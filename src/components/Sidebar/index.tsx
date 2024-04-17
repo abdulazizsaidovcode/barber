@@ -62,7 +62,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/" className="flex items-center gap-5">
+        <NavLink to="/master" className="flex items-center gap-5">
           <img src={Logo} alt="Logo"  className='w-10 rounded'/>
           <p>It CITY</p>
         </NavLink> 
@@ -104,7 +104,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/' || pathname.includes('master')
+                  pathname === '/master' || pathname.includes('/master')
                 }
               >
                 {(handleClick, open) => {
@@ -113,7 +113,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`border group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${(pathname === '/' ||
-                          pathname.includes('dashboard')) &&
+                          pathname.includes('/master')) &&
                           'bg-gray dark:bg-meta-4'
                           }`}
                         onClick={(e) => {
@@ -192,7 +192,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/' || pathname.includes('client')
+                  pathname === '/client' || pathname.includes('/client')
                 }
               >
                 {(handleClick, open) => {
@@ -201,7 +201,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`border group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${(pathname === '/' ||
-                          pathname.includes('dashboard')) &&
+                          pathname.includes('client')) &&
                           'bg-gray dark:bg-meta-4'
                           }`}
                         onClick={(e) => {
