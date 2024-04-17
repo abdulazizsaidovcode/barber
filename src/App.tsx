@@ -16,6 +16,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Client from './pages/Client/Client';
+import Master from './pages/Masters/Mastera';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -142,10 +143,19 @@ function App() {
             </>
           } />
         <Route
+          path="/master"
+          element={
+            <>
+              <PageTitle title="Master | Barber" />
+              <Master />
+            </>
+          }
+        />
+        <Route
           path="/client"
           element={
             <>
-              <PageTitle title="Signup | Barber" />
+              <PageTitle title="client | Barber" />
               <Client />
             </>
           }
