@@ -10,13 +10,14 @@ import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
-import Profile from './pages/Profile'; 
+import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Client from './pages/Client/Client';
 import Master from './pages/Masters/Mastera';
+import Order from './pages/orders/order';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,6 +46,14 @@ function App() {
           }
         />
         <Route
+          element={
+            <>
+              <PageTitle title="Order" />
+              <Order />
+            </>
+          }
+        />
+        <Route
           path="/calendar"
           element={
             <>
@@ -62,6 +71,7 @@ function App() {
             </>
           }
         />
+
         <Route
           path="/forms/form-elements"
           element={
@@ -141,7 +151,8 @@ function App() {
               <PageTitle title="Signup | Barber" />
               <SignUp />
             </>
-          } />
+          }
+        />
         <Route
           path="/master"
           element={
@@ -157,6 +168,15 @@ function App() {
             <>
               <PageTitle title="client | Barber" />
               <Client />
+            </>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            <>
+              <PageTitle title="Orders | Barber" />
+              <Order />
             </>
           }
         />
