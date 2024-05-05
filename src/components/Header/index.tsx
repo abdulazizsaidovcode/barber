@@ -4,6 +4,7 @@ import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
+import Logout from './logout';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -85,6 +86,7 @@ const Header = (props: {
           {/* <!-- User Area --> */}
           {/* <DropdownUser /> */}
           {/* <!-- User Area --> */}
+          <Logout />
         </div>
       </div>
     </header>
