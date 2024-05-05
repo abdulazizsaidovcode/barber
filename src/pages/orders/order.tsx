@@ -1,11 +1,13 @@
-import React from 'react';
 import DefaultLayout from './../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import MainTabs from './mainTabs';
 
 const Order = () => {
   return (
     <div>
       <DefaultLayout>
-        <h1>Salom</h1>
+        <Breadcrumb pageName="Orders" />
+        <MainTabs />
       </DefaultLayout>
     </div>
   );
