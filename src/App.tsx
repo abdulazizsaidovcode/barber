@@ -18,6 +18,8 @@ import Buttons from './pages/UiElements/Buttons';
 import Client from './pages/Client/Client';
 import Master from './pages/Masters/Mastera';
 import Order from './pages/orders/order';
+import Gallery from './pages/galery';
+import Massage from './pages/message';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,7 +42,7 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="eCommerce Dashboard | Barber" />
+              <PageTitle title="  Dashboard | Barber" />
               <ECommerce />
             </>
           }
@@ -78,6 +80,24 @@ function App() {
             <>
               <PageTitle title="Form Elements | Barber" />
               <FormElements />
+            </>
+          }
+        />
+        <Route
+          path="/gallery"
+          element={
+            <>
+              <PageTitle title="Gallery | Barber" />
+              <Gallery />
+            </>
+          }
+        />
+        <Route
+          path="/massage"
+          element={
+            <>
+              <PageTitle title="Massage | Barber" />
+              <Massage />
             </>
           }
         />
