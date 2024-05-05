@@ -1,26 +1,28 @@
 import React from 'react';
 import { Tabs } from 'antd';
-import type { TabsProps } from 'antd';
+import FirstTab from './firstTab';
+import SecondTab from './seondTab'; // Corrected typo from 'seondTab' to 'secondTab'
+import ThirdTab from './thirdTab';
 
 const onChange = (key: string) => {
   console.log(key);
 };
 
-const items: TabsProps['items'] = [
+const items = [
   {
     key: '1',
-    label: 'Tab 1',
-    children: 'Content of Tab Pane 1',
+    label: <span style={{ color: 'Black', fontSize: '30px' }}>Upcoming</span>,
+    children: <FirstTab />,
   },
   {
     key: '2',
-    label: 'Tab 2',
-    children: 'Content of Tab Pane 2',
+    label: <span style={{ color: 'black', fontSize: '30px' }}>Completed</span>,
+    children: <SecondTab />,
   },
   {
     key: '3',
-    label: 'Tab 3',
-    children: 'Content of Tab Pane 3',
+    label: <span style={{ color: 'black', fontSize: '30px' }}>Rejected</span>,
+    children: <ThirdTab />,
   },
 ];
 
