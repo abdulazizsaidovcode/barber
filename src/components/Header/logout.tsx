@@ -1,5 +1,4 @@
-import React from 'react';
-import { FaArrowRightToBracket } from 'react-icons/fa6';
+ import { FaArrowRightToBracket } from 'react-icons/fa6';
 
 const Logout = () => {
   return (
