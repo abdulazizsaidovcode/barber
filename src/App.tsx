@@ -20,6 +20,7 @@ import Master from './pages/Masters/Mastera';
 import Order from './pages/orders/order';
 import Gallery from './pages/galery';
 import Massage from './pages/message';
+import Finance from './pages/finance/finance';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -197,6 +198,15 @@ function App() {
             <>
               <PageTitle title="Orders | Barber" />
               <Order />
+            </>
+          }
+        />
+        <Route
+          path="/finance"
+          element={
+            <>
+              <PageTitle title="Finance | Barber" />
+              <Finance />
             </>
           }
         />
