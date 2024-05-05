@@ -11,7 +11,14 @@ const onChange = (key: string) => {
 const items = [
   {
     key: '1',
-    label: <span style={{ color: 'Black', fontSize: '30px' }}>Upcoming</span>,
+    label: (
+      <span
+        className="dark:text-white"
+        style={{ color: 'Black', fontSize: '30px' }}
+      >
+        Upcoming
+      </span>
+    ),
     children: <FirstTab />,
   },
   {
@@ -27,7 +34,12 @@ const items = [
 ];
 
 const MainTabs: React.FC = () => (
-  <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+  <Tabs
+    className="dark:bg-boxdark p-2"
+    defaultActiveKey="1"
+    items={items}
+    onChange={onChange}
+  />
 );
 
 export default MainTabs;
