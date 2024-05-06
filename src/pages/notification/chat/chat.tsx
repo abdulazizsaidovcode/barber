@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react';
 import Chatusers from '../components/chat components/user';
 import Notselected from '../components/chat components/notselected';
 import ChatEmptyState from '../components/chat components/emptychat';
-import { Select } from 'antd';
+import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
+import { IoSearchOutline } from 'react-icons/io5';
 // ========= images ======= //
 // import user from "../../../../public/img/chat/user.jpg"
 
@@ -34,7 +35,7 @@ const Chat = () => {
             if (window.innerWidth >= 768) {
                 setSidebarWidth('w-1/6'); // md: ekranlar va undan kattaroq uchun
             } else {
-                setSidebarWidth('w-20'); // kichik ekranda boshlang'ich holat
+                setSidebarWidth('w-20 fixed z-10 -left-full'); // kichik ekranda boshlang'ich holat
             }
         }
 
@@ -49,7 +50,7 @@ const Chat = () => {
     }, []);
 
     const toggleSidebar = () => {
-        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20' : 'w-max'));
+        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20 fixed z-20 -left-full ' : 'w-max'));
     };
 
     useEffect(() => {
@@ -60,19 +61,17 @@ const Chat = () => {
     return (
         <div>
 
-            <div className="w-full pb-5 flex gap-10 items-center">
-                <div className="relative w-max">
-                    <input type="search" id="search" className="block w-full h-10 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
-
-                    <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                </div>
+            <div className="w-full pb-5 flex gap-10 items-center flex-wrap">
+                <button onClick={toggleSidebar} className="md:hidden  text-black mb-2">
+                    <CgMenuLeft className='text-[1.5rem] font-bold' />
+                </button>
+                
+                <Input
+                    prefix={<IoSearchOutline />}
+                    className='w-max' />
                 <Select
                     defaultValue="lucy"
-                    style={{ width: 180, height: 40 }}
+                    className='w-40'
                     options={[
                         { value: 'jack', label: 'Jack' },
                         { value: 'lucy', label: 'Lucy' },
@@ -85,11 +84,8 @@ const Chat = () => {
             </div>
 
             <div className='flex w-[100%]'>
-                <div className={`${sidebarWidth} md:w-1/4  md:px-3 border py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
-                    <button onClick={toggleSidebar} className="md:hidden pl-5  text-black mb-2">
-                        <CgMenuLeft className='text-[1.5rem] font-bold' />
-                    </button>
-                    <div className={`${sidebarWidth == "w-max" ? "p-3 border" : "py-2"}   `}>
+                <div className={`${sidebarWidth} sm:w-1/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed  md:px-3 p-5 y border md:py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
+                    <div className={`${sidebarWidth == "w-max" ? "md:p-3 border" : "py-2"}   `}>
                         <Chatusers user={data} widthbar={sidebarWidth} />
                     </div>
                 </div>
@@ -133,7 +129,7 @@ const Chat = () => {
                             </div>
                         </div>
                         :
-                        <div className='w-full'>
+                        <div className='w-full relative z-0'>
                             <Notselected />
                         </div>}
                 </div>
