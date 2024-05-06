@@ -86,7 +86,7 @@ const Chat: React.FC = () => {
     }, []);
 
     return (
-        <div className='overflow-y-hidden'>
+        <div>
 
             <div className="w-full pb-5 flex gap-10 items-center flex-wrap ">
                 <button onClick={toggleSidebar} className="md:hidden  text-black mb-2">
@@ -112,15 +112,15 @@ const Chat: React.FC = () => {
             </div>
 
             <div className='flex w-[100%] relative '>
-                <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full  sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px]  md:px-3 p-5 y border md:py-5 h-[83vh] overflow-scrool  duration-300 flex flex-col`}>
+                <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full  sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px]  md:px-3 p-5 y border md:py-5 h-[83vh]   duration-300 flex flex-col`}>
                     <div className={`w-full`}>
                         <Chatusers user={data} />
                     </div>
                 </div>
                 <div className=' w-full relative overflow-y-auto'>
                     {data.length > 0 ?
-                        <div className="w-full h-[100%] flex flex-col overflow-scroll">
-                            <div className="bg-gray-200 flex-1 overflow-y-scroll pb-20 pt-5 px-4">
+                        <div className="w-full h-[100%] flex flex-col overflow-auto">
+                            <div className="bg-gray-200 flex-1 overflow-y-auto pb-20 pt-5 px-4">
                                 {/* <Link> */}
                                 {!chats ? <h1 className='text-xl hover:text-lime-600 mb-10'>Teshavoy (998 91 959 55 99)</h1> : ""}
                                 {/* </Link> */}
@@ -151,9 +151,6 @@ const Chat: React.FC = () => {
                                 {chats ? <p className='text-center'>thats all 🙂</p> : ""}
                             </div>
                             <div id="parent-container" className="container">
-                                <div className="content">
-                                    {/* Sahifangizning boshqa tarkibi */}
-                                </div>
                                 <div className=" bg-gray-100 px-4 py-2 border fixed bottom-3 w-full sm:ml-[12px] sm:left-auto left-[50%] sm:translate-x-0 -translate-x-[50%]" style={{ width: 'inherit' }} id="fixed-footer">
                                     <div className="flex items-center gap-5 w-full">
                                         <input className="w-1/2 border-none rounded-full py-2 px-4 mr-2 bg-transparent" type="text" placeholder="Type your message..." />
@@ -165,11 +162,6 @@ const Chat: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className=" bg-gray-100 px-4 py-2  border fixed bottom-0 w-full " id="parent-container">
-                                <div className="flex  items-center gap-5  w-full ">
-
-                                </div>
-                            </div> */}
                         </div>
                         :
                         <div className='w-full relative z-0'>
