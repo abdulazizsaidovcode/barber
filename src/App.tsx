@@ -17,10 +17,10 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Client from './pages/Client/Client';
 import Master from './pages/Masters/Mastera';
-import Order from './pages/orders/order';
 import Gallery from './pages/galery';
 import Massage from './pages/message';
 import Finance from './pages/finance/finance';
+import Calculation from './pages/Calculation/calculation';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,14 +48,7 @@ function App() {
             </>
           }
         />
-        <Route
-          element={
-            <>
-              <PageTitle title="Order" />
-              <Order />
-            </>
-          }
-        />
+
         <Route
           path="/calendar"
           element={
@@ -193,11 +186,11 @@ function App() {
           }
         />
         <Route
-          path="/order"
+          path="/calculation"
           element={
             <>
-              <PageTitle title="Orders | Barber" />
-              <Order />
+              <PageTitle title="Calculation | Barber" />
+              <Calculation />
             </>
           }
         />

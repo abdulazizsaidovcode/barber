@@ -1,8 +1,8 @@
-import DefaultLayout from './../../layout/DefaultLayout';
+import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import MainTabs from './mainTabs';
 
-const Order = () => {
+const Calculation = () => {
   return (
     <div>
       <DefaultLayout>
@@ -13,4 +13,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Calculation;

@@ -1,0 +1,60 @@
+/* General page styles */
+body {
+ font-family: Arial, sans-serif;
+ background-color: #f0f0f0;
+ margin: 0;
+ padding: 20px;
+}
+
+.main-container {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.filter-container {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-between;
+ gap: 10px;
+ margin-bottom: 10px;
+}
+
+.filter {
+ flex-basis: 30%;
+ min-width: 180px;
+}
+
+.filter, .toggle-filters-btn {
+ background-color: white;
+ border: 1px solid #ccc;
+ padding: 10px;
+ border-radius: 5px;
+ box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-filters-btn {
+ cursor: pointer;
+ text-align: center;
+ background-color: #007bff;
+ color: white;
+}
+
+.extra-filters {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 10px;
+}
+
+.filter-title {
+ margin-bottom: 5px;
+ font-weight: bold;
+}
+
+.filter-input {
+ width: 100%;
+ padding: 8px;
+ margin-top: 5px;
+ border-radius: 4px;
+ border: 1px solid #ccc;
+}
