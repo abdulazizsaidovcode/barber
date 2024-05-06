@@ -1,7 +1,7 @@
 import { IMasterItems, ITbody, IThead } from '../../types/master.ts';
-import SecondTab from '../finance/secondTab.tsx';
 import MasterTables from './master-tables.tsx';
 import img from '../../images/product/product-01.png';
+import MasterLocation from './master-location.tsx';
 
 export const thead: IThead[] = [
   {
@@ -130,6 +130,6 @@ export const items: IMasterItems[] = [
           Masterning joylashuvi
         </span>
     ),
-    children: <SecondTab />
+    children: <MasterLocation />
   }
 ];
