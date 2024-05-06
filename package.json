@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
+    "@vis.gl/react-google-maps": "^0.10.0",
     "antd": "^5.17.0",
     "apexcharts": "^3.41.0",
     "flatpickr": "^4.6.13",
