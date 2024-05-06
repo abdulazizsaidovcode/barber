@@ -1,115 +1,104 @@
-import { Button, Select } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
+import { Select } from 'antd';
 
-const FirstTab = () => {
-  const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    console.log(value);
+const { Option } = Select;
+
+const FirstTab: React.FC = () => {
+  // Handling changes for both selects
+  const handleCountryChange = (value: string) => {
+    console.log('Selected Country:', value);
+  };
+
+  const handleYearChange = (value: string) => {
+    console.log('Selected Year:', value);
   };
 
   return (
-    <div className="p-4">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex flex-col items-end justify-end w-[30%]">
-          <Select
-            labelInValue
-            defaultValue={{ value: 'toshkent' }}
-            placeholder="Select a location"
-            onChange={handleChange}
-            className="w-full md:w-1/4 bg-white dark:bg-gray-800 dark:rounded-lg text-black dark:text-white border-none shadow-md"
-            options={[
-              {
-                value: 'toshkent',
-                label: 'Toshkent',
-              },
-              {
-                value: 'qarshi',
-                label: 'Qarshi',
-              },
-            ]}
-          />
-          <div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Turnover</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Income</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Consumption</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Прибыль</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
+    <div>
+      {/* Top Section */}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {/* Left Section */}
+        <div style={{ marginRight: '20px' }}>
+          <div style={{ marginBottom: '10px' }}>
+            <Select
+              defaultValue="Select Country"
+              style={{ width: '200px' }}
+              onChange={handleCountryChange}
+            >
+              <Option value="uzbekistan">Uzbekistan</Option>
+              <Option value="kazakhstan">Kazakhstan</Option>
+              <Option value="kyrgyzstan">Kyrgyzstan</Option>
+            </Select>
           </div>
+          {[
+            { label: 'Turnover', value: '49 000 000' },
+            { label: 'Income', value: '60 500 000' },
+            { label: 'Consumption', value: '30 500 000' },
+            { label: 'Profit', value: '30 000 000' },
+          ].map((item) => (
+            <div
+              key={item.label}
+              style={{
+                display: 'flex',
+                marginBottom: '10px',
+                alignItems: 'center',
+              }}
+            >
+              <p style={{ marginRight: '10px' }}>{item.label}</p>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  border: '1px solid black',
+                  padding: '10px 30px',
+                }}
+              >
+                {item.value}
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col items-end justify-end w-[30%]">
-          <Select
-            labelInValue
-            defaultValue={{ value: 'toshkent' }}
-            placeholder="Select a location"
-            onChange={handleChange}
-            className="w-full md:w-1/4 bg-white dark:bg-gray-800 dark:rounded-lg text-black dark:text-white border-none shadow-md"
-            options={[
-              {
-                value: 'toshkent',
-                label: 'Toshkent',
-              },
-              {
-                value: 'qarshi',
-                label: 'Qarshi',
-              },
-            ]}
-          />
-          <div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Turnover</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Income</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Consumption</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
-            {/* oporto */}
-            <div className="flex items-center gap-2">
-              <p className="dark:text-white">Прибыль</p>
-              <div className=" p-2 px-6 border-[1px] border-solid dark:border-white dark:text-white">
-                490 000 000
-              </div>
-            </div>
+        {/* Right Section */}
+        <div>
+          <div style={{ marginBottom: '10px' }}>
+            <Select
+              defaultValue="Select Year"
+              style={{ width: '200px' }}
+              onChange={handleYearChange}
+            >
+              <Option value="2024">2024</Option>
+              <Option value="2023">2023</Option>
+              <Option value="2022">2022</Option>
+            </Select>
           </div>
+          {[
+            { label: 'Turnover', value: '49 000 000' },
+            { label: 'Income', value: '60 500 000' },
+            { label: 'Consumption', value: '30 500 000' },
+            { label: 'Profit', value: '30 000 000' },
+          ].map((item) => (
+            <div
+              key={item.label}
+              style={{
+                display: 'flex',
+                marginBottom: '10px',
+                alignItems: 'center',
+              }}
+            >
+              <p style={{ marginRight: '10px' }}>{item.label}</p>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  border: '1px solid black',
+                  padding: '10px 30px',
+                }}
+              >
+                {item.value}
+              </div>
+            </div>
+          ))}
         </div>
-        <Button type="primary" className="w-full md:w-auto">
-          Download
-        </Button>
       </div>
     </div>
   );

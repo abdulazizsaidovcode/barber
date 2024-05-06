@@ -4,12 +4,12 @@ import MainTabs from './mainTabs';
 
 const Finance = () => {
   return (
-    <div>
+    <>
       <DefaultLayout>
         <Breadcrumb pageName="Finance" />
         <MainTabs />
       </DefaultLayout>
-    </div>
+    </>
   );
 };
 
