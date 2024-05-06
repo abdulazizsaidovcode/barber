@@ -7,7 +7,7 @@ const Chatusers = ({ user }: any) => {
 
 
     return (
-        <div className='h-full overflow-y-scroll'>
+        <div className='h-full overflow-y-auto'>
             <ul>
                 {user.length > 0 ? user.map((item: any) =>
                     <li className='flex gap-2 items-center  md:my-1 border p-2'>
