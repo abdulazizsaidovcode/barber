@@ -1,7 +1,49 @@
 import MasterTable from '../../components/Tables/MasterTable.tsx';
 import { tbody, thead } from './data.tsx';
+import { CiMenuKebab } from 'react-icons/ci';
+import type { MenuProps } from 'antd';
+import { Dropdown, Space } from 'antd';
+// import React from 'react';
+// import { useState } from 'react';
+
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    label: 'Открыть'
+  },
+  {
+    key: '2',
+    label: 'Заблокировать'
+  },
+  {
+    key: '3',
+    label: 'Разблокировать'
+  },
+  {
+    key: '4',
+    label: 'Открыть справку'
+  },
+  {
+    key: '5',
+    label: 'Сделать скидку'
+  },
+  {
+    key: '6',
+    label: 'Скачать справку'
+  },
+  {
+    key: '7',
+    label: 'Написать'
+  },
+];
 
 const MasterTables = () => {
+  // const [statusValue, setStatusValue] = useState('')
+  // const clickHandler = (e: React.MouseEvent<HTMLSpanElement>): void => {
+  //   let val: string | null | undefined = (e.target as HTMLSpanElement).textContent
+  //   setStatusValue(val)
+  // };
+
   return (
     <MasterTable thead={thead}>
       {tbody.map((item, key) => (
@@ -34,7 +76,7 @@ const MasterTables = () => {
               {item.rating}
             </p>
           </td>
-          <td className="min-w-[150px] p-5">
+          <td className="min-w-[150px] p-5 flex items-center justify-between">
             <p
               className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
                 item.status === 'Активный'
@@ -44,6 +86,15 @@ const MasterTables = () => {
             >
               {item.status}
             </p>
+            <Space direction="vertical">
+              <Space wrap>
+                <Dropdown menu={{ items }} placement="bottomLeft" arrow>
+                  <CiMenuKebab
+                    className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200"
+                  />
+                </Dropdown>
+              </Space>
+            </Space>
           </td>
           <td className="min-w-[150px] p-5">
             <p className="text-black dark:text-white">
