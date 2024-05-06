@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"
 import timeGridPlugin from "@fullcalendar/timegrid"
-import { Button, Select } from "antd";
+import { Select } from "antd";
 const Calendar = () => {
   const regionOption = [
     {
@@ -22,18 +22,18 @@ const Calendar = () => {
       <Breadcrumb pageName="Calendar" />
       <div className="grid grid-cols-2 gap-5 my-5">
         <div className="grid grid-cols-4 gap-5">
-          <Button type="primary" className="bg-yellow-500 hover:bg-yellow-500 active:bg-yellow-500 focus:bg-yellow-500 ant-btn-danger" block>
+          <div className="bg-green-500 flex justify-center items-center rounded-lg text-white">
             Завершён
-          </Button>
-          <Button color="red" type="primary"  block>
+          </div>
+          <div className="bg-blue-500 flex justify-center items-center rounded-lg text-white">
             Одобрен
-          </Button>
-          <Button type="primary" block>
+          </div>
+          <div className="bg-orange-500 flex justify-center items-center rounded-lg text-white" >
             На одобрении
-          </Button>
-          <Button type="primary" danger block>
+          </div>
+          <div className="bg-red-500 flex justify-center items-center rounded-lg text-white" >
             Отклонён
-          </Button>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-5">
           <Select
@@ -72,9 +72,9 @@ const Calendar = () => {
         initialView="dayGridMonth"
         headerToolbar={{
 
-          start: "today prev,next",
+          start: "prev,today,next",
           center: "title",
-          end: "dayGridMonth,timeGridMonth,timeGridDay",
+          end: "dayGridMonth,timeGridWeek,timeGridDay",
         }
         }
       />
