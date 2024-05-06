@@ -22,6 +22,7 @@ import Massage from './pages/message';
 import Finance from './pages/finance/finance';
 import Calculation from './pages/Calculation/calculation';
 import Card from './pages/cards/card';
+import Natification from './pages/notification/index.js';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -204,17 +205,26 @@ function App() {
             </>
           }
         />
-         <Route
+        <Route
           path="/cards"
           element={
             <>
               <PageTitle title="Finance | Barber" />
               <Card />
+
+            </>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <>
+              <PageTitle title="Finance | Barber" />
+              <Natification />
             </>
           }
         />
       </Routes>
-
     </>
   );
 }
