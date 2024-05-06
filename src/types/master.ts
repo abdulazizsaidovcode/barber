@@ -11,11 +11,6 @@ export interface IMasterTableProps {
   children: ReactNode
 }
 
-export interface ISelectFilter {
-  value: string;
-  label: string;
-}
-
 export interface IThead {
   id: number;
   name: string;
