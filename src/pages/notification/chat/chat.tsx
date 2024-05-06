@@ -37,7 +37,7 @@ const Chat: React.FC = () => {
     useEffect(() => {
         function handleResize() {
             if (window.innerWidth >= 768) {
-                setSidebarWidth('w-1/6'); // md: ekranlar va undan kattaroq uchun
+                setSidebarWidth('w-1/4'); // md: ekranlar va undan kattaroq uchun
             } else {
                 setSidebarWidth('fixed z-10 left-0'); // kichik ekranda boshlang'ich holat
             }
@@ -95,10 +95,11 @@ const Chat: React.FC = () => {
 
                 <Input
                     prefix={<IoSearchOutline />}
-                    className='w-max' />
+                    className='w-max dark:bg-gray' />
                 <Select
                     defaultValue="lucy"
-                    className='w-40'
+                    className='w-40 dark:bg-gray'
+                    dropdownClassName="my-custom-dropdown"
                     options={[
                         { value: 'jack', label: 'Jack' },
                         { value: 'lucy', label: 'Lucy' },
@@ -111,7 +112,7 @@ const Chat: React.FC = () => {
             </div>
 
             <div className='flex w-[100%] relative '>
-                <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full  sm:w-1/3 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px]  md:px-3 p-5 y border md:py-5 h-[83vh] overflow-scrool  duration-300 flex flex-col`}>
+                <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full  sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px]  md:px-3 p-5 y border md:py-5 h-[83vh] overflow-scrool  duration-300 flex flex-col`}>
                     <div className={`w-full`}>
                         <Chatusers user={data} />
                     </div>
