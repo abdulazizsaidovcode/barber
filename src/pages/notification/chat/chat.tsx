@@ -50,7 +50,7 @@ const Chat = () => {
     }, []);
 
     const toggleSidebar = () => {
-        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20 fixed z-10 -left-full ' : 'w-max'));
+        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20 fixed z-20 -left-full ' : 'w-max'));
     };
 
     useEffect(() => {
@@ -62,7 +62,7 @@ const Chat = () => {
         <div>
 
             <div className="w-full pb-5 flex gap-10 items-center flex-wrap">
-                <button onClick={toggleSidebar} className="sm:hidden  text-black mb-2">
+                <button onClick={toggleSidebar} className="md:hidden  text-black mb-2">
                     <CgMenuLeft className='text-[1.5rem] font-bold' />
                 </button>
                 
@@ -84,7 +84,7 @@ const Chat = () => {
             </div>
 
             <div className='flex w-[100%]'>
-                <div className={`${sidebarWidth} sm:w-1/4 md:static fixed  md:px-3 p-5 y border md:py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
+                <div className={`${sidebarWidth} sm:w-1/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed  md:px-3 p-5 y border md:py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
                     <div className={`${sidebarWidth == "w-max" ? "md:p-3 border" : "py-2"}   `}>
                         <Chatusers user={data} widthbar={sidebarWidth} />
                     </div>
@@ -129,7 +129,7 @@ const Chat = () => {
                             </div>
                         </div>
                         :
-                        <div className='w-full'>
+                        <div className='w-full relative z-0'>
                             <Notselected />
                         </div>}
                 </div>
