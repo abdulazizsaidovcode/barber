@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { RolingLoading } from '../../../../../components/loadings/miniloading';
-import Input from '../../../../../components/inputs';
 
 
-const Chatusers = ({ user, widthbar }) => {
+const Chatusers = ({ user, widthbar }: any) => {
     const [widths, setSidebarWidth] = useState('w-max');
 
     useEffect(() => {
@@ -19,11 +17,8 @@ const Chatusers = ({ user, widthbar }) => {
 
     return (
         <div className='h-full overflow-y-scroll'>
-            <div className={widths}>
-                <Input placeholder='name' />
-            </div>
             <ul>
-                {user.length > 0 ? user.map((item) =>
+                {user.length > 0 ? user.map((item: any) =>
                     <li className='flex gap-2 items-center  my-1 border p-2'>
                         <img src={item.img ? item.img : "https://picsum.photos/50/50"} alt="user img" className='w-10 rounded-full' />
                         <div className={`${widths} flex gap-1  flex-col w-max`}>
@@ -40,7 +35,7 @@ const Chatusers = ({ user, widthbar }) => {
                     :
                     <div className='w-full flex items-center mt-3 flex-col'>
                         <p>user not found</p>
-                        <RolingLoading />
+                        "not found"
                     </div>}
             </ul>
         </div>

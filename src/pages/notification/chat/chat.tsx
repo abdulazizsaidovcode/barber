@@ -2,6 +2,11 @@
 import { Link } from 'react-router-dom';
 import { CgMenuLeft } from 'react-icons/cg';
 import { useEffect, useState } from 'react';
+import Chatusers from '../components/chat components/user';
+import Notselected from '../components/chat components/notselected';
+import ChatEmptyState from '../components/chat components/emptychat';
+import { Select } from 'antd';
+import { Buttons } from '../../../components/buttons';
 // ========= images ======= //
 // import user from "../../../../public/img/chat/user.jpg"
 
@@ -53,61 +58,87 @@ const Chat = () => {
 
 
     return (
-        <div className='flex w-[100%]'>
-            <div className={`${sidebarWidth} md:w-1/4  md:px-3 border py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
-                <button onClick={toggleSidebar} className="md:hidden pl-5  text-black mb-2">
-                    {/* <CgMenuLeft className='text-[1.5rem] font-bold' /> */}
-                </button>
-                <div className={`${sidebarWidth == "w-max" ? "p-3 border" : "py-2"}   `}>
-                    {/* <Chatusers user={data} widthbar={sidebarWidth} /> */}
-                </div>
-            </div>
-            <div className=' w-full relative overflow-y-auto'>
-                {data.length > 0 ?
-                    <div className="w-full h-[100%] flex flex-col overflow-scroll">
-                        <div className="bg-gray-200 flex-1 overflow-y-scroll pb-20 pt-5 px-4">
-                            {/* <Link> */}
-                            <h1 className='text-xl hover:text-lime-600 mb-10'>Teshavoy (998 91 959 55 99)</h1>
-                            {/* </Link> */}
-                            {!chats ? <div className=" py-2">
-                                <div>
-                                    <div className="flex items-center mb-2">
-                                        <img className="w-8 h-8 rounded-full mr-2" src="https://picsum.photos/50/50" alt="User Avatar" />
-                                        <div className="font-medium">John Doe</div>
-                                    </div>
-                                    <div className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm">
-                                        Hi, how can I help you?
-                                    </div>
-                                    <p className='text-xs'>12.23.2024</p>
-                                </div>
-                                <div className="flex items-end justify-end flex-col">
-                                    <h1 className='mb-2'>Abdul Aziz</h1>
-                                    <div className="bg-lime-500 text-white rounded-lg p-2 shadow  max-w-sm mb-2">
-                                        Sure, I can help with that.
-                                    </div>
-                                    <p className='text-xs'>12.23.2024</p>
-                                </div>
+        <div>
 
-                            </div> : "error"
-                            }
-                            <p className='text-center'>thats all 🙂</p>
-                        </div>
-                        <div className="bg-gray-100 px-4 py-2 fixed bottom-0 w-[74%]">
-                            <div className="flex items-center w-full">
-                                <input className="w-full border rounded-full py-2 px-4 mr-2" type="text" placeholder="Type your message..." />
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">
-                                    Send
-                                </button>
+            <div className="w-full pb-5 flex gap-10 items-center">
+                <div className="relative w-max">
+                    <input type="search" id="search" className="block w-full h-10 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
+
+                    <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                </div>
+                <Select
+                    defaultValue="lucy"
+                    style={{ width: 180, height: 40 }}
+                    options={[
+                        { value: 'jack', label: 'Jack' },
+                        { value: 'lucy', label: 'Lucy' },
+                        { value: 'Yiminghe', label: 'yiminghe' },
+                        { value: 'disabled', label: 'Disabled', disabled: true },
+                    ]}
+                />
+                <Buttons>button</Buttons>
+                <Buttons>button</Buttons>
+            </div>
+
+            <div className='flex w-[100%]'>
+                <div className={`${sidebarWidth} md:w-1/4  md:px-3 border py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
+                    <button onClick={toggleSidebar} className="md:hidden pl-5  text-black mb-2">
+                        <CgMenuLeft className='text-[1.5rem] font-bold' />
+                    </button>
+                    <div className={`${sidebarWidth == "w-max" ? "p-3 border" : "py-2"}   `}>
+                        <Chatusers user={data} widthbar={sidebarWidth} />
+                    </div>
+                </div>
+                <div className=' w-full relative overflow-y-auto'>
+                    {data.length > 0 ?
+                        <div className="w-full h-[100%] flex flex-col overflow-scroll">
+                            <div className="bg-gray-200 flex-1 overflow-y-scroll pb-20 pt-5 px-4">
+                                {/* <Link> */}
+                                {chats ? <h1 className='text-xl hover:text-lime-600 mb-10'>Teshavoy (998 91 959 55 99)</h1> : ""}
+                                {/* </Link> */}
+                                {chats ? <div className=" py-2">
+                                    <div>
+                                        <div className="flex items-center mb-2">
+                                            <img className="w-8 h-8 rounded-full mr-2" src="https://picsum.photos/50/50" alt="User Avatar" />
+                                            <div className="font-medium">John Doe</div>
+                                        </div>
+                                        <div className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm">
+                                            Hi, how can I help you?
+                                        </div>
+                                        <p className='text-xs'>12.23.2024</p>
+                                    </div>
+                                    <div className="flex items-end justify-end flex-col">
+                                        <h1 className='mb-2'>Abdul Aziz</h1>
+                                        <div className="bg-lime-500 text-white rounded-lg p-2 shadow  max-w-sm mb-2">
+                                            Sure, I can help with that.
+                                        </div>
+                                        <p className='text-xs'>12.23.2024</p>
+                                    </div>
+
+                                </div> : <ChatEmptyState />
+                                }
+                                {chats ? <p className='text-center'>thats all 🙂</p> : ""}
+                            </div>
+                            <div className="relative bg-gray-100 px-4 py-2  ">
+                                <div className="flex items-center fixed bottom-0 w-[49%]">
+                                    <input className="w-full border rounded-full py-2 px-4 mr-2" type="text" placeholder="Type your message..." />
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">
+                                        Send
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    :
-                    <div className='w-full'>
-                        {/* <WaitingLoading /> */}
-                        "error"
-                    </div>}
-            </div>
+                        :
+                        <div className='w-full'>
+                            <Notselected />
+                        </div>}
+                </div>
 
+            </div>
         </div>
     )
 }
