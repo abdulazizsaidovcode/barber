@@ -25,11 +25,7 @@ const items = [
     label: <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">Completed</span>,
     children: <SecondTab />,
   },
-  {
-    key: '3',
-    label: <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">Rejected</span>,
-    children: <ThirdTab />,
-  },
+ 
 ];
 
 const MainTabs: React.FC = () => (
