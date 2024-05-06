@@ -2,6 +2,7 @@ import { Button, Col, DatePicker, Input, Row, Select } from 'antd';
 import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
+import MasterModal from '../master-modal.tsx';
 
 const { Option } = Select;
 const filterObj = {
@@ -19,10 +20,12 @@ const filterObj = {
 const Filters: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
   const [filters, setFilters] = useState(filterObj);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
   const handleInputChange = (key: string, value: any) => setFilters({ ...filters, [key]: value });
+  const openModal = () => setIsModalOpen(!isModalOpen);
 
   const styles = {
     mainContainer: {
@@ -97,7 +100,8 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton}>Download</Button>
+          <Button style={styles.extraButton} onClick={openModal}>Download</Button>
+          <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
         </Col>
       </Row>
 

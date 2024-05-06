@@ -1,27 +1,15 @@
-import { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
+import React from 'react';
 
-const MasterModal = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface IMasterModalProps {
+  openModal: () => void;
+  isModalOpen: boolean;
+}
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
+const MasterModal: React.FC<IMasterModalProps> = ({ openModal, isModalOpen }) => {
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
-      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="Basic Modal" open={isModalOpen} onCancel={openModal}>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
