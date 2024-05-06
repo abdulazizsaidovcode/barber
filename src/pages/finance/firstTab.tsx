@@ -14,15 +14,15 @@ const FirstTab: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='flex justify-center'>
       {/* Top Section */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className='flex sm:justify-between w-[700px] flex-wrap justify-center'>
         {/* Left Section */}
-        <div style={{ marginRight: '20px' }}>
-          <div style={{ marginBottom: '10px' }}>
+        <div>
+          <div className='mb-[10px] flex justify-center'>
             <Select
               defaultValue="Select Country"
-              style={{ width: '200px' }}
+              className="w-[200px]"
               onChange={handleCountryChange}
             >
               <Option value="uzbekistan">Uzbekistan</Option>
@@ -30,40 +30,36 @@ const FirstTab: React.FC = () => {
               <Option value="kyrgyzstan">Kyrgyzstan</Option>
             </Select>
           </div>
-          {[
-            { label: 'Turnover', value: '49 000 000' },
-            { label: 'Income', value: '60 500 000' },
-            { label: 'Consumption', value: '30 500 000' },
-            { label: 'Profit', value: '30 000 000' },
-          ].map((item) => (
-            <div
-              key={item.label}
-              style={{
-                display: 'flex',
-                marginBottom: '10px',
-                alignItems: 'center',
-              }}
-            >
-              <p style={{ marginRight: '10px' }}>{item.label}</p>
+          <div className=''>
+            {[
+              { label: 'Turnover', value: '49 000 000' },
+              { label: 'Income', value: '60 500 000' },
+              { label: 'Consumption', value: '30 500 000' },
+              { label: 'Profit', value: '30 000 000' },
+            ].map((item) => (
               <div
+                key={item.label}
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
-                  border: '1px solid black',
-                  padding: '10px 30px',
+                  alignItems: 'center',
+                  marginBottom: '10px',
                 }}
               >
-                {item.value}
+                <p className='w-[100px] ml-[10px] dark:text-white'>{item.label}:</p>
+                <div className='border-2 border-black px-[50px] dark:border-white py-[10px]'
+                >
+                  <p className='dark:text-white'>{item.value}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         {/* Right Section */}
         <div>
-          <div style={{ marginBottom: '10px' }}>
+          <div className='mb-[10px] flex justify-center'>
             <Select
+              className='w-[200px]'
               defaultValue="Select Year"
-              style={{ width: '200px' }}
               onChange={handleYearChange}
             >
               <Option value="2024">2024</Option>
@@ -71,33 +67,23 @@ const FirstTab: React.FC = () => {
               <Option value="2022">2022</Option>
             </Select>
           </div>
-          {[
-            { label: 'Turnover', value: '49 000 000' },
-            { label: 'Income', value: '60 500 000' },
-            { label: 'Consumption', value: '30 500 000' },
-            { label: 'Profit', value: '30 000 000' },
-          ].map((item) => (
-            <div
-              key={item.label}
-              style={{
-                display: 'flex',
-                marginBottom: '10px',
-                alignItems: 'center',
-              }}
-            >
-              <p style={{ marginRight: '10px' }}>{item.label}</p>
+          <div>
+            {[
+              { label: 'Turnover', value: '49 000 000' },
+              { label: 'Income', value: '60 500 000' },
+              { label: 'Consumption', value: '30 500 000' },
+              { label: 'Profit', value: '30 000 000' },
+            ].map((item) => (
               <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  border: '1px solid black',
-                  padding: '10px 30px',
-                }}
-              >
-                {item.value}
+                key={item.label}
+                className='flex items-center mb-[10px]'>
+                <p className='mr-[10px] w-[100px] dark:text-white'>{item.label}:</p>
+                <div className='border-2 border-black px-[50px] dark:border-white py-[10px]'>
+                  <p className='dark:text-white'>{item.value}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
