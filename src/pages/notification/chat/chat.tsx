@@ -7,13 +7,17 @@ import Notselected from '../components/chat components/notselected';
 import ChatEmptyState from '../components/chat components/emptychat';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoSearchOutline, IoSend } from 'react-icons/io5';
+import { IoMdAttach } from "react-icons/io";
+import { FaCheck } from 'react-icons/fa6';
 // ========= images ======= //
 // import user from "../../../../public/img/chat/user.jpg"
 
-const Chat = () => {
+const Chat: React.FC = () => {
     const [chats, setchats] = useState(false);
     const [sidebarWidth, setSidebarWidth] = useState('w-max');
+    const [siteBar, setsiteBar] = useState<boolean>(false);
+    const [siteBarClass, setsiteBarClass] = useState<string>("");
 
     const data = [
         {
@@ -35,7 +39,7 @@ const Chat = () => {
             if (window.innerWidth >= 768) {
                 setSidebarWidth('w-1/6'); // md: ekranlar va undan kattaroq uchun
             } else {
-                setSidebarWidth('w-20 fixed z-10 -left-full'); // kichik ekranda boshlang'ich holat
+                setSidebarWidth('fixed z-10 left-0'); // kichik ekranda boshlang'ich holat
             }
         }
 
@@ -50,22 +54,45 @@ const Chat = () => {
     }, []);
 
     const toggleSidebar = () => {
-        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20 fixed z-20 -left-full ' : 'w-max'));
+        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'fixed' : 'w-max'));
+        setsiteBarClass(() => {
+            if (siteBar) {
+                setsiteBar(false)
+                return "translate-x-0 left-0"
+            } else {
+                setsiteBar(true)
+                return "-translate-x-full -left-10"
+            }
+        })
     };
 
     useEffect(() => {
-    })
+        const updateWidth = () => {
+            const parent = document.getElementById('parent-container') as HTMLElement;
+            const footer = document.getElementById('fixed-footer') as HTMLElement;
 
+            if (parent && footer) {
+                const parentWidth = parent.offsetWidth;
+                footer.style.width = `${parentWidth}px`;
+            }
+        };
 
+        window.addEventListener('resize', updateWidth);
+        updateWidth();
+
+        return () => {
+            window.removeEventListener('resize', updateWidth);
+        };
+    }, []);
 
     return (
-        <div>
+        <div className='overflow-y-hidden'>
 
-            <div className="w-full pb-5 flex gap-10 items-center flex-wrap">
+            <div className="w-full pb-5 flex gap-10 items-center flex-wrap ">
                 <button onClick={toggleSidebar} className="md:hidden  text-black mb-2">
                     <CgMenuLeft className='text-[1.5rem] font-bold' />
                 </button>
-                
+
                 <Input
                     prefix={<IoSearchOutline />}
                     className='w-max' />
@@ -83,10 +110,10 @@ const Chat = () => {
                 <Buttons>button</Buttons>
             </div>
 
-            <div className='flex w-[100%]'>
-                <div className={`${sidebarWidth} sm:w-1/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed  md:px-3 p-5 y border md:py-5 h-screen overflow-scrool transition-width duration-300 flex flex-col`}>
-                    <div className={`${sidebarWidth == "w-max" ? "md:p-3 border" : "py-2"}   `}>
-                        <Chatusers user={data} widthbar={sidebarWidth} />
+            <div className='flex w-[100%] relative '>
+                <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full  sm:w-1/3 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px]  md:px-3 p-5 y border md:py-5 h-[83vh] overflow-scrool  duration-300 flex flex-col`}>
+                    <div className={`w-full`}>
+                        <Chatusers user={data} />
                     </div>
                 </div>
                 <div className=' w-full relative overflow-y-auto'>
@@ -94,9 +121,9 @@ const Chat = () => {
                         <div className="w-full h-[100%] flex flex-col overflow-scroll">
                             <div className="bg-gray-200 flex-1 overflow-y-scroll pb-20 pt-5 px-4">
                                 {/* <Link> */}
-                                {chats ? <h1 className='text-xl hover:text-lime-600 mb-10'>Teshavoy (998 91 959 55 99)</h1> : ""}
+                                {!chats ? <h1 className='text-xl hover:text-lime-600 mb-10'>Teshavoy (998 91 959 55 99)</h1> : ""}
                                 {/* </Link> */}
-                                {chats ? <div className=" py-2">
+                                {!chats ? <div className=" py-2">
                                     <div>
                                         <div className="flex items-center mb-2">
                                             <img className="w-8 h-8 rounded-full mr-2" src="https://picsum.photos/50/50" alt="User Avatar" />
@@ -108,7 +135,10 @@ const Chat = () => {
                                         <p className='text-xs'>12.23.2024</p>
                                     </div>
                                     <div className="flex items-end justify-end flex-col">
-                                        <h1 className='mb-2'>Abdul Aziz</h1>
+                                        <div className="flex items-center mb-2">
+                                            <img className="w-8 h-8 rounded-full mr-2" src="https://picsum.photos/50/50" alt="User Avatar" />
+                                            <div className="font-medium">Abdul Aziz</div>
+                                        </div>
                                         <div className="bg-lime-500 text-white rounded-lg p-2 shadow  max-w-sm mb-2">
                                             Sure, I can help with that.
                                         </div>
@@ -119,14 +149,26 @@ const Chat = () => {
                                 }
                                 {chats ? <p className='text-center'>thats all 🙂</p> : ""}
                             </div>
-                            <div className="relative bg-gray-100 px-4 py-2  ">
-                                <div className="flex items-center fixed bottom-0 w-[49%]">
-                                    <input className="w-full border rounded-full py-2 px-4 mr-2" type="text" placeholder="Type your message..." />
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">
-                                        Send
-                                    </button>
+                            <div id="parent-container" className="container">
+                                <div className="content">
+                                    {/* Sahifangizning boshqa tarkibi */}
+                                </div>
+                                <div className=" bg-gray-100 px-4 py-2 border fixed bottom-3 w-full sm:ml-[12px] sm:left-auto left-[50%] sm:translate-x-0 -translate-x-[50%]" style={{ width: 'inherit' }} id="fixed-footer">
+                                    <div className="flex items-center gap-5 w-full">
+                                        <input className="w-1/2 border-none rounded-full py-2 px-4 mr-2 bg-transparent" type="text" placeholder="Type your message..." />
+                                        <div className='flex justify-end items-center text-2xl w-1/2 gap-5'>
+                                            <IoMdAttach />
+                                            <FaCheck />
+                                            <Buttons><IoSend /></Buttons>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            {/* <div className=" bg-gray-100 px-4 py-2  border fixed bottom-0 w-full " id="parent-container">
+                                <div className="flex  items-center gap-5  w-full ">
+
+                                </div>
+                            </div> */}
                         </div>
                         :
                         <div className='w-full relative z-0'>
