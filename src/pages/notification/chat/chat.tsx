@@ -50,7 +50,7 @@ const Chat = () => {
     }, []);
 
     const toggleSidebar = () => {
-        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20 fixed z-10 -left-full' : 'w-max'));
+        setSidebarWidth(currentWidth => (currentWidth === 'w-max' ? 'w-20 fixed z-10 -left-full ' : 'w-max'));
     };
 
     useEffect(() => {
@@ -61,10 +61,11 @@ const Chat = () => {
     return (
         <div>
 
-            <div className="w-full pb-5 flex gap-10 items-center ">
+            <div className="w-full pb-5 flex gap-10 items-center flex-wrap">
                 <button onClick={toggleSidebar} className="sm:hidden  text-black mb-2">
                     <CgMenuLeft className='text-[1.5rem] font-bold' />
                 </button>
+                
                 <Input
                     prefix={<IoSearchOutline />}
                     className='w-max' />
