@@ -19,7 +19,7 @@ const Chatusers = ({ user, widthbar }: any) => {
         <div className='h-full overflow-y-scroll'>
             <ul>
                 {user.length > 0 ? user.map((item: any) =>
-                    <li className='flex gap-2 items-center  my-1 border p-2'>
+                    <li className='flex gap-2 items-center  md:my-1 border p-2'>
                         <img src={item.img ? item.img : "https://picsum.photos/50/50"} alt="user img" className='w-10 rounded-full' />
                         <div className={`${widths} flex gap-1  flex-col w-max`}>
                             <div className={`flex items-center gap-1 ${widths == 'hidden' ? "" : "flex-col items-start"}`}>
