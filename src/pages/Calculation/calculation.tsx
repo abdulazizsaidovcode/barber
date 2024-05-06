@@ -5,28 +5,23 @@ import MasterTable from '../../components/Tables/MasterTable';
 
 const Calculation = () => {
   const tableHeaders = [
-    { id: 1, name: 'Ism' },
-    { id: 2, name: 'Familiya' },
-    { id: 3, name: 'Yosh' },
+    { id: 1, name: 'Country' },
+    { id: 2, name: 'Non-cash turnover' },
+    { id: 3, name: 'All turnover' },
+    { id: 4, name: 'Total income' },
+    { id: 5, name: 'Income “Simple”' },
+    { id: 6, name: 'Income "Premium"' },
+    { id: 7, name: 'Income "Vip"' },
+    { id: 8, name: 'Master total' },
+    { id: 9, name: 'Income "Simple"' },
+    { id: 10, name: '“Family” income' },
+    { id: 11, name: 'Total clients' },
   ];
   return (
     <div>
       <DefaultLayout>
         <Breadcrumb pageName="Calculation" />
         <MainTabs />
-        <MasterTable thead={tableHeaders}>
-          <tr>
-            <td className="p-5">Ali</td>
-            <td className="p-5">Valiyev</td>
-            <td className="p-5">25</td>
-          </tr>
-          <tr>
-            <td className="p-5">Bek</td>
-            <td className="p-5">Karimov</td>
-            <td className="p-5">30</td>
-          </tr>
-          // Bu yerda yanada ko'proq qatorlar qo'shishingiz mumkin
-        </MasterTable>{' '}
       </DefaultLayout>
     </div>
   );
