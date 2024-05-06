@@ -74,7 +74,7 @@ const RirstTab = () => {
         {users.map((user, index) => (
           <div
             key={index}
-            className="hover:shadow-lg p-2 bg-white dark:bg-gray-800 rounded-lg"
+            className="hover:shadow-lg p-2 bg-gray dark:bg-[#30303d] dark:text-white  rounded-lg cursor-pointer"
             onClick={() => showModal(user.image)}
           >
             <img
@@ -86,7 +86,7 @@ const RirstTab = () => {
               <div className="flex items-center justify-between">
                 <h5 className="text-lg font-bold">{user.name}</h5>
                 <div className="flex items-center justify-center px-1 rounded-lg bg-red-500 text-white">
-                  New Image
+                  New images
                 </div>
               </div>
               <p className="text-gray-500">{user.phone}</p>

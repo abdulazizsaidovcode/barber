@@ -74,7 +74,7 @@ const SecondTab = () => {
         {users.map((user, index) => (
           <div
             key={index}
-            className="hover:shadow-lg p-2 bg-white dark:bg-gray-800 rounded-lg"
+            className="hover:shadow-lg p-2 bg-gray dark:bg-[#30303d] cursor-pointer dark:text-white  rounded-lg"
             onClick={() => showModal(user.image)}
           >
             <img
