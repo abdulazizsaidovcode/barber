@@ -1,10 +1,12 @@
 
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from './../../layout/DefaultLayout';
 const Card = () => {
   return (
     <div>
      <DefaultLayout>
-      <h1>Card piece</h1>
+      <Breadcrumb pageName='Card'/>
+      
      </DefaultLayout>
     </div>
   )
