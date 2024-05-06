@@ -21,6 +21,7 @@ import Gallery from './pages/galery';
 import Massage from './pages/message';
 import Finance from './pages/finance/finance';
 import Calculation from './pages/Calculation/calculation';
+import Card from './pages/cards/card';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -203,7 +204,17 @@ function App() {
             </>
           }
         />
+         <Route
+          path="/cards"
+          element={
+            <>
+              <PageTitle title="Finance | Barber" />
+              <Card />
+            </>
+          }
+        />
       </Routes>
+
     </>
   );
 }

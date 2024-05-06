@@ -678,9 +678,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Tables --> */}
               <li>
                 <NavLink
-                  to="/tables"
+                  to="/cards"
                   className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
-                    pathname.includes('tables') && 'bg-gray dark:bg-[#9c0a36]'
+                    pathname.includes('cards') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
                   <svg
@@ -708,7 +708,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Tables
+                  Cards
                 </NavLink>
               </li>
               {/* <!-- Menu Item Tables --> */}
