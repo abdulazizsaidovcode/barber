@@ -37,6 +37,7 @@ const options: ApexOptions = {
       columnWidth: '25%',
       borderRadiusApplication: 'end',
       borderRadiusWhenStacked: 'last',
+
     },
   },
   dataLabels: {

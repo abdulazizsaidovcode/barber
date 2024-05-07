@@ -118,7 +118,7 @@ interface ChartOneState {
   }[];
 }
 
-const ChartOne: React.FC = () => {
+const ChartFour: React.FC = () => {
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
@@ -151,7 +151,7 @@ const ChartOne: React.FC = () => {
           <ReactApexChart
             options={options}
             series={state.series}
-            type="area"
+            type="line"
             height={350}
           />
         </div>
@@ -160,4 +160,4 @@ const ChartOne: React.FC = () => {
   );
 };
 
-export default ChartOne;
+export default ChartFour;
