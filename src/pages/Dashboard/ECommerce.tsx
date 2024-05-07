@@ -9,7 +9,6 @@ import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { DatePicker, Select } from 'antd';
 import { Option } from 'antd/es/mentions';
-import CardDataCharts from '../../components/CardDataCharts';
 
 const ECommerce: React.FC = () => {
   const [type, setType] = useState<string>('2024');
@@ -26,7 +25,7 @@ const ECommerce: React.FC = () => {
             <Option value="year">2029</Option>
             <Option value="year">2030</Option>
           </Select>
-          <DatePicker className='block mb-3 md:mb-0 ' />
+          <DatePicker className='block mb-3 md:mb-0  dark:border-none  ' />
           <DatePicker className='block mb-3 md:mb-0' />
         </div>
       </div>
@@ -52,8 +51,6 @@ const ECommerce: React.FC = () => {
         </CardDataStats>
         <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  >
         </CardDataStats>
-        <CardDataCharts title='Трафик Мастера/клиенты' firstTotal={10100} secondTotal={50300}>
-        </CardDataCharts>
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">

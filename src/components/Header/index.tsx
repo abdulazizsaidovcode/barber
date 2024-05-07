@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import Logout from './logout';
-import { BsFillQuestionSquareFill } from "react-icons/bs";
-import { IoIosNotifications, IoIosSettings  } from "react-icons/io";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -75,6 +73,8 @@ const Header = (props: {
             </div>
           </div>
           <ul className="flex items-center gap-2 2xsm:gap-4">
+            {/* language */}
+            <LanguageSelector/>
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
@@ -89,9 +89,9 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
-          {/* <DropdownUser /> */}
           {/* <!-- User Area --> */}
-          <Logout />
+          {/* <Logout /> */}
+          <DropdownUser />
         </div>
       </div>
     </header>

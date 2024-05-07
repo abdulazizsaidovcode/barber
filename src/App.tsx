@@ -17,7 +17,7 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Client from './pages/Client/Client';
 import Master from './pages/Masters/Mastera';
-import Gallery from './pages/galery';
+import Gallery from './pages/gallery/galery.js';
 import Massage from './pages/message';
 import Finance from './pages/finance/finance';
 import Calculation from './pages/Calculation/calculation';
@@ -211,7 +211,6 @@ function App() {
             <>
               <PageTitle title="Finance | Barber" />
               <Card />
-
             </>
           }
         />

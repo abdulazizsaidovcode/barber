@@ -1,7 +1,5 @@
-
-import { Link } from 'react-router-dom';
 import { CgMenuLeft } from 'react-icons/cg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Chatusers from '../components/chat components/user';
 import Notselected from '../components/chat components/notselected';
 import ChatEmptyState from '../components/chat components/emptychat';
@@ -85,6 +83,13 @@ const Chat: React.FC = () => {
         };
     }, []);
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Fayl tanlash oynasini ochuvchi hodisa (event handler)
+    const handleClick = () => {
+        fileInputRef.current?.click();
+    };
+
     return (
         <div>
 
@@ -154,10 +159,14 @@ const Chat: React.FC = () => {
                                 <div className=" bg-gray-100 px-4 py-2 border fixed bottom-3 w-full sm:ml-[12px] sm:left-auto left-[50%] sm:translate-x-0 -translate-x-[50%]" style={{ width: 'inherit' }} id="fixed-footer">
                                     <div className="flex items-center gap-5 w-full">
                                         <input className="w-1/2 border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0" type="text" placeholder="Type your message..." />
-
                                         <div className='flex justify-end items-center text-2xl w-1/2 gap-5'>
-                                            <IoMdAttach />
-                                            <FaCheck />
+                                            <div>
+                                                {/* useRef bilan input elementiga murojaat qilamiz */}
+                                                <input type="file" className="hidden" ref={fileInputRef} />
+                                                {/* onClick hodisasini boshqarish */}
+                                                <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
+                                            </div>
+                                            < FaCheck />
                                             <Buttons><IoSend /></Buttons>
                                         </div>
                                     </div>
