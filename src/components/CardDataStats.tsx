@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface CardDataStatsProps {
-  title: string;
-  total: string;
+  title: any;
+  total: any;
   
   // rate: string;
   // levelUp?: boolean;
