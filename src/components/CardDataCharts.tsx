@@ -1,0 +1,88 @@
+import React, { useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+
+interface ChartThreeState {
+  series: number[];
+}
+
+const options: ApexOptions = {
+  chart: {
+    fontFamily: 'Satoshi, sans-serif',
+    type: 'donut',
+  },
+  colors: ['#3C50E0', '#6577F3'],
+  labels: ['Desktop', 'Table'],
+  legend: {
+    show: false,
+    position: 'bottom',
+  },
+  plotOptions: {
+    pie: {
+      donut: {
+        size: '65%',
+        background: 'transparent',
+      },
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  responsive: [
+    {
+      breakpoint: 2600,
+      options: {
+        chart: {
+          width: 180,
+        },
+      },
+    },
+    {
+      breakpoint: 640,
+      options: {
+        chart: {
+          width: 200,
+        },
+      },
+    },
+  ],
+};
+
+interface CardDataChartsProps {
+  title: string;
+  firstTotal: number;
+  secondTotal: number;
+}
+
+const CardDataCharts: React.FC<CardDataChartsProps> = ({ title, firstTotal, secondTotal }) => {
+  const [state, setState] = useState<ChartThreeState>({
+    series: [secondTotal, firstTotal],
+  });
+
+  const handleReset = () => {
+    setState((prevState) => ({
+      ...prevState,
+      series: [secondTotal, firstTotal]
+    }));
+  };
+  handleReset;
+  return (
+    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark w-[400px]">
+      <div className="mt-4 flex items-center justify-between">
+        <div>
+          <span className="text-sm font-medium">{title}</span>
+          <h4 className="text-title-md font-bold text-black dark:text-white">{firstTotal} / {secondTotal}</h4>
+        </div>
+        <div className="flex justify-center">
+          <ReactApexChart
+            options={options}
+            series={state.series}
+            type="donut"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CardDataCharts;
