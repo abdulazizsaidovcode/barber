@@ -67,7 +67,7 @@ const CardDataCharts: React.FC<CardDataChartsProps> = ({ title, firstTotal, seco
   };
   handleReset;
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark w-[400px]">
+    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark w-[430px]">
       <div className="mt-4 flex items-center justify-between">
         <div>
           <span className="text-sm font-medium">{title}</span>

@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import Logout from './logout';
+import { BsFillQuestionSquareFill } from 'react-icons/bs';
+import { IoIosNotifications, IoIosSettings } from 'react-icons/io';
+import LanguageSelector from './language';
+import DropdownUser from './DropdownUser';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
