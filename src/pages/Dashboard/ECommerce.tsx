@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CardDataStats from '../../components/CardDataStats';
 // import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
 import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
-import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { DatePicker, Select } from 'antd';
-import { Option } from 'antd/es/mentions';
 import CardDataCharts from '../../components/CardDataCharts';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartFour from '../../components/Charts/ChartFour';
 import ChartFive from '../../components/Charts/ChartFive';
+import ChartSex from '../../components/Charts/ChartSex';
+import ChartSeven from '../../components/Charts/ChartSeven';
+import ChartEight from '../../components/Charts/ChartEight';
 
 const ECommerce: React.FC = () => {
   // const [type, setType] = useState<string>('2024');
@@ -37,33 +36,20 @@ const ECommerce: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Мастера" total="1 684"  >
-        </CardDataStats>
-        <CardDataStats title="Total Profit" total="3 545"  >
-        </CardDataStats>
-        <CardDataStats title="Заказы" total="10 845"  >
-        </CardDataStats>
-        <CardDataStats title="Отмененные клиент/мастер" total="152 / 253"  >
-        </CardDataStats>
-        <CardDataStats title="Оборот общий" total="100 545 000"  >
-        </CardDataStats>
-        <CardDataStats title="Доход" total="20 785 500"  >
-        </CardDataStats>
-        <CardDataStats title="Отток клиентов" total="1 684"  >
-        </CardDataStats>
-        <CardDataStats title="Отток мастеров" total="10"  >
-        </CardDataStats>
-        <CardDataStats title="Отток клиентов" total="27"  >
-        </CardDataStats>
-        <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  >
-
-        </CardDataStats>
+        <CardDataStats title="Мастера" total="1 684"  />
+        <CardDataStats title="Total Profit" total="3 545"  />
+        <CardDataStats title="Заказы" total="10 845"  />
+        <CardDataStats title="Отмененные клиент/мастер" total="152 / 253"  />
+        <CardDataStats title="Оборот общий" total="100 545 000"  />
+        <CardDataStats title="Доход" total="20 785 500"  />
+        <CardDataStats title="Отток клиентов" total="1 684"  />
+        <CardDataStats title="Отток мастеров" total="10"  />
+        <CardDataStats title="Отток клиентов" total="27" />
+        <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  />
       </div>
       <div className='flex gap-5 mt-5 flex-wrap'>
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} >
-        </CardDataCharts>
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} >
-        </CardDataCharts>
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} />
       </div>
       <div className='flex mt-7 justify-between flex-wrap gap-2'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>
@@ -136,6 +122,19 @@ const ECommerce: React.FC = () => {
         <ChartOne />
         <ChartFour />
       </div>
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+        <ChartSex/>
+        <ChartSeven/>
+        <div className='w-80  grid gap-6'>
+          <h1 className=' grid items-center font-semibold text-black text-xl dark:text-white'>Value</h1>
+        <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  />
+        <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  />
+        </div>
+      </div>
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+        <ChartEight/>
+      </div>
+      
 
     </DefaultLayout>
   );
