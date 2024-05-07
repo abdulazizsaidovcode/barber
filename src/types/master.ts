@@ -7,8 +7,8 @@ export interface IMasterItems {
 }
 
 export interface IMasterTableProps {
-  thead: IThead[]
-  children: ReactNode
+  thead: IThead[];
+  children: ReactNode;
 }
 
 export interface IThead {
@@ -17,6 +17,7 @@ export interface IThead {
 }
 
 export interface ITbody {
+  id: number;
   img: string;
   name: string;
   category: string;

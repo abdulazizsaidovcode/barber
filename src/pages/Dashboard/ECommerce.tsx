@@ -8,12 +8,8 @@ import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { DatePicker, Select } from 'antd';
-import ReactApexChart from 'react-apexcharts';
-// import { Option } from 'antd/es/mentions';
-
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
+import { Option } from 'antd/es/mentions';
+import CardDataCharts from '../../components/CardDataCharts';
 
 const ECommerce: React.FC = () => {
   // const [type, setType] = useState<string>('2024');
@@ -26,7 +22,6 @@ const ECommerce: React.FC = () => {
             className='mb-3'
             defaultValue="2024"
             style={{ width: 120 }}
-            onChange={handleChange}
             options={[
               { value: '2024', label: '2024' },
               { value: '2025', label: '2025' },
@@ -38,7 +33,7 @@ const ECommerce: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Мастера" total="1 684"  >
         </CardDataStats>
         <CardDataStats title="Total Profit" total="3 545"  >
@@ -60,18 +55,18 @@ const ECommerce: React.FC = () => {
         <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  >
           
         </CardDataStats>
-        <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  >
-       
-        </CardDataStats>
-          
-
+      </div>
+      <div className='flex gap-5 mt-5'>
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={80870} >
+        </CardDataCharts>
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={80870} >
+        </CardDataCharts>
       </div>
       <div className='flex mt-7 justify-between flex-wrap gap-2'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>
         <Select
           defaultValue="2024"
           style={{ width: 120 }}
-          onChange={handleChange}
           options={[
             { value: '2024', label: '2024' },
             { value: '2025', label: '2025' },
@@ -83,7 +78,6 @@ const ECommerce: React.FC = () => {
           <Select
             defaultValue="2024"
             style={{ width: 120 }}
-            onChange={handleChange}
             options={[
               { value: '2024', label: '2024' },
               { value: '2025', label: '2025' },
@@ -93,7 +87,6 @@ const ECommerce: React.FC = () => {
           <Select
             defaultValue="May"
             style={{ width: 120 }}
-            onChange={handleChange}
             options={[
               { value: 'January', label: 'January' },
               { value: 'February', label: 'February' },

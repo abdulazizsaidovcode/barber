@@ -29,10 +29,7 @@ const Filters: React.FC = () => {
 
   const styles = {
     mainContainer: {
-      padding: '20px',
-      backgroundColor: '#fff',
-      borderRadius: '8px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      padding: '0 30px',
       marginBottom: '20px'
     },
     filterGroup: {
@@ -44,7 +41,8 @@ const Filters: React.FC = () => {
     },
     filterInput: {
       width: '100%',
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      borderRadius: '8px'
     },
     toggleButton: {
       width: '13%',

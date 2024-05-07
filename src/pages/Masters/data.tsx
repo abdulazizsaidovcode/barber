@@ -64,6 +64,7 @@ export const thead: IThead[] = [
 
 export const tbody: ITbody[] = [
   {
+    id: 1,
     img: img,
     name: 'Имя, Фамилия',
     category: 'Красота и здоровье волос',
@@ -80,6 +81,7 @@ export const tbody: ITbody[] = [
     selfEmployed: 'Да'
   },
   {
+    id: 2,
     img: img,
     name: 'Имя, Фамилия',
     category: 'Красота и здоровье волос',
@@ -96,6 +98,7 @@ export const tbody: ITbody[] = [
     selfEmployed: 'Да'
   },
   {
+    id: 3,
     img: img,
     name: 'Имя, Фамилия',
     category: 'Ногтевой сервис',
