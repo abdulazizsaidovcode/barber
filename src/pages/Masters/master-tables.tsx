@@ -4,8 +4,7 @@ import { CiMenuKebab } from 'react-icons/ci';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import Filters from './filters/filters.tsx';
-// import React from 'react';
-// import { useState } from 'react';
+import React from 'react';
 
 const items: MenuProps['items'] = [
   {
@@ -38,13 +37,7 @@ const items: MenuProps['items'] = [
   }
 ];
 
-const MasterTables = () => {
-  // const [statusValue, setStatusValue] = useState('')
-  // const clickHandler = (e: React.MouseEvent<HTMLSpanElement>): void => {
-  //   let val: string | null | undefined = (e.target as HTMLSpanElement).textContent
-  //   setStatusValue(val)
-  // };
-
+const MasterTables: React.FC = () => {
   return (
     <>
       <Filters />
