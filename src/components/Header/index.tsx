@@ -66,7 +66,6 @@ const Header = (props: {
             <div className="relative"></div>
           </form>
         </div>
-      {t('change_language')}
         <div className="flex items-center gap-3 2xsm:gap-7">
           <div className='flex gap-3'>
             <div className='dark:bg-white bg-[#f1f5f9] dark:text-black rounded-full flex justify-center items-center w-[40px] h-[40px]'>
