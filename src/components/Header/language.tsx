@@ -22,9 +22,9 @@ const LanguageSelector = () => {
       <Menu.Item key="English" onClick={() => changeLanguage('en')}>
         <span className="flag-icon flag-icon-us" /> English
       </Menu.Item>
-      {/* <Menu.Item key="Russian" onClick={() => changeLanguage}>
+      <Menu.Item key="Russian" onClick={() => changeLanguage('ru')}>
         <span className="flag-icon flag-icon-ru" /> Русский
-      </Menu.Item> */}
+      </Menu.Item>
     </Menu>
   );
 
