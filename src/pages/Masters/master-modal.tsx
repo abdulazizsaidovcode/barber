@@ -10,7 +10,7 @@ const MasterModal: React.FC<IMasterModalProps> = ({ openModal, isModalOpen }) =>
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title="Download pdf"
         open={isModalOpen}
         onCancel={openModal}
         footer={null}
