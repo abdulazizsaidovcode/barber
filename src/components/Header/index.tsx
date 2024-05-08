@@ -1,18 +1,15 @@
 import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { useTranslation } from 'react-i18next';
 import { BsFillQuestionSquareFill } from 'react-icons/bs';
 import { IoIosNotifications, IoIosSettings } from 'react-icons/io';
 import LanguageSelector from './language';
 import DropdownUser from './DropdownUser';
-import "../../i18n"  // Bu yerda import yo'lining xato yozilganligiga e'tibor bering, to'g'ri yo'li "./../../i18n" bo'lishi kerak.
 
 const Header = (props: {
   sidebarOpen: boolean | undefined;
   setSidebarOpen: (isOpen: boolean) => void;
 }) => {
-  const { t, i18n } = useTranslation();
 
   return (
     <header className="sticky top-0 z-999 flex w-full bg-graymedium drop-shadow-1 dark:bg-[#30303d] dark:drop-shadow-none">
