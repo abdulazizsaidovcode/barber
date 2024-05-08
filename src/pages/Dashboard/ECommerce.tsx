@@ -49,8 +49,8 @@ const ECommerce: React.FC = () => {
         <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  />
       </div>
       <div className='flex gap-5 mt-5 flex-wrap'>
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} />
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={870} />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={870} />
       </div>
       <div className='flex mt-7 justify-between flex-wrap gap-2'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>
