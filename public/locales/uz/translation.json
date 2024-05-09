@@ -1,3 +1,14 @@
-{
-    "dashboard_main_text": "Umumiy ko'rsatkichlar"
+{   
+    "dashboard_main_text": "Umumiy ko'rsatkichlar",
+    "sidebar_menu_text": "MENYU",
+    "siderbar_dashboard": "Boshqaruv paneli",
+    "siderbar_master": "Usta",
+    "siderbar_calendar": "Kalendar",
+    "siderbar_calculation": "Hisoblash",
+    "siderbar_finance": "Moliya",
+    "siderbar_gallery": "Galereya",
+    "siderbar_profile": "Profil",
+    "siderbar_cards": "Kartalar",
+    "siderbar_chat": "Chat",
+    "siderbar_settings": "Sozlamalar"
 }

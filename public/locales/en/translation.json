@@ -1,3 +1,14 @@
 {
-    "dashboard_main_text": "General indicators"
+    "dashboard_main_text": "General indicators",
+    "sidebar_menu_text": "MENU",
+    "siderbar_dashboard": "Dashboard",
+    "siderbar_master": "Master",
+    "siderbar_calendar": "Calendar",
+    "siderbar_calculation": "Calculation",
+    "siderbar_finance": "Finance",
+    "siderbar_gallery": "Gallery",
+    "siderbar_profile": "Profile",
+    "siderbar_cards": "Cards",
+    "siderbar_chat": "Chat",
+    "siderbar_settings": "Settings"
 }

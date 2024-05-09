@@ -14,7 +14,6 @@ import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
-import i18n from '../../i18n';
 
 const ECommerce: React.FC = () => {
   const { t, i18n } = useTranslation();
