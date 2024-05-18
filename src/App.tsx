@@ -45,12 +45,11 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="  Dashboard | Barber" />
+              <PageTitle title="  Dashboard | Barber"/>
               <ECommerce />
             </>
           }
         />
-
         <Route
           path="/calendar"
           element={

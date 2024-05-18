@@ -1,6 +1,5 @@
 import React from 'react';
 import CardDataStats from '../../components/CardDataStats';
-// import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
 import ChartTwo from '../../components/Charts/ChartTwo';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -15,7 +14,6 @@ import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
 
 const ECommerce: React.FC = () => {
-  // const [type, setType] = useState<string>('2024');
   return (
     <DefaultLayout>
       <div className=' block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
