@@ -12,15 +12,18 @@ import ChartSex from '../../components/Charts/ChartSex';
 import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
+import { useTranslation } from 'react-i18next';
 
 const ECommerce: React.FC = () => {
+  const { t, i18n } = useTranslation();
+
   return (
     <DefaultLayout>
-      <div className=' block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>General indicators</h1>
-        <div className='gap-10 md:flex md:gap-10 lg:flex lg:gap-10 xl:flex xl:gap-10'>
+      <div className='block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
+        <h1 className='font-semibold text-black text-xl dark:text-white'>{t("dashboard_main_text")}</h1>
+        <div className='gap-5 md:flex md:gap-10 lg:flex lg:gap-10 xl:flex xl:gap-5'>
           <Select
-            className='mb-3'
+            className='w-40'
             defaultValue="2024"
             style={{ width: 120 }}
             options={[
@@ -29,8 +32,8 @@ const ECommerce: React.FC = () => {
               { value: '2026', label: '2026' },
             ]}
           />
-          <DatePicker className='block mb-3 md:mb-0  dark:border-none  ' />
-          <DatePicker className='block mb-3 md:mb-0' />
+          <DatePicker className='h-8 w-50' placeholder='Дата'/>
+          <DatePicker className='h-8 w-50' placeholder='Период'/>
         </div>
       </div>
 
@@ -47,8 +50,8 @@ const ECommerce: React.FC = () => {
         <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684"  />
       </div>
       <div className='flex gap-5 mt-5 flex-wrap'>
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} />
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={8870} />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={870} />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={870} />
       </div>
       <div className='flex mt-7 justify-between flex-wrap gap-2'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>

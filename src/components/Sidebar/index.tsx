@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useTransition } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import Logo from '../../images/logo/logo.jpeg';
@@ -9,6 +9,8 @@ import { BsCurrencyDollar } from 'react-icons/bs';
 import { TfiGallery } from 'react-icons/tfi';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { TbCards } from "react-icons/tb";
+import { useTranslation } from 'react-i18next';
+import "../../i18n"
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -18,6 +20,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+  const { t, i18n } = useTranslation();
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -106,7 +109,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {/* <!-- Menu Group --> */}
           <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-black dark:text-white">
-              MENU
+              {t('sidebar_menu_text')}
             </h3>
 
             <ul className="mb-6 flex flex-col gap-1.5">
@@ -385,11 +388,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <AiOutlineDashboard />
-                  Dashboard
+                  {t('siderbar_dashboard')}
                 </NavLink>
               </li>
               <li>
-                <NavLink
+                <NavLink  
                   to="/master"
                   className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
@@ -408,7 +411,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
                     </svg>
                   </i>
-                  Master
+                  {t('siderbar_master')}
                 </NavLink>
               </li>
               <li>
@@ -419,7 +422,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <CiCalendar />
-                  Calendar
+                  {t('siderbar_calendar')}
                 </NavLink>
               </li>
               <li>
@@ -431,7 +434,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <SlCalculator />
-                  Calculation
+                  {t('siderbar_calculation')}
                 </NavLink>
               </li>
               <li>
@@ -442,7 +445,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <BsCurrencyDollar />
-                  Finance
+                  {t('siderbar_finance')}
                 </NavLink>
               </li>
 
@@ -457,7 +460,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <TfiGallery />
-                  Gallery
+                  {t('siderbar_gallery')}
                 </NavLink>
               </li>
 
@@ -488,7 +491,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       fill=""
                     />
                   </svg>
-                  Profile
+                  {t('siderbar_profile')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item Profile --> */}
@@ -609,7 +612,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                  <TbCards/>
-                  Cards
+                 {t('siderbar_cards')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item Tables --> */}
@@ -623,7 +626,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <IoChatbubbleEllipsesOutline />
-                  Chat
+                  {t('siderbar_chat')}
                 </NavLink>
               </li>
               <li>
@@ -662,7 +665,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Settings
+                  {t('siderbar_settings')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item Settings --> */}
