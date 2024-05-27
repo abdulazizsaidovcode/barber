@@ -23,6 +23,7 @@ import Finance from './pages/finance/finance';
 import Calculation from './pages/Calculation/calculation';
 import Card from './pages/cards/card';
 import Natification from './pages/notification/index.js';
+import Mortal from './pages/Mutual_settlements/index.js';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -213,7 +214,7 @@ function App() {
             </>
           }
         />
-        <Route
+       < Route
           path="/chat"
           element={
             <>
@@ -222,9 +223,18 @@ function App() {
             </>
           }
         />
+         < Route
+          path="/Mutual_settlements"
+          element={
+            <>
+              <PageTitle title="Finance | Barber" />
+              <Mortal />
+            </>
+          }
+        />
       </Routes>
     </>
   );
 }
-
+//Mutual_settlements
 export default App;

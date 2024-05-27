@@ -8,9 +8,9 @@ import { SlCalculator } from 'react-icons/sl';
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { TfiGallery } from 'react-icons/tfi';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import { TbCards } from "react-icons/tb";
+import { TbCards } from 'react-icons/tb';
 import { useTranslation } from 'react-i18next';
-import "../../i18n"
+import '../../i18n';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -392,7 +392,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
               <li>
-                <NavLink  
+                <NavLink
                   to="/master"
                   className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
@@ -446,6 +446,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <BsCurrencyDollar />
                   {t('siderbar_finance')}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/Mutual_settlements"
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('Mutual_settlements') &&
+                    'bg-gray dark:bg-[#9c0a36]'
+                  }`}
+                >
+                  <BsCurrencyDollar />
+                  {t('siderbar_Mutual_settlements')}
                 </NavLink>
               </li>
 
@@ -611,8 +623,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('cards') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
-                 <TbCards/>
-                 {t('siderbar_cards')}
+                  <TbCards />
+                  {t('siderbar_cards')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item Tables --> */}
