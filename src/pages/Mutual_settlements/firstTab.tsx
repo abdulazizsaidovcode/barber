@@ -16,10 +16,8 @@ const FilterComponent: React.FC = () => {
   // Inline styles for the component
   const styles = {
     mainContainer: {
-      padding: '20px',
-      backgroundColor: '#fff',
+      padding: '0px',
       borderRadius: '8px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
       marginBottom: '20px',
     },
     filterGroup: {
@@ -42,20 +40,9 @@ const FilterComponent: React.FC = () => {
     },
   };
 
-  const tableHeaders = [
-    { id: 1, name: 'Картинка' },
-    { id: 2, name: 'Мастер' },
-    { id: 3, name: 'Тип карты' },
-    { id: 4, name: 'Описание' },
-    { id: 5, name: 'Ставка”' },
-    { id: 6, name: 'Дата открытия"' },
-    { id: 7, name: 'Дата окончания' },
-    { id: 8, name: 'Дней до окончания' },
-    { id: 9, name: 'Статус"' },
-  ];
   const tableData = [
     {
-      
+      country: "O'zbekistan",
       nonCashTurnover: '50 000 000',
       allTurnover: '250 000 000',
       totalIncome: '25 000 000',
@@ -65,12 +52,26 @@ const FilterComponent: React.FC = () => {
       masterTotal: '25 000 000',
       anotherSimple: '0',
       familyIncome: '0',
-      totalClients: ':',
+      totalClients: '0',
     },
   ];
 
+  const tableHeaders = [
+    { id: 1, name: 'Country' },
+    { id: 2, name: 'Non-cash turnover' },
+    { id: 3, name: 'All turnover' },
+    { id: 4, name: 'Total income' },
+    { id: 5, name: 'Income “Simple”' },
+    { id: 6, name: 'Income "Premium"' },
+    { id: 7, name: 'Income "Vip"' },
+    { id: 8, name: 'Master total' },
+    { id: 9, name: 'Income "Simple"' },
+    { id: 10, name: '“Family” income' },
+    { id: 11, name: 'Total clients' },
+  ];
+
   return (
-    <div style={styles.mainContainer}>
+    <div style={styles.mainContainer} className="dark:bg-boxdark">
       {/* Top filters row */}
       <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
@@ -104,8 +105,7 @@ const FilterComponent: React.FC = () => {
           className="flex gap-4"
         >
           <Button
-            className="flex items-center justify-center"
-            type="primary"
+            className="flex items-center justify-center dark:bg-black"
             onClick={toggleExtraFilters}
             style={styles.toggleButton}
           >
@@ -142,12 +142,12 @@ const FilterComponent: React.FC = () => {
           </Col>
         </Row>
       )}
-      {/* Table piece */}
+      {/* Table */}
       <div>
-      <MasterTable thead={tableHeaders}>
+        <MasterTable thead={tableHeaders}>
           {tableData.map((data, index) => (
             <tr key={index} className="dark:text-white">
-              <td className="p-5">{}</td>
+              <td className="p-5">{data.country}</td>
               <td className="p-5">{data.nonCashTurnover}</td>
               <td className="p-5">{data.allTurnover}</td>
               <td className="p-5">{data.totalIncome}</td>

@@ -456,7 +456,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <BsCurrencyDollar />
-                  {t('siderbar_Mutual_settlements')}
+                  {t('Взаиморасчёты')}
                 </NavLink>
               </li>
 

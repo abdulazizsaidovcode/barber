@@ -9,7 +9,7 @@ const Finance = () => {
       <DefaultLayout>
         <Breadcrumb pageName="Finance" />
         <MainTabs />
-           </DefaultLayout>
+      </DefaultLayout>
     </>
   );
 };
