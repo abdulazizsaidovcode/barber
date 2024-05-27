@@ -47,7 +47,9 @@ const MasterCard: React.FC = () => {
                         <div className='flex justify-center mb-3'>
                             <img
                                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-VkIPYYQdu9f9V-v466dFYjCnKA49Uuc3YFni6s1Azg&s'
-                                className='rounded-full'/>
+                                className='rounded-full'
+                            alt={`master image`}
+                            />
                         </div>
                         <h1 className='text-center mb-2'>Специалист по наращиванию ресниц</h1>
                         <p className='text-center mb-3'>+99893 171 63 80</p>
