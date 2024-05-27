@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BiSolidShow } from 'react-icons/bi';
 import { BiSolidHide } from 'react-icons/bi';
 import logo from '../../images/logo/logo.jpeg';
+import axios from 'axios';
+import { login_url } from '../../helpers/api.tsx';
 
 interface StylesType {
   container: string;
@@ -31,6 +33,36 @@ export const Login = () => {
       username, password
     };
     console.log(data.username, data.password);
+    if (!data.username && !data.password) {
+      // setLoading(true); // Set loading state to true
+      axios.post(login_url)
+      //     .then(res => {
+      //       setLoading(false)
+      //       if (res.data.success === false) toast.error('Telefon raqam yoki parol xato kirgizildi!!!')
+      //       else {
+      //         sessionStorage.setItem('jwtTokin', "Bearer " + res.data.body);
+      //         if (res.data.message === "ROLE_SUPER_ADMIN") {
+      //           setRole('/super-admin/boshqaruv-paneli');
+      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
+      //         } else if (res.data.message === "ROLE_ADMIN") {
+      //           setRole('/admin/hisobot');
+      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
+      //         } else if (res.data.message === "ROLE_LEADER") {
+      //           setRole('/brigadir/boshqaruv-qismi');
+      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
+      //         }
+      //       }
+      //     })
+      //     .catch(() => {
+      //       setLoading(false)
+      //       toast.error('Telefon raqam yoki parolda xatolik mavjud❌');
+      //       setPhoneNumber(true)
+      //       setPassword(true)
+      //     })
+      // } else {
+      //   setLoading(false)
+      // }
+    }
   };
 
   return (
