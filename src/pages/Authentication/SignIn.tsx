@@ -3,6 +3,7 @@ import { BiSolidShow } from 'react-icons/bi';
 import { BiSolidHide } from 'react-icons/bi';
 import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
+import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 
 interface StylesType {
   container: string;
@@ -13,8 +14,16 @@ interface StylesType {
   hideShowIcon: string;
 }
 
-export const Login = () => {
-  const { show, username, password, setPassword, setUsername, setShow } = authStore();
+export const Login: React.FC = () => {
+  const {
+    show,
+    username,
+    password,
+    setPassword,
+    setUsername,
+    setShow
+  } = authStore();
+
   const styles: StylesType = {
     container: 'min-h-screen flex items-center justify-center bg-gray-100',
     card: 'max-w-md w-full space-y-8 z-10',
@@ -24,10 +33,6 @@ export const Login = () => {
     hideShowIcon: 'absolute top-4 right-4 text-[1.5rem] hover:cursor-pointer opacity-60 hover:opacity-90 duration-150 z-40'
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -35,7 +40,10 @@ export const Login = () => {
           <img src={logo} alt={`bookers logo`} className={`w-24 h-24 rounded-full`} />
         </div>
         <h2 className={styles.title + ' tracking-wide'}>Bookers Beauty</h2>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form
+          className="mt-8 space-y-6"
+          onSubmit={(event) => handleSubmit(event, password, username)}
+        >
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mb-6">
               <label htmlFor="username" className="sr-only">Username</label>
