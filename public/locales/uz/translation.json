@@ -1,4 +1,4 @@
-{   
+{
     "dashboard_main_text": "Umumiy ko'rsatkichlar",
     "sidebar_menu_text": "MENYU",
     "siderbar_dashboard": "Boshqaruv paneli",
@@ -10,5 +10,7 @@
     "siderbar_profile": "Profil",
     "siderbar_cards": "Kartalar",
     "siderbar_chat": "Chat",
-    "siderbar_settings": "Sozlamalar"
+    "siderbar_settings": "Sozlamalar",
+    "siderbar_Mutual_settlements": "Hisoblar"
+
 }
