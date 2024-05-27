@@ -81,9 +81,19 @@ const FilterComponent: React.FC = () => {
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-          <Select defaultValue="Country" style={styles.filterInput}>
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qarshi">Qarshi</Option>
+          <Select defaultValue="Select Month" className="w-[200px]">
+            <Option value="Yanvar">Yanvar</Option>
+            <Option value="Fevral">Fevral</Option>
+            <Option value="Mart">Mart</Option>
+            <Option value="April">April</Option>
+            <Option value="May">May</Option>
+            <Option value="Iyun">Iyun</Option>
+            <Option value="Iyul">Iyul</Option>
+            <Option value="Avgust">Avgust</Option>
+            <Option value="Sentabr">Sentabr</Option>
+            <Option value="Oktaber">Oktaber</Option>
+            <Option value="Noyaber">Noyaber</Option>
+            <Option value="Dekaber">Dekaber</Option>
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>

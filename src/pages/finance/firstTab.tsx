@@ -46,22 +46,31 @@ const FirstTab: React.FC = () => {
 
   return (
     <div>
-      <div className='flex justify-center'>
-        <div className='flex sm:justify-between w-[700px] flex-wrap justify-center'>
+      <div className="flex justify-center">
+        <div className="flex sm:justify-between w-[700px] flex-wrap justify-center">
           {/* Left Section */}
           <div>
-            <div className='mb-[10px] flex justify-center'>
+            <div className="mb-[10px] flex justify-center">
               <Select
-                defaultValue="Select Country"
+                defaultValue="Select Month"
                 className="w-[200px]"
                 onChange={handleCountryChange}
               >
-                <Option value="uzbekistan">Uzbekistan</Option>
-                <Option value="kazakhstan">Kazakhstan</Option>
-                <Option value="kyrgyzstan">Kyrgyzstan</Option>
+                <Option value="Yanvar">Yanvar</Option>
+                <Option value="Fevral">Fevral</Option>
+                <Option value="Mart">Mart</Option>
+                <Option value="April">April</Option>
+                <Option value="May">May</Option>
+                <Option value="Iyun">Iyun</Option>
+                <Option value="Iyul">Iyul</Option>
+                <Option value="Avgust">Avgust</Option>
+                <Option value="Sentabr">Sentabr</Option>
+                <Option value="Oktaber">Oktaber</Option>
+                <Option value="Noyaber">Noyaber</Option>
+                <Option value="Dekaber">Dekaber</Option>
               </Select>
             </div>
-            <div className=''>
+            <div className="">
               {[
                 { label: 'Turnover', value: '49 000 000' },
                 { label: 'Income', value: '60 500 000' },
@@ -76,10 +85,11 @@ const FirstTab: React.FC = () => {
                     marginBottom: '10px',
                   }}
                 >
-                  <p className='w-[100px] ml-[10px] dark:text-white'>{item.label}:</p>
-                  <div className='border-2 border-black px-[50px] dark:border-white py-[10px]'
-                  >
-                    <p className='dark:text-white'>{item.value}</p>
+                  <p className="w-[100px] ml-[10px] dark:text-white">
+                    {item.label}:
+                  </p>
+                  <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
+                    <p className="dark:text-white">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -87,9 +97,9 @@ const FirstTab: React.FC = () => {
           </div>
           {/* Right Section */}
           <div>
-            <div className='mb-[10px] flex justify-center'>
+            <div className="mb-[10px] flex justify-center">
               <Select
-                className='w-[200px]'
+                className="w-[200px]"
                 defaultValue="Select Year"
                 onChange={handleYearChange}
               >
@@ -105,12 +115,12 @@ const FirstTab: React.FC = () => {
                 { label: 'Consumption', value: '30 500 000' },
                 { label: 'Profit', value: '30 000 000' },
               ].map((item) => (
-                <div
-                  key={item.label}
-                  className='flex items-center mb-[10px]'>
-                  <p className='mr-[10px] w-[100px] dark:text-white'>{item.label}:</p>
-                  <div className='border-2 border-black px-[50px] dark:border-white py-[10px]'>
-                    <p className='dark:text-white'>{item.value}</p>
+                <div key={item.label} className="flex items-center mb-[10px]">
+                  <p className="mr-[10px] w-[100px] dark:text-white">
+                    {item.label}:
+                  </p>
+                  <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
+                    <p className="dark:text-white">{item.value}</p>
                   </div>
                 </div>
               ))}
