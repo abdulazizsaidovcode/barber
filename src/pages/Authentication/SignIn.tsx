@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BiSolidShow } from 'react-icons/bi';
 import { BiSolidHide } from 'react-icons/bi';
 import logo from '../../images/logo/logo.jpeg';
-import axios from 'axios';
-import { login_url } from '../../helpers/api.tsx';
+import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 
 interface StylesType {
   container: string;
@@ -15,9 +14,7 @@ interface StylesType {
 }
 
 export const Login = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [show, setShow] = useState<boolean>(true);
+  const { show, username, password, setPassword, setUsername, setShow } = authStore();
   const styles: StylesType = {
     container: 'min-h-screen flex items-center justify-center bg-gray-100',
     card: 'max-w-md w-full space-y-8 z-10',
@@ -29,40 +26,6 @@ export const Login = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    let data: { username: string, password: string } = {
-      username, password
-    };
-    console.log(data.username, data.password);
-    if (!data.username && !data.password) {
-      // setLoading(true); // Set loading state to true
-      axios.post(login_url)
-      //     .then(res => {
-      //       setLoading(false)
-      //       if (res.data.success === false) toast.error('Telefon raqam yoki parol xato kirgizildi!!!')
-      //       else {
-      //         sessionStorage.setItem('jwtTokin', "Bearer " + res.data.body);
-      //         if (res.data.message === "ROLE_SUPER_ADMIN") {
-      //           setRole('/super-admin/boshqaruv-paneli');
-      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
-      //         } else if (res.data.message === "ROLE_ADMIN") {
-      //           setRole('/admin/hisobot');
-      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
-      //         } else if (res.data.message === "ROLE_LEADER") {
-      //           setRole('/brigadir/boshqaruv-qismi');
-      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
-      //         }
-      //       }
-      //     })
-      //     .catch(() => {
-      //       setLoading(false)
-      //       toast.error('Telefon raqam yoki parolda xatolik mavjud❌');
-      //       setPhoneNumber(true)
-      //       setPassword(true)
-      //     })
-      // } else {
-      //   setLoading(false)
-      // }
-    }
   };
 
   return (
