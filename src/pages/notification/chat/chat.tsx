@@ -49,26 +49,26 @@ const Chat: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-//   useEffect(() => {
-//     const socket = new SockJS('http://localhost/ws');
-//     const client = new Client({
-//       webSocketFactory: () => socket,
-//       debug: (str) => {
-//         console.log(str);
-//       },
-//       onConnect: (frame) => {
-//         console.log('Connected: ' + frame);
-//         client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-//         //   showGreeting(response.body);
-//         });
-//       },
-//       onStompError: (frame) => {
-//         console.error('Error: ' + frame.headers['message']);
-//       }
-//     });
-//     client.activate();
-//     setStompClient(client);
-//   }, []);
+  useEffect(() => {
+    const socket = new SockJS('http://localhost/ws');
+    const client = new Client({
+      webSocketFactory: () => socket,
+      debug: (str) => {
+        console.log(str);
+      },
+      onConnect: (frame) => {
+        console.log('Connected: ' + frame);
+        client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
+        //   showGreeting(response.body);
+        });
+      },
+      onStompError: (frame) => {
+        console.error('Error: ' + frame.headers['message']);
+      }
+    });
+    client.activate();
+    setStompClient(client);
+  }, []);
 
 //   const sendName = () => {
 //     const chatMessage = {
