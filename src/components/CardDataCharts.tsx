@@ -11,7 +11,7 @@ const options: ApexOptions = {
     fontFamily: 'Satoshi, sans-serif',
     type: 'donut',
   },
-  colors: ['#3C50E0', '#6577F3'],
+  colors: ['#000000', '#D9D9D9'],
   labels: ['Desktop', 'Table'],
   legend: {
     show: false,
@@ -67,7 +67,7 @@ const CardDataCharts: React.FC<CardDataChartsProps> = ({ title, firstTotal, seco
   };
   handleReset;
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark w-[430px]">
+    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark flex-wrap dark:bg-boxdark w-full lg:w-[430px]">
       <div className="mt-4 flex items-center justify-between">
         <div>
           <span className="text-sm font-medium">{title}</span>

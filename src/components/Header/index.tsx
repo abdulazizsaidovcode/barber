@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import Logout from './logout';
 import { BsFillQuestionSquareFill } from 'react-icons/bs';
 import { IoIosNotifications, IoIosSettings } from 'react-icons/io';
 import LanguageSelector from './language';
 import DropdownUser from './DropdownUser';
 
 const Header = (props: {
-  sidebarOpen: string | boolean | undefined;
-  setSidebarOpen: (arg0: boolean) => void;
+  sidebarOpen: boolean | undefined;
+  setSidebarOpen: (isOpen: boolean) => void;
 }) => {
+
   return (
     <header className="sticky top-0 z-999 flex w-full bg-graymedium drop-shadow-1 dark:bg-[#30303d] dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -68,7 +68,6 @@ const Header = (props: {
             <div className="relative"></div>
           </form>
         </div>
-
         <div className="flex items-center gap-3 2xsm:gap-7">
           <div className="flex gap-3">
             <Link to={'/chat'}>
