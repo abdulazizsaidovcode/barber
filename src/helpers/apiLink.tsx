@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function ApiLink() {
+const ApiLink: React.FC = () => {
   return (
     <div>
-      salom
-    </div>
-  )
-}
 
-export default ApiLink
+    </div>
+  );
+};
+
+export default ApiLink;
