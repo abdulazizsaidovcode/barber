@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { BsFillQuestionSquareFill } from 'react-icons/bs';
-import { IoIosNotifications, IoIosSettings } from 'react-icons/io';
+import { IoIosNotifications } from 'react-icons/io';
 import LanguageSelector from './language';
 import DropdownUser from './DropdownUser';
 
