@@ -19,6 +19,8 @@ export const Login: React.FC = () => {
     show,
     username,
     password,
+    // loading,
+    setLoading,
     setPassword,
     setUsername,
     setShow
@@ -42,7 +44,7 @@ export const Login: React.FC = () => {
         <h2 className={styles.title + ' tracking-wide'}>Bookers Beauty</h2>
         <form
           className="mt-8 space-y-6"
-          onSubmit={(event) => handleSubmit(event, password, username)}
+          onSubmit={(event) => handleSubmit(event, password, username, setLoading)}
         >
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mb-6">
