@@ -27,12 +27,14 @@ import Mortal from './pages/Mutual_settlements/index.js';
 import ServiceCategories from './pages/settings/ServiceCategories.js';
 import Specializations from './pages/settings/Specializations.js';
 import OnlineBooking from './pages/settings/OnlinBooking.tsx';
+import MasterDatail from './pages/cards/masterDatail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate()
   const isToken = sessionStorage.getItem('token')
+  let count: number = 0
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,7 +43,10 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
-    navigate('/auth/signin')
+    if(count === 0) {
+      count++
+      navigate('/auth/signin')
+    }
   }, []);
 
   return loading ? (
@@ -56,6 +61,15 @@ function App() {
             <>
               <PageTitle title="Dashboard | Barber" />
               <ECommerce />
+            </>
+          }
+        />
+        <Route
+          path='/MasterDatail'
+          element={
+            <>
+              <PageTitle title='MasterDatail' />
+              <MasterDatail />
             </>
           }
         />
