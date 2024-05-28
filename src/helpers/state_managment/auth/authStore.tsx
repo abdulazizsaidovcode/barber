@@ -14,7 +14,7 @@ interface AuthState {
 }
 
 const authStore = create<AuthState>((set) => ({
-  username: '',
+  username: '+998',
   password: '',
   show: false,
   loading: false,
