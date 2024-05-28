@@ -20,22 +20,25 @@ const ECommerce: React.FC = () => {
   return (
     <DefaultLayout>
       <div className='block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>{t("dashboard_main_text")}</h1>
-        <div className='gap-5 md:flex md:gap-10 lg:flex lg:gap-10 xl:flex xl:gap-5'>
-          <Select
-            className='w-40'
-            defaultValue="2024"
-            style={{ width: 120 }}
-            options={[
-              { value: '2024', label: '2024' },
-              { value: '2025', label: '2025' },
-              { value: '2026', label: '2026' },
-            ]}
-          />
-          <DatePicker className='h-8 w-50' placeholder='Дата'/>
-          <DatePicker className='h-8 w-50' placeholder='Период'/>
-        </div>
-      </div>
+  <h1 className='font-semibold text-black text-xl dark:text-white'>
+    {t("dashboard_main_text")}
+  </h1>
+  <div className='gap-5 flex flex-col md:flex-row md:gap-10 lg:flex-row lg:gap-10 xl:flex-row xl:gap-5'>
+    <Select
+      className='w-full md:w-40 lg:w-40 xl:w-40'
+      defaultValue="2024"
+      style={{ width: 120 }}
+      options={[
+        { value: '2024', label: '2024' },
+        { value: '2025', label: '2025' },
+        { value: '2026', label: '2026' },
+      ]}
+    />
+    <DatePicker className='h-8 w-full md:w-50 lg:w-50 xl:w-50' placeholder='Дата'/>
+    <DatePicker className='h-8 w-full md:w-50 lg:w-50 xl:w-50' placeholder='Период'/>
+  </div>
+</div>
+
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Мастера" total="1 684"  />

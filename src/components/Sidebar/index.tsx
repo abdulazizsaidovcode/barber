@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import Logo from '../../images/logo/logo.jpeg';
+import Logo from '../../images/logo/logo.png';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { CiCalendar } from 'react-icons/ci';
 import { SlCalculator } from 'react-icons/sl';

@@ -25,7 +25,7 @@ const Specializations: React.FC = () => {
         <div>
           <Accordion title='Красота волос'>
             <div className='flex justify-between'>
-              <div>
+              <div className=' w-[75%]'>
                 <ServiceCategoriesCard title='Красота волос' editOnClick={() => 'w'} deleteOnClick={() => openModal()} />
               </div>
               <div className='mt-5'>
@@ -43,7 +43,7 @@ const Specializations: React.FC = () => {
                 <input
                   type='text'
                   placeholder='Type something...'
-                  className='dark:bg-[#60606d] w-[700px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3 '
+                  className='dark:bg-[#60606d]  w-[66.6%] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3 '
                 />
               )}
             </div>

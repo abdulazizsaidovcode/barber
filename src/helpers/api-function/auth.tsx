@@ -5,11 +5,12 @@ export const handleSubmit = (
   event: React.FormEvent<HTMLFormElement>,
   username: string,
   password: string,
-  setLoading: (loading: boolean) => void
+  setLoading: (loading: boolean) => void,
+  setRole: (status: string) => void
 ): void => {
   event.preventDefault();
   const data = {
-    phone: `+998${username}`,
+    phone: username,
     password: password
   }
 
@@ -18,9 +19,11 @@ export const handleSubmit = (
     axios.post(login_url, data)
       .then(res => {
         setLoading(false);
-        console.log(res);
         if (res.data.success === false) console.log('Telefon raqam yoki parol xato kirgizildi!!!');
-        else sessionStorage.setItem('token', `Bearer ${res.data.body}`)
+        else {
+          res.data.status === "ACCEPTED" ? setRole('/') : setRole('/auth/signin')
+          sessionStorage.setItem('token', `Bearer ${res.data.body}`)
+        }
       })
       .catch(() => setLoading(false));
   } else setLoading(false);

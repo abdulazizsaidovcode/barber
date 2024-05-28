@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BiSolidShow } from 'react-icons/bi';
 import { BiSolidHide } from 'react-icons/bi';
 import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
-// import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface StylesType {
   container: string;
@@ -28,9 +28,11 @@ export const Login: React.FC = () => {
     setUsername,
     setShow
   } = authStore();
-  // const {pathname}: {pathname: string} = useLocation();
   const navigate = useNavigate();
-  // const token: string | null = sessionStorage.getItem('token')
+
+  useEffect(() => {
+    navigate(role)
+  }, [role]);
 
   const styles: StylesType = {
     container: 'min-h-screen flex items-center justify-center bg-gray-100',
@@ -85,7 +87,7 @@ export const Login: React.FC = () => {
             </div>
           </div>
           <button type="submit" className={styles.button}>
-            LOGIN
+            {loading ? 'loading...' : 'LOGIN'}
           </button>
         </form>
       </div>
