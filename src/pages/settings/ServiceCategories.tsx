@@ -19,7 +19,7 @@ const ServiceCategories = () => {
                     <p className="font-bold text-xl text-black">Категории услуг</p>
                     <button onClick={addOpenModal} className="dark:bg-danger bg-[#c2c2c2] text-black dark:text-white    py-2 px-4 rounded-lg">Добавить категорию</button>
                 </div>
-                <div className="mt-4">
+                <div className="mt-4 w-[75%]">
                     <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => delOpenModal()} />
                     <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => 'w'} />
                     <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => 'w'} />
