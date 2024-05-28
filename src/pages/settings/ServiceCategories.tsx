@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ServiceCategoriesCard from "../../components/settings/ServiceCategoriesCard"
 import DefaultLayout from "../../layout/DefaultLayout"
-import Modal from "../../components/modals";
+import Modal from "../../components/settings/modal";
 
 const ServiceCategories = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ const ServiceCategories = () => {
             </DefaultLayout>
             <Modal isOpen={isOpen} onClose={closeModal}>
                 <h2>Hello, I am a modal!</h2>
-                <p>This is a modal example using React.</p>
+                
             </Modal>
         </>
 
