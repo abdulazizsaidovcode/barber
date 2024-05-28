@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
-import SignIn from './pages/Authentication/SignIn';
+import { Login } from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
 import Chart from './pages/Chart';
@@ -11,7 +11,7 @@ import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
-import Settings from './pages/Settings';
+import Settings from './pages/settings/Settings.js';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
@@ -24,6 +24,8 @@ import Calculation from './pages/Calculation/calculation';
 import Card from './pages/cards/card';
 import Natification from './pages/notification/index.js';
 import Mortal from './pages/Mutual_settlements/index.js';
+import ServiceCategories from './pages/settings/ServiceCategories.js';
+import Specializations from './pages/settings/Specializations.js';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -46,7 +48,7 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="  Dashboard | Barber"/>
+              <PageTitle title="Dashboard | Barber" />
               <ECommerce />
             </>
           }
@@ -125,6 +127,24 @@ function App() {
           }
         />
         <Route
+          path="/service-categories"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <ServiceCategories />
+            </>
+          }
+        />
+        <Route
+          path="/specializations"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <Specializations />
+            </>
+          }
+        />
+        <Route
           path="/chart"
           element={
             <>
@@ -156,7 +176,7 @@ function App() {
           element={
             <>
               <PageTitle title="Signin | Barber" />
-              <SignIn />
+              <Login />
             </>
           }
         />
@@ -214,7 +234,7 @@ function App() {
             </>
           }
         />
-       < Route
+        < Route
           path="/chat"
           element={
             <>
@@ -223,7 +243,7 @@ function App() {
             </>
           }
         />
-         < Route
+        < Route
           path="/Mutual_settlements"
           element={
             <>
