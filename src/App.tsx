@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -31,13 +31,17 @@ import OnlineBooking from './pages/settings/OnlinBooking.tsx';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const navigate = useNavigate()
+  const isToken = sessionStorage.getItem('token')
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (!isToken) navigate(`/auth/signin`)
   }, [pathname]);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
+    navigate('/auth/signin')
   }, []);
 
   return loading ? (
