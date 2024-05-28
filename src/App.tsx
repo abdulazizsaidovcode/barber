@@ -32,14 +32,16 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate()
+  const isToken = sessionStorage.getItem('token')
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (!isToken) navigate(`/auth/signin`)
   }, [pathname]);
 
   useEffect(() => {
-    navigate('/auth/signin')
     setTimeout(() => setLoading(false), 1000);
+    navigate('/auth/signin')
   }, []);
 
   return loading ? (

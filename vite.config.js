@@ -8,6 +8,6 @@ export default defineConfig({
     global: 'window',
   },
   server: {
-    port: 2003
+    port: 8000
   }
 })
