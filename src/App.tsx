@@ -71,7 +71,7 @@ function App() {
           path="/MasterDatail"
           element={
             <>
-              <PageTitle title="MasterDatail" />
+              <PageTitle title="Взаиморасчёты | Barber" />
               <MasterDatail />
             </>
           }

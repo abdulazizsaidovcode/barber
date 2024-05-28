@@ -91,17 +91,17 @@ const FilterComponent: React.FC = () => {
   const statusData = [
     {
       id: 1,
-      name: 'wsad',
+      name: 'Открыть',
       category: 'open'
     },
     {
       id: 2,
-      name: 'asfd',
+      name: 'Продлить',
       category: 'close'
     },
     {
       id: 3,
-      name: 'asdf',
+      name: 'Остановиить подписку',
       category: 'close'
     },
   ]
@@ -203,10 +203,10 @@ const FilterComponent: React.FC = () => {
                       {statusData && statusData.map(item => (
                         <Link to={`${item.category === 'open' ? '/MasterDatail' : pathname}`} key={item.id} className='block'>{item.name}</Link>
                       ))}
+                      
                     </>
                   }
-                  trigger="click"
-                  open={open}
+                  
                   onOpenChange={handleOpenChange}
                 >
                   <Button>:</Button>
