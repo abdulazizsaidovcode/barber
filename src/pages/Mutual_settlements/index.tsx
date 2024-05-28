@@ -11,7 +11,7 @@ const Mortal:React.FC = () => {
   return (
     <div>
         <DefaultLayout>
-           <div className='bg-white w-full p-3 max-h-screen'>
+           <div className=' w-full p-3 max-h-screen'>
                <Breadcrumb pageName="Мастера"  />
                 <MainTabs/>
            </div>

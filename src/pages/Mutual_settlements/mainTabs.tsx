@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import FirstTab from './firstTab';
-
+ // Make sure the file name is correctly referenced.
 
 const onChange = (key: string) => {
     console.log(key);
@@ -24,7 +24,7 @@ const items = [
 
 const MainTabs: React.FC = () => (
     <Tabs
-        className="dark:bg-boxdark bg-white p-2 w-full" // Use w-full for full width and responsive background colors
+        className="bg-white dark:bg-black  text-slate-700 dark:text-slate-300 p-2 w-full" // Use w-full for full width and responsive background colors
         defaultActiveKey="1"
         items={items}
         onChange={onChange}
