@@ -5,8 +5,8 @@ interface AuthState {
   password: string;
   show: boolean;
   loading: boolean;
-  role: string
-  setRole: (val: string) => void;
+  goPage: string
+  setGoPage: (val: string) => void;
   setUsername: (val: string) => void;
   setPassword: (val: string) => void;
   setShow: (val: boolean) => void;
@@ -18,8 +18,8 @@ const authStore = create<AuthState>((set) => ({
   password: '',
   show: false,
   loading: false,
-  role: '',
-  setRole: (val: string) => set({role: val}),
+  goPage: '',
+  setGoPage: (val: string) => set({goPage: val}),
   setUsername: (val: string) => set({ username: val }),
   setPassword: (val: string) => set({ password: val }),
   setShow: (val: boolean) => set({ show: val }),

@@ -6,7 +6,7 @@ export const handleSubmit = (
   username: string,
   password: string,
   setLoading: (loading: boolean) => void,
-  setRole: (status: string) => void
+  setGoPage: (val: string) => void
 ): void => {
   event.preventDefault();
   const data = {
@@ -21,7 +21,7 @@ export const handleSubmit = (
         setLoading(false);
         if (res.data.success === false) console.log('Telefon raqam yoki parol xato kirgizildi!!!');
         else {
-          res.data.status === "ACCEPTED" ? setRole('/') : setRole('/auth/signin')
+          res.data.status === "ACCEPTED" ? setGoPage('/') : setGoPage('/auth/signin')
           sessionStorage.setItem('token', `Bearer ${res.data.body}`)
         }
       })
