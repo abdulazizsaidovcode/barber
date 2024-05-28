@@ -15,7 +15,7 @@ const Accordion: React.FC<AccordionProp> = ({ title, children }) => {
 
     return (
         <div className="accordion">
-            <div className={`bg-white flex justify-between p-3 shadow-1 rounded-lg shadow-black ${isActive ? 'active' : ''}`} onClick={toggleAccordion}>
+            <div className={`bg-white flex dark:text-black justify-between p-3 shadow-1 rounded-lg shadow-black ${isActive ? 'active' : ''}`} onClick={toggleAccordion}>
                 {title}
                 {isActive ? <MdKeyboardArrowUp size={24}/> : <MdKeyboardArrowDown size={24}/>}
             </div>

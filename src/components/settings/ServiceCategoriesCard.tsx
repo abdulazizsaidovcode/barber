@@ -10,7 +10,7 @@ interface ServiceCategoriesCard {
 const ServiceCategoriesCard: React.FC<ServiceCategoriesCard> = ({ title, editOnClick, deleteOnClick }) => {
   return (
     <div className="flex mt-4">
-      <div className="w-[400px] flex items-center p-2 rounded-md border-[1px] dark:border-[#fff] border-[#000]">
+      <div className="w-[700px] flex items-center p-3 rounded-md border-[1px] dark:border-[#fff] border-[#000]">
         <p className="dark:text-white">{title}</p>
       </div>
       <div className="flex items-center gap-2 ms-5">
