@@ -59,7 +59,7 @@ const Chat: React.FC = () => {
       onConnect: (frame) => {
         console.log('Connected: ' + frame);
         client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-        //   showGreeting(response.body);
+          // showGreeting(response.body);
         });
       },
       onStompError: (frame) => {
@@ -164,7 +164,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className=''>
       <div className="w-full pb-5 flex gap-10 items-center flex-wrap ">
         <button onClick={toggleSidebar} className="md:hidden text-black mb-2">
           <CgMenuLeft className="text-[1.5rem] font-bold" />

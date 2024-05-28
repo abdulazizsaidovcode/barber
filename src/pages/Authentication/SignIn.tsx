@@ -4,7 +4,8 @@ import { BiSolidHide } from 'react-icons/bi';
 import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
-
+// import { useLocation, useNavigate } from 'react-router-dom';
+// +998886700770 12345
 interface StylesType {
   container: string;
   card: string;
@@ -25,6 +26,9 @@ export const Login: React.FC = () => {
     setUsername,
     setShow
   } = authStore();
+  // const {pathname}: {pathname: string} = useLocation();
+  // const navigate = useNavigate();
+  // const token: string | null = sessionStorage.getItem('token')
 
   const styles: StylesType = {
     container: 'min-h-screen flex items-center justify-center bg-gray-100',

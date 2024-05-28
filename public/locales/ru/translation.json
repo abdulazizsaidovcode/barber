@@ -1,16 +1,15 @@
 {
-    "dashboard_main_text": "Общие показатели",
-    "sidebar_menu_text": "МЕНЮ",
-    "siderbar_dashboard": "Панель приборов",
-    "siderbar_master": "Владелец",
-    "siderbar_calendar": "Календарь",
-    "siderbar_calculation": "Расчет",
-    "siderbar_finance": "Финансы",
-    "siderbar_gallery": "Галерея",
-    "siderbar_profile": "Профиль",
-    "siderbar_cards": "Карты",
-    "siderbar_chat": "Чат",
-    "siderbar_settings": "Настройки",
-    "siderbar_Mutual_settlements": "Взаиморасчёты"
-
+  "dashboard_main_text": "Общие показатели",
+  "sidebar_menu_text": "МЕНЮ",
+  "siderbar_dashboard": "Панель приборов",
+  "siderbar_master": "Владелец",
+  "siderbar_calendar": "Календарь",
+  "siderbar_calculation": "Записи",
+  "siderbar_finance": "Финансы",
+  "siderbar_gallery": "Галерея",
+  "siderbar_profile": "Профиль",
+  "siderbar_cards": "Карты",
+  "siderbar_chat": "Чат",
+  "siderbar_settings": "Настройки",
+  "siderbar_Mutual_settlements": "Взаиморасчёты"
 }

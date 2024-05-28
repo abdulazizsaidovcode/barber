@@ -1,6 +1,13 @@
-// FilterComponent.tsx
 import React, { useState } from 'react';
-import { Select, Input, Button, Row, Col } from 'antd';
+import {
+  Select,
+  Input,
+  Button,
+  Row,
+  Col,
+  DatePicker,
+  DatePickerProps,
+} from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
@@ -30,6 +37,7 @@ const FilterComponent: React.FC = () => {
     },
     filterInput: {
       width: '100%',
+      borderRadius: '8px',
       backgroundColor: '#f0f0f0', // Light gray
     },
     toggleButton: {
@@ -46,30 +54,40 @@ const FilterComponent: React.FC = () => {
       country: "O'zbekistan",
       nonCashTurnover: '50 000 000',
       allTurnover: '250 000 000',
-      totalIncome: '25 000 000',
+      enterTime: '0',
+      leftTime: '0',
       incomeSimple: '0',
       incomePremium: '5 000 000',
       incomeVip: '12 000 000',
       masterTotal: '25 000 000',
-      anotherSimple: '0',
-      familyIncome: '0',
+      anotherSimple: 'Одобнена',
+      familyIncome: 'j',
       totalClients: '0',
     },
   ];
 
+  const Status = () => (
+    <div className="w-[100%]">
+      <p>Одобнена</p>
+    </div>
+  );
+
   const tableHeaders = [
-    { id: 1, name: 'Country' },
-    { id: 2, name: 'Non-cash turnover' },
-    { id: 3, name: 'All turnover' },
-    { id: 4, name: 'Total income' },
-    { id: 5, name: 'Income “Simple”' },
-    { id: 6, name: 'Income "Premium"' },
-    { id: 7, name: 'Income "Vip"' },
-    { id: 8, name: 'Master total' },
-    { id: 9, name: 'Income "Simple"' },
-    { id: 10, name: '“Family” income' },
-    { id: 11, name: 'Total clients' },
+    { id: 1, name: 'Клиент' },
+    { id: 2, name: 'Процедура' },
+    { id: 3, name: 'Дата записи' },
+    { id: 4, name: 'Время' },
+    { id: 5, name: 'Стимость' },
+    { id: 6, name: 'Предоплата' },
+    { id: 7, name: 'Оплачено' },
+    { id: 8, name: 'Тип оплаты' },
+    { id: 9, name: 'К оплате' },
+    { id: 10, name: 'Статус записи' },
+    { id: 11, name: 'Мастер' },
   ];
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+  };
 
   return (
     <div style={styles.mainContainer} className="dark:bg-boxdark">
@@ -118,27 +136,37 @@ const FilterComponent: React.FC = () => {
 
       {/* Extra filters row */}
       {showExtraFilters && (
-        <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Input placeholder="Status" style={styles.filterInput} />
+        <Row gutter={[29, 16]} style={{ marginBottom: '10px' }}>
+          <Col xs={14} sm={7} md={4} style={styles.filterGroup}>
+            <DatePicker onChange={onChange} />
           </Col>
           <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select defaultValue="Service category" style={styles.filterInput}>
-              <Option value="toshkent">Toshkent</Option>
-              <Option value="qarshi">Qarshi</Option>
+            <Select defaultValue="Категория услуг" style={styles.filterInput}>
+              <Option value="toshkent">100</Option>
+              <Option value="qarshi">200</Option>
             </Select>
           </Col>
           <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
             <Select
-              defaultValue="2024"
+              defaultValue="Статус записи"
               style={styles.filterInput}
               placeholder="Tariff"
             >
-              <Option value="2024">2024</Option>
-              <Option value="2023">2023</Option>
+              <Option value="Одобрена">Одобрена √</Option>
+              <Option value="На_одобрении">На одобрении !</Option>
             </Select>
           </Col>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+          <Col xs={24} sm={12} md={5} style={styles.filterGroup}>
+            <Select
+              defaultValue="Статус записи"
+              style={styles.filterInput}
+              placeholder="Tariff"
+            >
+              <Option value="Карта">Карта</Option>
+              <Option value="Наличные">Наличные</Option>
+            </Select>
+          </Col>
+          <Col xs={24} sm={12} md={3} style={styles.filterGroup}>
             <Button style={styles.extraButton}>Reset</Button>
           </Col>
         </Row>
@@ -151,12 +179,20 @@ const FilterComponent: React.FC = () => {
               <td className="p-5">{data.country}</td>
               <td className="p-5">{data.nonCashTurnover}</td>
               <td className="p-5">{data.allTurnover}</td>
-              <td className="p-5">{data.totalIncome}</td>
+              <td className="p-5 flex items-center justify-center">
+                <div className="bg-blue-400 p-1 flex items-center justify-center rounded-xl w-[90%]">
+                  {data.enterTime} - {data.leftTime}
+                </div>
+              </td>
               <td className="p-5">{data.incomeSimple}</td>
               <td className="p-5">{data.incomePremium}</td>
               <td className="p-5">{data.incomeVip}</td>
               <td className="p-5">{data.masterTotal}</td>
-              <td className="p-5">{data.anotherSimple}</td>
+              <td className="p-5 ">
+                <div className="bg-blue-500 p-1 flex rounded-md items-center justify-center">
+                  {data.anotherSimple}
+                </div>
+              </td>
               <td className="p-5">{data.familyIncome}</td>
               <td className="p-5">{data.totalClients}</td>
             </tr>

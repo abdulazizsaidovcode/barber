@@ -32,7 +32,7 @@ const items = [
 
 const MainTabs: React.FC = () => (
   <Tabs
-    className="dark:bg-boxdark bg-white p-2 w-full" // Use w-full for full width and responsive background colors
+    className="dark:bg-boxdark bg-white p-2 w-full" 
     defaultActiveKey="1"
     items={items}
     onChange={onChange}
