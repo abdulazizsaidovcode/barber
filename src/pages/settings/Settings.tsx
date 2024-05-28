@@ -12,7 +12,7 @@ const Settings = () => {
         </div>
         <div className='flex justify-between w-[85%]'>
           <MainCard text='Специализации' link='/specializations'/>
-          <MainCard text='Тарифы и функционал' link=''/>
+          <MainCard text='Тарифы и функционал' link='/tariffs-functionality'/>
           <MainCard text='Помощь' link=''/>
         </div>
       </div>

@@ -28,6 +28,8 @@ import ServiceCategories from './pages/settings/ServiceCategories.js';
 import Specializations from './pages/settings/Specializations.js';
 import OnlineBooking from './pages/settings/OnlinBooking.tsx';
 import MasterDatail from './pages/cards/masterDatail.tsx';
+import TariffDetail from './components/settings/details/TariffDetail.tsx';
+import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -170,6 +172,24 @@ function App() {
             <>
               <PageTitle title="Settings | Barber" />
               <OnlineBooking />
+            </>
+          }
+        />
+        <Route
+          path="/tariffs-functionality"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <TariffsFunctionality />
+            </>
+          }
+        />
+        <Route
+          path="/tariff-detail"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <TariffDetail />
             </>
           }
         />
