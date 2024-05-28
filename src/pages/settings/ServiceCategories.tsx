@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ServiceCategoriesCard from "../../components/settings/ServiceCategoriesCard"
 import DefaultLayout from "../../layout/DefaultLayout"
-import Modal from "../../components/settings/modal";
+import Modal from "../../components/modals/modal";
 
 const ServiceCategories = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +25,8 @@ const ServiceCategories = () => {
                 </div>
             </DefaultLayout>
             <Modal isOpen={isOpen} onClose={closeModal}>
-                <h2>Hello, I am a modal!</h2>
-                
+                <p className="text-xl text-black">Название категории:</p>
+                <input className="w-full border-[1px] border-black p-" type="text" placeholder="Оздоровительные процедуры" />
             </Modal>
         </>
 
