@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BiSolidShow } from 'react-icons/bi';
 import { BiSolidHide } from 'react-icons/bi';
 import logo from '../../images/logo/logo.jpeg';
-import axios from 'axios';
-import { login_url } from '../../helpers/api.tsx';
+import authStore from '../../helpers/state_managment/auth/authStore.tsx';
+import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 
 interface StylesType {
   container: string;
@@ -14,10 +14,18 @@ interface StylesType {
   hideShowIcon: string;
 }
 
-export const Login = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [show, setShow] = useState<boolean>(true);
+export const Login: React.FC = () => {
+  const {
+    show,
+    username,
+    password,
+    // loading,
+    setLoading,
+    setPassword,
+    setUsername,
+    setShow
+  } = authStore();
+
   const styles: StylesType = {
     container: 'min-h-screen flex items-center justify-center bg-gray-100',
     card: 'max-w-md w-full space-y-8 z-10',
@@ -27,44 +35,6 @@ export const Login = () => {
     hideShowIcon: 'absolute top-4 right-4 text-[1.5rem] hover:cursor-pointer opacity-60 hover:opacity-90 duration-150 z-40'
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    let data: { username: string, password: string } = {
-      username, password
-    };
-    console.log(data.username, data.password);
-    if (!data.username && !data.password) {
-      // setLoading(true); // Set loading state to true
-      axios.post(login_url)
-      //     .then(res => {
-      //       setLoading(false)
-      //       if (res.data.success === false) toast.error('Telefon raqam yoki parol xato kirgizildi!!!')
-      //       else {
-      //         sessionStorage.setItem('jwtTokin', "Bearer " + res.data.body);
-      //         if (res.data.message === "ROLE_SUPER_ADMIN") {
-      //           setRole('/super-admin/boshqaruv-paneli');
-      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
-      //         } else if (res.data.message === "ROLE_ADMIN") {
-      //           setRole('/admin/hisobot');
-      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
-      //         } else if (res.data.message === "ROLE_LEADER") {
-      //           setRole('/brigadir/boshqaruv-qismi');
-      //           toast.success("Tizimga muvaffaqiyatli kirdingiz✔");
-      //         }
-      //       }
-      //     })
-      //     .catch(() => {
-      //       setLoading(false)
-      //       toast.error('Telefon raqam yoki parolda xatolik mavjud❌');
-      //       setPhoneNumber(true)
-      //       setPassword(true)
-      //     })
-      // } else {
-      //   setLoading(false)
-      // }
-    }
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -72,7 +42,10 @@ export const Login = () => {
           <img src={logo} alt={`bookers logo`} className={`w-24 h-24 rounded-full`} />
         </div>
         <h2 className={styles.title + ' tracking-wide'}>Bookers Beauty</h2>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form
+          className="mt-8 space-y-6"
+          onSubmit={(event) => handleSubmit(event, password, username, setLoading)}
+        >
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mb-6">
               <label htmlFor="username" className="sr-only">Username</label>
