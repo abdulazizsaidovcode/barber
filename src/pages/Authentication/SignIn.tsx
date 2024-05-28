@@ -5,7 +5,7 @@ import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 // import { useLocation, useNavigate } from 'react-router-dom';
-// +998886700770 12345
+
 interface StylesType {
   container: string;
   card: string;
@@ -20,14 +20,16 @@ export const Login: React.FC = () => {
     show,
     username,
     password,
-    // loading,
+    loading,
+    role,
+    setRole,
     setLoading,
     setPassword,
     setUsername,
     setShow
   } = authStore();
   // const {pathname}: {pathname: string} = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const token: string | null = sessionStorage.getItem('token')
 
   const styles: StylesType = {
@@ -48,7 +50,7 @@ export const Login: React.FC = () => {
         <h2 className={styles.title + ' tracking-wide'}>Bookers Beauty</h2>
         <form
           className="mt-8 space-y-6"
-          onSubmit={(event) => handleSubmit(event, password, username, setLoading)}
+          onSubmit={(event) => handleSubmit(event, username, password, setLoading, setRole)}
         >
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mb-6">
