@@ -198,10 +198,10 @@ function App() {
           }
         />
         <Route
-          path="/calculation"
+          path="/notification"
           element={
             <>
-              <PageTitle title="Calculation | Barber" />
+              <PageTitle title="Notification | Barber" />
               <Calculation />
             </>
           }
@@ -224,7 +224,7 @@ function App() {
             </>
           }
         />
-        < Route
+        <Route
           path="/chat"
           element={
             <>
@@ -233,7 +233,7 @@ function App() {
             </>
           }
         />
-        < Route
+        <Route
           path="/Mutual_settlements"
           element={
             <>

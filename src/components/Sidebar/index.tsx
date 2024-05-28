@@ -10,6 +10,7 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { TbCards } from 'react-icons/tb';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
+import { IoIosNotificationsOutline } from 'react-icons/io';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -429,13 +430,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <NavLink
-                  to="/calculation"
+                  to="/notification"
                   className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
-                    pathname.includes('calculation') &&
+                    pathname.includes('notification') &&
                     'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
-                  <SlCalculator />
+                  <IoIosNotificationsOutline />
+
                   {t('siderbar_calculation')}
                 </NavLink>
               </li>
