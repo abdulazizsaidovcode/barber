@@ -46,6 +46,7 @@ function App() {
       <Routes>
         <Route
           index
+          path={`/`}
           element={
             <>
               <PageTitle title="Dashboard | Barber" />

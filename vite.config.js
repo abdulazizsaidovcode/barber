@@ -9,6 +9,5 @@ export default defineConfig({
   },
   server: {
     port: 2003
-  },
-  base: '/auth/signin'
+  }
 })
