@@ -12,9 +12,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
     return (
         <div className="fixed inset-0 z-99999 flex items-center justify-center bg-slate-900 bg-opacity-50">
-            <div className="bg-white absolute rounded-lg shadow-lg p-6">
-                {children}
-                <button className='relative -top-[88px] left-67' onClick={onClose}>
+            <div className="bg-white relative rounded-lg shadow-lg p-6">
+                <div>
+                    {children}
+                </div>
+                <button
+                    onClick={onClose}
+                    className='absolute top-0 right-0 mt-[-20px] mr-[-20px]'
+                >
                     <IoMdCloseCircleOutline size={30} color='#000' />
                 </button>
             </div>

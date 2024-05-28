@@ -1,11 +1,11 @@
-import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
-import DefaultLayout from "../layout/DefaultLayout";
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb.tsx";
+import DefaultLayout from "../../layout/DefaultLayout.tsx";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { Select } from "antd";
+import { Select } from 'antd';
 const Calendar = () => {
   const regionOption = [
     {
@@ -132,25 +132,37 @@ const Calendar = () => {
           />
         </div>
       </div>
+      <div className="grid grid-cols-7 gap-3 my-3">
+        <button
+          disabled
+          className={'inline-block rounded bg-[#2C3E50] cursor-not-allowed px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-lg focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong'}>Все
+          категории
+        </button>
+        <button
+            className={'inline-block rounded border-2 border-[#2C3E50] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-[#2C3E50] shadow-primary-3 transition duration-150 ease-in-out  hover:shadow-xl hover:bg-[#DDDDDD] active:shadow-sm focus:ring-0 motion-reduce:transition-none dark:border-[#DDDDDD] dark:hover:border-[#2C3E50] dark:hover:text-[#2C3E50] dark:text-[#DDDDDD]'}>
+          категории
+        </button>
+      </div>
       <FullCalendar
         schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         plugins={[
           dayGridPlugin,
           resourceTimelinePlugin,
           interactionPlugin,
-          timeGridPlugin,
+          timeGridPlugin
         ]}
         initialView="dayGridMonth"
         headerToolbar={{
-          start: "prev,next",
-          center: "title",
-          
-          end: "dayGridMonth,timeGridWeek",
+          start: 'prev,next',
+          center: 'title',
+
+          end: 'dayGridMonth,timeGridWeek'
         }}
-        eventAdd={() => {}}
+        eventAdd={() => {
+        }}
         eventBackgroundColor="#fff"
         eventClick={(e) => {
-          alert(e.event._def.title)
+          alert(e.event._def.title);
 
         }}
         events={event}

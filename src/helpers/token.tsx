@@ -6,4 +6,4 @@ export const config = {
   }
 };
 
-export const setConfig = config.headers.Authorization = token
+export const setConfig: string | null | undefined = config.headers.Authorization = token

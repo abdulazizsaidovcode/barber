@@ -5,10 +5,9 @@ import Notselected from '../components/chat components/notselected';
 import ChatEmptyState from '../components/chat components/emptychat';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
-import { IoSearchOutline, IoSend } from 'react-icons/io5';
+import { IoSearchOutline } from 'react-icons/io5';
 import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';
-import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
 const Chat: React.FC = () => {

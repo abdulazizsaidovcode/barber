@@ -5,7 +5,7 @@ import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import { Login } from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Calendar from './pages/Calendar';
+import Calendar from './pages/calendar/Calendar.tsx';
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
@@ -25,6 +25,7 @@ import Card from './pages/cards/card';
 import Natification from './pages/notification/index.js';
 import Mortal from './pages/Mutual_settlements/index.js';
 import ServiceCategories from './pages/settings/ServiceCategories.js';
+import Specializations from './pages/settings/Specializations.js';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -131,6 +132,15 @@ function App() {
             <>
               <PageTitle title="Settings | Barber" />
               <ServiceCategories />
+            </>
+          }
+        />
+        <Route
+          path="/specializations"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <Specializations />
             </>
           }
         />
