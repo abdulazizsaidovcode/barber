@@ -158,12 +158,12 @@ const ChartNine: React.FC = () => {
                     />
                     <Select
                         className='mb-3'
-                        defaultValue="2024"
+                        defaultValue="Yanvar"
                         style={{ width: 120 }}
                         options={[
-                            { value: '2024', label: '2024' },
-                            { value: '2025', label: '2025' },
-                            { value: '2026', label: '2026' },
+                            { value: 'Fevral', label: 'Fevral' },
+                            { value: 'Mart', label: 'Mart' },
+                            { value: 'Aprel', label: 'Aprel' },
                         ]}
                     />
                 </div>
