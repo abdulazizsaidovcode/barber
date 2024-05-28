@@ -28,24 +28,27 @@ import ServiceCategories from './pages/settings/ServiceCategories.js';
 import Specializations from './pages/settings/Specializations.js';
 import OnlineBooking from './pages/settings/OnlinBooking.tsx';
 import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
+import TariffDetail from './components/settings/details/TariffDetail.tsx';
+import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
+
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
-  const navigate = useNavigate()
-  const isToken = sessionStorage.getItem('token')
-  let count: number = 0
+  const navigate = useNavigate();
+  const isToken = sessionStorage.getItem('token');
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!isToken) navigate(`/auth/signin`)
+    if (!isToken) navigate(`/auth/signin`);
   }, [pathname]);
 
   useEffect(() => {
+    const refresh = sessionStorage.getItem('refreshUrl')
     setTimeout(() => setLoading(false), 1000);
-    if(count === 0) {
-      count++
-      navigate('/auth/signin')
+    if (!refresh) {
+      navigate('/auth/signin');
+      sessionStorage.setItem('refreshUrl', 'true');
     }
   }, []);
 
@@ -65,10 +68,10 @@ function App() {
           }
         />
         <Route
-          path='/MasterDatail'
+          path="/MasterDatail"
           element={
             <>
-              <PageTitle title='MasterDatail' />
+              <PageTitle title="MasterDatail" />
               <MasterDatail />
             </>
           }
@@ -170,6 +173,24 @@ function App() {
             <>
               <PageTitle title="Settings | Barber" />
               <OnlineBooking />
+            </>
+          }
+        />
+        <Route
+          path="/tariffs-functionality"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <TariffsFunctionality />
+            </>
+          }
+        />
+        <Route
+          path="/tariff-detail"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <TariffDetail />
             </>
           }
         />
@@ -285,5 +306,6 @@ function App() {
     </>
   );
 }
+
 //Mutual_settlements
 export default App;
