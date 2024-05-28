@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { Select, Input, Button, Row, Col } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -10,7 +10,7 @@ const { Option } = Select;
 const FilterComponent: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
   const [activeMenu, setActiveMenu] = useState<number | null>(null);
-  const history = useHistory(); // Hook for navigation
+
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
 
@@ -18,9 +18,7 @@ const FilterComponent: React.FC = () => {
     setActiveMenu(activeMenu === id ? null : id);
   };
 
-  const navigateToPage = (path: string) => {
-    history.push(path);
-  };
+ 
 
   const styles = {
     mainContainer: {
@@ -174,13 +172,7 @@ const FilterComponent: React.FC = () => {
                     >
                       ...
                     </Button>
-                    {activeMenu === data.id && (
-                        <div style={styles.contextMenu}>
-                          <div onClick={() => navigateToPage('/')}>Открыть</div>
-                          <div onClick={() => navigateToPage('/extend')}>Продлить</div>
-                          <div onClick={() => navigateToPage('/stop-subscription')}>Остановить подписку</div>
-                        </div>
-                    )}
+                    
                   </td>
                 </tr>
             ))}
