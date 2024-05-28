@@ -25,6 +25,7 @@ import Card from './pages/cards/card';
 import Natification from './pages/notification/index.js';
 import Mortal from './pages/Mutual_settlements/index.js';
 import ServiceCategories from './pages/settings/ServiceCategories.js';
+import Specializations from './pages/settings/Specializations.js';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -131,6 +132,15 @@ function App() {
             <>
               <PageTitle title="Settings | Barber" />
               <ServiceCategories />
+            </>
+          }
+        />
+        <Route
+          path="/specializations"
+          element={
+            <>
+              <PageTitle title="Settings | Barber" />
+              <Specializations />
             </>
           }
         />
