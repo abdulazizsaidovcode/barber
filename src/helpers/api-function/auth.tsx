@@ -8,14 +8,17 @@ export const handleSubmit = (
   setLoading: (loading: boolean) => void
 ): void => {
   event.preventDefault();
-  console.log(username);
-  console.log(password);
+  const data = {
+    phone: `+998${username}`,
+    password: password
+  }
 
-  if (!username && !password) {
+  if (username && password) {
     setLoading(true);
-    axios.post(login_url, '')
+    axios.post(login_url, data)
       .then(res => {
         setLoading(false);
+        console.log(res);
         if (res.data.success === false) console.log('Telefon raqam yoki parol xato kirgizildi!!!');
         else sessionStorage.setItem('token', `Bearer ${res.data.body}`)
       })
