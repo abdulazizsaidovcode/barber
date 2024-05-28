@@ -27,7 +27,7 @@ import Mortal from './pages/Mutual_settlements/index.js';
 import ServiceCategories from './pages/settings/ServiceCategories.js';
 import Specializations from './pages/settings/Specializations.js';
 import OnlineBooking from './pages/settings/OnlinBooking.tsx';
-import MasterDatail from './pages/cards/masterDatail.tsx';
+import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);

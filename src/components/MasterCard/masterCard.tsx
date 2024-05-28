@@ -1,32 +1,31 @@
 import React from "react";
-import PricesCard from "../PricesCard/pricesCard.tsx";
 
 interface IData {
     name: string;
     price: number | string;
 }
 
-interface MasterCardStatusProps {
-    masterData: IData[];
+interface MasterCardProps {
     masterName: string;
     specialistTitle: string;
     phoneNumber: string;
     imageUrl: string;
+    masterData: IData[];
 }
 
-const MasterCard: React.FC<MasterCardStatusProps> = ({ masterData, masterName, specialistTitle, phoneNumber, imageUrl }) => {
+const MasterCard: React.FC<MasterCardProps> = ({ masterName, specialistTitle, phoneNumber, imageUrl, masterData }) => {
     return (
         <div className='w-full max-h-screen mb-4 flex flex-wrap'>
-            <div className='p-4 w-full bg-white rounded-lg shadow-md mb-4'>
+            <div className='p-4 w-full  rounded-lg shadow-md mb-4'>
                 <h1 className='font-bold'>История подписки</h1>
             </div>
-            <div className='flex flex-wrap justify-between p-4 w-full bg-white rounded-lg shadow-md mb-4'>
+            <div className='flex flex-wrap justify-between p-4 w-full  rounded-lg shadow-md mb-4'>
                 <h1 className='font-bold text-xl'>Premium</h1>
                 <button className='bg-[#58CA64] px-6 rounded-full text-white'>Активный</button>
             </div>
             <div className='w-full flex justify-between'>
                 <div className='w-[35%]'>
-                    <div className='w-full bg-white shadow-md p-3 rounded-lg mb-3'>
+                    <div className='w-full  shadow-lg p-3 rounded-lg mb-3'>
                         <div className='flex justify-between mb-3'>
                             <h1 className='font-bold'>Мастер</h1>
                             <h1>{masterName}</h1>
@@ -41,7 +40,7 @@ const MasterCard: React.FC<MasterCardStatusProps> = ({ masterData, masterName, s
                         <h1 className='text-center mb-2'>{specialistTitle}</h1>
                         <p className='text-center mb-3'>{phoneNumber}</p>
                     </div>
-                    <div className='w-full bg-white shadow-md p-3 rounded-lg mb-3'>
+                    <div className='w-full bg-white shadow-lg p-3 rounded-lg mb-3'>
                         <div className='flex justify-between mb-3 '>
                             <h1>Остановить</h1>
                             <div className='bg-gray-300 p-1 rounded-full'>
@@ -64,7 +63,6 @@ const MasterCard: React.FC<MasterCardStatusProps> = ({ masterData, masterName, s
                     ))}
                 </div>
             </div>
-            <PricesCard />
         </div>
     );
 };

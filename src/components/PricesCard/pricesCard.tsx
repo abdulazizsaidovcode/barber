@@ -17,7 +17,7 @@ const masterData: IData[] = [
 
 const PricesCard : React.FC = () => {
     return(
-        <div className='flex w-full bg-white p-3 justify-between'>
+        <div className='flex w-full justify-between'>
             <div className='w-[35%] bg-white shadow-6 p-4 mb-3'>
                 <h1 className='font-bold text-xl text-black mb-2'>Тарифы:</h1>
                 <hr className='text-gray'/>

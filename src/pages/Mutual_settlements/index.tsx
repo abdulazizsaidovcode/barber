@@ -1,6 +1,8 @@
 import DefaultLayout from "../../layout/DefaultLayout"
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb.tsx";
-import MainTabsCard from "../cards/mainTabs.tsx";
+
+import MainTabs from "./mainTabs.tsx";
+
 
 
 
@@ -11,7 +13,7 @@ const Mortal:React.FC = () => {
         <DefaultLayout>
            <div className='bg-white w-full p-3 max-h-screen'>
                <Breadcrumb pageName="Мастера"  />
-                <MainTabsCard/>
+                <MainTabs/>
            </div>
 
 
