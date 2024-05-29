@@ -1,17 +1,31 @@
 // FilterComponent.tsx
 import React, { useState } from 'react';
-import { Select, Input, Button, Row, Col } from 'antd';
+import { Select, Input, Button, Row, Col, Popover } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
+import { Link, useLocation } from 'react-router-dom';
 
 const { Option } = Select;
 
 const FilterComponent: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
+  const {pathname} = useLocation()
+  const hide = () => {
+    setOpen(false);
+  };
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
 
-  // Toggle visibility of extra filters
+
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
+
+  const toggleContextMenu = (id: number) => {
+    setActiveMenu(activeMenu === id ? null : id);
+  };
 
   // Inline styles for the component
   const styles = {
@@ -42,33 +56,55 @@ const FilterComponent: React.FC = () => {
 
   const tableData = [
     {
-      country: "O'zbekistan",
-      nonCashTurnover: '50 000 000',
-      allTurnover: '250 000 000',
-      totalIncome: '25 000 000',
-      incomeSimple: '0',
-      incomePremium: '5 000 000',
-      incomeVip: '12 000 000',
-      masterTotal: '25 000 000',
-      anotherSimple: '0',
-      familyIncome: '0',
-      totalClients: '0',
+      img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYxuazQ7_RGUp4WrKx41JwXBlZ0Xr818VVPQuqcHgzWQ&s',
+      master: "Имя, Фамилия 99893 258 36 52",
+      Спеиализация: 'Парихмахер, барбер',
+      Тариф: 'Premiup',
+      Цена: 'Цена',
+      Оплачено: 'Оплачено',
+      Способоплаты: 'Способ оплаты',
+      Датаоплаты: 'Дата оплаты',
+      Срокподписки: 'Срок подписки',
+      Датаначала: 'Дата начала',
+      Статус: 'Статус',
+      Датаокончания: 'Дата окончания',
+      icon:':'
+     
     },
   ];
 
   const tableHeaders = [
-    { id: 1, name: 'Country' },
-    { id: 2, name: 'Non-cash turnover' },
-    { id: 3, name: 'All turnover' },
-    { id: 4, name: 'Total income' },
-    { id: 5, name: 'Income “Simple”' },
-    { id: 6, name: 'Income "Premium"' },
-    { id: 7, name: 'Income "Vip"' },
-    { id: 8, name: 'Master total' },
-    { id: 9, name: 'Income "Simple"' },
-    { id: 10, name: '“Family” income' },
-    { id: 11, name: 'Total clients' },
+    { id: 1, name: 'Фото' },
+    { id: 2, name: 'Мастер' },
+    { id: 3, name: 'Спеиализация' },
+    { id: 4, name: 'Тариф' },
+    { id: 5, name: 'Цена' },
+    { id: 6, name: 'Оплачено' },
+    { id: 7, name: 'Способ оплаты' },
+    { id: 8, name: 'Дата оплаты' },
+    { id: 9, name: 'Срок подписки' },
+    { id: 10, name: 'Дата начала' },
+    { id: 11, name: 'Статус' },
+    { id: 13, name: 'Дата окончания' },
+    { id: 13, name: '' },
   ];
+  const statusData = [
+    {
+      id: 1,
+      name: 'Открыть',
+      category: 'open'
+    },
+    {
+      id: 2,
+      name: 'Продлить',
+      category: 'close'
+    },
+    {
+      id: 3,
+      name: 'Остановиить подписку',
+      category: 'close'
+    },
+  ]
 
   return (
     <div style={styles.mainContainer} className="dark:bg-boxdark">
@@ -146,18 +182,35 @@ const FilterComponent: React.FC = () => {
       <div>
         <MasterTable thead={tableHeaders}>
           {tableData.map((data, index) => (
-            <tr key={index} className="dark:text-white">
-              <td className="p-5">{data.country}</td>
-              <td className="p-5">{data.nonCashTurnover}</td>
-              <td className="p-5">{data.allTurnover}</td>
-              <td className="p-5">{data.totalIncome}</td>
-              <td className="p-5">{data.incomeSimple}</td>
-              <td className="p-5">{data.incomePremium}</td>
-              <td className="p-5">{data.incomeVip}</td>
-              <td className="p-5">{data.masterTotal}</td>
-              <td className="p-5">{data.anotherSimple}</td>
-              <td className="p-5">{data.familyIncome}</td>
-              <td className="p-5">{data.totalClients}</td>
+            <tr key={index} className="dark:text-white text-center">
+              <td className="text-center rounded-full p-2">
+                <img src={data.img} alt="Img" className='w-12 rounded-full' /></td>
+              <td className="p-2">{data.master}</td>
+              <td className="p-2">{data.Спеиализация}</td>
+              <td className="p-2">{data.Тариф}</td>
+              <td className="p-2">{data.Цена}</td>
+              <td className="p-2">{data.Оплачено}</td>
+              <td className="p-2">{data.Способоплаты}</td>
+              <td className="p-2">{data.Датаоплаты}</td>
+              <td className="p-2">{data.Срокподписки}</td>
+              <td className="p-2">{data.Датаначала}</td>
+              <td className="p-2">{data.Статус}</td>
+              <td className="p-2">{data.Датаокончания}</td>
+              <td className="p-2">
+              <Popover
+                  content={
+                    <>
+                      {statusData && statusData.map(item => (
+                        <Link to={`${item.category === 'open' ? '/MasterDatail' : pathname}`} key={item.id} className='block '>{item.name}</Link>
+                      ))}
+                      
+                    </>
+                  }
+                  
+                  onOpenChange={handleOpenChange}
+                >
+                  <Button>:</Button>
+                </Popover></td>
             </tr>
           ))}
         </MasterTable>

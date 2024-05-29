@@ -30,7 +30,7 @@ const masterData: IData[] = [
 
 const MasterStatus: React.FC = () => {
     return (
-        <div className='w-full bg-white shadow-6 p-5 mb-3'>
+        <div className='w-full shadow-6 p-5 mb-3'>
             {masterData && masterData.map((item, idx) => (
                 <div className='flex justify-start items-center font-bold mt-8 p-2' key={idx}>
                     <h1 className={`w-48`}>{item.name}</h1>
