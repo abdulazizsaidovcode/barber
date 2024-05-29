@@ -15,10 +15,10 @@ const ServiceCategoriesCard: React.FC<ServiceCategoriesCard> = ({ title, editOnC
       </div>
       <div className="flex items-center gap-2 ms-5">
         <button onClick={editOnClick} className="p-[6px]  dark:border-[#fff] border-[#000] border-[1px] rounded-lg">
-          <MdEdit size={20} color="black"/>
+          <MdEdit size={20} color="black" className="dark:text-white"/>
         </button>
         <button onClick={deleteOnClick}  className="p-[6px] dark:border-[#fff] border-[1px] border-[#000] rounded-lg">
-          <MdDelete size={20} color="black" />
+          <MdDelete size={20} color="black" className="dark:text-white" />
         </button>
       </div>
     </div>
