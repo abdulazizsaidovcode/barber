@@ -9,7 +9,7 @@ interface FunctionlityCardProp {
 
 const FunctionlityCard: React.FC<FunctionlityCardProp> = ({ title, editOnClick }) => {
   return (
-    <div className="flex mt-4">
+    <div className="flex">
       <div className="w-full flex items-center p-3 rounded-md border-[1px] dark:border-[#fff] border-[#000]">
         <p className="dark:text-white">{title}</p>
       </div>
