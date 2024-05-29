@@ -221,3 +221,7 @@ span.flatpickr-weekday,
 .webkit::-webkit-scrollbar {
   display: none;
 }
+.table-row {
+  height: 70px; /* Adjust this value as needed */
+}
+
