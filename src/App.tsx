@@ -30,6 +30,7 @@ import OnlineBooking from './pages/settings/OnlinBooking.tsx';
 import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
 import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
+import Documents from './pages/documents/Documents.tsx';
 
 
 function App() {
@@ -191,6 +192,15 @@ function App() {
             <>
               <PageTitle title="Settings | Barber" />
               <TariffDetail />
+            </>
+          }
+        />
+        <Route
+          path="/documents"
+          element={
+            <>
+              <PageTitle title="Documents | Barber" />
+              <Documents />
             </>
           }
         />
