@@ -6,11 +6,16 @@ import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
 import { add_precent_list, precent_list } from '../../helpers/api';
 import Modal from '../../components/modals/modal';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import { config } from '../../helpers/token';
 
 interface Data {
   id: number;
   percent: string;
+}
+
+interface EditData {
+  percent: number;
 }
 
 const DirectoriesOnlineBooking: React.FC = () => {
@@ -19,19 +24,32 @@ const DirectoriesOnlineBooking: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
   const [newPercent, setNewPercent] = useState('');
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    axios.get(precent_list)
+      .then((res) => {
+        setData(res.data.body);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   const toggleInput = () => {
     setIsInputOpen(!isInputOpen);
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = () => {
-    axios.get(precent_list)
-      .then((res) => {
-        setData(res.data.body);
-      }).catch((err) => {
+  const editPercent = (id: number, percent: number) => {
+    const payload: EditData = { percent };
+    axios.put(`${precent_list}/${id}`, payload, config)
+      .then(res => {
+        console.log(res.data);
+        fetchData();
+      })
+      .catch(err => {
         console.error(err);
       });
   };
@@ -39,10 +57,16 @@ const DirectoriesOnlineBooking: React.FC = () => {
   const addPercent = (percent: string) => {
     axios.post(add_precent_list, { percent })
       .then((res) => {
-        console.log(res.data.message);
-        toast.success('Successfully added!');
-        getData();
-      }).catch((err) => {
+        if (res.data.message === 'Already exists') {
+          toast('This value already exists', {
+            icon: '⚠️',
+          });
+        } else {
+          toast.success('Successfully added');
+          fetchData();
+        }
+      })
+      .catch((err) => {
         console.error(err);
       });
   };
@@ -50,8 +74,8 @@ const DirectoriesOnlineBooking: React.FC = () => {
   const deletePercent = (id: number) => {
     axios.delete(`${precent_list}/${id}`)
       .then(() => {
-        getData();
-        alert('Successfully deleted!');
+        toast.success('Successfully deleted!');
+        fetchData();
       })
       .catch((err) => {
         console.error(err);
@@ -74,20 +98,20 @@ const DirectoriesOnlineBooking: React.FC = () => {
                     <div key={item.id}>
                       <ServiceCategoriesCard
                         title={`${item.percent}%`}
-                        editOnClick={() => 'w'}
+                        editOnClick={(newPercent) => editPercent(item.id, +newPercent)}
                         deleteOnClick={() => openModal(item.id)}
                       />
                       <Modal isOpen={modalOpenId === item.id} onClose={closeModal}>
                         <div className="w-[500px] h-[130px]">
                           <div className="flex justify-center">
-                            <p className="text-xl text-black">Вы уверены что хоите удалить процедуру?</p>
+                            <p className="text-xl text-black">Вы уверены что хотите удалить процедуру?</p>
                           </div>
                           <div className="flex justify-around mt-10">
                             <button onClick={() => {
                               deletePercent(item.id);
                               closeModal();
                             }} className="text-white bg-[#000] py-2 px-10">Удалить</button>
-                            <button onClick={closeModal} className="text-white bg-gray py-2 px-14">Hет</button>
+                            <button onClick={closeModal} className="text-white bg-gray py-2 px-14">Нет</button>
                           </div>
                         </div>
                       </Modal>
@@ -107,10 +131,13 @@ const DirectoriesOnlineBooking: React.FC = () => {
                 {isInputOpen && (
                   <div className='flex gap-2'>
                     <input
-                      type='text'
+                      type='number'
                       placeholder='Type something...'
                       className='dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3'
-                      onChange={(e) => setNewPercent(e.target.value)}
+                      value={newPercent}
+                      onChange={(e) =>
+                        setNewPercent(e.target.value)
+                      }
                     />
                     <button
                       className='bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5'
@@ -118,6 +145,7 @@ const DirectoriesOnlineBooking: React.FC = () => {
                         addPercent(newPercent);
                         setNewPercent('');
                         setIsInputOpen(false);
+
                       }}
                     >
                       Добавить
@@ -128,9 +156,10 @@ const DirectoriesOnlineBooking: React.FC = () => {
             </Accordion>
           </div>
         </div>
+        <Toaster position="top-center" reverseOrder={false} />
       </DefaultLayout>
     </>
   );
-}
+};
 
 export default DirectoriesOnlineBooking;
