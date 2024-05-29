@@ -6,12 +6,14 @@ import { CiCalendar } from 'react-icons/ci';
 import { SlCalculator } from 'react-icons/sl';
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { TfiGallery } from 'react-icons/tfi';
-import { IoChatbubbleEllipsesOutline, IoDocumentTextOutline } from 'react-icons/io5';
+import {
+  IoChatbubbleEllipsesOutline,
+  IoDocumentTextOutline,
+} from 'react-icons/io5';
 import { TbCards } from 'react-icons/tb';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 import { IoIosNotificationsOutline } from 'react-icons/io';
-
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -69,8 +71,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-white duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-white duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
@@ -385,9 +388,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('dashboard') &&
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('dashboard') &&
                     'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  }`}
                 >
                   <AiOutlineDashboard />
                   {t('siderbar_dashboard')}
@@ -396,8 +400,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/master"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <i className="bi bi-card-checklist">
                     <svg
@@ -418,8 +423,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/calendar"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('calendar') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('calendar') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <CiCalendar />
                   {t('siderbar_calendar')}
@@ -427,11 +433,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <NavLink
-                  to="/notification"
+                  to="/orders"
                   className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('notification') &&
                     'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  }`}
                 >
                   <IoIosNotificationsOutline />
 
@@ -441,8 +447,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/finance"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('finance') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('finance') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <BsCurrencyDollar />
                   {t('siderbar_finance')}
@@ -451,9 +458,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/Mutual_settlements"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('Mutual_settlements') &&
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('Mutual_settlements') &&
                     'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  }`}
                 >
                   <BsCurrencyDollar />
                   {t('Взаиморасчёты')}
@@ -466,8 +474,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/gallery"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${pathname.includes('gallery') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
+                    pathname.includes('gallery') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <TfiGallery />
                   {t('siderbar_gallery')}
@@ -478,8 +487,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Document --> */}
                 <NavLink
                   to="/documents"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-slate-950 dark:text-white ${pathname.includes('gallery') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-slate-950 dark:text-white ${
+                    pathname.includes('gallery') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <IoDocumentTextOutline />
                   {t('siderbar_documents')}
@@ -491,8 +501,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/profile"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${pathname.includes('profile') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
+                    pathname.includes('profile') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <svg
                     className="fill-current"
@@ -627,8 +638,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/cards"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${pathname.includes('cards') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
+                    pathname.includes('cards') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <TbCards />
                   {t('siderbar_cards')}
@@ -640,8 +652,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/Chat"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('Chat') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${
+                    pathname.includes('Chat') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <IoChatbubbleEllipsesOutline />
                   {t('siderbar_chat')}
@@ -650,8 +663,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/settings"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('settings') && 'bg-gray dark:bg-[#9c0a36]'
-                    }`}
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${
+                    pathname.includes('settings') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
                 >
                   <svg
                     className="fill-current"
