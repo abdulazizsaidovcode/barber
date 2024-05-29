@@ -2,7 +2,6 @@
 // +998886700770 12345
 // http://45.67.35.86:8080/swagger-ui/index.html#/
 
-import axios from "axios";
 
 // swagger url
 const base_url: string = 'http://45.67.35.86:8080/'
