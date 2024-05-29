@@ -94,7 +94,7 @@ const FilterComponent: React.FC = () => {
 
   const content = (
     <div>
-      <Link to="">
+      <Link to="/orders/1">
         <p>Открыть</p>
       </Link>
     </div>
