@@ -7,10 +7,12 @@ import {
   Col,
   DatePicker,
   DatePickerProps,
+  Popover,
 } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
+import { Link } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -84,11 +86,19 @@ const FilterComponent: React.FC = () => {
     { id: 9, name: 'К оплате' },
     { id: 10, name: 'Статус записи' },
     { id: 11, name: 'Мастер' },
+    { id: 12, name: '' },
   ];
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
   };
 
+  const content = (
+    <div>
+      <Link to="">
+        <p>Открыть</p>
+      </Link>
+    </div>
+  );
   return (
     <div style={styles.mainContainer} className="dark:bg-boxdark">
       {/* Top filters row */}
@@ -195,6 +205,16 @@ const FilterComponent: React.FC = () => {
               </td>
               <td className="p-5">{data.familyIncome}</td>
               <td className="p-5">{data.totalClients}</td>
+              <td className="flex items-center justify-center">
+                <Popover
+                  content={content}
+                  placement="bottomRight"
+                  title="Title"
+                  trigger="click"
+                >
+                  <Button> . . . </Button>
+                </Popover>
+              </td>
             </tr>
           ))}
         </MasterTable>

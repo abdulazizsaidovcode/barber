@@ -6,7 +6,7 @@ const Calculation = () => {
   return (
     <div>
       <DefaultLayout>
-        <Breadcrumb pageName="Notification" />
+        <Breadcrumb pageName="Orders" />
         <MainTabs />
       </DefaultLayout>
     </div>
