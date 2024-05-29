@@ -183,8 +183,8 @@ const FilterComponent: React.FC = () => {
         <MasterTable thead={tableHeaders}>
           {tableData.map((data, index) => (
             <tr key={index} className="dark:text-white text-center">
-              <td className="text-center">
-                <img src={data.img} alt="Img" className='w-12' /></td>
+              <td className="text-center rounded-full p-2">
+                <img src={data.img} alt="Img" className='w-12 rounded-full' /></td>
               <td className="p-2">{data.master}</td>
               <td className="p-2">{data.Спеиализация}</td>
               <td className="p-2">{data.Тариф}</td>
@@ -201,7 +201,7 @@ const FilterComponent: React.FC = () => {
                   content={
                     <>
                       {statusData && statusData.map(item => (
-                        <Link to={`${item.category === 'open' ? '/MasterDatail' : pathname}`} key={item.id} className='block'>{item.name}</Link>
+                        <Link to={`${item.category === 'open' ? '/MasterDatail' : pathname}`} key={item.id} className='block '>{item.name}</Link>
                       ))}
                       
                     </>

@@ -45,7 +45,7 @@ const MasterDatail = () => {
 
 
       </DefaultLayout>
-      MasterDatail
+     
     </div>
   )
 }
