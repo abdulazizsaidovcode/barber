@@ -32,7 +32,6 @@ import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
 
-
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -45,7 +44,7 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    const refresh = sessionStorage.getItem('refreshUrl')
+    const refresh = sessionStorage.getItem('refreshUrl');
     setTimeout(() => setLoading(false), 1000);
     if (!refresh) {
       navigate('/auth/signin');
@@ -268,7 +267,7 @@ function App() {
           }
         />
         <Route
-          path="/notification"
+          path="/orders"
           element={
             <>
               <PageTitle title="Notification | Barber" />
