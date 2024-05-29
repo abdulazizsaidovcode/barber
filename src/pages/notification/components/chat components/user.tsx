@@ -11,14 +11,17 @@ const Chatusers = ({ user }: any) => {
             <ul>
                 {user.length > 0 ? user.map((item: any) =>
                     <li className='flex gap-2 items-center  md:my-1 border p-2'>
-                        <img src={item.img ? item.img : "https://picsum.photos/50/50"} alt="user img" className='w-10 rounded-full' />
+                        <img src={item.attachmentId ? item.attachmentId : "https://picsum.photos/50/50"} alt="user img" className='w-10 rounded-full' />
                         <div className={`${widths} flex gap-1  flex-col w-max`}>
                             <div className={`flex  gap-1 flex-col items-start}`}>
                                 <p className='text-sm'>{item.name ? item.name : "namae "} </p>
                                 <p className='text-xs'> ({item.number ? item.number : "number"})</p>
                             </div>
-                            <div className='bg-blue-400 text-xs px-1 w-max rounded-sm text-white'>
-                                detailes
+                            <div className='flex w-full justify-between items-center '>
+                                <div className='bg-blue-400 text-xs px-1 w-max rounded-sm text-white'>
+                                    detailes
+                                </div>
+                                {item.status !== "OFFLINE" && <p>✅</p>}
                             </div>
                         </div>
                     </li>
