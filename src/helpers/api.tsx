@@ -7,3 +7,5 @@ const base_url: string = 'http://45.67.35.86:8080/'
 
 //login url
 export const login_url: string = `${base_url}auth/admin-login`
+
+export const chat_user_url: string = `${base_url}chat/support-service`

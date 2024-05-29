@@ -10,9 +10,14 @@ import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
+import axios from 'axios';
+import ApiLink from '../../../helpers/apiLink';
+import { chat_user_url } from '../../../helpers/api';
+import { setConfig } from '../../../helpers/token';
 
 const Chat: React.FC = () => {
   const [chats, setChats] = useState(false);
+  const [user, setUser] = useState<any>([]);
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
@@ -20,16 +25,32 @@ const Chat: React.FC = () => {
   const [chatId, setChatId] = useState<string>('');
   const [stompClient, setStompClient] = useState<Client | null>(null);
 
+
+  useEffect(() => {
+    // setConfig()
+    axios.get(chat_user_url, {
+
+      headers: {
+        Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTk2NzY1MDc3In0.uqLtkSGi18oOwOR6GZa2gTrE3OlqausESCugorzSyb2tsC3REuBH1uf_3iciMtBwJkJh6eiE13O3_HMsuucWLw"
+      }
+    })
+      .then(res => {
+        setUser(res.data.body)
+        console.log(res.data.body)
+      }).catch((err) => {
+        console.error(err)
+      })
+  }, [])
   const data = [
     {
       id: 1,
-      img: null,
+      attachmentId: null,
       name: 'Abdulaziz',
       number: '91 959 55 99'
     },
     {
       id: 2,
-      img: null,
+      attachmentId: null,
       name: 'Abdulaziz',
       number: '91 959 55 99'
     }
@@ -49,81 +70,81 @@ const Chat: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const socket = new SockJS('http://localhost/ws');
-    const client = new Client({
-      webSocketFactory: () => socket,
-      debug: (str) => {
-        console.log(str);
-      },
-      onConnect: (frame) => {
-        console.log('Connected: ' + frame);
-        client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-          // showGreeting(response.body);
-        });
-      },
-      onStompError: (frame) => {
-        console.error('Error: ' + frame.headers['message']);
-      }
-    });
-    client.activate();
-    setStompClient(client);
-  }, []);
+  // useEffect(() => {
+  //   const socket = new SockJS('http://localhost/ws');
+  //   const client = new Client({
+  //     webSocketFactory: () => socket,
+  //     debug: (str) => {
+  //       console.log(str);
+  //     },
+  //     onConnect: (frame) => {
+  //       console.log('Connected: ' + frame);
+  //       client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
+  //         // showGreeting(response.body);
+  //       });
+  //     },
+  //     onStompError: (frame) => {
+  //       console.error('Error: ' + frame.headers['message']);
+  //     }
+  //   });
+  //   client.activate();
+  //   setStompClient(client);
+  // }, []);
 
-//   const sendName = () => {
-//     const chatMessage = {
-//       id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-//       senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
-//       recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
-//       content: message,
-//       isRead: false,
-//       createdAt: new Date(),
-//       attachmentIds: []
-//     };
-//     if (stompClient && stompClient.connected) {
-//       stompClient.publish({
-//         destination: '/app/chat',
-//         body: JSON.stringify(chatMessage)
-//       });
-//     }
-//   };
+  //   const sendName = () => {
+  //     const chatMessage = {
+  //       id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  //       senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
+  //       recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
+  //       content: message,
+  //       isRead: false,
+  //       createdAt: new Date(),
+  //       attachmentIds: []
+  //     };
+  //     if (stompClient && stompClient.connected) {
+  //       stompClient.publish({
+  //         destination: '/app/chat',
+  //         body: JSON.stringify(chatMessage)
+  //       });
+  //     }
+  //   };
 
-//   const messageDelete = () => {
-//     if (stompClient && stompClient.connected) {
-//       stompClient.publish({
-//         destination: '/app/deleteMessage',
-//         body: JSON.stringify(chatId)
-//       });
-//     }
-//   };
+  //   const messageDelete = () => {
+  //     if (stompClient && stompClient.connected) {
+  //       stompClient.publish({
+  //         destination: '/app/deleteMessage',
+  //         body: JSON.stringify(chatId)
+  //       });
+  //     }
+  //   };
 
-//   const editMessage = () => {
-//     const editMessage = {
-//       messageId: chatId,
-//       chatDto: {
-//         id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-//         senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
-//         recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
-//         content: message,
-//         isRead: false,
-//         createdAt: new Date(),
-//         attachmentIds: []
-//       }
-//     };
-//     if (stompClient && stompClient.connected) {
-//       stompClient.publish({
-//         destination: '/app/editMessage',
-//         body: JSON.stringify(editMessage)
-//       });
-//     }
-//   };
+  //   const editMessage = () => {
+  //     const editMessage = {
+  //       messageId: chatId,
+  //       chatDto: {
+  //         id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  //         senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
+  //         recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
+  //         content: message,
+  //         isRead: false,
+  //         createdAt: new Date(),
+  //         attachmentIds: []
+  //       }
+  //     };
+  //     if (stompClient && stompClient.connected) {
+  //       stompClient.publish({
+  //         destination: '/app/editMessage',
+  //         body: JSON.stringify(editMessage)
+  //       });
+  //     }
+  //   };
 
-//   const showGreeting = (message: string) => {
-//     const response = document.getElementById('response') as HTMLElement;
-//     const p = document.createElement('p');
-//     p.appendChild(document.createTextNode(message));
-//     response.appendChild(p);
-//   };
+  //   const showGreeting = (message: string) => {
+  //     const response = document.getElementById('response') as HTMLElement;
+  //     const p = document.createElement('p');
+  //     p.appendChild(document.createTextNode(message));
+  //     response.appendChild(p);
+  //   };
 
   const toggleSidebar = () => {
     setSidebarWidth((currentWidth) => (currentWidth === 'w-max' ? 'fixed' : 'w-max'));
