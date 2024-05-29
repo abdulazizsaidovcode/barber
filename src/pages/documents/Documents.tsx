@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import DefaultLayout from '../../layout/DefaultLayout'
-import Accordion from '../../components/accordion/accordion'
-import { MdEdit } from 'react-icons/md'
-import Switch from '../../components/settings/details/TableSwitcher'
+import React, { useState } from 'react';
+import DefaultLayout from '../../layout/DefaultLayout';
+import Accordion from '../../components/accordion/accordion';
+
+import Switch from '../../components/settings/details/TableSwitcher';
 
 const Documents: React.FC = () => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -10,50 +10,50 @@ const Documents: React.FC = () => {
     const toggleSwitch = () => {
         setIsSwitchOn(!isSwitchOn);
     };
-    return (
-        <>
-            <DefaultLayout>
-                <div className='flex flex-col gap-3'>
-                    <Accordion title='О сервисе'>
-                        <div className='border-[1px] border-black p-5 rounded-2xl dark:border-white'>
-                            <p>Соображения высшего порядка, а также новая модель организационной деятельности
-                                играет важную роль в формировании дальнейших направлений развития проекта. Практический
-                                опыт показывает, что социально-экономическое развитие обеспечивает широкому кругу специалистов участие
-                                в формировании дальнейших направлений развитая системы массового участия. Равным образом повышение уровня гражданского
-                                сознания влечет за собой процесс внедрения и модернизации форм воздействия?
-                                Повседневная практика показывает, что консультация с профессионалами из IT играет важную роль
-                                в формировании ключевых компонентов планируемого обновления. Не следует, однако, забывать о том,
-                                что курс на социально-ориентированный национальный проект требует от нас анализа экономической
-                                целесообразности принимаемых решений. Задача организации, в особенности же выбранный нами инновационный
-                                путь способствует подготовке и реализации соответствующих условий активизации.
-                                Таким образом, социально-экономическое развитие позволяет оценить значение системы
-                                обучения кадров, соответствующей насущным потребностям.</p>
-                        </div>
-                        <div className='float-end mt-3'>
-                            <button className="p-[6px] dark:border-[#fff] border-[#000] border-[1px] rounded-lg">
-                                <MdEdit size={20} className="dark:text-white" />
-                            </button>
-                        </div>
-                    </Accordion>
-                    <Accordion title='Политика конфиденциальности'>
-                        <div className='border-[1px] border-black p-5 rounded-2xl dark:border-white'>
-                            <p>Соображения высшего порядка, а также новая модель организационной деятельности играет важную роль в формировании дальнейших направлений развития проекта. Практический опыт показывает, что социально-экономическое развитие обеспечивает широкому кругу специалистов участие в формировании дальнейших направлений развитая системы массового участия. Равным образом повышение уровня гражданского сознания влечет за собой процесс внедрения и модернизации форм воздействия?
-                                Повседневная практика показывает, что консультация с профессионалами из IT играет важную роль в формировании ключевых компонентов планируемого обновления. Не следует, однако, забывать о том, что курс на социально-ориентированный национальный проект требует от нас анализа экономической целесообразности принимаемых решений. Задача организации, в особенности же выбранный нами инновационный путь способствует подготовке и реализации соответствующих условий активизации. Таким образом, социально-экономическое развитие позволяет оценить значение системы обучения кадров, соответствующей насущным потребностям.</p>
-                        </div>
-                        <div className='mt-3 flex gap-3 items-center'>
-                            <p>Отображать в приложениях</p>
-                            <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
-                        </div>
-                    </Accordion>
-                    <Accordion title='Лицензии'>
-                        <div>
-                            <p>Вложения</p>
-                        </div>
-                    </Accordion>
-                </div >
-            </DefaultLayout >
-        </>
-    )
-}
 
-export default Documents
+    // Define accordion items
+    const accordionItems = [
+        {
+            title: 'О сервисе',
+            content: 'Your content for О сервисе',
+            showSwitch: false
+        },
+        {
+            title: 'Политика конфиденциальности',
+            content: 'Your content for Политика конфиденциальности',
+            showSwitch: true
+        },
+        {
+            title: 'Лицензионное соглашение',
+            content: 'Your content for Лицензионное соглашение',
+            showSwitch: true
+        },
+        {
+            title: 'Лицензии',
+            content: 'Your content for Лицензии',
+            showSwitch: false
+        }
+    ];
+
+    return (
+        <DefaultLayout>
+            <div className='flex flex-col gap-3'>
+                {accordionItems.map((item, index) => (
+                    <Accordion key={index} title={item.title}>
+                        <div className='border-[1px] border-black p-5 rounded-2xl dark:border-white'>
+                            <p>{item.content}</p>
+                        </div>
+                        {item.showSwitch && (
+                            <div className='mt-3 flex gap-3 items-center'>
+                                <p>Отображать в приложениях</p>
+                                <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
+                            </div>
+                        )}
+                    </Accordion>
+                ))}
+            </div>
+        </DefaultLayout>
+    );
+};
+
+export default Documents;
