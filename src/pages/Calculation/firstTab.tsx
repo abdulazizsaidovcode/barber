@@ -53,6 +53,7 @@ const FilterComponent: React.FC = () => {
 
   const tableData = [
     {
+      id: 1,
       country: "O'zbekistan",
       nonCashTurnover: '50 000 000',
       allTurnover: '250 000 000',
@@ -66,6 +67,7 @@ const FilterComponent: React.FC = () => {
       familyIncome: 'j',
       totalClients: '0',
     },
+    // Add more objects as needed
   ];
 
   const Status = () => (
@@ -88,17 +90,19 @@ const FilterComponent: React.FC = () => {
     { id: 11, name: 'Мастер' },
     { id: 12, name: '' },
   ];
+
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
   };
 
-  const content = (
+  const renderPopoverContent = (id: number) => (
     <div>
-      <Link to="/orders/1">
+      <Link to={`/orders/${id}`}>
         <p>Открыть</p>
       </Link>
     </div>
   );
+
   return (
     <div style={styles.mainContainer} className="dark:bg-boxdark">
       {/* Top filters row */}
@@ -184,8 +188,8 @@ const FilterComponent: React.FC = () => {
       {/* Table */}
       <div>
         <MasterTable thead={tableHeaders}>
-          {tableData.map((data, index) => (
-            <tr key={index} className="dark:text-white">
+          {tableData.map((data) => (
+            <tr key={data.id} className="dark:text-white">
               <td className="p-5">{data.country}</td>
               <td className="p-5">{data.nonCashTurnover}</td>
               <td className="p-5">{data.allTurnover}</td>
@@ -207,7 +211,7 @@ const FilterComponent: React.FC = () => {
               <td className="p-5">{data.totalClients}</td>
               <td className="flex items-center justify-center">
                 <Popover
-                  content={content}
+                  content={renderPopoverContent(data.id)}
                   placement="bottomRight"
                   title="Title"
                   trigger="click"
