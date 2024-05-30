@@ -9,8 +9,7 @@ const Calculation = () => {
   return (
     <div>
       <DefaultLayout>
-
-        <Breadcrumb pageName= {t('orders_name')} />
+        <Breadcrumb pageName={t('orders_name')} />
         <MainTabs />
       </DefaultLayout>
     </div>
