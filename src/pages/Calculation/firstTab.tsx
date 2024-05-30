@@ -187,7 +187,7 @@ const FilterComponent: React.FC = () => {
                 <td className="p-5">{data.price}</td>
                 <td className="p-5">{data.prePayment}</td>
                 <td className="p-5">{data.paid}</td>
-                <td className="p-5">{data.paymentType}</td>
+                <td className="p-5">{data.paymentType === null ? "Mavjud emas": data.paymentType}</td>
                 <td className="p-5">{data.toPay}</td>
                 <td className="p-5">{data.orderStatus === 'COMPLETED' ? 'true' : 'false'}</td>
                 <td className="p-5">
