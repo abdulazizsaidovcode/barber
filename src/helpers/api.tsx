@@ -14,3 +14,5 @@ export const get_orders_list: string = `${base_url}order/web`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`
 
+export const calendar_url: string = `${base_url}dashboard/web/calendar`
+
