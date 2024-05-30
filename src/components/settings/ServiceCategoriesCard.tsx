@@ -10,7 +10,7 @@ interface ServiceCategoriesCardProps {
 const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, editOnClick, deleteOnClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
-  const [chamgedTitle, setchamgedTitle] = useState(title);
+  const [changedTitle, setChangedTitle] = useState(title);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -22,9 +22,7 @@ const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, ed
         >{currentTitle}</div>
       </div>
       <div className="flex items-center gap-2 ms-5">
-
         <button
-
           onClick={() => {
             openModal()
           }}
@@ -52,7 +50,7 @@ const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, ed
               closeModal()
             }} className="text-white bg-[#000] py-2 px-10">close</button>
             <button onClick={() => {
-              if (chamgedTitle !== currentTitle && currentTitle.trim() !== " " && currentTitle !== "") {
+              if (changedTitle !== currentTitle && currentTitle.trim() !== " " && currentTitle !== "") {
                 if (+currentTitle !== 0 && +currentTitle < 100) {
                   closeModal()
                   editOnClick(currentTitle)

@@ -11,5 +11,6 @@ const base_url: string = 'http://45.67.35.86:8080/'
 export const login_url: string = `${base_url}auth/admin-login`
 export const precent_list: string = `${base_url}percent`
 export const add_precent_list: string = `${base_url}percent`
+export const service_category_list: string = `${base_url}category`
 
 export const chat_user_url: string = `${base_url}chat/support-service`

@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ServiceCategoriesCard from "../../components/settings/ServiceCategoriesCard"
 import DefaultLayout from "../../layout/DefaultLayout"
 import Modal from "../../components/modals/modal";
+import axios from "axios";
+import { service_category_list } from "../../helpers/api";
+
+interface Data {
+    id: string;
+    name: string;
+}
 
 const ServiceCategories = () => {
     const [addIsOpen, setAddIsOpen] = useState(false);
     const [delIsOpen, setDelIsOpen] = useState(false);
+    const [data, setData] = useState<Data[]>([]);
 
     const delOpenModal = () => setDelIsOpen(true);
     const delCloseModal = () => setDelIsOpen(false);
     const addOpenModal = () => setAddIsOpen(true);
     const addCloseModal = () => setAddIsOpen(false);
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const getData = async () => {
+        try {
+            const res = await axios.get(service_category_list)
+            console.log(res.data);
+            setData(res.data.body)
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
 
     return (
         <>
@@ -20,11 +42,11 @@ const ServiceCategories = () => {
                     <button onClick={addOpenModal} className="dark:bg-danger bg-[#c2c2c2] text-black dark:text-white    py-2 px-4 rounded-lg">Добавить категорию</button>
                 </div>
                 <div className="mt-4 w-[75%]">
-                    <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => delOpenModal()} />
-                    <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => 'w'} />
-                    <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => 'w'} />
-                    <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => 'w'} />
-                    <ServiceCategoriesCard title="Красота волос" editOnClick={() => 'w'} deleteOnClick={() => 'w'} />
+                    {data.map(item => (
+                        <div key={item.id}>
+                            <ServiceCategoriesCard title={`${item.name}`} editOnClick={() => 'w'} deleteOnClick={() => delOpenModal()} />
+                        </div>
+                    ))}
                 </div>
             </DefaultLayout>
             <Modal isOpen={addIsOpen} onClose={addCloseModal}>
