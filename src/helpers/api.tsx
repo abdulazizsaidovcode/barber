@@ -16,6 +16,9 @@ export const chat_user_url: string = `${base_url}chat/support-service`
 
 export const calendar_url: string = `${base_url}dashboard/web/calendar`
 
+export const dashboard_url = (year: number) => {
+    return `${base_url}dashboard/web/statistic?year=${year}`
+}
 
 //finance
 export const finance_list = (month: number, year: number) => {
