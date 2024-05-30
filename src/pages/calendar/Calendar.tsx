@@ -38,9 +38,22 @@ const Calendar: React.FC = () => {
   ];
 
   const [activeButton, setActiveButton] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState<string>('');
 
   const handleButtonClick = (buttonId: string) => {
     setActiveButton(buttonId);
+  };
+
+  const handleDatesSet = (arg: any) => {
+    if (arg.view.type === 'dayGridMonth') {
+      setCurrentDate(arg.startStr); // Store year-month-day for month view
+    } else if (arg.view.type === 'timeGridWeek') {
+      const start = new Date(arg.start);
+      const end = new Date(arg.end);
+      const startDate = `${start.getFullYear()}-${(start.getMonth() + 1).toString().padStart(2, '0')}-${start.getDate().toString().padStart(2, '0')}`;
+      const endDate = `${end.getFullYear()}-${(end.getMonth() + 1).toString().padStart(2, '0')}-${(end.getDate() - 1).toString().padStart(2, '0')}`; // Subtracting 1 from end date as it includes the next day
+      setCurrentDate(`${startDate} to ${endDate}`); // Store year-month-day to year-month-day for week view
+    }
   };
 
   return (
@@ -129,10 +142,14 @@ const Calendar: React.FC = () => {
           center: 'title',
           end: 'dayGridMonth,timeGridWeek',
         }}
+        datesSet={handleDatesSet}
         eventAdd={() => {}}
         eventBackgroundColor="#fff"
         events={events}
       />
+      <div>
+        <p>Current Date: {currentDate}</p>
+      </div>
     </DefaultLayout>
   );
 };
