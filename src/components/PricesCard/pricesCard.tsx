@@ -1,4 +1,4 @@
-import { Button, Checkbox, CheckboxProps, Input } from "antd";
+import { Button, Checkbox, CheckboxProps, DatePicker, Input } from "antd";
 import React, { useState } from "react";
 import Modal from "../modals/modal";
 
@@ -64,35 +64,38 @@ const PricesCard: React.FC = () => {
                     <Input placeholder="3 000 000" className="py-2 text-dark font-bold mr-48" disabled={isCheckboxChecked} />
                     <Checkbox disabled={isCheckboxChecked}>Карта</Checkbox>
                 </div>
-                <div className="flex flex-col md:flex-row justify-between mb-2 text-slate-700 dark:text-slate-300">
+                <div className="flex flex-col md:flex-row justify-between mb-3 text-slate-700 dark:text-slate-300">
                     <Checkbox disabled={isCheckboxChecked}>Вся сумма подписки</Checkbox>
                     <Checkbox disabled={isCheckboxChecked}>Вся сумма подписки</Checkbox>
                 </div>
-                <p className="mb-1">Дата с которой остановить тариф</p>
-                <div className="flex flex-col md:flex-row font-bold text-black justify-between mb-2">
-                    <Input type="date" className="px-8 py-1 rounded-lg shadow-6 mb-2 mr-24" disabled={isCheckboxChecked} />
-                    <button className="bg-[#A6A6A6] rounded-lg px-2 mb-2" disabled={isCheckboxChecked}>Отменить</button>
-                    <button
-                        className={`rounded-lg px-2 ${isCheckboxChecked ? "bg-red-600" : "bg-[#A6A6A6]"} mb-2`}
-                        onClick={handleOpenModal}
-                        disabled={!isCheckboxChecked}
-                    >
-                        Остановить
-                    </button>
+                <p className="mb-2 text-sm">Дата с которой остановить тариф</p>
+                <div className="flex flex-col md:flex-row font-bold text-black mb-2 justify-between">
+                    <DatePicker disabled={isCheckboxChecked} />
+                    <div className="flex justify-end gap-2 mt-2">
+                        <button className="bg-[#A6A6A6] rounded-lg px-2 p-1 mb-2 flex" disabled={isCheckboxChecked}>Отменить</button>
+                        <button
+                            className={`rounded-lg px-2 ${isCheckboxChecked ? "bg-red-600 text-white" : "bg-[#A6A6A6]"} mb-2`}
+                            onClick={handleOpenModal}
+                            disabled={!isCheckboxChecked}
+                        >
+                            Остановить подписку
+                        </button>
+                    </div>
+
                 </div>
             </div>
             <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
                 <p>Вы уверены что хоите остановить подписку?</p>
                 <div className="flex justify-end mt-4">
-                    <button 
-                        onClick={handleCloseModal} 
+                    <button
+                        onClick={handleCloseModal}
                         className="mr-2 bg-[#232323] px-2 py-1 text-white"
                         disabled={sliderValue < 100}
                     >
                         Остановить
                     </button>
-                    <button 
-                        onClick={handleCloseModal} 
+                    <button
+                        onClick={handleCloseModal}
                         className="bg-[#686868] px-4 py-1 text-white"
                     >
                         Нет
