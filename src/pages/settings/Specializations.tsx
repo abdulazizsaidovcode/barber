@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Accordion from '../../components/accordion/accordion';
-import ServiceCategoriesCard from '../../components/settings/ServiceCategoriesCard';
+import ServiceCategoriesCard from '../../components/settings/details/ServiceCategoriesCard';
 import { FaPlus } from 'react-icons/fa';
 import Modal from '../../components/modals/modal';
 

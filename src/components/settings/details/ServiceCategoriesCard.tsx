@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
-import Modal from "../modals/modal";
+import Modal from "../../modals/modal";
 interface ServiceCategoriesCardProps {
   title: string;
   editOnClick: (newTitle: string) => void;
@@ -10,7 +10,7 @@ interface ServiceCategoriesCardProps {
 const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, editOnClick, deleteOnClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
-  const [changedTitle, setChangedTitle] = useState(title);
+  const [chamgedTitle, setchamgedTitle] = useState(title);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -22,7 +22,9 @@ const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, ed
         >{currentTitle}</div>
       </div>
       <div className="flex items-center gap-2 ms-5">
+
         <button
+
           onClick={() => {
             openModal()
           }}
@@ -50,10 +52,10 @@ const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, ed
               closeModal()
             }} className="text-white bg-[#000] py-2 px-10">close</button>
             <button onClick={() => {
-              if (changedTitle !== currentTitle && currentTitle.trim() !== " " && currentTitle !== "") {
-                if (+currentTitle !== 0 && +currentTitle < 100) {
+              if (chamgedTitle !== currentTitle && currentTitle.trim() !== " " && currentTitle !== "") {
+                if (currentTitle !== "0" && currentTitle < "100") {
                   closeModal()
-                  editOnClick(currentTitle)
+                  editOnClick(currentTitle) 
                 } else {
                   alert("0 ga teng bolmasligi va 100dan bvalandd bolmasligi kerak")
                 }

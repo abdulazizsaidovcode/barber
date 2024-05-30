@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ServiceCategoriesCard from "../../components/settings/ServiceCategoriesCard"
+import ServiceCategoriesCard from "../../components/settings/details/ServiceCategoriesCard"
 import DefaultLayout from "../../layout/DefaultLayout"
 import Modal from "../../components/modals/modal";
 import axios from "axios";

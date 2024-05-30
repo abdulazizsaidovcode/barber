@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Accordion from '../../components/accordion/accordion';
-import ServiceCategoriesCard from '../../components/settings/ServiceCategoriesCard';
+import ServiceCategoriesCard from '../../components/settings/details/ServiceCategoriesCard';
 import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
 import { add_precent_list, precent_list } from '../../helpers/api';
