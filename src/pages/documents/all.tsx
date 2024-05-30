@@ -31,14 +31,14 @@ const All: React.FC = () => {
 
     return (
         <div className='p-2'>
-            <div className='flex flex-col gap-3 mb-3'>
+            <div className='flex flex-col gap-3 mb-3   text-slate-700 dark:text-slate-300'>
                 {accordionItems.map((item, index) => (
                     <Accordion key={index} title={item.title}>
-                        <div className='border-[1px] border-black p-5 rounded-2xl dark:border-white'>
+                        <div className='border-[1px]  p-5 rounded-2xl dark:border-white bg-white dark:bg-black  text-slate-700 dark:text-slate-300'>
                             <p>{item.content}</p>
                         </div>
                         {item.showSwitch && (
-                            <div className='mt-3 flex gap-3 items-center'>
+                            <div className='mt-3 flex gap-3 items-center text-slate-700 dark:text-slate-300'>
                                 <p>Отображать в приложениях</p>
                                 <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
                             </div>
@@ -46,9 +46,9 @@ const All: React.FC = () => {
                     </Accordion>
                 ))}
                 <Accordion title='Лицензии'>
-                    <p className='mb-2'>Вложения</p>
+                    <p className='mb-2  text-slate-700 dark:text-slate-300'>Вложения</p>
                     <div className="flex flex-row flex-wrap bg-gray-100">
-                        <div className='mt-3 flex gap-3 items-center mb-2'>
+                        <div className='mt-3 flex gap-3 items-center mb-2text-slate-700 dark:text-slate-300'>
                             <p>Отображать в приложениях</p>
                             <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
                         </div> 
