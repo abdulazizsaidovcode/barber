@@ -14,10 +14,3 @@ export const get_orders_list: string = `${base_url}order/web`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`
 
-// beautification jwt token
-export const config = {
-    headers: {Authorization: sessionStorage.getItem('jwtTokEn')}
-};
-
-export const setConfig = () => config.headers.Authorization = sessionStorage.getItem('jwtTokEn');
-
