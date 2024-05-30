@@ -1,9 +1,10 @@
-import { Button, Col, DatePicker, Input, Row, Select } from 'antd';
+import { Button, Col, DatePicker, Input, Row, Select, Space } from 'antd';
 import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import MasterModal from '../master-modal.tsx';
 
+const { RangePicker } = DatePicker;
 const { Option } = Select;
 const filterObj = {
   searchValue: '',
@@ -107,12 +108,13 @@ const Filters: React.FC = () => {
         <>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <DatePicker
-                placeholder={'Registration period for masters'}
-                style={styles.filterInput}
-                value={filters.registrationPeriodValue}
-                onChange={(date) => handleInputChange('registrationPeriodValue', date)}
-              />
+              <Space direction="vertical" size={12}>
+                <RangePicker
+                    style={styles.filterInput}
+                    value={filters.registrationPeriodValue}
+                    onChange={(date) => handleInputChange('registrationPeriodValue', date)}
+                />
+              </Space>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select

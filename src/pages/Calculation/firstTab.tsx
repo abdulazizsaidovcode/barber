@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
-import {
-  Select,
-  Input,
-  Button,
-  Row,
-  Col,
-  DatePicker,
-  DatePickerProps,
-  Popover,
-} from 'antd';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Select, Input, Button, Row, Col, DatePicker, DatePickerProps, Popover } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
@@ -18,63 +10,9 @@ const { Option } = Select;
 
 const FilterComponent: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
+  const [tableData, setTableData] = useState<any[]>([]);
 
-  // Toggle visibility of extra filters
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
-
-  // Inline styles for the component
-  const styles = {
-    mainContainer: {
-      padding: '20px',
-      borderRadius: '8px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-      marginBottom: '20px',
-    },
-    filterGroup: {
-      marginBottom: '16px',
-    },
-    filterTitle: {
-      marginBottom: '5px',
-      fontWeight: 'bold',
-    },
-    filterInput: {
-      width: '100%',
-      borderRadius: '8px',
-      backgroundColor: '#f0f0f0', // Light gray
-    },
-    toggleButton: {
-      width: '13%',
-      backgroundColor: '#f0f0f0',
-    },
-    extraButton: {
-      backgroundColor: '#f0f0f0',
-    },
-  };
-
-  const tableData = [
-    {
-      id: 1,
-      country: "O'zbekistan",
-      nonCashTurnover: '50 000 000',
-      allTurnover: '250 000 000',
-      enterTime: '0',
-      leftTime: '0',
-      incomeSimple: '0',
-      incomePremium: '5 000 000',
-      incomeVip: '12 000 000',
-      masterTotal: '25 000 000',
-      anotherSimple: 'Одобнена',
-      familyIncome: 'j',
-      totalClients: '0',
-    },
-    // Add more objects as needed
-  ];
-
-  const Status = () => (
-    <div className="w-[100%]">
-      <p>Одобнена</p>
-    </div>
-  );
 
   const tableHeaders = [
     { id: 1, name: 'Клиент' },
@@ -104,87 +42,81 @@ const FilterComponent: React.FC = () => {
   );
 
   return (
-    <div style={styles.mainContainer} className="dark:bg-boxdark">
+    <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
-      <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+      <Row gutter={[16, 16]} className="mb-2">
+        <Col xs={24} sm={12} md={6} className="mb-4">
           <Input
             placeholder="Search by name"
             prefix={<IoSearchOutline />}
-            style={styles.filterInput}
+            className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
           />
         </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-          <Select defaultValue="Country" style={styles.filterInput}>
+        <Col xs={24} sm={12} md={6} className="mb-4">
+          <Select defaultValue="Country" className="w-full rounded-lg bg-gray-200 dark:bg-gray-800">
             <Option value="toshkent">Toshkent</Option>
             <Option value="qarshi">Qarshi</Option>
           </Select>
         </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+        <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
             defaultValue="2024"
-            style={styles.filterInput}
+            className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             placeholder="Select Year"
           >
             <Option value="2024">2024</Option>
             <Option value="2023">2023</Option>
           </Select>
         </Col>
-        <Col
-          xs={24}
-          sm={12}
-          md={6}
-          style={styles.filterGroup}
-          className="flex gap-4"
-        >
+        <Col xs={24} sm={12} md={6} className="mb-4 flex gap-4">
           <Button
-            className="flex items-center justify-center dark:bg-black"
+            className="flex items-center justify-center w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             onClick={toggleExtraFilters}
-            style={styles.toggleButton}
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton}>Download</Button>
+          <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg">Download</Button>
         </Col>
       </Row>
 
       {/* Extra filters row */}
       {showExtraFilters && (
-        <Row gutter={[29, 16]} style={{ marginBottom: '10px' }}>
-          <Col xs={14} sm={7} md={4} style={styles.filterGroup}>
-            <DatePicker onChange={onChange} />
+        <Row gutter={[29, 16]} className="mb-2">
+          <Col xs={14} sm={7} md={4} className="mb-4">
+            <DatePicker onChange={onChange} className="w-full rounded-lg bg-gray-200 dark:bg-gray-800" />
           </Col>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select defaultValue="Категория услуг" style={styles.filterInput}>
+          <Col xs={24} sm={12} md={6} className="mb-4">
+            <Select defaultValue="Категория услуг" className="w-full rounded-lg bg-gray-200 dark:bg-gray-800">
               <Option value="toshkent">100</Option>
               <Option value="qarshi">200</Option>
             </Select>
           </Col>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+          <Col xs={24} sm={12} md={6} className="mb-4">
             <Select
               defaultValue="Статус записи"
-              style={styles.filterInput}
+              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               placeholder="Tariff"
             >
               <Option value="Одобрена">Одобрена √</Option>
               <Option value="На_одобрении">На одобрении !</Option>
             </Select>
           </Col>
-          <Col xs={24} sm={12} md={5} style={styles.filterGroup}>
+          <Col xs={24} sm={12} md={5} className="mb-4">
             <Select
               defaultValue="Статус записи"
-              style={styles.filterInput}
+              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               placeholder="Tariff"
             >
               <Option value="Карта">Карта</Option>
               <Option value="Наличные">Наличные</Option>
             </Select>
           </Col>
-          <Col xs={24} sm={12} md={3} style={styles.filterGroup}>
-            <Button style={styles.extraButton}>Reset</Button>
+          <Col xs={24} sm={12} md={3} className="mb-4">
+            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full">Reset</Button>
           </Col>
         </Row>
       )}
+
       {/* Table */}
       <div>
         <MasterTable thead={tableHeaders}>
