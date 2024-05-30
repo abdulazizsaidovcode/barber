@@ -3,9 +3,9 @@ import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../../images/logo/logo.png';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { CiCalendar } from 'react-icons/ci';
-import { SlCalculator } from 'react-icons/sl';
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { TfiGallery } from 'react-icons/tfi';
+
 import {
   IoChatbubbleEllipsesOutline,
   IoDocumentTextOutline,
@@ -13,7 +13,7 @@ import {
 import { TbCards } from 'react-icons/tb';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
-import { IoIosNotificationsOutline } from 'react-icons/io';
+import { MdOutlineShoppingBag } from 'react-icons/md';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -439,7 +439,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
-                  <IoIosNotificationsOutline />
+                  <MdOutlineShoppingBag />
 
                   {t('siderbar_calculation')}
                 </NavLink>

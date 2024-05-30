@@ -10,6 +10,10 @@
   "siderbar_profile": "Профиль",
   "siderbar_cards": "Карты",
   "siderbar_chat": "Чат",
+  "orders_name": "Записи",
+  "FirstTab_name": "Предстоящие",
+  "SecondTab_name": "Завершенные",
+  "ThirdTab_name": "Отклонённые",
   "siderbar_settings": "Настройки",
   "siderbar_documents": "Нормативные документы",
   "siderbar_Mutual_settlements": "Взаиморасчёты"
