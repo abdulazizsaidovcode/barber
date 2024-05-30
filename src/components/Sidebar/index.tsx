@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../../images/logo/logo.png';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { CiCalendar } from 'react-icons/ci';
-import { BsCurrencyDollar } from 'react-icons/bs';
+import { BsCurrencyDollar, BsFillPersonLinesFill } from 'react-icons/bs';
 import { TfiGallery } from 'react-icons/tfi';
 
 import {
@@ -418,6 +418,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </svg>
                   </i>
                   {t('siderbar_master')}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/client"
+                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                    pathname.includes('client') && 'bg-gray dark:bg-[#9c0a36]'
+                  }`}
+                >
+                 <BsFillPersonLinesFill />
+                  {t('siderbar_client')}
                 </NavLink>
               </li>
               <li>
