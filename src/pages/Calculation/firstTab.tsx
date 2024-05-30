@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Select, Input, Button, Row, Col, DatePicker, DatePickerProps, Popover } from 'antd';
+import {
+  Select,
+  Input,
+  Button,
+  Row,
+  Col,
+  DatePicker,
+  DatePickerProps,
+  Popover,
+} from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
 import { Link } from 'react-router-dom';
+import { get_orders_list } from '../../helpers/api';
 
 const { Option } = Select;
 
 const FilterComponent: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
   const [tableData, setTableData] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
 
@@ -41,6 +52,21 @@ const FilterComponent: React.FC = () => {
     </div>
   );
 
+  useEffect(() => {
+    // Fetch data from API
+    axios
+      .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`)
+      .then((response) => {
+        setTableData(response.data);
+        setLoading(false);
+
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the data!', error);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
@@ -53,7 +79,10 @@ const FilterComponent: React.FC = () => {
           />
         </Col>
         <Col xs={24} sm={12} md={6} className="mb-4">
-          <Select defaultValue="Country" className="w-full rounded-lg bg-gray-200 dark:bg-gray-800">
+          <Select
+            defaultValue="Country"
+            className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+          >
             <Option value="toshkent">Toshkent</Option>
             <Option value="qarshi">Qarshi</Option>
           </Select>
@@ -75,7 +104,9 @@ const FilterComponent: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg">Download</Button>
+          <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg">
+            Download
+          </Button>
         </Col>
       </Row>
 
@@ -83,10 +114,16 @@ const FilterComponent: React.FC = () => {
       {showExtraFilters && (
         <Row gutter={[29, 16]} className="mb-2">
           <Col xs={14} sm={7} md={4} className="mb-4">
-            <DatePicker onChange={onChange} className="w-full rounded-lg bg-gray-200 dark:bg-gray-800" />
+            <DatePicker
+              onChange={onChange}
+              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+            />
           </Col>
           <Col xs={24} sm={12} md={6} className="mb-4">
-            <Select defaultValue="Категория услуг" className="w-full rounded-lg bg-gray-200 dark:bg-gray-800">
+            <Select
+              defaultValue="Категория услуг"
+              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+            >
               <Option value="toshkent">100</Option>
               <Option value="qarshi">200</Option>
             </Select>
@@ -112,7 +149,9 @@ const FilterComponent: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
-            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full">Reset</Button>
+            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full">
+              Reset
+            </Button>
           </Col>
         </Row>
       )}
@@ -120,39 +159,39 @@ const FilterComponent: React.FC = () => {
       {/* Table */}
       <div>
         <MasterTable thead={tableHeaders}>
-          {tableData.map((data) => (
-            <tr key={data.id} className="dark:text-white">
-              <td className="p-5">{data.country}</td>
-              <td className="p-5">{data.nonCashTurnover}</td>
-              <td className="p-5">{data.allTurnover}</td>
-              <td className="p-5 flex items-center justify-center">
-                <div className="bg-blue-400 p-1 flex items-center justify-center rounded-xl w-[90%]">
-                  {data.enterTime} - {data.leftTime}
-                </div>
-              </td>
-              <td className="p-5">{data.incomeSimple}</td>
-              <td className="p-5">{data.incomePremium}</td>
-              <td className="p-5">{data.incomeVip}</td>
-              <td className="p-5">{data.masterTotal}</td>
-              <td className="p-5 ">
-                <div className="bg-blue-500 p-1 flex rounded-md items-center justify-center">
-                  {data.anotherSimple}
-                </div>
-              </td>
-              <td className="p-5">{data.familyIncome}</td>
-              <td className="p-5">{data.totalClients}</td>
-              <td className="flex items-center justify-center">
-                <Popover
-                  content={renderPopoverContent(data.id)}
-                  placement="bottomRight"
-                  title="Title"
-                  trigger="click"
-                >
-                  <Button> . . . </Button>
-                </Popover>
+          {loading ? (
+            <tr>
+              <td colSpan={tableHeaders.length} className="text-center p-5">
+                Loading...
               </td>
             </tr>
-          ))}
+          ) : (
+            tableData.map((data) => (
+              <tr key={data.id} className="dark:text-white">
+                <td className="p-5">{data.client}</td>
+                <td className="p-5">{data.procedure}</td>
+                <td className="p-5">{data.date}</td>
+                <td className="p-5">{data.time}</td>
+                <td className="p-5">{data.cost}</td>
+                <td className="p-5">{data.prepayment}</td>
+                <td className="p-5">{data.paid}</td>
+                <td className="p-5">{data.paymentType}</td>
+                <td className="p-5">{data.toPay}</td>
+                <td className="p-5">{data.status}</td>
+                <td className="p-5">{data.master}</td>
+                <td className="flex items-center justify-center">
+                  <Popover
+                    content={renderPopoverContent(data.id)}
+                    placement="bottomRight"
+                    title="Title"
+                    trigger="click"
+                  >
+                    <Button> . . . </Button>
+                  </Popover>
+                </td>
+              </tr>
+            ))
+          )}
         </MasterTable>
       </div>
     </div>
