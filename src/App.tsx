@@ -32,6 +32,7 @@ import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
 import Id_page from './pages/Calculation/id_page.tsx';
+import { getMe } from './helpers/api.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -51,6 +52,7 @@ function App() {
       navigate('/auth/signin');
       sessionStorage.setItem('refreshUrl', 'true');
     }
+    getMe()
   }, []);
 
   return loading ? (
