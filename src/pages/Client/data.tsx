@@ -123,18 +123,9 @@ export const items: IClientItems[] = [
     key: '1',
     label: (
       <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-        Клиенты ройхати
+        
       </span>
     ),
     children: <ClientTables />
-  },
-  {
-    key: '2',
-    label: (
-      <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-        Клиентов место
-      </span>
-    ),
-    children: <ClientLocation />
   }
 ];
