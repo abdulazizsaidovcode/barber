@@ -14,3 +14,10 @@ export const get_orders_list: string = `${base_url}order/web`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`
 
+export const calendar_url: string = `${base_url}dashboard/web/calendar`
+
+
+//finance
+export const finance_list = (month: number, year: number) => {
+ return `${base_url}finance/web?month=${month}&year=${year}`
+}

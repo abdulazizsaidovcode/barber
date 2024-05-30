@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from 'antd';
+import { InputNumber, Select } from 'antd';
 import MasterTable from '../../components/Tables/MasterTable';
 
 const { Option } = Select;
@@ -10,7 +10,7 @@ const FirstTab: React.FC = () => {
     console.log('Selected Country:', value);
   };
 
-  const handleYearChange = (value: string) => {
+  const handleYearChange = (value: number | null) => {
     console.log('Selected Year:', value);
   };
 
@@ -56,18 +56,18 @@ const FirstTab: React.FC = () => {
                 className="w-[200px]"
                 onChange={handleCountryChange}
               >
-                <Option value="Yanvar">Yanvar</Option>
-                <Option value="Fevral">Fevral</Option>
-                <Option value="Mart">Mart</Option>
-                <Option value="April">April</Option>
-                <Option value="May">May</Option>
-                <Option value="Iyun">Iyun</Option>
-                <Option value="Iyul">Iyul</Option>
-                <Option value="Avgust">Avgust</Option>
-                <Option value="Sentabr">Sentabr</Option>
-                <Option value="Oktaber">Oktaber</Option>
-                <Option value="Noyaber">Noyaber</Option>
-                <Option value="Dekaber">Dekaber</Option>
+                <Option value='1'>Yanvar</Option>
+                <Option value="2">Fevral</Option>
+                <Option value="3">Mart</Option>
+                <Option value="4">April</Option>
+                <Option value="5">May</Option>
+                <Option value="6">Iyun</Option>
+                <Option value="7">Iyul</Option>
+                <Option value="8">Avgust</Option>
+                <Option value="9">Sentabr</Option>
+                <Option value="10">Oktaber</Option>
+                <Option value="11">Noyaber</Option>
+                <Option value="12">Dekaber</Option>
               </Select>
             </div>
             <div className="">
@@ -98,15 +98,11 @@ const FirstTab: React.FC = () => {
           {/* Right Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <Select
+              <InputNumber
                 className="w-[200px]"
-                defaultValue="Select Year"
+                defaultValue={new Date().getFullYear()}
                 onChange={handleYearChange}
-              >
-                <Option value="2024">2024</Option>
-                <Option value="2023">2023</Option>
-                <Option value="2022">2022</Option>
-              </Select>
+              />
             </div>
             <div>
               {[
