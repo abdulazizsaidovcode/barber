@@ -15,30 +15,33 @@ import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
 import { Link } from 'react-router-dom';
 import { get_orders_list } from '../../helpers/api';
+import { config } from '../../helpers/token';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
 const FilterComponent: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [tableData, setTableData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
+  const [tableData, setTableData] = useState<any[]>([]);
+  const { t } = useTranslation();
 
   const tableHeaders = [
-    { id: 1, name: 'Клиент' },
-    { id: 2, name: 'Процедура' },
-    { id: 3, name: 'Дата записи' },
-    { id: 4, name: 'Время' },
-    { id: 5, name: 'Стимость' },
-    { id: 6, name: 'Предоплата' },
-    { id: 7, name: 'Оплачено' },
-    { id: 8, name: 'Тип оплаты' },
-    { id: 9, name: 'К оплате' },
-    { id: 10, name: 'Статус записи' },
-    { id: 11, name: 'Мастер' },
+    { id: 1, name: t('order_table_client') },
+    { id: 2, name: t('order_table_procedure') },
+    { id: 3, name: t('order_table_date') },
+    { id: 4, name: t('order_table_time') },
+    { id: 5, name: t('order_table_cost') },
+    { id: 6, name: t('order_table_prepayment') },
+    { id: 7, name: t('order_table_paid') },
+    { id: 8, name: t('order_table_paymentType') },
+    { id: 9, name: t('order_table_pay') },
+    { id: 10, name: t('order_table_status') },
+    { id: 11, name: t('order_table_master') },
     { id: 12, name: '' },
   ];
+
+  const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
@@ -53,13 +56,11 @@ const FilterComponent: React.FC = () => {
   );
 
   useEffect(() => {
-    // Fetch data from API
     axios
-      .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`)
+      .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
       .then((response) => {
-        setTableData(response.data);
+        setTableData(response.data.body.object);
         setLoading(false);
-
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
@@ -168,24 +169,35 @@ const FilterComponent: React.FC = () => {
           ) : (
             tableData.map((data) => (
               <tr key={data.id} className="dark:text-white">
-                <td className="p-5">{data.client}</td>
-                <td className="p-5">{data.procedure}</td>
-                <td className="p-5">{data.date}</td>
-                <td className="p-5">{data.time}</td>
-                <td className="p-5">{data.cost}</td>
-                <td className="p-5">{data.prepayment}</td>
+                <td className="p-5">
+                  <div className="flex flex-col justify-start gap-1">
+                    <p>{data.clientFullName}</p>
+                    <p>{data.clientPhone}</p>
+                  </div>
+                </td>
+                <td className="p-5">{data.serviceName}</td>
+                <td className="p-5">{data.orderDate}</td>
+                <td className="p-5">
+                  <div className="bg-blue-500 rounded-md flex items-center gap-2 justify-center p-1">
+                    <p>{data.orderFrom}</p>
+                    <p>-</p>
+                    <p>{data.orderTo}</p>
+                  </div>
+                </td>
+                <td className="p-5">{data.price}</td>
+                <td className="p-5">{data.prePayment}</td>
                 <td className="p-5">{data.paid}</td>
                 <td className="p-5">{data.paymentType}</td>
                 <td className="p-5">{data.toPay}</td>
-                <td className="p-5">{data.status}</td>
-                <td className="p-5">{data.master}</td>
+                <td className="p-5">{data.orderStatus === 'COMPLETED' ? 'true' : 'false'}</td>
+                <td className="p-5">
+                  <div className="flex flex-col justify-start gap-1">
+                    <p>{data.masterFullName}</p>
+                    <p>{data.masterPhone}</p>
+                  </div>
+                </td>
                 <td className="flex items-center justify-center">
-                  <Popover
-                    content={renderPopoverContent(data.id)}
-                    placement="bottomRight"
-                    title="Title"
-                    trigger="click"
-                  >
+                  <Popover content={renderPopoverContent(data.id)} placement="bottomRight" title="Title" trigger="click">
                     <Button> . . . </Button>
                   </Popover>
                 </td>

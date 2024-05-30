@@ -8,7 +8,7 @@ interface Data {
   percent: string;
 }
 
-// get
+// Fetch data
 export const fetchData = (setData: (data: Data[]) => void) => {
   axios.get(precent_list, config)
     .then((res) => {
@@ -16,28 +16,29 @@ export const fetchData = (setData: (data: Data[]) => void) => {
     })
     .catch((err) => {
       console.error(err);
+      toast.error('Error fetching data');
     });
 };
 
-// add
-export const addPercent = (percent: string, setData: (data: Data[]) => void) => {
+// Add percent
+export const addPercent = (percent: string, setData: (data: Data[]) => void, closeToggleInput: () => void) => {
   axios.post(add_precent_list, { percent }, config)
     .then((res) => {
-      if (res.data.success === false) {
-        toast('This value already exists', {
-          icon: '⚠️'
-        });
+      if (!res.data.success) {
+        toast('Something went wrong', { icon: '⚠️' });
       } else {
         toast.success('Successfully added');
         fetchData(setData);
+        closeToggleInput();
       }
     })
     .catch((err) => {
       console.error(err);
+      toast.error('Error adding percent');
     });
 };
 
-// edit
+// Edit percent
 export const editPercent = (changedTitle: string, editItemId: number | null, setData: (data: Data[]) => void, closeEditModal: () => void) => {
   const data = { percent: changedTitle };
 
@@ -46,19 +47,26 @@ export const editPercent = (changedTitle: string, editItemId: number | null, set
       .then(() => {
         fetchData(setData);
         closeEditModal();
+        toast.success('Successfully edited');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.error(err);
+        toast.error('Error editing percent');
+      });
   }
 };
 
-//delete
+// Delete percent
 export const deletePercent = (id: number | null, setData: (data: Data[]) => void) => {
-  if (id) {
+  if (id !== null) {
     axios.delete(`${precent_list}/${id}`, config)
       .then(() => {
         toast.success('Successfully deleted!');
         fetchData(setData);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        toast.error('Error deleting percent');
+      });
   }
 };

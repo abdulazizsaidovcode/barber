@@ -6,9 +6,10 @@ import { FaPlus } from 'react-icons/fa6';
 import Modal from '../../components/modals/modal';
 import { Toaster } from 'react-hot-toast';
 import onlineBookingStore from '../../helpers/state_managment/settings/online_booking.tsx';
-import { addPercent, deletePercent, editPercent, fetchData } from '../../helpers/api-function/perecent/percent.tsx';
+import { addPercent, deletePercent, editPercent, fetchData } from '../../helpers/api-function/repcent/percent.tsx';
 
 const DirectoriesOnlineBooking: React.FC = () => {
+  // STATE MANAGMENT
   const { data, setData, isInputOpen, setIsInputOpen, setEditModal, isEditModal, items } = onlineBookingStore();
   // STATES
   const [modalOpenId, setModalOpenId] = useState<number | null>(null);
@@ -26,7 +27,8 @@ const DirectoriesOnlineBooking: React.FC = () => {
   const closeModalId = () => setModalOpenId(null);
 
   // ADD INPUT SHOW FUNCTION
-  const toggleInput = () => setIsInputOpen(!isInputOpen);
+  const openToggleInput = () => setIsInputOpen(true);
+  const closeToggleInput = () => setIsInputOpen(false);
 
   return (
     <>
@@ -92,7 +94,7 @@ const DirectoriesOnlineBooking: React.FC = () => {
                 <div className="mt-5">
                   <button
                     className="bg-[#eaeaea] text-black dark:text-white dark:bg-[#9C0A35] rounded-lg py-2 px-10"
-                    onClick={toggleInput}
+                    onClick={openToggleInput}
                   >
                     <FaPlus size={25} />
                   </button>
@@ -113,7 +115,7 @@ const DirectoriesOnlineBooking: React.FC = () => {
                     <button
                       className="bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5"
                       onClick={() => {
-                        addPercent(newPercent, setData);
+                        addPercent(newPercent, setData, closeToggleInput);
                         setNewPercent('');
                         setIsInputOpen(false);
                       }}
