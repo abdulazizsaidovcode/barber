@@ -1,5 +1,5 @@
 import DefaultLayout from "../../layout/DefaultLayout";
-import Chat from "./chat/chat";
+import Chat from "./chat/index";
 
 
 const Natification = () => {
