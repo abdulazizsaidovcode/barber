@@ -74,20 +74,19 @@ const Chatdetail: React.FC = () => {
 
 
   useEffect(() => {
-    const socket = new SockJS('http://45.67.35.86:8080/wp');
-    const client = Stomp.over(socket)
-
-    client.connect({}, () => {
-      client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-        const data = JSON.parse(response.body);
-        setMessages((prevMessage: any) => [...prevMessage, data])
+    const socket = new SockJS('http://45.67.35.86:8080/ws');
+    const stomp = Stomp.over(socket);
+    
+    stomp.connect({}, (frame:any) => {
+      console.log('Connected: ' + frame);
+      setStompClient(stomp);
+      stomp.subscribe('/user/ff4b5bbe-1932-4548-a783-eea3be4af982/queue/messages', (response) => {
+        setStompClient(response.body);
       });
-    })
-    setStompClient(client)
+    }, (error:any) => {
+      console.error('Error connecting: ', error);
+    });
 
-    return () => {
-      client.disconnect()
-    }
 
     // const client = new Client({
     //   webSocketFactory: () => socket,
@@ -114,6 +113,7 @@ const Chatdetail: React.FC = () => {
     // client.activate();
     // setStompClient(client);
   }, []);
+
   const handleNickName = (e: any) => {
     setNickName(e.target.value)
   }
@@ -132,7 +132,8 @@ const Chatdetail: React.FC = () => {
       createdAt: new Date(),
       attachmentIds: []
     };
-
+    console.log(message);
+    
     stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
     // sendMessage()
   };
