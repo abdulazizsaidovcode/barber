@@ -8,12 +8,11 @@ import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline, IoSend } from 'react-icons/io5';
 import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';
-import SockJS from 'sockjs-client';
-import { Client } from '@stomp/stompjs';
 import axios from 'axios';
-import ApiLink from '../../../helpers/apiLink';
 import { chat_user_url } from '../../../helpers/api';
-import { setConfig } from '../../../helpers/token';
+
+import { Client, Stomp } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 const Chat: React.FC = () => {
   const [chats, setChats] = useState(false);
@@ -21,9 +20,12 @@ const Chat: React.FC = () => {
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
+
+  const [messages, setMessages] = useState<any>('');
   const [message, setMessage] = useState<string>('');
-  const [chatId, setChatId] = useState<string>('');
-  const [stompClient, setStompClient] = useState<Client | null>(null);
+  // const [chatId, setChatId] = useState<string>('');
+  const [stompClient, setStompClient] = useState<any>([]);
+  const [nickName, setNickName] = useState<string>('');
 
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const Chat: React.FC = () => {
         console.error(err)
       })
   }, [])
+
   const data = [
     {
       id: 1,
@@ -70,29 +73,84 @@ const Chat: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // useEffect(() => {
-  //   const socket = new SockJS('http://localhost/ws');
-  //   const client = new Client({
-  //     webSocketFactory: () => socket,
-  //     debug: (str) => {
-  //       console.log(str);
-  //     },
-  //     onConnect: (frame) => {
-  //       console.log('Connected: ' + frame);
-  //       client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-  //         // showGreeting(response.body);
-  //       });
-  //     },
-  //     onStompError: (frame) => {
-  //       console.error('Error: ' + frame.headers['message']);
-  //     }
-  //   });
-  //   client.activate();
-  //   setStompClient(client);
-  // }, []);
 
-  //   const sendName = () => {
-  //     const chatMessage = {
+  useEffect(() => {
+    const socket = new SockJS('http://45.67.35.86:8080/wp');
+    const client = Stomp.over(socket)
+
+    client.connect({}, () => {
+      client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
+        const data = JSON.parse(response.body);
+        setMessages((prevMessage: any) => [...prevMessage, data])
+      });
+    })
+    setStompClient(client)
+
+    return () => {
+      client.disconnect()
+    }
+
+    // const client = new Client({
+    //   webSocketFactory: () => socket,
+    //   debug: (str) => {
+    //     console.log(str);
+    //   },
+
+    //   onConnect: (frame) => {
+    //     console.log('Connected: ' + frame);
+    //     client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
+    //       console.log(response);
+    //     });
+    //   },
+    //   onStompError: (frame) => {
+    //     console.error('Error: ' + frame.headers['message']);
+    //   },
+    //   onDisconnect(frame) {
+    //     console.error('Error: ' + frame.headers['message']);
+    //   },
+    //   onWebSocketError(res){
+    //     console.log(res)
+    //   }
+    // });
+    // client.activate();
+    // setStompClient(client);
+  }, []);
+  const handleNickName = (e: any) => {
+    setNickName(e.target.value)
+  }
+  const handleMessage = (e: any) => {
+    setMessage(e.target.value)
+  }
+
+  const sendMessage = () => {
+
+    const chatMessage = {
+      id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
+      recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
+      content: message,
+      isRead: false,
+      createdAt: new Date(),
+      attachmentIds: []
+    };
+
+    stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+    // sendMessage()
+  };
+
+  // const messageDelete = () => {
+  //   if (stompClient && stompClient.connected) {
+  //     stompClient.publish({
+  //       destination: '/app/deleteMessage',
+  //       body: JSON.stringify(chatId)
+  //     });
+  //   }
+  // };
+
+  // const editMessage = () => {
+  //   const editMessage = {
+  //     messageId: chatId,
+  //     chatDto: {
   //       id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
   //       senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
   //       recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
@@ -100,58 +158,23 @@ const Chat: React.FC = () => {
   //       isRead: false,
   //       createdAt: new Date(),
   //       attachmentIds: []
-  //     };
-  //     if (stompClient && stompClient.connected) {
-  //       stompClient.publish({
-  //         destination: '/app/chat',
-  //         body: JSON.stringify(chatMessage)
-  //       });
   //     }
   //   };
+  //   if (stompClient && stompClient.connected) {
+  //     stompClient.publish({
+  //       destination: '/app/editMessage',
+  //       body: JSON.stringify(editMessage)
+  //     });
+  //   }
+  // };
 
-  //   const messageDelete = () => {
-  //     if (stompClient && stompClient.connected) {
-  //       stompClient.publish({
-  //         destination: '/app/deleteMessage',
-  //         body: JSON.stringify(chatId)
-  //       });
-  //     }
-  //   };
-
-  //   const editMessage = () => {
-  //     const editMessage = {
-  //       messageId: chatId,
-  //       chatDto: {
-  //         id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  //         senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
-  //         recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
-  //         content: message,
-  //         isRead: false,
-  //         createdAt: new Date(),
-  //         attachmentIds: []
-  //       }
-  //     };
-  //     if (stompClient && stompClient.connected) {
-  //       stompClient.publish({
-  //         destination: '/app/editMessage',
-  //         body: JSON.stringify(editMessage)
-  //       });
-  //     }
-  //   };
-
-  //   const showGreeting = (message: string) => {
-  //     const response = document.getElementById('response') as HTMLElement;
-  //     const p = document.createElement('p');
-  //     p.appendChild(document.createTextNode(message));
-  //     response.appendChild(p);
-  //   };
 
   const toggleSidebar = () => {
     setSidebarWidth((currentWidth) => (currentWidth === 'w-max' ? 'fixed' : 'w-max'));
     setSiteBarClass(() => {
       if (siteBar) {
         setSiteBar(false);
-        return 'translate-x-0 left-0';
+        return 'translate-x-0 left-0 ';
       } else {
         setSiteBar(true);
         return '-translate-x-full -left-10';
@@ -282,9 +305,9 @@ const Chat: React.FC = () => {
                         <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
                       </div>
                       <FaCheck />
-                      {/* <Buttons onClick={sendName}>
+                      <button onClick={sendMessage}>
                         <IoSend />
-                      </Buttons> */}
+                      </button>
                     </div>
                   </div>
                 </div>
