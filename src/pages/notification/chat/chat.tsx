@@ -151,7 +151,7 @@ const Chat: React.FC = () => {
     setSiteBarClass(() => {
       if (siteBar) {
         setSiteBar(false);
-        return 'translate-x-0 left-0';
+        return 'translate-x-0 left-0 ';
       } else {
         setSiteBar(true);
         return '-translate-x-full -left-10';
