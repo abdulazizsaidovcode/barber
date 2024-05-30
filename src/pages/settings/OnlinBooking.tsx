@@ -87,11 +87,8 @@ const DirectoriesOnlineBooking: React.FC = () => {
   }
 
   // MODALS OPEN AND CLOSE 
-  const openEditModal = (item: Data) => {
-    setCurrentTitle(item.percent); // Set the current title to the existing percentage value
-    setChangedTitle(item.percent); // Set the changed title to the existing percentage value
-    setModalOpenId(item.id); // Open the modal
-  }; const closeEditModal = () => setEditModal(false);
+  const openEditModal = () => setEditModal(true);
+  const closeEditModal = () => setEditModal(false);
   const openModalId = (id: number) => setModalOpenId(id);
   const closeModalId = () => setModalOpenId(null);
 
