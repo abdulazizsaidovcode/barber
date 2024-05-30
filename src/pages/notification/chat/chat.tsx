@@ -14,9 +14,9 @@ import { chat_user_url } from '../../../helpers/api';
 import { Client, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const Chat: React.FC = () => {
+const Chatdetail: React.FC = () => {
   const [chats, setChats] = useState(false);
-  const [user, setUser] = useState<any>([]);
+  const [admin, setAdmin] = useState<any>(null);
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
@@ -37,8 +37,7 @@ const Chat: React.FC = () => {
       }
     })
       .then(res => {
-        setUser(res.data.body)
-        console.log(res.data.body)
+        setAdmin(res.data.body)
       }).catch((err) => {
         console.error(err)
       })
@@ -235,7 +234,7 @@ const Chat: React.FC = () => {
           className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}
         >
           <div className={`w-full`}>
-            <Chatusers user={data} />
+            <Chatusers user={admin} />
           </div>
         </div>
         <div className="w-full relative overflow-y-auto">
@@ -325,4 +324,4 @@ const Chat: React.FC = () => {
   );
 };
 
-export default Chat;
+export default Chatdetail;
