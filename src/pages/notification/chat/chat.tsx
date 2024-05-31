@@ -11,10 +11,10 @@ import { FaCheck } from 'react-icons/fa6';
 import axios from 'axios';
 import { chat_user_url } from '../../../helpers/api';
 
-import { Client, Stomp } from '@stomp/stompjs';
+import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const Chatdetail: React.FC = () => {
+const Chatdetail: React.FC = ({ role }: any) => {
   const [chats, setChats] = useState(false);
   const [admin, setAdmin] = useState<any>(null);
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
@@ -27,7 +27,9 @@ const Chatdetail: React.FC = () => {
   const [stompClient, setStompClient] = useState<any>([]);
   const [nickName, setNickName] = useState<string>('');
 
-
+  
+  // ---------- get admin and user ----------- //
+  
   useEffect(() => {
     // setConfig()
     axios.get(chat_user_url, {
@@ -217,10 +219,14 @@ const Chatdetail: React.FC = () => {
           <CgMenuLeft className="text-[1.5rem] font-bold" />
         </button>
 
-        <Input prefix={<IoSearchOutline />} className="w-max dark:bg-gray" />
+        <Input
+            placeholder="Search F.I.O"
+            prefix={<IoSearchOutline />}
+            className='w-56'
+          />
         <Select
           defaultValue="lucy"
-          className="w-40 dark:bg-gray"
+          className="w-56 "
           dropdownClassName="my-custom-dropdown"
           options={[
             { value: 'jack', label: 'Jack' },
@@ -229,8 +235,8 @@ const Chatdetail: React.FC = () => {
             { value: 'disabled', label: 'Disabled', disabled: true }
           ]}
         />
-        <Buttons>button</Buttons>
-        <Buttons>button</Buttons>
+        <Buttons>Начать</Buttons>
+        <Buttons>Удалить все прочитанные</Buttons>
       </div>
 
       <div className="flex w-[100%] relative">
