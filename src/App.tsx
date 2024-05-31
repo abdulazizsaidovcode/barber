@@ -328,5 +328,4 @@ function App() {
   );
 }
 
-//Mutual_settlements
 export default App;
