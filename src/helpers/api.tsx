@@ -28,6 +28,7 @@ export const calendar_url: string = `${base_url}dashboard/web/calendar`;
 
 export const dashboard_url = `${base_url}dashboard/`
 export const dashboard_chart_reating_url = `${base_url}dashboard/`
+export const dashboard_clinet_url = `${base_url}dashboard/`
 
 
 //finance

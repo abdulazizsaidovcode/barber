@@ -1,6 +1,8 @@
 import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { dashboard_clinet_url } from '../../helpers/api';
 
 const options: ApexOptions = {
   colors: ['#000000', '#D9D9D9'],
@@ -24,7 +26,7 @@ const options: ApexOptions = {
         plotOptions: {
           bar: {
             borderRadius: 0,
-            columnWidth: '25%',
+            columnWidth: '59%',
           },
         },
       },
@@ -71,15 +73,99 @@ interface ChartTwoState {
 }
 
 const ChartTwo: React.FC = () => {
+  const [clientData , setClientData] = useState (
+    [
+    {
+      "monthName": "JANUARY",
+      "masterCount": 0,
+      "clientCount": 0
+    },
+    {
+      "monthName": "FEBRUARY",
+      "masterCount": 0,
+      "clientCount": 0
+    },
+    {
+      "monthName": "MARCH",
+      "masterCount": 0,
+      "clientCount": 0
+    },
+    {
+      "monthName": "APRIL",
+      "masterCount": 0,
+      "clientCount": 0
+    },
+    {
+      "monthName": "MAY",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "JUNE",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "JULY",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "AUGUST",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "SEPTEMBER",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "OCTOBER",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "NOVEMBER",
+      "masterCount": 2,
+      "clientCount": 7
+    },
+    {
+      "monthName": "DECEMBER",
+      "masterCount": 2,
+      "clientCount": 7
+    }
+  ] )
+  const currentYear = new Date().getFullYear();
+  useEffect(() => {
+    axios
+      .get(`${dashboard_clinet_url}web/masterVsClient?year=${currentYear}`)
+      .then((response) => {
+        setClientData(response.data.body);
+        console.log(clientData); 
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the data!', error);
+      });
+  }, []);
+
   const [state, setState] = useState<ChartTwoState>({
     series: [
       {
-        name: 'Sales',
-        data: [44, 55, 41, 67, 22, 43, 65, 75],
+        name: 'MasterCount',
+        data: clientData.map((item)=>{
+          return(
+             item.masterCount ? item.masterCount:0
+          )
+        })
       },
       {
-        name: 'Revenue',
-        data: [13, 23, 20, 8, 13, 27, 15, 85],
+        name: 'Client Count',
+        data: clientData.map((item)=>{
+          return(
+             item.clientCount ? item.clientCount:0
+          )
+        }),
       },
     ],
   });
