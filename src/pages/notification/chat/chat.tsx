@@ -21,7 +21,7 @@ const Chatdetail: React.FC = () => {
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
 
-  const [messages, setMessages] = useState<any>('');
+  const [messages, setMessages] = useState<any>([]);
   const [message, setMessage] = useState<string>('');
   // const [chatId, setChatId] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
@@ -74,19 +74,7 @@ const Chatdetail: React.FC = () => {
 
 
   useEffect(() => {
-    const socket = new SockJS('http://45.67.35.86:8080/ws');
-    const stomp = Stomp.over(socket);
-    
-    stomp.connect({}, (frame:any) => {
-      console.log('Connected: ' + frame);
-      setStompClient(stomp);
-      stomp.subscribe('/user/ff4b5bbe-1932-4548-a783-eea3be4af982/queue/messages', (response) => {
-        setStompClient(response.body);
-      });
-    }, (error:any) => {
-      console.error('Error connecting: ', error);
-    });
-
+    connect()
 
     // const client = new Client({
     //   webSocketFactory: () => socket,
@@ -114,6 +102,24 @@ const Chatdetail: React.FC = () => {
     // setStompClient(client);
   }, []);
 
+  const connect = () => {
+    const socket = new SockJS('http://45.67.35.86:8080/ws');
+    const stomp = Stomp.over(socket);
+
+    stomp.connect({}, (frame: any) => {
+      console.log('Connected: ' + frame);
+      setStompClient(stomp);
+      stomp.subscribe('/user/8ccc9e7d-c678-446e-a394-7375c249dbbd/queue/messages', (response) => {
+        const receivedMessages = JSON.parse(response.body);
+        setMessages((prevState: any) => [...prevState, receivedMessages]);
+
+      });
+    }, (error: any) => {
+      console.error('Error connecting: ', error);
+    });
+
+  };
+
   const handleNickName = (e: any) => {
     setNickName(e.target.value)
   }
@@ -122,20 +128,17 @@ const Chatdetail: React.FC = () => {
   }
 
   const sendMessage = () => {
-
     const chatMessage = {
-      id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
-      recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
+      senderId: '8ccc9e7d-c678-446e-a394-7375c249dbbd',
+      recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
       content: message,
       isRead: false,
       createdAt: new Date(),
-      attachmentIds: []
+      attachmentIds: [],
     };
-    console.log(message);
-    
+
     stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-    // sendMessage()
+    console.log(messages);
   };
 
   // const messageDelete = () => {
