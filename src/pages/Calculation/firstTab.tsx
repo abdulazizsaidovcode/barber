@@ -13,7 +13,7 @@ import {
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { get_orders_list } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ const FilterComponent: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [tableData, setTableData] = useState<any[]>([]);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const tableHeaders = [
     { id: 1, name: t('order_table_client') },
@@ -47,13 +48,9 @@ const FilterComponent: React.FC = () => {
     console.log(date, dateString);
   };
 
-  const renderPopoverContent = (id: number) => (
-    <div>
-      <Link to={`/orders/${id}`}>
-        <p>Открыть</p>
-      </Link>
-    </div>
-  );
+  const handleOpenOrderDetails = (id: number) => {
+    navigate(`/orders/${id}`);
+  };
 
   useEffect(() => {
     axios
@@ -187,9 +184,13 @@ const FilterComponent: React.FC = () => {
                 <td className="p-5">{data.price}</td>
                 <td className="p-5">{data.prePayment}</td>
                 <td className="p-5">{data.paid}</td>
-                <td className="p-5">{data.paymentType}</td>
+                <td className="p-5">
+                  {data.paymentType === null ? 'Mavjud emas' : data.paymentType}
+                </td>
                 <td className="p-5">{data.toPay}</td>
-                <td className="p-5">{data.orderStatus === 'COMPLETED' ? 'true' : 'false'}</td>
+                <td className="p-5">
+                  {data.orderStatus === 'COMPLETED' ? 'true' : 'false'}
+                </td>
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
                     <p>{data.masterFullName}</p>
@@ -197,7 +198,19 @@ const FilterComponent: React.FC = () => {
                   </div>
                 </td>
                 <td className="flex items-center justify-center">
-                  <Popover content={renderPopoverContent(data.id)} placement="bottomRight" title="Title" trigger="click">
+                  <Popover
+                    content={
+                      <div>
+                        <Button onClick={() => handleOpenOrderDetails(data.id)}>
+                          Открыть
+                        </Button>
+                      </div>
+                    }
+                    placement="bottomRight"
+                    className="flex items-center justify-center"
+                    title="Title"
+                    trigger="click"
+                  >
                     <Button> . . . </Button>
                   </Popover>
                 </td>

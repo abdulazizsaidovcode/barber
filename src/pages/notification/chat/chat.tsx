@@ -14,14 +14,14 @@ import { chat_user_url } from '../../../helpers/api';
 import { Client, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const Chat: React.FC = () => {
+const Chatdetail: React.FC = () => {
   const [chats, setChats] = useState(false);
-  const [user, setUser] = useState<any>([]);
+  const [admin, setAdmin] = useState<any>(null);
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
 
-  const [messages, setMessages] = useState<any>('');
+  const [messages, setMessages] = useState<any>([]);
   const [message, setMessage] = useState<string>('');
   // const [chatId, setChatId] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
@@ -37,8 +37,7 @@ const Chat: React.FC = () => {
       }
     })
       .then(res => {
-        setUser(res.data.body)
-        console.log(res.data.body)
+        setAdmin(res.data.body)
       }).catch((err) => {
         console.error(err)
       })
@@ -75,20 +74,7 @@ const Chat: React.FC = () => {
 
 
   useEffect(() => {
-    const socket = new SockJS('http://45.67.35.86:8080/wp');
-    const client = Stomp.over(socket)
-
-    client.connect({}, () => {
-      client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-        const data = JSON.parse(response.body);
-        setMessages((prevMessage: any) => [...prevMessage, data])
-      });
-    })
-    setStompClient(client)
-
-    return () => {
-      client.disconnect()
-    }
+    connect()
 
     // const client = new Client({
     //   webSocketFactory: () => socket,
@@ -115,6 +101,25 @@ const Chat: React.FC = () => {
     // client.activate();
     // setStompClient(client);
   }, []);
+
+  const connect = () => {
+    const socket = new SockJS('http://45.67.35.86:8080/ws');
+    const stomp = Stomp.over(socket);
+
+    stomp.connect({}, (frame: any) => {
+      console.log('Connected: ' + frame);
+      setStompClient(stomp);
+      stomp.subscribe('/user/8ccc9e7d-c678-446e-a394-7375c249dbbd/queue/messages', (response) => {
+        const receivedMessages = JSON.parse(response.body);
+        setMessages((prevState: any) => [...prevState, receivedMessages]);
+
+      });
+    }, (error: any) => {
+      console.error('Error connecting: ', error);
+    });
+
+  };
+
   const handleNickName = (e: any) => {
     setNickName(e.target.value)
   }
@@ -123,19 +128,17 @@ const Chat: React.FC = () => {
   }
 
   const sendMessage = () => {
-
     const chatMessage = {
-      id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
-      recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
+      senderId: '8ccc9e7d-c678-446e-a394-7375c249dbbd',
+      recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
       content: message,
       isRead: false,
       createdAt: new Date(),
-      attachmentIds: []
+      attachmentIds: [],
     };
 
     stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-    // sendMessage()
+    console.log(messages);
   };
 
   // const messageDelete = () => {
@@ -235,7 +238,7 @@ const Chat: React.FC = () => {
           className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}
         >
           <div className={`w-full`}>
-            <Chatusers user={data} />
+            <Chatusers user={admin} />
           </div>
         </div>
         <div className="w-full relative overflow-y-auto">
@@ -325,4 +328,4 @@ const Chat: React.FC = () => {
   );
 };
 
-export default Chat;
+export default Chatdetail;

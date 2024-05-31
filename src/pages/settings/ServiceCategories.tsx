@@ -2,38 +2,22 @@ import { useEffect, useState } from "react";
 import ServiceCategoriesCard from "../../components/settings/details/ServiceCategoriesCard"
 import DefaultLayout from "../../layout/DefaultLayout"
 import Modal from "../../components/modals/modal";
-import axios from "axios";
-import { service_category_list } from "../../helpers/api";
-
-interface Data {
-    id: string;
-    name: string;
-}
+import useServiceCategoriesStore from "../../helpers/state_managment/settings/service_category";
+import { fetchData } from "../../helpers/api-function/service_category/category";
 
 const ServiceCategories = () => {
+    const {data, setData} = useServiceCategoriesStore()
     const [addIsOpen, setAddIsOpen] = useState(false);
     const [delIsOpen, setDelIsOpen] = useState(false);
-    const [data, setData] = useState<Data[]>([]);
 
+    useEffect(() => {
+        fetchData(setData)
+    }, [])
+           
     const delOpenModal = () => setDelIsOpen(true);
     const delCloseModal = () => setDelIsOpen(false);
     const addOpenModal = () => setAddIsOpen(true);
     const addCloseModal = () => setAddIsOpen(false);
-    useEffect(() => {
-        getData()
-    }, [])
-
-    const getData = async () => {
-        try {
-            const res = await axios.get(service_category_list)
-            console.log(res.data);
-            setData(res.data.body)
-        } catch (error) {
-            console.error(error);
-        }
-
-    }
-
     return (
         <>
             <DefaultLayout>

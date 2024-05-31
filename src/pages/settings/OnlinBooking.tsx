@@ -6,7 +6,7 @@ import { FaPlus } from 'react-icons/fa6';
 import Modal from '../../components/modals/modal';
 import { Toaster } from 'react-hot-toast';
 import onlineBookingStore from '../../helpers/state_managment/settings/online_booking.tsx';
-import { addPercent, deletePercent, editPercent, fetchData } from '../../helpers/api-function/repcent/percent.tsx';
+import { addPercent, deletePercent, editPercent, fetchData } from '../../helpers/api-function/percent/percent.tsx';
 
 const DirectoriesOnlineBooking: React.FC = () => {
   // STATE MANAGMENT
