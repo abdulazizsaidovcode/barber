@@ -6,37 +6,37 @@ import { Dropdown, Space } from 'antd';
 import Filters from './filters/filters.tsx';
 import React from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import images from '../../images/user/user-01.png'
+import images from '../../images/user/user-01.png';
 
 const items: MenuProps['items'] = [
   {
     key: '1',
-    label: 'Открыть',
+    label: 'Открыть'
   },
   {
     key: '2',
-    label: 'Заблокировать',
+    label: 'Заблокировать'
   },
   {
     key: '3',
-    label: 'Разблокировать',
+    label: 'Разблокировать'
   },
   {
     key: '4',
-    label: 'Открыть справку',
+    label: 'Открыть справку'
   },
   {
     key: '5',
-    label: 'Сделать скидку',
+    label: 'Сделать скидку'
   },
   {
     key: '6',
-    label: 'Скачать справку',
+    label: 'Скачать справку'
   },
   {
     key: '7',
-    label: 'Написать',
-  },
+    label: 'Написать'
+  }
 ];
 
 const MasterTables: React.FC = () => {
@@ -127,15 +127,10 @@ const MasterTables: React.FC = () => {
                   {item.workPlace}
                 </p>
               </td>
-              <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">
-                  {}
-                </p>
-              </td>
             </tr>
           )) : (
             <tr className={`border-b border-[#eee] dark:border-strokedark`}>
-              <td className="min-w-full text-center py-10 text-xl" colSpan={5}>
+              <td className="min-w-full text-center py-10 text-xl font-bold" colSpan={5}>
                 Malumot mavjud emas!
               </td>
             </tr>
