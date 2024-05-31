@@ -13,10 +13,12 @@ export const getMe = (token?: string) => {
     }
   } : config)
     .then(res => {
-      console.log(res.data);
-      console.log('get me bor');
+      if (res.data.success === true) {
+        sessionStorage.setItem('userInfo', JSON.stringify(res.data.body));
+        sessionStorage.setItem('userId', res.data.body.id)
+      }
     })
-    .catch(err => console.log(err));
+    .catch(() => console.log('user info error'));
 };
 
 // swagger url
