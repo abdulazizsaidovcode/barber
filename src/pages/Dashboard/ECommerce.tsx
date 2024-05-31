@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartThree from '../../components/Charts/ChartThree';
 import ChartTwo from '../../components/Charts/ChartTwo';
@@ -13,10 +13,44 @@ import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { dashboard_url } from '../../helpers/api';
 
 const ECommerce: React.FC = () => {
+  const [data, setData] = useState(
+    {
+      "clientCanselOrder":0,
+      "clientCount":0,
+      "customerDissatisfaction": 0,
+      "income":0,
+      "masterAverageClient":0,
+      "masterCanselOrder":0,
+      "masterCount":0,
+      "masterDissatisfaction":0,
+      "negativeFeedbackInService":0,
+      "orderCount":0,
+      "positiveFeedbackInService": 0,
+      "theOutgoingClient": 0,
+      "theOutgoingMaster": 0,
+      "totalTurnover": 0
+    }
+  );
+  const currentYear = new Date().getFullYear();
+
   const { t, i18n } = useTranslation();
 
+  useEffect(() => {
+    axios
+      .get(`${dashboard_url}web/statistic?year=${currentYear}`)
+      .then((response) => {
+        setData(response.data.body);
+
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the data!', error);
+      });
+  }, []);
+  console.log(data);
   return (
     <DefaultLayout>
       <div className='block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
@@ -48,17 +82,17 @@ const ECommerce: React.FC = () => {
 
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Мастера" total="1 684" />
-        <CardDataStats title="Total Profit" total="3 545" />
-        <CardDataStats title="Заказы" total="10 845" />
-        <CardDataStats title="Отмененные клиент/мастер" total="152 / 253" />
+        <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} />
+        <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
+        <CardDataStats title="Заказы" total={data.clientCount ? data.clientCount : 0} />
+        <CardDataStats title="Отмененные клиент/мастер" total={data.clientCount ? data.clientCount : 0} />
         <CardDataStats title="Оборот общий" total="100 545 000" />
-        <CardDataStats title="Доход" total="20 785 500" />
-        <CardDataStats title="Отток клиентов" total="1 684" />
-        <CardDataStats title="Отток мастеров" total="10" />
+        <CardDataStats title="Доход" total={data.income ? data.income : 0} />
+        <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction? data.customerDissatisfaction: 0} />
+      <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction? data.masterDissatisfaction:0} />
         <CardDataStats title="Отток клиентов" total="27" />
         <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684" />
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={1000} secondTotal={870} />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.masterAverageClient} secondTotal={data.clientCount} />
       </div>
       <div className='flex mt-7 justify-between flex-wrap gap-2'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>
