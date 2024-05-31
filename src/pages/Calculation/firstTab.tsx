@@ -108,7 +108,6 @@ const FilterComponent: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Extra filters row */}
       {showExtraFilters && (
         <Row gutter={[29, 16]} className="mb-2">
           <Col xs={14} sm={7} md={4} className="mb-4">
