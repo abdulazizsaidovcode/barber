@@ -6,14 +6,22 @@
 import axios from 'axios';
 import { config } from './token.tsx';
 
-export const getMe = () => {
-  axios.get(`${base_url}user/me`, config)
-    .then(res => console.log(res.data))
+export const getMe = (token?: string) => {
+  axios.get(`${base_url}user/me`, token ? {
+    headers: { Authorization: `Bearer ${token}` }
+  } : config)
+    .then(res => {
+      console.log(res.data)
+      console.log('get me bor');
+    })
     .catch(err => console.log(err));
 };
 
 // swagger url
 const base_url: string = 'http://45.67.35.86:8080/';
+
+// master url
+export const master_url: string = `${base_url}web/masters-by-filter`
 
 //login url
 export const service_category_list: string = `${base_url}category`;
