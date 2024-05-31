@@ -8,10 +8,12 @@ import { config } from './token.tsx';
 
 export const getMe = (token?: string) => {
   axios.get(`${base_url}user/me`, token ? {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   } : config)
     .then(res => {
-      console.log(res.data)
+      console.log(res.data);
       console.log('get me bor');
     })
     .catch(err => console.log(err));
@@ -21,7 +23,7 @@ export const getMe = (token?: string) => {
 const base_url: string = 'http://45.67.35.86:8080/';
 
 // master url
-export const master_url: string = `${base_url}web/masters-by-filter`
+export const master_url: string = `${base_url}web/masters-by-filter`;
 
 //login url
 export const service_category_list: string = `${base_url}category`;
@@ -34,8 +36,8 @@ export const chat_user_url: string = `${base_url}chat/support-service`;
 
 export const calendar_url: string = `${base_url}dashboard/web/calendar`;
 
-export const dashboard_url = `${base_url}dashboard/`
-export const dashboard_chart_reating_url = `${base_url}dashboard/`
+export const dashboard_url = `${base_url}dashboard/`;
+export const dashboard_chart_reating_url = `${base_url}dashboard/`;
 
 
 //finance
