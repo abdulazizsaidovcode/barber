@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { InputNumber, Select } from 'antd';
 import MasterTable from '../../components/Tables/MasterTable';
+import financeStore from '../../helpers/state_managment/finance/financeStore.tsx';
+import { getFinance } from '../../helpers/api-function/finance/finance.tsx';
 
 const { Option } = Select;
 
 const FirstTab: React.FC = () => {
-  // Handling changes for both selects
-  const handleCountryChange = (value: string) => {
-    console.log('Selected Country:', value);
-  };
+  const {data, setData, yearVal, setYearVal, monthVal, setMonthVal} = financeStore()
 
+  useEffect(() => {
+    getFinance(monthVal, yearVal, setData)
+  }, [])
+
+  const handleMonthChange = (value: string | null) => {
+    setMonthVal(value)
+    getFinance(monthVal, yearVal, setData)
+  }
   const handleYearChange = (value: number | null) => {
-    console.log('Selected Year:', value);
-  };
+    setYearVal(value)
+    getFinance(monthVal, yearVal, setData)
+  }
 
   const tableData = [
     {
@@ -54,7 +62,7 @@ const FirstTab: React.FC = () => {
               <Select
                 defaultValue="Select Month"
                 className="w-[200px]"
-                onChange={handleCountryChange}
+                onChange={handleMonthChange}
               >
                 <Option value='1'>Yanvar</Option>
                 <Option value="2">Fevral</Option>
