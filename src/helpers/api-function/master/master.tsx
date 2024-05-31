@@ -30,12 +30,13 @@ export const getMasters = ({
                              workPlace,
                              page = 0,
                              size = 10,
-                             // setData
+                             setData
                            }: IMaster) => {
   axios.get(`${master_url}?${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${startDate ? `startDate=${startDate}&` : ''}${endDate ? `endDate=${endDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${statusName ? `statusName=${statusName}&` : ''}${selfEmployed ? `selfEmployed=${selfEmployed}&` : ''}${workPlace ? `workPlace=${workPlace}&` : ''}page=${page}&size=${size}`, config)
     .then(res => {
-      console.log(res.data);
-      // setData(res.data)
+      if (res.data.success === true) {
+        setData(res.data.body.object)
+      }
     })
     .catch(err => console.log(err));
 };
