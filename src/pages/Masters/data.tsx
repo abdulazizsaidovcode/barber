@@ -6,60 +6,60 @@ import MasterLocation from './master-location.tsx';
 export const thead: IThead[] = [
   {
     id: 1,
-    name: 'Фото'
+    name: 'Фото',
   },
   {
     id: 2,
-    name: 'Мастер'
+    name: 'Мастер',
   },
   {
     id: 3,
-    name: 'Категория услуг'
+    name: 'Категория услуг',
   },
   {
     id: 4,
-    name: 'Начал работу'
+    name: 'Начал работу',
   },
   {
     id: 5,
-    name: 'Сеансов всего'
+    name: 'Сеансов всего',
   },
   {
     id: 6,
-    name: 'Рейтинг'
+    name: 'Рейтинг',
   },
   {
     id: 7,
-    name: 'Статус'
+    name: 'Статус',
   },
   {
     id: 8,
-    name: 'Тип расписания'
+    name: 'Тип расписания',
   },
   {
     id: 9,
-    name: 'Отмененых'
+    name: 'Отмененых',
   },
   {
     id: 10,
-    name: 'Спеиализация'
+    name: 'Спеиализация',
   },
   {
     id: 11,
-    name: 'Клиенты'
+    name: 'Клиенты',
   },
   {
     id: 12,
-    name: 'Телефон'
+    name: 'Телефон',
   },
   {
     id: 13,
-    name: 'Место работы'
+    name: 'Место работы',
   },
   {
     id: 14,
-    name: 'Самозанятый'
-  }
+    name: 'Самозанятый',
+  },
 ];
 
 export const tbody: ITbody[] = [
@@ -78,7 +78,7 @@ export const tbody: ITbody[] = [
     clients: 154,
     phoneNumber: '99899 205 05 05',
     placeOfWork: 'Beauty Lab',
-    selfEmployed: 'Да'
+    selfEmployed: 'Да',
   },
   {
     id: 2,
@@ -95,7 +95,7 @@ export const tbody: ITbody[] = [
     clients: 154,
     phoneNumber: '99899 205 05 05',
     placeOfWork: 'Beauty Lab',
-    selfEmployed: 'Да'
+    selfEmployed: 'Да',
   },
   {
     id: 3,
@@ -112,8 +112,8 @@ export const tbody: ITbody[] = [
     clients: 154,
     phoneNumber: '99899 205 05 05',
     placeOfWork: 'Beauty Lab',
-    selfEmployed: 'Да'
-  }
+    selfEmployed: 'Да',
+  },
 ];
 
 export const items: IMasterItems[] = [
@@ -124,15 +124,15 @@ export const items: IMasterItems[] = [
         Masterlar ro'yxati
       </span>
     ),
-    children: <MasterTables />
+    children: <MasterTables />,
   },
   {
     key: '2',
     label: (
       <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          Masterning joylashuvi
-        </span>
+        Masterning joylashuvi
+      </span>
     ),
-    children: <MasterLocation />
-  }
+    children: <MasterLocation />,
+  },
 ];

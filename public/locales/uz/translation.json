@@ -17,5 +17,16 @@
   "ThirdTab_name": "Rad etilgan",
   "siderbar_settings": "Sozlamalar",
   "siderbar_documents": "Нормативные документы",
-  "siderbar_Mutual_settlements": "Hisoblar"
+  "siderbar_Mutual_settlements": "Hisoblar",
+  "order_table_client": "Mijoz",
+  "order_table_procedure": "Protsedura",
+  "order_table_date": "Yozish vaqti",
+  "order_table_time": "Vaqt",
+  "order_table_cost": "Narxi",
+  "order_table_prepayment": "Oldindan to'lov",
+  "order_table_paid": "To'langan",
+  "order_table_paymentType": "To'lov turi",
+  "order_table_pay": "To'lash",
+  "order_table_status": "Yozuv holati",
+  "order_table_master": "Usta"
 }

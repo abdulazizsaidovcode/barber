@@ -1,7 +1,7 @@
 import MasterTable from '../../components/Tables/MasterTable.tsx';
 import { tbody, thead } from './data.tsx';
 import { CiMenuKebab } from 'react-icons/ci';
-import type { MenuProps } from 'antd';
+import { MenuProps, Pagination } from 'antd';
 import { Dropdown, Space } from 'antd';
 import Filters from './filters/filters.tsx';
 import React from 'react';
@@ -130,6 +130,12 @@ const MasterTables: React.FC = () => {
           </tr>
         ))}
       </MasterTable>
+      <Pagination
+        responsive={true}
+        defaultCurrent={0}
+        total={100}
+        rootClassName={`mt-10 mb-5 ms-5`}
+      />
     </>
   );
 };
