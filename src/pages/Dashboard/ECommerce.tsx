@@ -50,7 +50,7 @@ const ECommerce: React.FC = () => {
         console.error('There was an error fetching the data!', error);
       });
   }, []);
-  console.log(data);
+ 
   return (
     <DefaultLayout>
       <div className='block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
