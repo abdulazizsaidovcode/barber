@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
-import Chatusers from '../components/chat components/user';
-import Notselected from '../components/chat components/notselected';
-import ChatEmptyState from '../components/chat components/emptychat';
+import Chatusers from '../components/user';
+import Notselected from '../components/notselected';
+import ChatEmptyState from '../components/emptychat';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline, IoSend } from 'react-icons/io5';
@@ -13,52 +13,42 @@ import { chat_user_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import Modal from '../../../components/modals/modal';
+import NewChat from '../newChat';
+import Sms from '../sms/sms';
+import { config } from '../../../helpers/token';
 
 const Chatdetail: React.FC = ({ role }: any) => {
-  const [chats, setChats] = useState(false);
   const [admin, setAdmin] = useState<any>(null);
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
+  const [adminId, setAdminId] = useState<string | null>('');
 
   const [messages, setMessages] = useState<any>([]);
   const [message, setMessage] = useState<string>('');
   // const [chatId, setChatId] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
-  const [nickName, setNickName] = useState<string>('');
+  const [nickName, setNickName] = useState<string | null>('');
 
-  
+
   // ---------- get admin and user ----------- //
-  
-  useEffect(() => {
-    // setConfig()
-    axios.get(chat_user_url, {
 
-      headers: {
-        Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTk2NzY1MDc3In0.uqLtkSGi18oOwOR6GZa2gTrE3OlqausESCugorzSyb2tsC3REuBH1uf_3iciMtBwJkJh6eiE13O3_HMsuucWLw"
-      }
-    })
+  useEffect(() => {
+    axios.get(chat_user_url, config)
       .then(res => {
         setAdmin(res.data.body)
+        console.log(res.data.body);
+
       }).catch((err) => {
         console.error(err)
       })
+    setAdminId(sessionStorage.getItem('userId'))
+    console.log(sessionStorage.getItem('userId'));
+    
   }, [])
 
-  const data = [
-    {
-      id: 1,
-      attachmentId: null,
-      name: 'Abdulaziz',
-      number: '91 959 55 99'
-    },
-    {
-      id: 2,
-      attachmentId: null,
-      name: 'Abdulaziz',
-      number: '91 959 55 99'
-    }
-  ];
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -121,13 +111,6 @@ const Chatdetail: React.FC = ({ role }: any) => {
     });
 
   };
-
-  const handleNickName = (e: any) => {
-    setNickName(e.target.value)
-  }
-  const handleMessage = (e: any) => {
-    setMessage(e.target.value)
-  }
 
   const sendMessage = () => {
     const chatMessage = {
@@ -206,11 +189,8 @@ const Chatdetail: React.FC = ({ role }: any) => {
     };
   }, []);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
+
 
   return (
     <div className=''>
@@ -220,10 +200,10 @@ const Chatdetail: React.FC = ({ role }: any) => {
         </button>
 
         <Input
-            placeholder="Search F.I.O"
-            prefix={<IoSearchOutline />}
-            className='w-56'
-          />
+          placeholder="Search F.I.O"
+          prefix={<IoSearchOutline />}
+          className='w-56'
+        />
         <Select
           defaultValue="lucy"
           className="w-56 "
@@ -235,101 +215,22 @@ const Chatdetail: React.FC = ({ role }: any) => {
             { value: 'disabled', label: 'Disabled', disabled: true }
           ]}
         />
-        <Buttons>Начать</Buttons>
+        <NewChat />
         <Buttons>Удалить все прочитанные</Buttons>
       </div>
 
       <div className="flex w-[100%] relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed z-10 top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}
         >
           <div className={`w-full`}>
             <Chatusers user={admin} />
           </div>
         </div>
         <div className="w-full relative overflow-y-auto">
-          {data.length > 0 ? (
-            <div className="w-full h-[100%] flex flex-col overflow-auto">
-              <div className="bg-gray-200 flex-1 overflow-y-auto pb-20 pt-5 px-4">
-                {!chats ? (
-                  <h1 className="text-xl hover:text-lime-600 mb-10">
-                    Teshavoy (998 91 959 55 99)
-                  </h1>
-                ) : (
-                  ''
-                )}
-                {!chats ? (
-                  <div className="py-2">
-                    <div>
-                      <div className="flex items-center mb-2">
-                        <img
-                          className="w-8 h-8 rounded-full mr-2"
-                          src="https://picsum.photos/50/50"
-                          alt="User Avatar"
-                        />
-                        <div className="font-medium">John Doe</div>
-                      </div>
-                      <div className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm">
-                        Hi, how can I help you?
-                      </div>
-                      <p className="text-xs">12.23.2024</p>
-                    </div>
-                    <div className="flex items-end justify-end flex-col">
-                      <div className="flex items-center mb-2">
-                        <img
-                          className="w-8 h-8 rounded-full mr-2"
-                          src="https://picsum.photos/50/50"
-                          alt="User Avatar"
-                        />
-                        <div className="font-medium">Abdul Aziz</div>
-                      </div>
-                      <div className="bg-lime-500 text-white rounded-lg p-2 shadow max-w-sm mb-2">
-                        Sure, I can help with that.
-                      </div>
-                      <p className="text-xs">12.23.2024</p>
-                    </div>
-                  </div>
-                ) : (
-                  <ChatEmptyState />
-                )}
-                {chats ? <p className="text-center">thats all 🙂</p> : ''}
-              </div>
-              <div id="parent-container" className="container">
-                <div
-                  className="bg-gray-100 px-4 py-2 border fixed bottom-3 w-full sm:ml-[12px] sm:left-auto left-[50%] sm:translate-x-0 -translate-x-[50%]"
-                  style={{ width: 'inherit' }}
-                  id="fixed-footer"
-                >
-                  <div className="flex items-center gap-5 w-full">
-                    <input
-                      className="w-1/2 border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0"
-                      type="text"
-                      placeholder="Type your message..."
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                    />
-                    <div className="flex justify-end items-center text-2xl w-1/2 gap-5">
-                      <div>
-                        <input type="file" className="hidden" ref={fileInputRef} />
-                        <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
-                      </div>
-                      <FaCheck />
-                      <button onClick={sendMessage}>
-                        <IoSend />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="w-full relative z-0">
-              <Notselected />
-            </div>
-          )}
+          <Sms sendMessage={sendMessage} chat={"salom"} />
         </div>
       </div>
-      <div id="response"></div>
     </div>
   );
 };
