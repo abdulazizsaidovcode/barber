@@ -153,7 +153,6 @@ const FilterComponent: React.FC = () => {
         </Row>
       )}
 
-      {/* Table */}
       <div>
         <MasterTable thead={tableHeaders}>
           {loading ? (
