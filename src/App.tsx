@@ -31,7 +31,6 @@ import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
 import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
-import { getMe } from './helpers/api.tsx';
 import OrderDetails from './pages/Calculation/detail.tsx';
 
 function App() {
@@ -52,7 +51,6 @@ function App() {
       navigate('/auth/signin');
       sessionStorage.setItem('refreshUrl', 'true');
     }
-    getMe();
   }, []);
 
   return loading ? (
@@ -328,5 +326,4 @@ function App() {
   );
 }
 
-//Mutual_settlements
 export default App;
