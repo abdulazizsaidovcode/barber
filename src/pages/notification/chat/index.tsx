@@ -1,5 +1,5 @@
 import React from 'react'
-import Chatdetail from './chat'
+import Chatdetail from '../chatDetails/chat'
 import { BsFillPersonLinesFill } from 'react-icons/bs'
 import { MdAdminPanelSettings } from 'react-icons/md'
 import ChatTable from '../mails'

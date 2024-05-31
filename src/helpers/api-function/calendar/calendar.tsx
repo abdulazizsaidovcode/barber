@@ -1,39 +1,31 @@
-import axios from "axios";
-import { config } from "../../token";
-import { service_category_list } from "../../api";
+import axios from 'axios';
+import { config } from '../../token';
+import { service_category_list } from '../../api';
 
-// interface Data {
-//     id: string;
-//     name: string;
-//   }
-  
-export const getCategoryId = (setCategory: (data: []) => void) => {
+interface Category {
+  categoryFatherId: any;
+  categoryFatherName: any;
+  id: string;
+  name: string;
+  new: boolean;
+}
+
+interface ResponseBody {
+  success: boolean;
+  body: Category[];
+}
+
+export const getCategoryId = (setCategory: (data: Category[]) => void) => {
   axios
-    .get(service_category_list, config)
+    .get<ResponseBody>(service_category_list, config)
     .then((res) => {
       if (res.data.success) {
         setCategory(res.data.body);
       } else {
-        console.log("null");
+        console.log('Failed to fetch categories.');
       }
     })
     .catch((err) => {
-      console.error(err);
+      console.error('Error fetching categories:', err);
     });
 };
-
-
-export const getCalendar = (setCategory: (data: []) => void) => {
-    axios
-      .get(service_category_list, config)
-      .then((res) => {
-        if (res.data.success) {
-          setCategory(res.data.body);
-        } else {
-          console.log("null");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };

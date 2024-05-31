@@ -14,8 +14,8 @@ interface CalendarStore {
 }
 
 interface CategoryList {
-  categoryFatherId: string;
-  categoryFatherName: string;
+  categoryFatherId: any;
+  categoryFatherName: any;
   id: string;
   name: string;
   new: boolean;
@@ -26,8 +26,8 @@ const calendarStore = create<CalendarStore>((set) => ({
   loading: false,
   category: [
     {
-      categoryFatherId: "",
-      categoryFatherName: "",
+      categoryFatherId: null,
+      categoryFatherName: null,
       id: "",
       name: "",
       new: true,
