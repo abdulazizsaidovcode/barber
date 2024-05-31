@@ -32,6 +32,7 @@ import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
 import { getMe } from './helpers/api.tsx';
+import OrderDetails from './pages/Calculation/detail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -51,7 +52,7 @@ function App() {
       navigate('/auth/signin');
       sessionStorage.setItem('refreshUrl', 'true');
     }
-    getMe()
+    getMe();
   }, []);
 
   return loading ? (
@@ -318,7 +319,7 @@ function App() {
           element={
             <>
               <PageTitle title="Order | Barber" />
-              <OrderDetails />
+              <OrderDetails  />
             </>
           }
         />
