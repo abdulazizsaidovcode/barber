@@ -73,11 +73,11 @@ const ECommerce: React.FC = () => {
             ]}
           />
           <DatePicker
-            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
+            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800  text-black dark:text-black'
             placeholder='Дата'
           />
           <DatePicker
-            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
+            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 text-black dark:text-black'
             placeholder='Период'
           />
         </div>
