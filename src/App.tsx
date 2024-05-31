@@ -36,6 +36,9 @@ import OrderDetails from './pages/Calculation/detail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
+
+
+  
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isToken = sessionStorage.getItem('token');
