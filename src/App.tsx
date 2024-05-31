@@ -31,7 +31,7 @@ import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
 import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
-import Id_page from './pages/Calculation/id_page.tsx';
+import OrderDetails from './pages/Calculation/detail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -317,7 +317,7 @@ function App() {
           element={
             <>
               <PageTitle title="Order | Barber" />
-              <Id_page />
+              <OrderDetails />
             </>
           }
         />
