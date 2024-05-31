@@ -97,12 +97,12 @@ const FilterComponent: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} className="mb-4 flex gap-4">
           <Button
-            className="flex items-center justify-center w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+            className="flex items-center justify-center bg-white w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             onClick={toggleExtraFilters}
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg">
+          <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg bg-white">
             Download
           </Button>
         </Col>
@@ -146,7 +146,7 @@ const FilterComponent: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
-            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full">
+            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full bg-white">
               Reset
             </Button>
           </Col>
