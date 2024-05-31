@@ -5,13 +5,14 @@ import { FaCheck } from 'react-icons/fa6';
 import { IoSend } from 'react-icons/io5';
 import Notselected from '../components/notselected';
 interface SmsProp {
-  sendMessage: () => void, chat: string
+  sendMessage: () => void,
+  chat: string,
+  contents: string
 }
 
-const Sms = ({ sendMessage, chat }: SmsProp) => {
+const Sms = ({ sendMessage, chat, contents }: SmsProp) => {
   const [chats, setChats] = useState<string>("");
-  const [messages, setMessages] = useState<any>([]);
-  const [message, setMessage] = useState<string>('');
+  const [content, setContent] = useState<any>('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -21,6 +22,10 @@ const Sms = ({ sendMessage, chat }: SmsProp) => {
   useEffect(() => {
     setChats(chat)
   }, [chats])
+
+  useEffect(() => {
+    setContent(contents);
+  }, [contents]);
 
   const data = [
     {
@@ -96,8 +101,8 @@ const Sms = ({ sendMessage, chat }: SmsProp) => {
                   rows={1} id="chat"
                   className="w-full border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0"
                   placeholder="Type your message..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
                 ></textarea>
                 <div className="flex justify-end items-center text-2xl w-1/2 gap-5">
                   <div>

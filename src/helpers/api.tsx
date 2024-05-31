@@ -55,3 +55,6 @@ export const finance_list = (month: string | null, year: number | null) => {
   else if (month === null && year !== null) return `${base_url}finance/web?month=${year}`;
   else return `${base_url}finance/web`;
 };
+
+// sock url
+export const sockjs_url = `${base_url}ws`;

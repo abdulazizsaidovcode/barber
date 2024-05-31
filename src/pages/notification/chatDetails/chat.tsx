@@ -5,15 +5,18 @@ import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
 import axios from 'axios';
-import { chat_user_url } from '../../../helpers/api';
+import { chat_user_url, sockjs_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import NewChat from '../newChat';
 import Sms from '../sms/sms';
 import { config } from '../../../helpers/token';
+interface ChatProp {
+  role: string;
+}
 
-const Chatdetail: React.FC = ({ role }: any) => {
+const Chatdetail = ({ role }: ChatProp) => {
   const [admin, setAdmin] = useState<any>(null);
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
@@ -21,10 +24,8 @@ const Chatdetail: React.FC = ({ role }: any) => {
   const [adminId, setAdminId] = useState<string | null>('');
 
   const [messages, setMessages] = useState<any>([]);
-  const [message, setMessage] = useState<string>('');
-  // const [chatId, setChatId] = useState<string>('');
+  const [content] = useState<any>('');
   const [stompClient, setStompClient] = useState<any>([]);
-  const [nickName, setNickName] = useState<string | null>('');
 
 
   // ---------- get admin and user ----------- //
@@ -38,9 +39,8 @@ const Chatdetail: React.FC = ({ role }: any) => {
       }).catch((err) => {
         console.error(err)
       })
-    setAdminId(sessionStorage.getItem('userid'))
-    console.log(sessionStorage.getItem('userid'));
-    
+
+    setAdminId(sessionStorage.getItem('userId'))
   }, [])
 
 
@@ -89,14 +89,15 @@ const Chatdetail: React.FC = ({ role }: any) => {
     // setStompClient(client);
   }, []);
 
+  // --------- connect socket with sock js ------
   const connect = () => {
-    const socket = new SockJS('http://45.67.35.86:8080/ws');
+    const socket = new SockJS(sockjs_url);
     const stomp = Stomp.over(socket);
 
     stomp.connect({}, (frame: any) => {
       console.log('Connected: ' + frame);
       setStompClient(stomp);
-      stomp.subscribe('/user/8ccc9e7d-c678-446e-a394-7375c249dbbd/queue/messages', (response) => {
+      stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
         const receivedMessages = JSON.parse(response.body);
         setMessages((prevState: any) => [...prevState, receivedMessages]);
 
@@ -109,16 +110,16 @@ const Chatdetail: React.FC = ({ role }: any) => {
 
   const sendMessage = () => {
     const chatMessage = {
-      senderId: '8ccc9e7d-c678-446e-a394-7375c249dbbd',
+      senderId: adminId,
       recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
-      content: message,
+      content: content,
       isRead: false,
       createdAt: new Date(),
       attachmentIds: [],
     };
 
     stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-    console.log(messages);
+    console.log('Message sent:', content);
   };
 
   // const messageDelete = () => {
@@ -223,7 +224,7 @@ const Chatdetail: React.FC = ({ role }: any) => {
           </div>
         </div>
         <div className="w-full relative overflow-y-auto">
-          <Sms sendMessage={sendMessage} chat={"salom"} />
+          <Sms sendMessage={sendMessage} chat={"salom"} contents={content} />
         </div>
       </div>
     </div>
