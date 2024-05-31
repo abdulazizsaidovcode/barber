@@ -17,5 +17,16 @@
   "ThirdTab_name": "Отклонённые",
   "siderbar_settings": "Настройки",
   "siderbar_documents": "Нормативные документы",
-  "siderbar_Mutual_settlements": "Взаиморасчёты"
+  "siderbar_Mutual_settlements": "Взаиморасчёты",
+  "order_table_client": "Клиент",
+  "order_table_procedure": "Процедура",
+  "order_table_date": "Дата записи",
+  "order_table_time": "Время",
+  "order_table_cost": "Цена",
+  "order_table_prepayment": "Предоплата",
+  "order_table_paid": "Оплачено",
+  "order_table_paymentType": "Тип оплаты",
+  "order_table_pay": "К оплате",
+  "order_table_status": "Статус записи",
+  "order_table_master": "Мастер"
 }

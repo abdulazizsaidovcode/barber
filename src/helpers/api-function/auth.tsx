@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { login_url } from '../api.tsx';
+import { getMe, login_url } from '../api.tsx';
 
 export const handleSubmit = (
   event: React.FormEvent<HTMLFormElement>,
@@ -23,6 +23,7 @@ export const handleSubmit = (
         else {
           res.data.status === "ACCEPTED" ? setGoPage('/') : setGoPage('/auth/signin')
           sessionStorage.setItem('token', `Bearer ${res.data.body}`)
+          if (res.data.body) getMe(res.data.body)
         }
       })
       .catch(() => setLoading(false));

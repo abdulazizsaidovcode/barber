@@ -1,7 +1,7 @@
 import MasterTable from '../../components/Tables/MasterTable.tsx';
 import { tbody, thead } from './data.tsx';
 import { CiMenuKebab } from 'react-icons/ci';
-import type { MenuProps } from 'antd';
+import { MenuProps, Pagination } from 'antd';
 import { Dropdown, Space } from 'antd';
 import Filters from './filters/filters.tsx';
 import React from 'react';
@@ -9,32 +9,32 @@ import React from 'react';
 const items: MenuProps['items'] = [
   {
     key: '1',
-    label: 'Открыть'
+    label: 'Открыть',
   },
   {
     key: '2',
-    label: 'Заблокировать'
+    label: 'Заблокировать',
   },
   {
     key: '3',
-    label: 'Разблокировать'
+    label: 'Разблокировать',
   },
   {
     key: '4',
-    label: 'Открыть справку'
+    label: 'Открыть справку',
   },
   {
     key: '5',
-    label: 'Сделать скидку'
+    label: 'Сделать скидку',
   },
   {
     key: '6',
-    label: 'Скачать справку'
+    label: 'Скачать справку',
   },
   {
     key: '7',
-    label: 'Написать'
-  }
+    label: 'Написать',
+  },
 ];
 
 const MasterTables: React.FC = () => {
@@ -43,34 +43,35 @@ const MasterTables: React.FC = () => {
       <Filters />
       <MasterTable thead={thead}>
         {tbody.map((item, key) => (
-          <tr key={key} className={`${key === (tbody.length - 1) ? '' : 'border-b border-[#eee] dark:border-strokedark'}`}>
+          <tr
+            key={key}
+            className={`${
+              key === tbody.length - 1
+                ? ''
+                : 'border-b border-[#eee] dark:border-strokedark'
+            }`}
+          >
             <td className={`min-w-[150px] p-5`}>
-              <img src={item.img} alt="img" className={'w-10 h-10 scale-[1.4] rounded-full object-cover'} />
+              <img
+                src={item.img}
+                alt="img"
+                className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+              />
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.name}
-              </p>
+              <p className="text-black dark:text-white">{item.name}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.category}
-              </p>
+              <p className="text-black dark:text-white">{item.category}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.invoiceDate}
-              </p>
+              <p className="text-black dark:text-white">{item.invoiceDate}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.totalSessions}
-              </p>
+              <p className="text-black dark:text-white">{item.totalSessions}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.rating}
-              </p>
+              <p className="text-black dark:text-white">{item.rating}</p>
             </td>
             <td className="min-w-[150px] p-5 flex items-center justify-between">
               <p
@@ -85,22 +86,16 @@ const MasterTables: React.FC = () => {
               <Space direction="vertical">
                 <Space wrap>
                   <Dropdown menu={{ items }} placement="bottomLeft" arrow>
-                    <CiMenuKebab
-                      className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200"
-                    />
+                    <CiMenuKebab className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
                   </Dropdown>
                 </Space>
               </Space>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.scheduleType}
-              </p>
+              <p className="text-black dark:text-white">{item.scheduleType}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.canceled}
-              </p>
+              <p className="text-black dark:text-white">{item.canceled}</p>
             </td>
             <td className="min-w-[150px] p-5">
               <p className="text-black dark:text-white">
@@ -108,28 +103,26 @@ const MasterTables: React.FC = () => {
               </p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.clients}
-              </p>
+              <p className="text-black dark:text-white">{item.clients}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.phoneNumber}
-              </p>
+              <p className="text-black dark:text-white">{item.phoneNumber}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.placeOfWork}
-              </p>
+              <p className="text-black dark:text-white">{item.placeOfWork}</p>
             </td>
             <td className="min-w-[150px] p-5">
-              <p className="text-black dark:text-white">
-                {item.selfEmployed}
-              </p>
+              <p className="text-black dark:text-white">{item.selfEmployed}</p>
             </td>
           </tr>
         ))}
       </MasterTable>
+      <Pagination
+        responsive={true}
+        defaultCurrent={0}
+        total={100}
+        rootClassName={`mt-10 mb-5 ms-5`}
+      />
     </>
   );
 };
