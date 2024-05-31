@@ -1,19 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
 import Chatusers from '../components/user';
-import Notselected from '../components/notselected';
-import ChatEmptyState from '../components/emptychat';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
-import { IoSearchOutline, IoSend } from 'react-icons/io5';
-import { IoMdAttach } from 'react-icons/io';
-import { FaCheck } from 'react-icons/fa6';
+import { IoSearchOutline } from 'react-icons/io5';
 import axios from 'axios';
 import { chat_user_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import Modal from '../../../components/modals/modal';
 import NewChat from '../newChat';
 import Sms from '../sms/sms';
 import { config } from '../../../helpers/token';
@@ -43,8 +38,8 @@ const Chatdetail: React.FC = ({ role }: any) => {
       }).catch((err) => {
         console.error(err)
       })
-    setAdminId(sessionStorage.getItem('userId'))
-    console.log(sessionStorage.getItem('userId'));
+    setAdminId(sessionStorage.getItem('userid'))
+    console.log(sessionStorage.getItem('userid'));
     
   }, [])
 
