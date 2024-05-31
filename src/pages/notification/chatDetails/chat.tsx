@@ -41,9 +41,11 @@ const Chatdetail = ({ role }: ChatProp) => {
       })
 
     setAdminId(sessionStorage.getItem('userId'))
+    connect()
   }, [])
 
 
+  // chat sitebar sizing
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,37 +61,20 @@ const Chatdetail = ({ role }: ChatProp) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const toggleSidebar = () => {
+    setSidebarWidth((currentWidth) => (currentWidth === 'w-max' ? 'fixed' : 'w-max'));
+    setSiteBarClass(() => {
+      if (siteBar) {
+        setSiteBar(false);
+        return 'translate-x-0 left-0 ';
+      } else {
+        setSiteBar(true);
+        return '-translate-x-full -left-10';
+      }
+    });
+  };
 
-  useEffect(() => {
-    connect()
-
-    // const client = new Client({
-    //   webSocketFactory: () => socket,
-    //   debug: (str) => {
-    //     console.log(str);
-    //   },
-
-    //   onConnect: (frame) => {
-    //     console.log('Connected: ' + frame);
-    //     client.subscribe('/user/3e129de3-cb68-4c72-b626-66d56f6cb2b2/queue/messages', (response) => {
-    //       console.log(response);
-    //     });
-    //   },
-    //   onStompError: (frame) => {
-    //     console.error('Error: ' + frame.headers['message']);
-    //   },
-    //   onDisconnect(frame) {
-    //     console.error('Error: ' + frame.headers['message']);
-    //   },
-    //   onWebSocketError(res){
-    //     console.log(res)
-    //   }
-    // });
-    // client.activate();
-    // setStompClient(client);
-  }, []);
-
-  // --------- connect socket with sock js ------
+  //  connect socket with sock js 
   const connect = () => {
     const socket = new SockJS(sockjs_url);
     const stomp = Stomp.over(socket);
@@ -105,7 +90,18 @@ const Chatdetail = ({ role }: ChatProp) => {
     }, (error: any) => {
       console.error('Error connecting: ', error);
     });
-
+    // onStompError: (frame) => {
+    //       console.error('Error: ' + frame.headers['message']);
+    //     },
+    //     onDisconnect(frame) {
+    //       console.error('Error: ' + frame.headers['message']);
+    //     },
+    //     onWebSocketError(res){
+    //       console.log(res)
+    //     }
+    //   });
+    //   client.activate();
+    //   setStompClient(client);
   };
 
   const sendMessage = () => {
@@ -153,37 +149,9 @@ const Chatdetail = ({ role }: ChatProp) => {
   // };
 
 
-  const toggleSidebar = () => {
-    setSidebarWidth((currentWidth) => (currentWidth === 'w-max' ? 'fixed' : 'w-max'));
-    setSiteBarClass(() => {
-      if (siteBar) {
-        setSiteBar(false);
-        return 'translate-x-0 left-0 ';
-      } else {
-        setSiteBar(true);
-        return '-translate-x-full -left-10';
-      }
-    });
-  };
+  
 
-  useEffect(() => {
-    const updateWidth = () => {
-      const parent = document.getElementById('parent-container') as HTMLElement;
-      const footer = document.getElementById('fixed-footer') as HTMLElement;
 
-      if (parent && footer) {
-        const parentWidth = parent.offsetWidth;
-        footer.style.width = `${parentWidth}px`;
-      }
-    };
-
-    window.addEventListener('resize', updateWidth);
-    updateWidth();
-
-    return () => {
-      window.removeEventListener('resize', updateWidth);
-    };
-  }, []);
 
 
 
@@ -211,8 +179,13 @@ const Chatdetail = ({ role }: ChatProp) => {
             { value: 'disabled', label: 'Disabled', disabled: true }
           ]}
         />
+
+        {/* yangi chat yaratuvchi button va component */}
+
         <NewChat />
+
         <Buttons>Удалить все прочитанные</Buttons>
+
       </div>
 
       <div className="flex w-[100%] relative">

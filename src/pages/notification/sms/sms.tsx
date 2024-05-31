@@ -27,6 +27,27 @@ const Sms = ({ sendMessage, chat, contents }: SmsProp) => {
     setContent(contents);
   }, [contents]);
 
+  // sented qismini sozlash
+
+  useEffect(() => {
+    const updateWidth = () => {
+      const parent = document.getElementById('parent-container') as HTMLElement;
+      const footer = document.getElementById('fixed-footer') as HTMLElement;
+
+      if (parent && footer) {
+        const parentWidth = parent.offsetWidth;
+        footer.style.width = `${parentWidth}px`;
+      }
+    };
+
+    window.addEventListener('resize', updateWidth);
+    updateWidth();
+
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, []);
+
   const data = [
     {
       id: 1,
@@ -97,6 +118,13 @@ const Sms = ({ sendMessage, chat, contents }: SmsProp) => {
               id="fixed-footer"
             >
               <div className="flex items-center gap-5 w-full">
+                {/* <textarea
+                  rows={1} id="chat"
+                  className="w-full border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0"
+                  placeholder="Type your message..."
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                ></textarea> */}
                 <textarea
                   rows={1} id="chat"
                   className="w-full border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0"
