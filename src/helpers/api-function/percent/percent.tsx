@@ -21,7 +21,7 @@ export const fetchData = (setData: (data: Data[]) => void) => {
 };
 
 // Add percent
-export const addPercent = (percent: string, setData: (data: Data[]) => void, closeToggleInput: () => void) => {
+export const addPercent = (percent: string, setData: (data: Data[]) => void, toggleInput: () => void) => {
   axios.post(add_precent_list, { percent }, config)
     .then((res) => {
       if (!res.data.success) {
@@ -29,7 +29,7 @@ export const addPercent = (percent: string, setData: (data: Data[]) => void, clo
       } else {
         toast.success('Successfully added');
         fetchData(setData);
-        closeToggleInput();
+        toggleInput();
       }
     })
     .catch((err) => {

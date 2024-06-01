@@ -138,7 +138,7 @@ const FilterComponent: React.FC = () => {
           <Col xs={24} sm={12} md={5} className="mb-4">
             <Select
               defaultValue="Статус записи"
-              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+              className="w-full rounded-lg bg-gray-800"
               placeholder="Tariff"
             >
               <Option value="Карта">Карта</Option>
@@ -146,7 +146,7 @@ const FilterComponent: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
-            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full bg-white">
+            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full  dark:text-white">
               Reset
             </Button>
           </Col>

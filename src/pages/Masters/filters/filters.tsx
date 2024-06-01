@@ -1,32 +1,61 @@
 import { Button, Col, DatePicker, Input, Row, Select, Space } from 'antd';
 import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MasterModal from '../master-modal.tsx';
+import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
+import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
+
+interface FilterTypes {
+  searchValue: string;
+  regionValue: string | null;
+  cityValue: string | null;
+  registrationPeriodValue: string | null;
+  serviceCategoryValue: string | null;
+  scheduleTypeValue: string | null;
+  selfEmployedStatusValue: string | null;
+  statusValue: string | null;
+  placeOfWorkValue: string | null;
+}
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 const filterObj = {
   searchValue: '',
-  regionValue: 'Region',
-  cityValue: 'City',
+  regionValue: null,
+  cityValue: null,
   registrationPeriodValue: null,
-  serviceCategoryValue: 'Service category',
-  scheduleTypeValue: 'Schedule type',
-  selfEmployedStatusValue: 'Self-employed status',
-  statusValue: 'Status',
-  placeOfWorkValue: 'Place of work'
+  serviceCategoryValue: null,
+  scheduleTypeValue: null,
+  selfEmployedStatusValue: null,
+  statusValue: null,
+  placeOfWorkValue: null
 };
 
 const Filters: React.FC = () => {
-  const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [filters, setFilters] = useState(filterObj);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
+  const [filters, setFilters] = useState<FilterTypes>(filterObj);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { setData, setTotalPage, regionData, setDistrictData, districtData } = masterStore();
 
-  const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
+  useEffect(() => {
+    getMasters({
+      fullName: filters.searchValue ? filters.searchValue : '',
+      regionId: filters.regionValue ? filters.regionValue : '',
+      setData,
+      setTotalPage
+    });
+    if (filters.regionValue) {
+      getDistrict(setDistrictData, +filters.regionValue)
+    }
+  }, [filters]);
+  console.log(regionData, 'aaa');
+  console.log(districtData, 'gh');
+
+  const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
   const handleInputChange = (key: string, value: any) => setFilters({ ...filters, [key]: value });
-  const openModal = () => setIsModalOpen(!isModalOpen);
+  const openModal = (): void => setIsModalOpen(!isModalOpen);
 
   const styles = {
     mainContainer: {
@@ -59,7 +88,7 @@ const Filters: React.FC = () => {
       <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Input
-            placeholder="Search F.I.O"
+            placeholder="Поиск по ФИО"
             prefix={<IoSearchOutline />}
             style={styles.filterInput}
             value={filters.searchValue}
@@ -68,21 +97,20 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            defaultValue="Region"
+            defaultValue="Регион"
             style={styles.filterInput}
-            value={filters.regionValue}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qashqadaryo">Qashqadaryo</Option>
-            <Option value="surxandaryo">Surxandaryo</Option>
+            {regionData.length > 0 &&
+              regionData.map(item => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            defaultValue="City"
+            defaultValue="Город"
             style={styles.filterInput}
-            value={filters.cityValue}
             onChange={(value) => handleInputChange('cityValue', value)}
           >
             <Option value="toshkent">Toshkent</Option>
@@ -110,17 +138,15 @@ const Filters: React.FC = () => {
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Space direction="vertical" size={12}>
                 <RangePicker
-                    style={styles.filterInput}
-                    value={filters.registrationPeriodValue}
-                    onChange={(date) => handleInputChange('registrationPeriodValue', date)}
+                  style={styles.filterInput}
+                  onChange={(date) => handleInputChange('registrationPeriodValue', date)}
                 />
               </Space>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Service category"
+                defaultValue="Категория услуг"
                 style={styles.filterInput}
-                value={filters.serviceCategoryValue}
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
               >
                 <Option value="toshkent">Toshkent</Option>
@@ -129,9 +155,8 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Schedule type"
+                defaultValue="Тип расписания"
                 style={styles.filterInput}
-                value={filters.scheduleTypeValue}
                 onChange={(value) => handleInputChange('scheduleTypeValue', value)}
               >
                 <Option value="2024">2024</Option>
@@ -142,9 +167,8 @@ const Filters: React.FC = () => {
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Self-employed status"
+                defaultValue="Статус самозанятых"
                 style={styles.filterInput}
-                value={filters.selfEmployedStatusValue}
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
                 <Option value="toshkent">Toshkent</Option>
@@ -153,9 +177,8 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Status"
+                defaultValue="Статус"
                 style={styles.filterInput}
-                value={filters.statusValue}
                 onChange={(value) => handleInputChange('statusValue', value)}
               >
                 <Option value="toshkent">Toshkent</Option>
@@ -164,9 +187,8 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Place of work"
+                defaultValue="Место работы"
                 style={styles.filterInput}
-                value={filters.placeOfWorkValue}
                 onChange={(value) => handleInputChange('placeOfWorkValue', value)}
               >
                 <Option value="2024">2024</Option>
