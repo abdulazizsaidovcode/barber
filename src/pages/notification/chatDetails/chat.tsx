@@ -5,7 +5,7 @@ import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
 import axios from 'axios';
-import { chat_user_url, sockjs_url } from '../../../helpers/api';
+import { chat_user_url, client_url, master_url, sockjs_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -22,6 +22,8 @@ const Chatdetail = ({ role }: ChatProp) => {
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
   const [adminId, setAdminId] = useState<string | null>('');
+  const [client, setClient] = useState<object | null>(null);
+  const [masters, setMasters] = useState<null | object>(null);
 
   const [messages, setMessages] = useState<any>([]);
   const [content] = useState<any>('');
@@ -41,17 +43,14 @@ const Chatdetail = ({ role }: ChatProp) => {
       })
 
     setAdminId(sessionStorage.getItem('userId'))
-    console.log(sessionStorage.getItem('userInfo'));
-
-    connect()
+    getUser()
+    // connect()
   }, [])
 
-  function getUser(){
-    axios.get(chat_user_url, config)
-     .then(res => {
-        setAdmin(res.data.body)
+  function getUser() {
+    axios.get(master_url, config)
+      .then(res => {
         console.log(res.data.body);
-
       }).catch((err) => {
         console.error(err)
       })
@@ -88,48 +87,48 @@ const Chatdetail = ({ role }: ChatProp) => {
   };
 
   //  connect socket with sock js 
-  const connect = () => {
-    const socket = new SockJS(sockjs_url);
-    const stomp = Stomp.over(socket);
+  // const connect = () => {
+  //   const socket = new SockJS(sockjs_url);
+  //   const stomp = Stomp.over(socket);
 
-    stomp.connect({}, (frame: any) => {
-      console.log('Connected: ' + frame);
-      setStompClient(stomp);
-      stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
-        const receivedMessages = JSON.parse(response.body);
-        setMessages((prevState: any) => [...prevState, receivedMessages]);
+  //   stomp.connect({}, (frame: any) => {
+  //     console.log('Connected: ' + frame);
+  //     setStompClient(stomp);
+  //     stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
+  //       const receivedMessages = JSON.parse(response.body);
+  //       setMessages((prevState: any) => [...prevState, receivedMessages]);
 
-      });
-    }, (error: any) => {
-      console.error('Error connecting: ', error);
-    });
-    // onStompError: (frame) => {
-    //       console.error('Error: ' + frame.headers['message']);
-    //     },
-    //     onDisconnect(frame) {
-    //       console.error('Error: ' + frame.headers['message']);
-    //     },
-    //     onWebSocketError(res){
-    //       console.log(res)
-    //     }
-    //   });
-    //   client.activate();
-    //   setStompClient(client);
-  };
+  //     });
+  //   }, (error: any) => {
+  //     console.error('Error connecting: ', error);
+  //   });
+  //   // onStompError: (frame) => {
+  //   //       console.error('Error: ' + frame.headers['message']);
+  //   //     },
+  //   //     onDisconnect(frame) {
+  //   //       console.error('Error: ' + frame.headers['message']);
+  //   //     },
+  //   //     onWebSocketError(res){
+  //   //       console.log(res)
+  //   //     }
+  //   //   });
+  //   //   client.activate();
+  //   //   setStompClient(client);
+  // };
 
-  const sendMessage = () => {
-    const chatMessage = {
-      senderId: adminId,
-      recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
-      content: content,
-      isRead: false,
-      createdAt: new Date(),
-      attachmentIds: [],
-    };
+  // const sendMessage = () => {
+  //   const chatMessage = {
+  //     senderId: adminId,
+  //     recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
+  //     content: content,
+  //     isRead: false,
+  //     createdAt: new Date(),
+  //     attachmentIds: [],
+  //   };
 
-    stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-    console.log('Message sent:', content);
-  };
+  //   stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+  //   console.log('Message sent:', content);
+  // };
 
   // const messageDelete = () => {
   //   if (stompClient && stompClient.connected) {
@@ -160,13 +159,6 @@ const Chatdetail = ({ role }: ChatProp) => {
   //     });
   //   }
   // };
-
-
-
-
-
-
-
 
 
   return (
@@ -210,7 +202,7 @@ const Chatdetail = ({ role }: ChatProp) => {
           </div>
         </div>
         <div className="w-full relative overflow-y-auto">
-          <Sms sendMessage={sendMessage} chat={"salom"} contents={content} />
+          {/* <Sms sendMessage={sendMessage} chat={"salom"} contents={content} /> */}
         </div>
       </div>
     </div>
