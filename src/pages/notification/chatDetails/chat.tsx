@@ -34,7 +34,7 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
   const [masters, setMasters] = useState<null | object>(null);
 
   const [messages, setMessages] = useState<any>([]);
-  const [content] = useState<any>('');
+  const [content, setContent] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
 
   const { clientData } = clientStore()
@@ -210,7 +210,7 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
           <Chatusers user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative overflow-y-auto">
-          {recipientId ? <Sms sendMessage={sendMessage} chat={"salom"} contents={content} /> : <Notselected />}
+          {recipientId ? <Sms sendMessage={sendMessage} chat={"salom"} contents={setContent} /> : <Notselected />}
         </div>
       </div>
 

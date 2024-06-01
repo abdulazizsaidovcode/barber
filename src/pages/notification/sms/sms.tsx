@@ -7,7 +7,7 @@ import Notselected from '../components/notselected';
 interface SmsProp {
   sendMessage: () => void,
   chat: string,
-  contents: string
+  contents: any
 }
 
 const Sms = ({ sendMessage, chat, contents }: SmsProp) => {
@@ -24,8 +24,8 @@ const Sms = ({ sendMessage, chat, contents }: SmsProp) => {
   }, [chats])
 
   useEffect(() => {
-    setContent(contents);
-  }, [contents]);
+    contents(content)
+  }, [content]);
 
   // sented qismini sozlash
 

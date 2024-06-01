@@ -2,9 +2,9 @@ import { create } from 'zustand';
 
 interface ClientData {
     clientData: Data[];
-    setData: (data: Data[]) => void;
+    setClientData: (data: Data[] | any) => void;
     totalPage: number;
-    setTotalPage: (val: number) => void;
+    setClientTotalPage: (val: number) => void;
 }
 
 export interface Data {
@@ -28,9 +28,9 @@ export interface Data {
 
 const clientStore = create<ClientData>((set) => ({
     clientData: [],
-    setData: (val: Data[]) => set({ clientData: val }),
+    setClientData: (val: Data[]) => set({ clientData: val }),
     totalPage: 0,
-    setTotalPage: (val: number) => set({ totalPage: val })
+    setClientTotalPage: (val: number) => set({ totalPage: val })
 }));
 
 export default clientStore;
