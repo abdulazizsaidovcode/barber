@@ -2,7 +2,7 @@ import { ApexOptions } from 'apexcharts';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { dashboard_clinet_url } from '../../helpers/api';
+import {dashboard_url } from '../../helpers/api';
 
 const options: ApexOptions = {
   colors: ['#000000', '#D9D9D9'],
@@ -139,7 +139,7 @@ const ChartTwo: React.FC = () => {
   const currentYear = new Date().getFullYear();
   useEffect(() => {
     axios
-      .get(`${dashboard_clinet_url}web/masterVsClient?year=${currentYear}`)
+      .get(`${dashboard_url}web/masterVsClient?year=${currentYear}`)
       .then((response) => {
         setClientData(response.data.body);
         console.log(clientData); 

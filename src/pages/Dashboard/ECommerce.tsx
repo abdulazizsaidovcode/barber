@@ -14,6 +14,7 @@ import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { dashboard_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
 
 const ECommerce: React.FC = () => {
   const [data, setData] = useState(
@@ -42,7 +43,7 @@ const ECommerce: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`${dashboard_url}web/statistic?year=${currentYear}`)
+      .get(`${dashboard_url}web/statistic?year=${currentYear}`, config)
       .then((response) => {
         setData(response.data.body);
 
