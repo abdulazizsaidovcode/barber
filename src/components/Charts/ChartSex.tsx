@@ -13,8 +13,8 @@ const options: ApexOptions = {
         fontFamily: 'Satoshi, sans-serif',
         type: 'donut',
     },
-    colors: ['#000000', '#D9D9D9', '#E4E8EF',],
-    labels: ['Desktop', 'Tablet', 'Mobile',],
+    colors: ['#ffba08', '#faa307', '#f48c06', '#e85d04', '#dc2f02',],
+    labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star',],
     legend: {
         show: true,
         position: 'bottom',
