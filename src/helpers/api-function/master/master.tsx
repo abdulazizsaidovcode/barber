@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { master_url } from '../../api.tsx';
 import { config } from '../../token.tsx';
-import { Data } from '../../state_managment/master/masterStore.tsx';
+import { Data, RegionData } from '../../state_managment/master/masterStore.tsx';
 
 interface IMaster {
   fullName?: string;
@@ -41,5 +41,11 @@ export const getMasters = ({
         setTotalPage(res.data.body.totalPage)
       }
     })
-    .catch(err => console.log(err));
+    .catch(() => 'error fetching master');
 };
+
+export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
+  axios.get(``, config)
+    .then(res => setRegionData(res.data.body))
+    .catch(() => 'Error fetching region data');
+}
