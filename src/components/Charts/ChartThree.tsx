@@ -51,13 +51,13 @@ const options: ApexOptions = {
 
 const ChartThree: React.FC = () => {
   const [state, setState] = useState<ChartThreeState>({
-    series: [65, 34, 12,],
+    series: [65, 34, 12,24],
   });
 
   const handleReset = () => {
     setState((prevState) => ({
       ...prevState,
-      series: [65, 34, 12,],
+      series: [65, 34, 12,24],
     }));
   };
   handleReset;
