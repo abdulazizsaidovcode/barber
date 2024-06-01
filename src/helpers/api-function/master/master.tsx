@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { master_url, region_url } from '../../api.tsx';
+import { district_url, master_url, region_url } from '../../api.tsx';
 import { config } from '../../token.tsx';
-import { Data, RegionData } from '../../state_managment/master/masterStore.tsx';
+import { Data, DistrictData, RegionData } from '../../state_managment/master/masterStore.tsx';
 
 interface IMaster {
   fullName?: string;
@@ -48,7 +48,18 @@ export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
   axios.get(region_url, config)
     .then(res => {
       console.log(res);
-      setRegionData(res.data.body)
+      setRegionData(res.data.body);
     })
     .catch((err) => console.log(err));
+};
+
+export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, districtId: number) => {
+  if (districtId) {
+    axios.get(`${district_url}?regionId=${districtId}`, config)
+      .then(res => {
+        console.log(res);
+        setDistrictData(res.data.body);
+      })
+      .catch((err) => console.log(err));
+  }
 };

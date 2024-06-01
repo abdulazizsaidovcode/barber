@@ -3,7 +3,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import MasterModal from '../master-modal.tsx';
-import { getMasters } from '../../../helpers/api-function/master/master.tsx';
+import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
 import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
 
 interface FilterTypes {
@@ -22,21 +22,21 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 const filterObj = {
   searchValue: '',
-  regionValue: '',
-  cityValue: '',
+  regionValue: null,
+  cityValue: null,
   registrationPeriodValue: null,
-  serviceCategoryValue: '',
-  scheduleTypeValue: '',
-  selfEmployedStatusValue: '',
-  statusValue: '',
-  placeOfWorkValue: ''
+  serviceCategoryValue: null,
+  scheduleTypeValue: null,
+  selfEmployedStatusValue: null,
+  statusValue: null,
+  placeOfWorkValue: null
 };
 
 const Filters: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [filters, setFilters] = useState<FilterTypes>(filterObj);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { setData, setTotalPage, regionData } = masterStore();
+  const { setData, setTotalPage, regionData, setDistrictData, districtData } = masterStore();
 
   useEffect(() => {
     getMasters({
@@ -45,8 +45,12 @@ const Filters: React.FC = () => {
       setData,
       setTotalPage
     });
+    if (filters.regionValue) {
+      getDistrict(setDistrictData, +filters.regionValue)
+    }
   }, [filters]);
-  console.log(regionData);
+  console.log(regionData, 'aaa');
+  console.log(districtData, 'gh');
 
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
