@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 interface ChartThreeState {
-    series: number[];
+    series: number[
+        
+    ];
 }
 
 const options: ApexOptions = {
@@ -51,13 +53,13 @@ const options: ApexOptions = {
 
 const ChartSex: React.FC = () => {
     const [state, setState] = useState<ChartThreeState>({
-        series: [65, 34, 12,],
+        series: [65, 34, 12,90,89],
     });
 
     const handleReset = () => {
         setState((prevState) => ({
             ...prevState,
-            series: [65, 34, 12,],
+            series: [65, 34, 12,90,89],
         }));
     };
     handleReset;
