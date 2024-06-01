@@ -1,6 +1,9 @@
 import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { dashboard_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
 
 interface ChartThreeState {
     series: number[
@@ -52,17 +55,54 @@ const options: ApexOptions = {
 };
 
 const ChartSex: React.FC = () => {
+
+    const [chart, setChart] = useState({
+        one: 0,
+        two: 0,
+        three: 0,
+        four: 0,
+        five: 0,
+    })
+     
+    useEffect(() => {
+        axios
+          .get(`${dashboard_url}web/diagram` , config)
+          .then((response) => {
+            setChart(response.data.body);
+        
+          })
+          .catch((error) => {
+            console.error('There was an error fetching the data!', error);
+          });
+      }, []);
+      
+      
+    
+
     const [state, setState] = useState<ChartThreeState>({
-        series: [65, 34, 12,90,89],
+        series: [
+            chart.five,
+            chart.four,
+            chart.three,
+            chart.two,
+            chart.one
+        ],
     });
 
     const handleReset = () => {
         setState((prevState) => ({
             ...prevState,
-            series: [65, 34, 12,90,89],
+            series: [
+                chart.five,
+                chart.four,
+                chart.three,
+                chart.two,
+                chart.one],
         }));
     };
     handleReset;
+
+
 
     return (
         <>

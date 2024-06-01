@@ -142,7 +142,6 @@ const ChartTwo: React.FC = () => {
       .get(`${dashboard_url}web/masterVsClient?year=${currentYear}`)
       .then((response) => {
         setClientData(response.data.body);
-        console.log(clientData); 
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
