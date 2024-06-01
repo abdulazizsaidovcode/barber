@@ -10,7 +10,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Select } from "antd";
 import calendarStore from "../../helpers/state_managment/calendar/calendarStore";
-import { getCategoryId } from "../../helpers/api-function/calendar/calendar";
+import { getCalendar, getCategoryId } from "../../helpers/api-function/calendar/calendar";
 
 interface Event {
   title: string;
@@ -30,6 +30,7 @@ const Calendar: React.FC = () => {
     getCategoryId(setCategory);
   }, []);
 
+  getCalendar("2024-05-30","","", 29)  
 
   const events: Event[] = [
     { title: "25", start: "2024-05-07", color: "#22C55E" },
@@ -55,7 +56,11 @@ const Calendar: React.FC = () => {
 
   const handleDatesSet = (arg: any) => {
     if (arg.view.type === "dayGridMonth") {
-      setCurrentDate(arg.startStr); // Store year-month-day for month view
+      const start = new Date(arg.startStr);
+      const formattedDate = `${start.getFullYear()}-${(start.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
+      setCurrentDate(formattedDate); // Oyning sanasini year-month-day formatida saqlash
     } else if (arg.view.type === "timeGridWeek") {
       const start = new Date(arg.start);
       const end = new Date(arg.end);
@@ -64,8 +69,8 @@ const Calendar: React.FC = () => {
         .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
       const endDate = `${end.getFullYear()}-${(end.getMonth() + 1)
         .toString()
-        .padStart(2, "0")}-${(end.getDate() - 1).toString().padStart(2, "0")}`; // Subtracting 1 from end date as it includes the next day
-      setCurrentDate(`${startDate} to ${endDate}`); // Store year-month-day to year-month-day for week view
+        .padStart(2, "0")}-${(end.getDate() - 1).toString().padStart(2, "0")}`; // Yakuniy sanani 1 kunga qisqartirish
+      setCurrentDate(`${startDate} to ${endDate}`); // Haftaning sanasini year-month-day to year-month-day formatida saqlash
     }
   };
 
@@ -134,9 +139,8 @@ const Calendar: React.FC = () => {
               <button
                 key={i}
                 onClick={() => {
-                  handleButtonClick(item.name)
-                  setCategoryId(item.id)
-                  
+                  handleButtonClick(item.name);
+                  setCategoryId(item.id);
                 }}
                 className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${
                   activeButton === item.name

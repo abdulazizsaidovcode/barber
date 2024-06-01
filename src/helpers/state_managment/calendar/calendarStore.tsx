@@ -1,18 +1,5 @@
 import { create } from "zustand";
 
-interface CalendarStore {
-  show: boolean;
-  loading: boolean;
-  date: string;
-  category: CategoryList[];
-  categoryId: string;
-  setShow: (val: boolean) => void;
-  setCategory: (val: []) => void;
-  setCategoryId: (val: string) => void;
-  setDate: (val: string) => void;
-  setLoading: (val: boolean) => void;
-}
-
 interface CategoryList {
   categoryFatherId: any;
   categoryFatherName: any;
@@ -20,6 +7,22 @@ interface CategoryList {
   name: string;
   new: boolean;
 }
+
+
+
+
+interface CalendarStore {
+  show: boolean;
+  loading: boolean;
+  date: string;
+  category: CategoryList[];
+  categoryId: string;
+  setShow: (val: boolean) => void;
+  setCategory: (val: CategoryList[]) => void;
+  setCategoryId: (val: string) => void;
+  setDate: (val: string) => void;
+  setLoading: (val: boolean) => void;
+}  
 
 const calendarStore = create<CalendarStore>((set) => ({
   show: false,
