@@ -133,8 +133,8 @@ const ChartFour: React.FC = () => {
       .then((response) => {
         setChart(response.data.body);
       })
-      .catch((error) => {
-        console.error('There was an error fetching the data!', error);
+      .catch(() => {
+        console.error('There was an error fetching the data!');
       });
   }, [currentYear]);
 

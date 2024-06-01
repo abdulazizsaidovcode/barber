@@ -5,6 +5,10 @@ interface MasterData {
   setData: (data: Data[]) => void;
   totalPage: number;
   setTotalPage: (val: number) => void;
+  regionData: RegionData[];
+  setRegionData: (val: RegionData[]) => void;
+  districtData: DistrictData[];
+  setDistrictData: (val: DistrictData[]) => void;
 }
 
 export interface Data {
@@ -26,11 +30,26 @@ export interface Data {
   lng: number
 }
 
+export interface RegionData {
+  id: number;
+  name: string;
+}
+
+export interface DistrictData {
+  id: number;
+  name: string;
+  regionId: number;
+}
+
 const masterStore = create<MasterData>((set) => ({
   data: [],
   setData: (val: Data[]) => set({ data: val }),
   totalPage: 0,
-  setTotalPage: (val: number) => set({ totalPage: val })
+  setTotalPage: (val: number) => set({ totalPage: val }),
+  regionData: [],
+  setRegionData: (val: RegionData[]) => set({ regionData: val }),
+  districtData: [],
+  setDistrictData: (val: DistrictData[]) => set({ districtData: val })
 }));
 
 export default masterStore;
