@@ -1,9 +1,14 @@
 import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { dashboard_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
 
 interface ChartThreeState {
-    series: number[];
+    series: number[
+        
+    ];
 }
 
 const options: ApexOptions = {
@@ -11,8 +16,8 @@ const options: ApexOptions = {
         fontFamily: 'Satoshi, sans-serif',
         type: 'donut',
     },
-    colors: ['#000000', '#D9D9D9', '#E4E8EF',],
-    labels: ['Desktop', 'Tablet', 'Mobile',],
+    colors: ['#ffba08', '#faa307', '#f48c06', '#e85d04', '#dc2f02',],
+    labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star',],
     legend: {
         show: true,
         position: 'bottom',
@@ -50,17 +55,54 @@ const options: ApexOptions = {
 };
 
 const ChartSex: React.FC = () => {
+
+    const [chart, setChart] = useState({
+        one: 0,
+        two: 0,
+        three: 0,
+        four: 0,
+        five: 0,
+    })
+     
+    useEffect(() => {
+        axios
+          .get(`${dashboard_url}web/diagram` , config)
+          .then((response) => {
+            setChart(response.data.body);
+        
+          })
+          .catch(() => {
+            console.error('There was an error fetching the data!');
+          });
+      }, []);
+      
+      
+    
+
     const [state, setState] = useState<ChartThreeState>({
-        series: [65, 34, 12,],
+        series: [
+            chart.five,
+            chart.four,
+            chart.three,
+            chart.two,
+            chart.one
+        ],
     });
 
     const handleReset = () => {
         setState((prevState) => ({
             ...prevState,
-            series: [65, 34, 12,],
+            series: [
+                chart.five,
+                chart.four,
+                chart.three,
+                chart.two,
+                chart.one],
         }));
     };
     handleReset;
+
+
 
     return (
         <>

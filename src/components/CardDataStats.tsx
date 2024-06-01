@@ -1,4 +1,5 @@
 import React from 'react';
+import CountUp from 'react-countup';
 
 interface CardDataStatsProps {
   title: any;
@@ -24,7 +25,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
         <div>
           <span className="text-sm font-medium">{title}</span>
           <h4 className="text-title-md font-bold text-black dark:text-white">
-            {total}
+            <CountUp end={total} duration={3}/>
           </h4>
         </div>
       </div>

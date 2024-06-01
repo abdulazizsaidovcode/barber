@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import admin from '../../../../images/user/admin-panel.png';
+import admin from '../../../images/user/admin-panel.png';
 
 
 const Chatusers = ({ user }: any) => {

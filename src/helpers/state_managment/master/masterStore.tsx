@@ -1,8 +1,12 @@
-import {create} from 'zustand'
+import { create } from 'zustand';
 
 interface MasterData {
-  data: Data[],
-  setData: (data: Data[]) => void
+  data: Data[];
+  setData: (data: Data[]) => void;
+  totalPage: number;
+  setTotalPage: (val: number) => void;
+  regionData: RegionData[];
+  setRegionData: (val: RegionData[]) => void;
 }
 
 export interface Data {
@@ -24,9 +28,18 @@ export interface Data {
   lng: number
 }
 
+export interface RegionData {
+  id: number;
+  name: string;
+}
+
 const masterStore = create<MasterData>((set) => ({
   data: [],
-  setData: (val: Data[]) => set({data: val}),
-}))
+  setData: (val: Data[]) => set({ data: val }),
+  totalPage: 0,
+  setTotalPage: (val: number) => set({ totalPage: val }),
+  regionData: [],
+  setRegionData: (val: RegionData[]) => set({ regionData: val }),
+}));
 
 export default masterStore;

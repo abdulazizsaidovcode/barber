@@ -7,7 +7,6 @@ import { DatePicker, Select } from 'antd';
 import CardDataCharts from '../../components/CardDataCharts';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartFour from '../../components/Charts/ChartFour';
-import ChartFive from '../../components/Charts/ChartFive';
 import ChartSex from '../../components/Charts/ChartSex';
 import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
@@ -15,6 +14,7 @@ import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { dashboard_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
 
 const ECommerce: React.FC = () => {
   const [data, setData] = useState(
@@ -35,13 +35,15 @@ const ECommerce: React.FC = () => {
       "totalTurnover": 0
     }
   );
+
+ 
   const currentYear = new Date().getFullYear();
 
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
     axios
-      .get(`${dashboard_url}web/statistic?year=${currentYear}`)
+      .get(`${dashboard_url}web/statistic?year=${currentYear}`, config)
       .then((response) => {
         setData(response.data.body);
 
@@ -50,6 +52,8 @@ const ECommerce: React.FC = () => {
         console.error('There was an error fetching the data!', error);
       });
   }, []);
+
+ 
  
   return (
     <DefaultLayout>
@@ -69,36 +73,35 @@ const ECommerce: React.FC = () => {
             ]}
           />
           <DatePicker
-            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
+            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800  text-black dark:text-black'
             placeholder='Дата'
           />
           <DatePicker
-            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
+            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 text-black dark:text-black'
             placeholder='Период'
           />
         </div>
       </div>
 
 
-
+      
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} />
+        <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} /> 
         <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
-        <CardDataStats title="Заказы" total={data.clientCount ? data.clientCount : 0} />
-        <CardDataStats title="Отмененные клиент/мастер" total={data.clientCount ? data.clientCount : 0} />
-        <CardDataStats title="Оборот общий" total="100 545 000" />
+        <CardDataStats title="Заказы" total={data.orderCount ? data.orderCount : 0} />
+        <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
+        <CardDataStats title="Оборот общий" total={data.totalTurnover ? data.totalTurnover : 0} />
         <CardDataStats title="Доход" total={data.income ? data.income : 0} />
         <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction? data.customerDissatisfaction: 0} />
-      <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction? data.masterDissatisfaction:0} />
-        <CardDataStats title="Отток клиентов" total="27" />
-        <CardDataStats title="Клиентов на 1 мастера усредненно" total="1 684" />
-        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.masterAverageClient} secondTotal={data.clientCount} />
+       <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction? data.masterDissatisfaction:0 } />
+        <CardDataStats title="Клиентов на 1 мастера усредненно" total={data.masterAverageClient ? data.masterAverageClient :0 } />
+        <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} />
       </div>
       <div className='flex mt-7 justify-between flex-wrap gap-2'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>
         <Select
           defaultValue="2024"
-          style={{ width: 120 }}
+          style={{ width: 200 }}
           options={[
             { value: '2024', label: '2024' },
             { value: '2025', label: '2025' },
@@ -117,10 +120,10 @@ const ECommerce: React.FC = () => {
             ]}
           />
           <Select
-            defaultValue="May"
-            style={{ width: 120 }}
+            defaultValue=''
+            style={{ width: 200 }}
             options={[
-              { value: 'January', label: 'January' },
+              { value: '' , label: 'January' },
               { value: 'February', label: 'February' },
               { value: 'March', label: 'March' },
               { value: 'Aprel', label: 'Aprel' },

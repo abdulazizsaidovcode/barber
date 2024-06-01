@@ -3,15 +3,14 @@ import { Tabs } from 'antd';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
 import { items } from './data.tsx';
 import { useEffect } from 'react';
-import { getMasters } from '../../helpers/api-function/master/master.tsx';
+import { getMasters, getRegion } from '../../helpers/api-function/master/master.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import { setConfig } from '../../helpers/token.tsx';
 
 const Master = () => {
-  const {setData} = masterStore()
+  const {setData, setTotalPage, setRegionData} = masterStore()
   useEffect(() => {
-    setConfig()
-    getMasters({setData})
+    getMasters({setData, setTotalPage})
+    getRegion(setRegionData)
   }, [])
   return (
     <DefaultLayout>

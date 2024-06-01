@@ -24,22 +24,32 @@ export const getMe = (token?: string) => {
 // swagger url
 const base_url: string = 'http://45.67.35.86:8080/';
 
+// get region url
+export const region_url: string = `${base_url}region`;
+
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
 
+// client url
+export const client_url: string = `${base_url}client/web/clients-by-filter`;
+
 //login url
-export const service_category_list: string = `${base_url}category`;
 export const login_url: string = `${base_url}auth/admin-login`;
-export const precent_list: string = `${base_url}percent`;
-export const add_precent_list: string = `${base_url}percent`;
 export const get_orders_list: string = `${base_url}order/web`;
+
+// settings url 
+export const service_category_list: string = `${base_url}category`;
+export const add_service_category: string = `${base_url}category/web`;
+export const del_service_category: string = `${base_url}category/web`;
+export const edit_service_category: string = `${base_url}category/web`;
+export const add_precent_list: string = `${base_url}percent`;
+export const precent_list: string = `${base_url}percent`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`;
 
 export const calendar_url: string = `${base_url}dashboard/web/calendar`;
-
 export const dashboard_url = `${base_url}dashboard/`;
-export const dashboard_chart_reating_url = `${base_url}dashboard/`;
+
 
 
 //finance
@@ -49,3 +59,6 @@ export const finance_list = (month: string | null, year: number | null) => {
   else if (month === null && year !== null) return `${base_url}finance/web?month=${year}`;
   else return `${base_url}finance/web`;
 };
+
+// sock url
+export const sockjs_url = `${base_url}ws`;
