@@ -32,6 +32,7 @@ import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
 import OrderDetails from './pages/Calculation/detail.tsx';
+import { setConfig } from './helpers/token.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,6 +41,7 @@ function App() {
   const isToken = sessionStorage.getItem('token');
 
   useEffect(() => {
+    setConfig()
     window.scrollTo(0, 0);
     if (!isToken) navigate(`/auth/signin`);
   }, [pathname]);
