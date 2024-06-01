@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ChatEmptyState from '../components/emptychat';
 import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';

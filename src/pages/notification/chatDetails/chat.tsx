@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
 import Chatusers from '../components/user';
 import { Input, Select } from 'antd';
@@ -12,16 +12,24 @@ import SockJS from 'sockjs-client';
 import NewChat from '../newChat';
 import Sms from '../sms/sms';
 import { config } from '../../../helpers/token';
+import clientStore from '../../../helpers/state_managment/client/clientstore';
+import masterStore, { Data } from '../../../helpers/state_managment/master/masterStore';
+import Notselected from '../components/notselected';
 interface ChatProp {
   role: string;
 }
 
-const Chatdetail = ({ role }: ChatProp) => {
-  const [admin, setAdmin] = useState<any>(null);
+const Chatdetail = ({ role = "master" }: ChatProp) => {
+
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
+
+  const [recipientId, setRecipientId] = useState<string | null>(null);
+
   const [adminId, setAdminId] = useState<string | null>('');
+  const [chatData, setchatData] = useState<Data[]>([]);
+
   const [client, setClient] = useState<object | null>(null);
   const [masters, setMasters] = useState<null | object>(null);
 
@@ -29,32 +37,38 @@ const Chatdetail = ({ role }: ChatProp) => {
   const [content] = useState<any>('');
   const [stompClient, setStompClient] = useState<any>([]);
 
+  const { clientData } = clientStore()
+  const { data } = masterStore()
 
   // ---------- get admin and user ----------- //
 
   useEffect(() => {
-    axios.get(chat_user_url, config)
-      .then(res => {
-        setAdmin(res.data.body)
-        console.log(res.data.body);
-
-      }).catch((err) => {
-        console.error(err)
-      })
-
     setAdminId(sessionStorage.getItem('userId'))
-    getUser()
-    // connect()
+    checkRole()
+    connect()
   }, [])
 
-  function getUser() {
-    axios.get(master_url, config)
-      .then(res => {
-        console.log(res.data.body);
-      }).catch((err) => {
-        console.error(err)
-      })
+  useEffect(() => {
+    checkRole()
+  }, [role])
+
+  // useEffect(() => {
+  //   console.log(recipientId);
+  // }, [recipientId])
+
+  function checkRole() {
+    if (role == 'master') {
+      setchatData(data)
+    }
+
+    if (role == 'client') {
+      setchatData(clientData)
+    }
   }
+
+  console.log(data, 'salom');
+
+
 
 
   // chat sitebar sizing
@@ -87,48 +101,48 @@ const Chatdetail = ({ role }: ChatProp) => {
   };
 
   //  connect socket with sock js 
-  // const connect = () => {
-  //   const socket = new SockJS(sockjs_url);
-  //   const stomp = Stomp.over(socket);
+  const connect = () => {
+    const socket = new SockJS(sockjs_url);
+    const stomp = Stomp.over(socket);
 
-  //   stomp.connect({}, (frame: any) => {
-  //     console.log('Connected: ' + frame);
-  //     setStompClient(stomp);
-  //     stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
-  //       const receivedMessages = JSON.parse(response.body);
-  //       setMessages((prevState: any) => [...prevState, receivedMessages]);
+    stomp.connect({}, (frame: any) => {
+      console.log('Connected: ' + frame);
+      setStompClient(stomp);
+      stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
+        const receivedMessages = JSON.parse(response.body);
+        setMessages((prevState: any) => [...prevState, receivedMessages]);
 
-  //     });
-  //   }, (error: any) => {
-  //     console.error('Error connecting: ', error);
-  //   });
-  //   // onStompError: (frame) => {
-  //   //       console.error('Error: ' + frame.headers['message']);
-  //   //     },
-  //   //     onDisconnect(frame) {
-  //   //       console.error('Error: ' + frame.headers['message']);
-  //   //     },
-  //   //     onWebSocketError(res){
-  //   //       console.log(res)
-  //   //     }
-  //   //   });
-  //   //   client.activate();
-  //   //   setStompClient(client);
-  // };
+      });
+    }, (error: any) => {
+      console.error('Error connecting: ', error);
+    });
+    // onStompError: (frame) => {
+    //       console.error('Error: ' + frame.headers['message']);
+    //     },
+    //     onDisconnect(frame) {
+    //       console.error('Error: ' + frame.headers['message']);
+    //     },
+    //     onWebSocketError(res){
+    //       console.log(res)
+    //     }
+    //   });
+    //   client.activate();
+    //   setStompClient(client);
+  };
 
-  // const sendMessage = () => {
-  //   const chatMessage = {
-  //     senderId: adminId,
-  //     recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
-  //     content: content,
-  //     isRead: false,
-  //     createdAt: new Date(),
-  //     attachmentIds: [],
-  //   };
+  const sendMessage = () => {
+    const chatMessage = {
+      senderId: adminId,
+      recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
+      content: content,
+      isRead: false,
+      createdAt: new Date(),
+      attachmentIds: [],
+    };
 
-  //   stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-  //   console.log('Message sent:', content);
-  // };
+    stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+    console.log('Message sent:', content);
+  };
 
   // const messageDelete = () => {
   //   if (stompClient && stompClient.connected) {
@@ -186,25 +200,20 @@ const Chatdetail = ({ role }: ChatProp) => {
         />
 
         {/* yangi chat yaratuvchi button va component */}
-
         <NewChat />
-
         <Buttons>Удалить все прочитанные</Buttons>
-
       </div>
 
+      {/* chat list */}
       <div className="flex w-[100%] relative">
-        <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}
-        >
-          <div className={`w-full`}>
-            <Chatusers user={admin} />
-          </div>
+        <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}>
+          <Chatusers user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative overflow-y-auto">
-          {/* <Sms sendMessage={sendMessage} chat={"salom"} contents={content} /> */}
+          {recipientId ? <Sms sendMessage={sendMessage} chat={"salom"} contents={content} /> : <Notselected />}
         </div>
       </div>
+
     </div>
   );
 };
