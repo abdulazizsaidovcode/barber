@@ -143,8 +143,8 @@ const ChartTwo: React.FC = () => {
       .then((response) => {
         setClientData(response.data.body);
       })
-      .catch((error) => {
-        console.error('There was an error fetching the data!', error);
+      .catch(() => {
+        console.error('There was an error fetching the data!');
       });
   }, []);
 

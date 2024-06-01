@@ -71,8 +71,8 @@ const ChartSex: React.FC = () => {
             setChart(response.data.body);
         
           })
-          .catch((error) => {
-            console.error('There was an error fetching the data!', error);
+          .catch(() => {
+            console.error('There was an error fetching the data!');
           });
       }, []);
       
