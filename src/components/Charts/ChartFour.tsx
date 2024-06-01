@@ -1,6 +1,8 @@
 import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { dashboard_url } from '../../helpers/api';
 
 const options: ApexOptions = {
   legend: {
@@ -21,7 +23,6 @@ const options: ApexOptions = {
       left: 0,
       opacity: 0.1,
     },
-
     toolbar: {
       show: false,
     },
@@ -66,7 +67,7 @@ const options: ApexOptions = {
   markers: {
     size: 4,
     colors: '#fff',
-    strokeColors: ['#3056D3', '#80CAEE','#D9D9D9'],
+    strokeColors: ['#3056D3', '#80CAEE', '#D9D9D9'],
     strokeWidth: 3,
     strokeOpacity: 0.9,
     strokeDashArray: 0,
@@ -106,8 +107,6 @@ const options: ApexOptions = {
         fontSize: '0px',
       },
     },
-    min: 0,
-    max: 100,
   },
 };
 
@@ -119,30 +118,45 @@ interface ChartOneState {
 }
 
 const ChartFour: React.FC = () => {
+  const [chart, setChart] = useState<
+    {
+      incomeTotal: number;
+      name: string;
+    }[]
+  >([]);
+  
+  const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    axios
+      .get(`${dashboard_url}web/month-profit?year=${currentYear}`)
+      .then((response) => {
+        setChart(response.data.body);
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the data!', error);
+      });
+  }, [currentYear]);
+
+  useEffect(() => {
+    setState({
+      series: [
+        {
+          name: 'Income',
+          data: chart.map((item) => item.incomeTotal || 0),
+        },
+      ],
+    });
+  }, [chart]);
+
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
-        name: 'Product One',
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
-      },
-
-      {
-        name: 'Product Two',
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51,200],
-      },
-      {
-        name: 'Product three',
-        data: [75, 85, 95, 30, 45, 35, 64, 52, 59, 36, 39, 51],
+        name: 'Income',
+        data: [],
       },
     ],
   });
-
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">

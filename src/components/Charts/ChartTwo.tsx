@@ -136,7 +136,7 @@ const ChartTwo: React.FC = () => {
       "clientCount": 7
     }
   ] )
-  const currentYear = new Date().getFullYear();
+ const currentYear = new Date().getFullYear();
   useEffect(() => {
     axios
       .get(`${dashboard_url}web/masterVsClient?year=${currentYear}`)
