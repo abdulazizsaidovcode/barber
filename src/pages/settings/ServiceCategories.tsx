@@ -6,6 +6,8 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { add_service_category, del_service_category, edit_service_category, service_category_list } from "../../helpers/api";
 import { config } from "../../helpers/token";
+import DelModal from "../../components/settings/modals/delModal";
+import EditModal from "../../components/settings/modals/editModal";
 
 interface Data {
     id: string;
@@ -162,43 +164,14 @@ const ServiceCategories = () => {
                     />
                 </div>
             </Modal>
-            <Modal isOpen={delIsOpen} onClose={delCloseModal}>
-                <div className="w-[500px] h-[130px]">
-                    <div className="flex justify-center">
-                        <p className="text-xl text-black">Are you sure you want to delete this category?</p>
-                    </div>
-                    <div className="flex justify-around mt-10">
-                        <button onClick={deleteData} className="text-white bg-[#000] py-2 px-10">Delete</button>
-                        <button onClick={delCloseModal} className="text-white bg-gray py-2 px-14">No</button>
-                    </div>
-                </div>
-            </Modal>
-            <Modal isOpen={editIsOpen} onClose={editCloseModal}>
-                <div className="w-[500px] h-max">
-                    <div className="flex justify-center">
-                        <p className="text-xl text-black">Are you sure you want to edit the title?</p>
-                    </div>
-                    <div className="flex justify-center mt-10">
-                        <input
-                            placeholder="Health Procedures"
-                            value={editedCategoryName}
-                            onChange={(e) => setEditedCategoryName(e.target.value)}
-                            className="dark:border-slate-700 w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px]  active:outline-none dark:bg-slate-100 dark:text-dark rounded-md px-3"
-                        />
-                    </div>
-                    <div className="flex justify-around mt-10">
-                        <button onClick={editCloseModal} className="text-white bg-[#000] py-2 px-10">
-                            Close
-                        </button>
-                        <button
-                            className="text-white bg-gray py-2 px-14"
-                            onClick={updateData}
-                        >
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </Modal>
+            <DelModal isOpen={delIsOpen} onClose={delCloseModal} onDelete={deleteData} />
+            <EditModal
+                isOpen={editIsOpen}
+                onClose={editCloseModal}
+                value={editedCategoryName}
+                onChange={(e) => setEditedCategoryName(e.target.value)}
+                onSave={updateData}
+            />
             <Toaster
                 position="top-center"
                 reverseOrder={false}
