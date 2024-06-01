@@ -7,14 +7,13 @@ import { DatePicker, Select } from 'antd';
 import CardDataCharts from '../../components/CardDataCharts';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartFour from '../../components/Charts/ChartFour';
-import ChartFive from '../../components/Charts/ChartFive';
 import ChartSex from '../../components/Charts/ChartSex';
 import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { dashboard_clinet_url, dashboard_url } from '../../helpers/api';
+import { dashboard_url } from '../../helpers/api';
 
 const ECommerce: React.FC = () => {
   const [data, setData] = useState(
@@ -84,9 +83,9 @@ const ECommerce: React.FC = () => {
       </div>
 
 
-
+      
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} />
+        <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} /> 
         <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
         <CardDataStats title="Заказы" total={data.orderCount ? data.orderCount : 0} />
         <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
