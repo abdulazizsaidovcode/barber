@@ -45,12 +45,8 @@ const Filters: React.FC = () => {
       setData,
       setTotalPage
     });
-    if (filters.regionValue) {
-      getDistrict(setDistrictData, +filters.regionValue)
-    }
+    if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue)
   }, [filters]);
-  console.log(regionData, 'aaa');
-  console.log(districtData, 'gh');
 
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
@@ -101,10 +97,9 @@ const Filters: React.FC = () => {
             style={styles.filterInput}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
-            {regionData.length > 0 &&
-              regionData.map(item => (
-                <Option value={item.id} key={item.id}>{item.name}</Option>
-              ))}
+            {regionData.length > 0 && regionData.map(item => (
+              <Option value={item.id} key={item.id}>{item.name}</Option>
+            ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
@@ -113,9 +108,9 @@ const Filters: React.FC = () => {
             style={styles.filterInput}
             onChange={(value) => handleInputChange('cityValue', value)}
           >
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qarshi">Qarshi</Option>
-            <Option value="boysun">Boysun</Option>
+            {districtData.length > 0 && districtData.map(item => (
+              <Option value={item.id} key={item.id}>{item.name}</Option>
+            ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup} className="flex gap-4">
