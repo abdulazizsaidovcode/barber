@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { master_url } from '../../api.tsx';
+import { master_url, region_url } from '../../api.tsx';
 import { config } from '../../token.tsx';
 import { Data, RegionData } from '../../state_managment/master/masterStore.tsx';
 
@@ -37,15 +37,15 @@ export const getMasters = ({
   axios.get(`${master_url}?${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${startDate ? `startDate=${startDate}&` : ''}${endDate ? `endDate=${endDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${statusName ? `statusName=${statusName}&` : ''}${selfEmployed ? `selfEmployed=${selfEmployed}&` : ''}${workPlace ? `workPlace=${workPlace}&` : ''}page=${page}&size=${size}`, config)
     .then(res => {
       if (res.data.success === true) {
-        setData(res.data.body.object)
-        setTotalPage(res.data.body.totalPage)
+        setData(res.data.body.object);
+        setTotalPage(res.data.body.totalPage);
       }
     })
     .catch(() => 'error fetching master');
 };
 
 export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
-  axios.get(``, config)
+  axios.get(region_url, config)
     .then(res => setRegionData(res.data.body))
     .catch(() => 'Error fetching region data');
-}
+};

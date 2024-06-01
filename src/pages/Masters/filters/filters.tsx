@@ -36,10 +36,9 @@ const Filters: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [filters, setFilters] = useState<FilterTypes>(filterObj);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { setData, setTotalPage } = masterStore();
+  const { setData, setTotalPage, regionData } = masterStore();
 
   useEffect(() => {
-    console.log(filters.regionValue);
     getMasters({
       fullName: filters.searchValue ? filters.searchValue: '',
       regionId: filters.regionValue ? filters.regionValue : '',
@@ -47,6 +46,7 @@ const Filters: React.FC = () => {
       setTotalPage
     });
   }, [filters]);
+  console.log(regionData);
 
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
