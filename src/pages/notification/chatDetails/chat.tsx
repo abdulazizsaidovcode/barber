@@ -41,8 +41,21 @@ const Chatdetail = ({ role }: ChatProp) => {
       })
 
     setAdminId(sessionStorage.getItem('userId'))
+    console.log(sessionStorage.getItem('userInfo'));
+
     connect()
   }, [])
+
+  function getUser(){
+    axios.get(chat_user_url, config)
+     .then(res => {
+        setAdmin(res.data.body)
+        console.log(res.data.body);
+
+      }).catch((err) => {
+        console.error(err)
+      })
+  }
 
 
   // chat sitebar sizing
@@ -149,7 +162,7 @@ const Chatdetail = ({ role }: ChatProp) => {
   // };
 
 
-  
+
 
 
 
