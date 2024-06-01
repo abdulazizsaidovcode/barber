@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { MdKeyboardArrowUp, MdKeyboardArrowDown  } from "react-icons/md";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 
 interface AccordionProp {
     title: string;
     children?: React.ReactNode;
+    onToggle?: () => void;
 }
 
-const Accordion: React.FC<AccordionProp> = ({ title, children }) => {
+const Accordion: React.FC<AccordionProp> = ({ title, children, onToggle }) => {
     const [isActive, setIsActive] = useState(false);
 
     const toggleAccordion = () => {
         setIsActive(!isActive);
+        if (onToggle) {
+            onToggle(); 
+        }
     };
 
     return (

@@ -18,9 +18,9 @@ const ServiceCategoriesCard: React.FC<ServiceCategoriesCardProps> = ({ title, it
   const { setItems } = onlineBookingStore();
   return (
     <div className="flex mt-4">
-      <div>
+      <div className='w-full'>
         <div
-          className="dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3 flex items-center">
+          className="dark:bg-[#60606d] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3 flex items-center">
           {title}
         </div>
       </div>

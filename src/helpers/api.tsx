@@ -27,6 +27,9 @@ const base_url: string = 'http://45.67.35.86:8080/';
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
 
+// client url
+export const client_url: string = `${base_url}client/web/clients-by-filter`;
+
 //login url
 export const login_url: string = `${base_url}auth/admin-login`;
 export const get_orders_list: string = `${base_url}order/web`;
