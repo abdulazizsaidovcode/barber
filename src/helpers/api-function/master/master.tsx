@@ -16,6 +16,7 @@ interface IMaster {
   page?: number;
   size?: number;
   setData: (val: Data[]) => void;
+  setTotalPage: (val: number) => void;
 }
 
 export const getMasters = ({
@@ -30,12 +31,14 @@ export const getMasters = ({
                              workPlace,
                              page = 0,
                              size = 10,
-                             setData
+                             setData,
+                             setTotalPage
                            }: IMaster) => {
   axios.get(`${master_url}?${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${startDate ? `startDate=${startDate}&` : ''}${endDate ? `endDate=${endDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${statusName ? `statusName=${statusName}&` : ''}${selfEmployed ? `selfEmployed=${selfEmployed}&` : ''}${workPlace ? `workPlace=${workPlace}&` : ''}page=${page}&size=${size}`, config)
     .then(res => {
       if (res.data.success === true) {
         setData(res.data.body.object)
+        setTotalPage(res.data.body.totalPage)
       }
     })
     .catch(err => console.log(err));

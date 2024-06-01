@@ -40,7 +40,7 @@ const items: MenuProps['items'] = [
 ];
 
 const MasterTables: React.FC = () => {
-  const { data } = masterStore();
+  const { data, totalPage } = masterStore();
   return (
     <>
       <Filters />
@@ -139,7 +139,7 @@ const MasterTables: React.FC = () => {
       <Pagination
         responsive={true}
         defaultCurrent={0}
-        total={100}
+        total={totalPage}
         rootClassName={`mt-10 mb-5 ms-5`}
       />
     </>
