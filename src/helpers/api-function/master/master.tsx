@@ -46,6 +46,9 @@ export const getMasters = ({
 
 export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
   axios.get(region_url, config)
-    .then(res => setRegionData(res.data.body))
-    .catch(() => 'Error fetching region data');
+    .then(res => {
+      console.log(res);
+      setRegionData(res.data.body)
+    })
+    .catch((err) => console.log(err));
 };

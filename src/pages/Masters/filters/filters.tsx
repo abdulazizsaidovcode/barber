@@ -40,7 +40,7 @@ const Filters: React.FC = () => {
 
   useEffect(() => {
     getMasters({
-      fullName: filters.searchValue ? filters.searchValue: '',
+      fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       setData,
       setTotalPage
@@ -97,9 +97,10 @@ const Filters: React.FC = () => {
             style={styles.filterInput}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qashqadaryo">Qashqadaryo</Option>
-            <Option value="surxandaryo">Surxandaryo</Option>
+            {regionData.length > 0 &&
+              regionData.map(item => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
