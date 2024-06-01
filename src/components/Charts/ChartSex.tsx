@@ -106,7 +106,7 @@ const ChartSex: React.FC = () => {
 
     return (
         <>
-            <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+            <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
                 <h1 className='font-semibold text-black text-xl dark:text-white'>Master rating</h1>
                 <div className="mb-2">
                     <div id="chartThree" className="mx-auto flex justify-center">

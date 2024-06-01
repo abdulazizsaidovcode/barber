@@ -124,19 +124,30 @@ const ChartFour: React.FC = () => {
       name: string;
     }[]
   >([]);
-  
-  const currentYear = new Date().getFullYear();
+
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    setLoading(true);
+    setError('');
     axios
-      .get(`${dashboard_url}web/month-profit?year=${currentYear}`)
+      .get(`${dashboard_url}web/month-profit?year=${year}`)
       .then((response) => {
-        setChart(response.data.body);
+        if (response.data.body && response.data.body.length > 0) {
+          setChart(response.data.body);
+        } else {
+          setError('No data available');
+        }
       })
       .catch(() => {
-        console.error('There was an error fetching the data!');
+        setError('There was an error fetching the data!');
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [currentYear]);
+  }, [year]);
 
   useEffect(() => {
     setState({
@@ -158,17 +169,34 @@ const ChartFour: React.FC = () => {
     ],
   });
 
+  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYear(parseInt(e.target.value, 10));
+  };
+
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
+    <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
       <div>
-        <div id="chartOne" className="-ml-5">
-          <ReactApexChart
-            options={options}
-            series={state.series}
-            type="line"
-            height={350}
-          />
-        </div>
+        <input
+          type="number"
+          value={year}
+          onChange={handleYearChange}
+          className="mb-4 p-2 border border-gray-300 rounded"
+          placeholder="Enter year"
+        />
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          <div id="chartOne" className="-ml-5">
+            <ReactApexChart
+              options={options}
+              series={state.series}
+              type="line"
+              height={350}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

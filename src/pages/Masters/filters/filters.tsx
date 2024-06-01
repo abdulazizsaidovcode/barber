@@ -3,7 +3,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import MasterModal from '../master-modal.tsx';
-import { getMasters } from '../../../helpers/api-function/master/master.tsx';
+import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
 import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
 
 interface FilterTypes {
@@ -22,31 +22,31 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 const filterObj = {
   searchValue: '',
-  regionValue: '',
-  cityValue: '',
+  regionValue: null,
+  cityValue: null,
   registrationPeriodValue: null,
-  serviceCategoryValue: '',
-  scheduleTypeValue: '',
-  selfEmployedStatusValue: '',
-  statusValue: '',
-  placeOfWorkValue: ''
+  serviceCategoryValue: null,
+  scheduleTypeValue: null,
+  selfEmployedStatusValue: null,
+  statusValue: null,
+  placeOfWorkValue: null
 };
 
 const Filters: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [filters, setFilters] = useState<FilterTypes>(filterObj);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { setData, setTotalPage, regionData } = masterStore();
+  const { setData, setTotalPage, regionData, setDistrictData, districtData } = masterStore();
 
   useEffect(() => {
     getMasters({
-      fullName: filters.searchValue ? filters.searchValue: '',
+      fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       setData,
       setTotalPage
     });
+    if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue)
   }, [filters]);
-  console.log(regionData);
 
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
@@ -97,9 +97,9 @@ const Filters: React.FC = () => {
             style={styles.filterInput}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qashqadaryo">Qashqadaryo</Option>
-            <Option value="surxandaryo">Surxandaryo</Option>
+            {regionData.length > 0 && regionData.map(item => (
+              <Option value={item.id} key={item.id}>{item.name}</Option>
+            ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
@@ -108,9 +108,9 @@ const Filters: React.FC = () => {
             style={styles.filterInput}
             onChange={(value) => handleInputChange('cityValue', value)}
           >
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qarshi">Qarshi</Option>
-            <Option value="boysun">Boysun</Option>
+            {districtData.length > 0 && districtData.map(item => (
+              <Option value={item.id} key={item.id}>{item.name}</Option>
+            ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup} className="flex gap-4">

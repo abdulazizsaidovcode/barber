@@ -16,7 +16,7 @@ interface AuthState {
 const authStore = create<AuthState>((set) => ({
   username: '+998',
   password: '',
-  show: false,
+  show: true,
   loading: false,
   goPage: '',
   setGoPage: (val: string) => set({goPage: val}),

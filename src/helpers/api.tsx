@@ -26,6 +26,7 @@ const base_url: string = 'http://45.67.35.86:8080/';
 
 // get region url
 export const region_url: string = `${base_url}region`;
+export const district_url: string = `${base_url}district`;
 
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;

@@ -20,7 +20,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   // children,
 }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="rounded-3xl border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="mt-4 flex items-center justify-between ">
         <div>
           <span className="text-sm font-medium">{title}</span>

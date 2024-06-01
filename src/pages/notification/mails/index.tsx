@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Product } from '../../../types/product';
 import ProductOne from '../../../images/product/product-01.png';
 import ProductTwo from '../../../images/product/product-02.png';
@@ -55,7 +55,7 @@ const ChatTable = () => {
 
                         <Buttons className="mb-5">
                             <TbArrowBigLeftFilled />
-                            
+
                         </Buttons>
                     </div>
                     <AddMails />
