@@ -208,7 +208,7 @@ const ChartNine: React.FC = () => {
   }, [year, month]);
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
+    <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
       <div className='flex justify-between flex-wrap'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>Total income</h1>
         <div className='flex gap-3'>
@@ -259,7 +259,7 @@ const ChartNine: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </div> 
   );
 };
 
