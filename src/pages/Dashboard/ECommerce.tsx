@@ -36,16 +36,11 @@ const ECommerce: React.FC = () => {
     }
   );
 
-  
-
- 
-  const currentYear = new Date().getFullYear();
-
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
     axios
-      .get(`${dashboard_url}web/statistic?year=${currentYear}`, config)
+      .get(`${dashboard_url}web/statistic`, config)
       .then((response) => {
         setData(response.data.body);  
       })
