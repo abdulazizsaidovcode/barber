@@ -19,9 +19,9 @@ import { config } from '../../helpers/token';
 const ECommerce: React.FC = () => {
   const [data, setData] = useState(
     {
-      "clientCanselOrder":0,
-      "clientCount":0,
-      "customerDissatisfaction": 0,
+      "clientCanselOrder":10,
+      "clientCount":10,
+      "customerDissatisfaction": 10,
       "income":0,
       "masterAverageClient":0,
       "masterCanselOrder":0,
@@ -36,6 +36,8 @@ const ECommerce: React.FC = () => {
     }
   );
 
+  
+
  
   const currentYear = new Date().getFullYear();
 
@@ -43,15 +45,18 @@ const ECommerce: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`${dashboard_url}web/statistic?year=${currentYear}`, config)
+      .get(`${dashboard_url}web/statistic?year=`, config)
       .then((response) => {
         setData(response.data.body);
-
+        
+        
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
       });
   }, []);
+  console.log(data);
+  
 
  
  
@@ -86,7 +91,7 @@ const ECommerce: React.FC = () => {
 
       
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} /> 
+        <CardDataStats title="Мастера" total={data.masterCount} /> 
         <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
         <CardDataStats title="Заказы" total={data.orderCount ? data.orderCount : 0} />
         <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
