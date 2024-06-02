@@ -1,25 +1,20 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
 import Chatusers from '../components/user';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
-import axios from 'axios';
 import { chat_user_url, client_url, master_url, sockjs_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import NewChat from '../newChat';
 import Sms from '../sms/sms';
-import { config } from '../../../helpers/token';
-import clientStore from '../../../helpers/state_managment/client/clientstore';
-import masterStore, { Data } from '../../../helpers/state_managment/master/masterStore';
 import Notselected from '../components/notselected';
-interface ChatProp {
-  role: string;
-}
+import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
 
-const Chatdetail = ({ role = "master" }: ChatProp) => {
+const Chatdetail: React.FC = () => {
+  const {role, chatData} = chatStore()
 
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
@@ -28,51 +23,34 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
   const [recipientId, setRecipientId] = useState<string | null>(null);
 
   const [adminId, setAdminId] = useState<string | null>('');
-  const [chatData, setchatData] = useState<Data[]>([]);
+  // const [chatData, setChatData] = useState<Data[]>([]);
 
-  const [client, setClient] = useState<object | null>(null);
-  const [masters, setMasters] = useState<null | object>(null);
+  // const [client, setClient] = useState<object | null>(null);
+  // const [masters, setMasters] = useState<null | object>(null);
 
   const [messages, setMessages] = useState<any>([]);
   const [content, setContent] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
 
-  const { clientData } = clientStore()
-  const { data } = masterStore()
-
   // ---------- get admin and user ----------- //
 
   useEffect(() => {
-    setAdminId(sessionStorage.getItem('userId'))
-    checkRole()
-    connect()
-  }, [])
+    setAdminId(sessionStorage.getItem('userId'));
+    connect();
+  }, []);
 
-  useEffect(() => {
-    checkRole()
-  }, [role])
+  console.log(chatData, role);
 
   // useEffect(() => {
   //   console.log(recipientId);
   // }, [recipientId])
 
-  function checkRole() {
-    if (role == 'master') {
-      setchatData(data)
-    }
-
-    if (role == 'client') {
-      setchatData(clientData)
-    }
-  }
-
-  console.log(data, 'salom');
-
-
-
+  // function checkRole(text: string) {
+  //   if (text === 'master') setChatData(data);
+  //   else setChatData(clientData);
+  // }
 
   // chat sitebar sizing
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -137,7 +115,7 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
       content: content,
       isRead: false,
       createdAt: new Date(),
-      attachmentIds: [],
+      attachmentIds: []
     };
 
     stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
@@ -176,7 +154,7 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
 
 
   return (
-    <div className=''>
+    <div className="">
       <div className="w-full pb-5 flex gap-10 items-center flex-wrap ">
         <button onClick={toggleSidebar} className="md:hidden text-black mb-2">
           <CgMenuLeft className="text-[1.5rem] font-bold" />
@@ -185,7 +163,7 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
         <Input
           placeholder="Search F.I.O"
           prefix={<IoSearchOutline />}
-          className='w-56'
+          className="w-56"
         />
         <Select
           defaultValue="lucy"
@@ -206,11 +184,12 @@ const Chatdetail = ({ role = "master" }: ChatProp) => {
 
       {/* chat list */}
       <div className="flex w-[100%] relative">
-        <div className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}>
+        <div
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed top-[130px] md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}>
           <Chatusers user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative overflow-y-auto">
-          {recipientId ? <Sms sendMessage={sendMessage} chat={"salom"} contents={setContent} /> : <Notselected />}
+          {recipientId ? <Sms sendMessage={sendMessage} chat={'salom'} contents={setContent} /> : <Notselected />}
         </div>
       </div>
 
