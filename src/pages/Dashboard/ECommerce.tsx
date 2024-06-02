@@ -47,9 +47,7 @@ const ECommerce: React.FC = () => {
     axios
       .get(`${dashboard_url}web/statistic?year=${currentYear}`, config)
       .then((response) => {
-        setData(response.data.body);
-        
-        
+        setData(response.data.body);  
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
