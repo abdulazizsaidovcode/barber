@@ -161,19 +161,18 @@ const Chatdetail: React.FC = () => {
         </button>
 
         <Input
-          placeholder="Search F.I.O"
+          placeholder="Поиск по ФИО"
           prefix={<IoSearchOutline />}
           className="w-56"
         />
         <Select
-          defaultValue="lucy"
+          defaultValue="Все сообщения"
           className="w-56 "
           dropdownClassName="my-custom-dropdown"
           options={[
-            { value: 'jack', label: 'Jack' },
-            { value: 'lucy', label: 'Lucy' },
-            { value: 'Yiminghe', label: 'yiminghe' },
-            { value: 'disabled', label: 'Disabled', disabled: true }
+            { value: 'Все сообщения', label: 'Все сообщения' },
+            { value: 'Непрочитанные', label: 'Непрочитанные' },
+            { value: 'Прочитанные', label: 'Прочитанные' },
           ]}
         />
 

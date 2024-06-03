@@ -44,8 +44,8 @@ const ECommerce: React.FC = () => {
       .then((response) => {
         setData(response.data.body);  
       })
-      .catch((error) => {
-        console.error('There was an error fetching the data!', error);
+      .catch(() => {
+        console.error('There was an error fetching the data!');
       });
   }, []);
 
@@ -67,7 +67,7 @@ const ECommerce: React.FC = () => {
             options={[
               { value: '2024', label: '2024' },
               { value: '2025', label: '2025' },
-              { value: '2026', label: '2026' },
+              { value: '2026', label: '2026' },           
             ]}
           />
           <DatePicker
