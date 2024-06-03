@@ -18,16 +18,16 @@ const RequestSidebar: React.FC = () => {
   ];
 
   return (
-    <div className='bg-[#F5F6F7] shadow-2 shadow-[0.2px] p-3 w-[19%] h-[600px] fixed py-10'>
+    <div className='bg-[#F5F6F7] dark:bg-[#21212e] shadow-2 shadow-[0.2px] p-3 w-[19%] h-[600px] fixed py-10'>
       <div className='w-full flex items-center px-4 justify-between h-14 rounded-3xl bg-white'>
-        <p>Все запросы</p>
+        <p className='dark:text-[#000]'>Все запросы</p>
         <p className='text-[#7D8FB3] font-bold'>43</p>
       </div>
       <div className='mt-5 flex flex-col gap-3'>
         {menu.map((item, index) => (
-          <Link key={index} to={item.link} className={item.link === location.pathname ? 'bg-[#C2C2C2] text-[#7D8FB3] rounded-md' : 'bg-white text-[#7D8FB3] rounded-md'}>
+          <Link key={index} to={item.link} className={item.link === location.pathname ? 'bg-[#C2C2C2] dark:bg-danger dark:text-white text-[#7D8FB3] rounded-md' : 'bg-white dark:text-[#000] text-[#7D8FB3] rounded-md'}>
             <div className='w-full flex items-center px-4 justify-between h-10 rounded-lg'>
-              <p>{item.name}</p>
+              <p >{item.name}</p>
               <p className='text-[#7D8FB3] font-bold'>{item.count}</p>
             </div>
           </Link>

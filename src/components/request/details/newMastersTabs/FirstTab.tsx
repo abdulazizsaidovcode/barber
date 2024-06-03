@@ -6,7 +6,7 @@ const FirstTab: React.FC = () => {
     return (
         <div className='flex justify-between'>
             <div className='w-1/4 mx-1'>
-                <div className='bg-[#cccccc] w-full h-[27%]'>
+                <div className='bg-[#cccccc] dark:bg-white w-full h-[27%]'>
                     <div className='flex justify-end p-3 items-center'>
                         <GoDotFill className='text-[#24FF00]' />
                         <p className='ml-2'>В сети</p>
@@ -15,7 +15,7 @@ const FirstTab: React.FC = () => {
                         <img className='w-45 h-45' src={opacha} alt="Profile" />
                     </div>
                 </div>
-                <div className='bg-[#cccccc] w-full h-[71.8%] mt-3 p-4 py-5'>
+                <div className='bg-[#cccccc] dark:bg-white w-full h-[71.8%] mt-3 p-4 py-5'>
                     <div>
                         <p className='text-2xl'>Контакты:</p>
                     </div>
@@ -37,7 +37,7 @@ const FirstTab: React.FC = () => {
                 </div>
             </div>
             <div className='w-3/4 h-auto mx-1'>
-                <div className='bg-[#cccccc] p-4 py-5 w-full'>
+                <div className='bg-[#cccccc] dark:bg-white p-4 py-5 w-full'>
                     <div>
                         <p className='text-2xl'>Профиль:</p>
                     </div>
@@ -65,7 +65,7 @@ const FirstTab: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className='bg-[#cccccc] p-4 py-5 w-full mt-3'>
+                <div className='bg-[#cccccc] dark:bg-white p-4 py-5 w-full mt-3'>
                     <div>
                         <p className='text-2xl'>Информация о профессии:</p>
                     </div>

@@ -3,7 +3,7 @@ import img from '../../../../../images/Image.png'
 
 const FirstTabCard: React.FC = () => {
     return (
-        <div className='bg-[#cccccc] px-4 flex w-full h-60 py-3'>
+        <div className='bg-[#cccccc] dark:bg-white px-4 flex w-full h-60 py-3'>
             <div className='w-[22%] mx-1 flex items-center'>
                 <img src={img} alt="" />
             </div>

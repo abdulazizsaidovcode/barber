@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) => {
                     onClick={onClose}
                     className='absolute top-0 right-0 mt-[-20px] mr-[-20px]'
                 >
-                    <IoMdCloseCircleOutline size={30} color='#000' />
+                    <IoMdCloseCircleOutline size={30} className='dark:text-white' color='#000' />
                 </button>
             </div>
         </div>
