@@ -16,7 +16,7 @@ const options: ApexOptions = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
     height: 335,
-    type: 'area',
+    type: 'bar', // Changed from 'area' to 'bar' to match your desired chart type
     dropShadow: {
       enabled: false,
       color: '#623CEA14',
@@ -82,20 +82,7 @@ const options: ApexOptions = {
   },
   xaxis: {
     type: 'category',
-    categories: [
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-    ],
+    categories: [], // Categories will be set dynamically
     axisBorder: {
       show: false,
     },
@@ -131,12 +118,8 @@ const ChartNine: React.FC = () => {
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
-        name: 'Product One',
-        data: [23, 11, 22, 27, 13, 22],
-      },
-      {
-        name: 'Product Two',
-        data: [30, 25, 36, 30, 45, 35],
+        name: 'Income',
+        data: [],
       },
     ],
   });
@@ -201,6 +184,7 @@ const ChartNine: React.FC = () => {
         },
       ],
     });
+    options.xaxis.categories = chart.map((item) => item.name);
   }, [chart]);
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
