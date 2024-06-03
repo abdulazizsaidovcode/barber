@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Accordion from '../../components/accordion/accordion';
 import { FaPlus } from 'react-icons/fa';
-import Modal from '../../components/modals/modal';
 import axios from 'axios';
-import { service_category_list } from '../../helpers/api';
+import { add_service_category, service_category_list, del_service_category } from '../../helpers/api';
 import { config } from '../../helpers/token';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import ServiceCategoriesCard from '../../components/settings/details/ServiceCategoriesCard';
 import DelModal from '../../components/settings/modals/delModal';
 
@@ -21,16 +20,24 @@ interface ChildData {
   categoryFatherId: string;
 }
 
+interface ChildDataMap {
+  [key: string]: ChildData[];
+}
+
 const Specializations: React.FC = () => {
   const [isInputOpen, setIsInputOpen] = useState<{ [key: string]: boolean }>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fatherData, setFatherData] = useState<FatherData[]>([]);
-  const [childData, setChildData] = useState<ChildData[]>([]);
+  const [childDataMap, setChildDataMap] = useState<ChildDataMap>({});
+  const [newCategoryName, setNewCategoryName] = useState<string>('');
+  const [selectedFatherId, setSelectedFatherId] = useState<string>('');
+  const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchFatherData();
   }, []);
 
+  // GET FATHER DATA
   const fetchFatherData = async () => {
     try {
       const res = await axios.get(service_category_list, config);
@@ -45,13 +52,17 @@ const Specializations: React.FC = () => {
     }
   };
 
+  // GET CHILD DATA
   const fetchChildData = async (categoryId: string) => {
     try {
       const res = await axios.get(`${service_category_list}/byCategory/${categoryId}`, config);
-      if (res.data && res.data.body) {
-        setChildData(res.data.body);
+      if (!res.data && !res.data.body) {
+        toast.error('No child categories not found.');
       } else {
-        console.log('Failed to fetch child categories.');
+        setChildDataMap((prev) => ({
+          ...prev,
+          [categoryId]: res.data.body,
+        }));
       }
     } catch (error) {
       console.error(error);
@@ -59,58 +70,133 @@ const Specializations: React.FC = () => {
     }
   };
 
-  const toggleInput = (id: string) => {
-    setIsInputOpen(prev => ({ ...prev, [id]: !prev[id] }));
+  // ADD CHILD DATA
+  const addChildData = async () => {
+    if (!newCategoryName || !selectedFatherId) {
+      toast.error('Please enter a category name');
+      return;
+    }
+
+    const payload = {
+      name: newCategoryName,
+      categoryFatherId: selectedFatherId,
+      new: true,
+    };
+    try {
+      await axios.post(add_service_category, payload, config);
+      toast.success('Category added successfully');
+      fetchChildData(selectedFatherId);
+      setNewCategoryName('');
+      toggleInput(selectedFatherId);
+    } catch (error) {
+      console.error(error);
+      toast.error('Error adding category');
+    }
   };
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  // DELETE CHILD DATA
+  const deleteChildData = async (id: string, fatherId: string) => {
+    try {
+      await axios.delete(`${del_service_category}/${id}`, config);
+      toast.success('Category deleted successfully');
+      fetchChildData(fatherId);
+    } catch (error) {
+      console.error(error);
+      toast.error('Error deleting category');
+    }
+  };
+
+  const toggleInput = (id: string) => {
+    setIsInputOpen((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const openModal = (id: string, fatherId: string) => {
+    setCategoryToDelete(id);
+    setSelectedFatherId(fatherId);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setCategoryToDelete(null);
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    if (categoryToDelete && selectedFatherId) {
+      deleteChildData(categoryToDelete, selectedFatherId);
+      closeModal();
+    } else {
+      console.log('No category selected for deletion');
+    }
+  };
 
   return (
     <DefaultLayout>
-      <div className='mb-5'>
-        <p className='text-xl'>Специализации</p>
+      <div className="mb-5">
+        <p className="text-xl">Специализации</p>
       </div>
       <div>
         {fatherData.map((fatherItem) => (
-          <div className='mt-3' key={fatherItem.id}>
-            <Accordion title={fatherItem.name} onClick={() => fetchChildData(fatherItem.id)}>
-              <div className='flex justify-between'>
-                <div className='w-[75%]'>
-                  {childData
-                    .filter(childItem => childItem.categoryFatherId === fatherItem.id)
-                    .map(childItem => (
+          <div className="mt-3" key={fatherItem.id}>
+            <Accordion
+              title={fatherItem.name}
+              onClick={() => fetchChildData(fatherItem.id)}
+            >
+              <div className="flex justify-between">
+                <div className="w-[75%]">
+                  {childDataMap[fatherItem.id] && childDataMap[fatherItem.id].length > 0 ? (
+                    childDataMap[fatherItem.id]?.map((childItem) => (
                       <div key={childItem.id}>
                         <ServiceCategoriesCard
                           title={childItem.name}
                           editOnClick={() => { }}
-                          deleteOnClick={openModal}
+                          deleteOnClick={() => openModal(childItem.id, fatherItem.id)}
                         />
                       </div>
-                    ))}
+                    ))
+                  ) : (
+                    <p>Categories not found</p>
+                  )}
                 </div>
-                <div className='mt-5 flex items-end'>
+                <div className="mt-5 flex items-end">
                   <button
-                    className='bg-[#eaeaea] text-black dark:text-white dark:bg-[#9C0A35] rounded-lg py-2 px-10'
+                    className="bg-[#eaeaea] text-black dark:text-white dark:bg-[#9C0A35] rounded-lg py-2 px-10"
                     onClick={() => {
                       toggleInput(fatherItem.id);
+                      setSelectedFatherId(fatherItem.id);
                     }}
-                    aria-label='Add new input'
+                    aria-label="Add new input"
                   >
                     <FaPlus size={25} />
                   </button>
                 </div>
               </div>
               {isInputOpen[fatherItem.id] && (
-                <div className='mt-5'>
-
+                <div className="flex gap-2 mt-3">
+                  <input
+                    type="text"
+                    placeholder="Type something..."
+                    className="dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3"
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                  />
+                  <button
+                    className="bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5"
+                    onClick={addChildData}
+                  >
+                    Добавить
+                  </button>
                 </div>
               )}
             </Accordion>
           </div>
         ))}
       </div>
-      <DelModal isOpen={isModalOpen} onClose={closeModal}/>
+      <DelModal isOpen={isModalOpen} onClose={closeModal} onDelete={handleDelete} />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
     </DefaultLayout>
   );
 };
