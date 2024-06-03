@@ -15,9 +15,9 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({ salonName, ownerImage, s
   return (
     <div onClick={modal} className='w-[280px] cursor-pointer h-[200px] rounded-xl shadow-4 shadow-[1px] p-3 bg-white'>
       <div>
-        <p className='text-xl font-bold'>{salonName}</p>
-        <p className='text-md font-bold'>{salonCategory} </p>
-        <p className='text-md'>{salonAddress}</p>
+        <p className='text-xl font-bold dark:text-[#000]'>{salonName}</p>
+        <p className='text-md font-bold dark:text-[#000]'>{salonCategory} </p>
+        <p className='text-md dark:text-[#000]'>{salonAddress}</p>
       </div>
       <div className='mt-3'>
         <hr />
@@ -27,10 +27,10 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({ salonName, ownerImage, s
           <img src={ownerImage} alt="" />
         </div>
         <div>
-          <p className='text-[14px]'>{salonOwner}</p>
+          <p className='text-[14px] dark:text-[#000]'>{salonOwner}</p>
           <div className='flex items-center w-full'>
-            <p className='text-[13px]'>{phoneNumber}</p>
-            <p className='text-[12px] ms-10'>{salonCreateDate}</p>
+            <p className='text-[13px] dark:text-[#000]'>{phoneNumber}</p>
+            <p className='text-[12px] ms-10 dark:text-[#000]'>{salonCreateDate}</p>
           </div>
         </div>
       </div>
