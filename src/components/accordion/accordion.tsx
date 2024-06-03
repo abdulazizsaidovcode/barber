@@ -5,7 +5,7 @@ interface AccordionProp {
     title: string;
     children?: React.ReactNode;
     onToggle?: () => void;
-    onClick?: () => void
+    onClick?: () => void;
 }
 
 const Accordion: React.FC<AccordionProp> = ({ title, children, onToggle, onClick }) => {
@@ -14,15 +14,23 @@ const Accordion: React.FC<AccordionProp> = ({ title, children, onToggle, onClick
     const toggleAccordion = () => {
         setIsActive(!isActive);
         if (onToggle) {
-            onToggle(); 
+            onToggle();
         }
     };
 
     return (
-        <div onClick={onClick} className="accordion">
-            <div className={`bg-white flex dark:text-black justify-between p-3 shadow-1 rounded-lg shadow-black ${isActive ? 'active' : ''}`} onClick={toggleAccordion}>
+        <div className="accordion">
+            <div 
+                className={`bg-white flex dark:text-black justify-between p-3 shadow-1 rounded-lg shadow-black ${isActive ? 'active' : ''}`} 
+                onClick={() => {
+                    toggleAccordion();
+                    if (onClick) {
+                        onClick();
+                    }
+                }}
+            >
                 {title}
-                {isActive ? <MdKeyboardArrowUp size={24}/> : <MdKeyboardArrowDown size={24}/>}
+                {isActive ? <MdKeyboardArrowUp size={24} /> : <MdKeyboardArrowDown size={24} />}
             </div>
             {isActive && <div className="p-2">{children}</div>}
         </div>
