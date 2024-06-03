@@ -75,7 +75,7 @@ const Header = (props: {
                 <IoIosNotifications className="text-2xl" />
               </div>
             </Link>
-            <Link to={'/request'}>
+            <Link to={'/request/new-masters'}>
               <div className="dark:bg-white bg-[#f1f5f9] dark:text-black rounded-full flex justify-center items-center w-[40px] h-[40px]">
                 <CiSquareQuestion className="text-2xl" />
               </div>
