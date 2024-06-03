@@ -2,7 +2,7 @@ import React, { useState, ReactNode } from 'react';
 import Header from '../components/Header/index';
 import Sidebar from '../components/Sidebar/index';
 
-const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+const DefaultLayout: React.FC<{ children: ReactNode, padding?: boolean }> = ({ children, padding }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto min-h-screen max-w-screen-2xl p-4 md:p-6 2xl:p-10 shadow-3">
+            <div className={padding ? "mx-auto min-h-screen max-w-screen-2xl shadow-3" : "mx-auto min-h-screen max-w-screen-2xl p-4 md:p-6 2xl:p-10 shadow-3"}>
               {children}
             </div>
           </main>

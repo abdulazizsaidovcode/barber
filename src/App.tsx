@@ -33,6 +33,7 @@ import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
 import OrderDetails from './pages/Calculation/detail.tsx';
 import { setConfig } from './helpers/token.tsx';
+import Request from './pages/request/request.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -76,6 +77,15 @@ function App() {
             <>
               <PageTitle title="Взаиморасчёты | Barber" />
               <MasterDatail />
+            </>
+          }
+        />
+        <Route
+          path="/request"
+          element={
+            <>
+              <PageTitle title="/Request | Barber" />
+              <Request />
             </>
           }
         />
