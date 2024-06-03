@@ -2,7 +2,7 @@ import { ApexOptions } from 'apexcharts';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import {dashboard_url } from '../../helpers/api';
+import { dashboard_url } from '../../helpers/api';
 
 const options: ApexOptions = {
   colors: ['#000000', '#D9D9D9'],
@@ -73,108 +73,35 @@ interface ChartTwoState {
 }
 
 const ChartTwo: React.FC = () => {
-  const [clientData , setClientData] = useState (
-    [
-    {
-      "monthName": "JANUARY",
-      "masterCount": 0,
-      "clientCount": 0
-    },
-    {
-      "monthName": "FEBRUARY",
-      "masterCount": 0,
-      "clientCount": 0
-    },
-    {
-      "monthName": "MARCH",
-      "masterCount": 0,
-      "clientCount": 0
-    },
-    {
-      "monthName": "APRIL",
-      "masterCount": 0,
-      "clientCount": 0
-    },
-    {
-      "monthName": "MAY",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "JUNE",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "JULY",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "AUGUST",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "SEPTEMBER",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "OCTOBER",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "NOVEMBER",
-      "masterCount": 2,
-      "clientCount": 7
-    },
-    {
-      "monthName": "DECEMBER",
-      "masterCount": 2,
-      "clientCount": 7
-    }
-  ] )
- const currentYear = new Date().getFullYear();
+  const [clientData, setClientData] = useState([]);
+  const [series, setSeries] = useState<ChartTwoState['series']>([
+    { name: 'MasterCount', data: [] },
+    { name: 'Client Count', data: [] },
+  ]);
+
+  const currentYear = new Date().getFullYear();
   useEffect(() => {
     axios
       .get(`${dashboard_url}web/masterVsClient?year=${currentYear}`)
       .then((response) => {
-        setClientData(response.data.body);
+        const { data } = response;
+        if (data && data.body) {
+          const newData = data.body.map((item: any) => ({
+            masterCount: item.masterCount ? item.masterCount : 0,
+            clientCount: item.clientCount ? item.clientCount : 0,
+          }));
+          setClientData(newData);
+          setSeries([
+            { name: 'MasterCount', data: newData.map((item) => item.masterCount) },
+            { name: 'Client Count', data: newData.map((item) => item.clientCount) },
+           
+          ]);
+        }
       })
       .catch(() => {
         console.error('There was an error fetching the data!');
       });
-  }, []);
-
-  const [state, setState] = useState<ChartTwoState>({
-    series: [
-      {
-        name: 'MasterCount',
-        data: clientData.map((item)=>{
-          return(
-             item.masterCount ? item.masterCount:0
-          )
-        })
-      },
-      {
-        name: 'Client Count',
-        data: clientData.map((item)=>{
-          return(
-             item.clientCount ? item.clientCount:0
-          )
-        }),
-      },
-    ],
-  });
-
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+  }, [currentYear]);
 
   return (
     <div className="col-span-12 rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
@@ -183,7 +110,7 @@ const ChartTwo: React.FC = () => {
         <div id="chartTwo" className="-ml-5 -mb-9">
           <ReactApexChart
             options={options}
-            series={state.series}
+            series={series}
             type="bar"
             height={350}
           />

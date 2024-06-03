@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 
-const options: ApexOptions = {
+const initialOptions: ApexOptions = {
   legend: {
     show: false,
     position: 'top',
@@ -80,20 +80,7 @@ const options: ApexOptions = {
   },
   xaxis: {
     type: 'category',
-    categories: [
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-    ],
+    categories: Array.from({ length: 12 }, (_, i) => i + 1),
     axisBorder: {
       show: false,
     },
@@ -128,8 +115,9 @@ const ChartFour: React.FC = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [options, setOptions] = useState(initialOptions);
 
-  useEffect(() => {
+  const fetchData = () => {
     setLoading(true);
     setError('');
     axios
@@ -147,6 +135,10 @@ const ChartFour: React.FC = () => {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [year]);
 
   useEffect(() => {
@@ -158,7 +150,17 @@ const ChartFour: React.FC = () => {
         },
       ],
     });
+
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      xaxis: {
+        ...prevOptions.xaxis,
+        categories: chart.map((item) => item.name),
+      },
+    }));
   }, [chart]);
+  
+  
 
   const [state, setState] = useState<ChartOneState>({
     series: [
