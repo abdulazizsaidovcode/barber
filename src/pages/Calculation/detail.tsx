@@ -37,7 +37,9 @@ const OrderDetails: React.FC = () => {
       <p>Client Phone: {orderDetails.clientPhone}</p>
       <p>Service Name: {orderDetails.serviceName}</p>
       <p>Order Date: {orderDetails.orderDate}</p>
-      <p>Order Time: {orderDetails.orderFrom} - {orderDetails.orderTo}</p>
+      <p>
+        Order Time: {orderDetails.orderFrom} - {orderDetails.orderTo}
+      </p>
       <p>Price: {orderDetails.price}</p>
       <p>PrePayment: {orderDetails.prePayment}</p>
       <p>Paid: {orderDetails.paid}</p>

@@ -48,8 +48,10 @@ const FilterComponent: React.FC = () => {
     console.log(date, dateString);
   };
 
-  const handleOpenOrderDetails = (id: number) => {
-    navigate(`/orders/${id}`);
+  const handleOpenOrderDetails = () => {
+    tableData.forEach((item) => {
+      navigate(`/orders/${item.orderId}`);
+    });
   };
 
   useEffect(() => {
@@ -199,7 +201,7 @@ const FilterComponent: React.FC = () => {
                   <Popover
                     content={
                       <div>
-                        <Button onClick={() => handleOpenOrderDetails(data.id)}>
+                        <Button onClick={() => handleOpenOrderDetails()}>
                           Открыть
                         </Button>
                       </div>
