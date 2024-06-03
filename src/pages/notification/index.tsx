@@ -50,7 +50,7 @@ const Natification = () => {
   useEffect(() => {
     getMasters({ setData, setTotalPage })
   }, [])
-  
+
   return (
     <DefaultLayout>
       <Chat />
