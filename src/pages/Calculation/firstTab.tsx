@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { get_orders_list } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 const { Option } = Select;
 
@@ -62,7 +63,7 @@ const FilterComponent: React.FC = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error('There was an error fetching the data!', error);
+        toast.error('Serverda Xatolik yuz berdi ! Qaytadan urinib kuring');
         setLoading(false);
       });
   }, []);

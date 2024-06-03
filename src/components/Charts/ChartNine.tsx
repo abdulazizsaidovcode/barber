@@ -142,9 +142,24 @@ const ChartNine: React.FC = () => {
   });
 
   const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState('Yanvar');
+  const [month, setMonth] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const monthMap: { [key: string]: string } = {
+    Yanvar: '01',
+    Fevral: '02',
+    Mart: '03',
+    Aprel: '04',
+    May: '05',
+    June: '06',
+    July: '07',
+    August: '08',
+    September: '09',
+    October: '10',
+    November: '11',
+    December: '12',
+  };
 
   const fetchData = () => {
     if (!year || isNaN(year) || !month) {
@@ -152,10 +167,12 @@ const ChartNine: React.FC = () => {
       return;
     }
 
+    const formattedMonth = monthMap[month];
+
     setLoading(true);
     setError('');
     axios
-      .get(`${dashboard_url}web/regions?month=${month}&year=${year}`, config)
+      .get(`${dashboard_url}web/regions?month=${formattedMonth}&year=${year}`, config)
       .then((response) => {
         if (response.data.body && response.data.body.length > 0) {
           setChart(response.data.body);
@@ -210,14 +227,14 @@ const ChartNine: React.FC = () => {
   return (
     <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
       <div className='flex justify-between flex-wrap'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>Total income</h1>
+        <h1 className='font-semibold text-black text-xl dark:text-white'>Total income for {year}</h1>
         <div className='flex gap-3'>
           <input
             type="number"
             value={year}
             onChange={handleYearChange}
-            className="mb-4 px-2 py-1 text-center border border-gray-300 rounded"
-            placeholder="Enter year"
+            className="mb-4 px-4  py-1  border border-gray-300 rounded"
+            placeholder=""
             min="2000"
             max="2100"
           />

@@ -19,9 +19,9 @@ import { config } from '../../helpers/token';
 const ECommerce: React.FC = () => {
   const [data, setData] = useState(
     {
-      "clientCanselOrder":10,
-      "clientCount":10,
-      "customerDissatisfaction": 10,
+      "clientCanselOrder":0,
+      "clientCount":0,
+      "customerDissatisfaction": 0,
       "income":0,
       "masterAverageClient":0,
       "masterCanselOrder":0,
@@ -95,9 +95,11 @@ const ECommerce: React.FC = () => {
         <CardDataStats title="Клиентов на 1 мастера усредненно" total={data.masterAverageClient ? data.masterAverageClient :0 } />
         <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} />
       </div>
-      <div className='flex mt-7 justify-between flex-wrap gap-2'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>Dynamics of connecting masters and clients</h1>
+      <div className='flex mt-7 justify-between flex-row flex-wrap gap-2'>
+        
+         <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
         <Select
+          className='mt-4'
           defaultValue="2024"
           style={{ width: 200 }}
           options={[
@@ -106,7 +108,9 @@ const ECommerce: React.FC = () => {
             { value: '2026', label: '2026' },
           ]}
         />
-        <h1 className='font-semibold text-black text-xl dark:text-white'>Subscription rates for client masters</h1>
+       
+       
+        <h1 className='font-semibold text-black text-2xl dark:text-white'>Subscription rates for client masters</h1>
         <div className='flex gap-2'>
           <Select
             defaultValue="2024"
@@ -128,7 +132,7 @@ const ECommerce: React.FC = () => {
               { value: 'May', label: 'May' },
             ]}
           />
-        </div>
+       </div> 
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
@@ -166,7 +170,7 @@ const ECommerce: React.FC = () => {
           />
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5 ">
         <ChartOne />
         <ChartFour />
       </div>
