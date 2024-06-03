@@ -63,3 +63,4 @@ export const finance_list = (month: string | null, year: number | null) => {
 
 // sock url
 export const sockjs_url = `${base_url}ws`;
+export const newChat_url = `${base_url}chat/web/nachat-chat/send`; // sent message

@@ -4,6 +4,8 @@ import DarkModeSwitcher from './DarkModeSwitcher';
 import { IoIosNotifications } from 'react-icons/io';
 import LanguageSelector from './language';
 import DropdownUser from './DropdownUser';
+import { CiSquareQuestion } from "react-icons/ci";
+
 
 const Header = (props: {
   sidebarOpen: boolean | undefined;
@@ -71,6 +73,11 @@ const Header = (props: {
             <Link to={'/chat'}>
               <div className="dark:bg-white bg-[#f1f5f9] dark:text-black rounded-full flex justify-center items-center w-[40px] h-[40px]">
                 <IoIosNotifications className="text-2xl" />
+              </div>
+            </Link>
+            <Link to={'/request/new-masters'}>
+              <div className="dark:bg-white bg-[#f1f5f9] dark:text-black rounded-full flex justify-center items-center w-[40px] h-[40px]">
+                <CiSquareQuestion className="text-2xl" />
               </div>
             </Link>
           </div>

@@ -30,7 +30,7 @@ const Specializations: React.FC = () => {
   const [fatherData, setFatherData] = useState<FatherData[]>([]);
   const [childDataMap, setChildDataMap] = useState<ChildDataMap>({});
   const [newCategoryName, setNewCategoryName] = useState<string>('');
-  const [selectedFatherId, setSelectedFatherId] = useState<string>('');
+  const [selectedFatherId, setSelectedFatherId] = useState<string | null>('');
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,18 +56,15 @@ const Specializations: React.FC = () => {
   const fetchChildData = async (categoryId: string) => {
     try {
       const res = await axios.get(`${service_category_list}/byCategory/${categoryId}`, config);
-      if (!res.data && !res.data.body) {
-        toast.error('No child categories not found.');
+      if (res.data && res.data.body) {
+          setChildDataMap((prev) => ({
+            ...prev,
+            [categoryId]: res.data.body,
+          }));
       } else {
-        setChildDataMap((prev) => ({
-          ...prev,
-          [categoryId]: res.data.body,
-        }));
+        toast.error('Something error')
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Error fetching child data');
-    }
+    } catch { }
   };
 
   // ADD CHILD DATA
@@ -96,13 +93,19 @@ const Specializations: React.FC = () => {
 
   // DELETE CHILD DATA
   const deleteChildData = async (id: string, fatherId: string) => {
-    try {
-      await axios.delete(`${del_service_category}/${id}`, config);
-      toast.success('Category deleted successfully');
-      fetchChildData(fatherId);
-    } catch (error) {
-      console.error(error);
-      toast.error('Error deleting category');
+    if (id !== null) {
+      try {
+        await axios.delete(`${del_service_category}/${id}`, config);
+        setSelectedFatherId(null)
+        setChildDataMap({})
+        setTimeout(() => {
+          fetchChildData(fatherId);
+        }, 10)
+        toast.success('Category deleted successfully');
+      } catch (error) {
+        console.error(error);
+        toast.error('Error deleting category');
+      }
     }
   };
 
@@ -155,7 +158,7 @@ const Specializations: React.FC = () => {
                       </div>
                     ))
                   ) : (
-                    <p>Categories not found</p>
+                    <p className='text-xl mt-4'>Child categories not found</p>
                   )}
                 </div>
                 <div className="mt-5 flex items-end">
@@ -165,7 +168,7 @@ const Specializations: React.FC = () => {
                       toggleInput(fatherItem.id);
                       setSelectedFatherId(fatherItem.id);
                     }}
-                    aria-label="Add new input"
+                    aria-label="Add new child category"
                   >
                     <FaPlus size={25} />
                   </button>

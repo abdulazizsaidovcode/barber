@@ -33,9 +33,7 @@ const ServiceCategories = () => {
             .then(res => {
                 setData(res.data.body);
             })
-            .catch(err => {
-                console.error('Error fetching data:', err);
-                toast.error('Error fetching data');
+            .catch(() => {
             });
     };
 
@@ -69,7 +67,10 @@ const ServiceCategories = () => {
             axios.delete(`${del_service_category}/${categoryToDelete}`, config)
                 .then(() => {
                     toast.success('Category deleted successfully');
-                    fetchData();
+                    setData([])
+                    setTimeout(() => {
+                        fetchData();
+                    }, 200)
                     delCloseModal();
                 })
                 .catch(err => {
@@ -152,7 +153,6 @@ const ServiceCategories = () => {
                         className="w-full border-[1px] border-black p-2 rounded-lg mt-3"
                         type="text"
                         placeholder="Health Procedures"
-                        value={newCategoryName}
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
                     <div className="flex mt-15 justify-center">

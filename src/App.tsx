@@ -33,6 +33,10 @@ import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
 import OrderDetails from './pages/Calculation/detail.tsx';
 import { setConfig } from './helpers/token.tsx';
+import RequestNewMasters from './components/request/pages/requestNewMasters.tsx';
+import RequestFoto from './components/request/pages/requestFoto.tsx';
+import RequestSpecializations from './components/request/pages/requestSpecializations.tsx';
+import RequestProcedures from './components/request/pages/requestProcedures.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -76,6 +80,42 @@ function App() {
             <>
               <PageTitle title="Взаиморасчёты | Barber" />
               <MasterDatail />
+            </>
+          }
+        />
+        <Route
+          path="/request/new-masters"
+          element={
+            <>
+              <PageTitle title="Request | Barber" />
+              <RequestNewMasters />
+            </>
+          }
+        />
+        <Route
+          path="/request/foto"
+          element={
+            <>
+              <PageTitle title="Request | Barber" />
+              <RequestFoto />
+            </>
+          }
+        />
+        <Route
+          path="/request/specializations"
+          element={
+            <>
+              <PageTitle title="Request | Barber" />
+              <RequestSpecializations />
+            </>
+          }
+        />
+        <Route
+          path="/request/procedures"
+          element={
+            <>
+              <PageTitle title="Request | Barber" />
+              <RequestProcedures />
             </>
           }
         />
