@@ -21,7 +21,6 @@ const FirstTab: React.FC = () => {
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex justify-between w-full'>
-
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl font-semibold'>Телефон</p>
                             <p className='text-xl font-semibold'>Telegram</p>

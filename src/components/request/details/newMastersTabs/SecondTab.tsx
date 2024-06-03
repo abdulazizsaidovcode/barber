@@ -1,8 +1,11 @@
 import React from 'react'
+import FirstTabCard from './cards/FirstTabCard'
 
 const SecondTab = () => {
   return (
-    <div>SecondTab</div>
+    <div>
+      <FirstTabCard/>
+    </div>
   )
 }
 
