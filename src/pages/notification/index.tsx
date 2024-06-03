@@ -9,7 +9,7 @@ import chatStore from '../../helpers/state_managment/chat/chatStore.tsx';
 
 
 const Natification = () => {
-  const { setTotalPage } = masterStore();
+  const { setData, setTotalPage } = masterStore();
   const { setClientTotalPage } = clientStore();
   const { role, setChatData } = chatStore();
 
@@ -47,6 +47,10 @@ const Natification = () => {
     }
   }, [role]);
 
+  useEffect(() => {
+    getMasters({ setData, setTotalPage })
+  }, [])
+  
   return (
     <DefaultLayout>
       <Chat />
