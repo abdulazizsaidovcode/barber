@@ -56,7 +56,7 @@ function NewChat() {
             message: content,
             status: role
         }
-        if (validateInputs() && recipientId && recipientName && content.trim()) {
+        if ( recipientId && recipientName && content.trim()) {
             console.log(editMessage);
 
             axios.post(`${newChat_url}`, editMessage, config)
@@ -75,24 +75,7 @@ function NewChat() {
         }
     }
 
-    const validateInputs = () => {
-        let isValid = true;
-        if (!recipientName) {
-            document.getElementById('recipientNameInput')?.classList.add('ant-input-error');
-            isValid = false;
-        } else {
-            document.getElementById('recipientNameInput')?.classList.remove('ant-input-error');
-        }
-
-        if (!recipientPhone) {
-            document.getElementById('recipientPhoneInput')?.classList.add('ant-input-error');
-            isValid = false;
-        } else {
-            document.getElementById('recipientPhoneInput')?.classList.remove('ant-input-error');
-        }
-
-        return isValid;
-    };
+    
     return (
         <div className='z-10 '>
             <div onClick={openModal}>
