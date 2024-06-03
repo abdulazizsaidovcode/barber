@@ -5,14 +5,15 @@ interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     children?: React.ReactNode;
+    mt?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-100 flex items-center justify-center bg-slate-900 bg-opacity-50 ">
-            <div className="bg-white dark:text-gray-400 dark:bg-[#30303d] relative rounded-lg shadow-lg p-6 ">
+        <div className="fixed inset-0 z-9999 flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50 ">
+            <div className={`bg-white dark:text-gray-400 dark:bg-[#30303d] relative rounded-lg shadow-lg p-6 ${mt}`}>
                 <div>
                     {children}
                 </div>

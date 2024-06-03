@@ -9,7 +9,7 @@ const RequestLayout = ({ children } : { children: ReactNode }) => {
                 <p className='w-1/4 p-2'>
                     <RequestSidebar />
                 </p>
-                <div className='w-3/4'>{children}</div>
+                <div className='w-3/4 p-2'>{children}</div>
             </div>
         </DefaultLayout>
     );
