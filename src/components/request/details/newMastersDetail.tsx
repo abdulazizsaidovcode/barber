@@ -6,10 +6,11 @@ import SecondTab from './newMastersTabs/SecondTab';
 import ThirdTab from './newMastersTabs/ThirdTab';
 
 interface NewMastersDetail {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
+  openReasonModal: () => void
 }
-const NewMastersDetail: React.FC<NewMastersDetail> = ({ isOpen, onClose }) => {
+const NewMastersDetail: React.FC<NewMastersDetail> = ({ isOpen, openReasonModal, onClose }) => {
   const items = [
     {
       key: '1',
@@ -38,7 +39,7 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({ isOpen, onClose }) => {
           Галерея
         </span>
       ),
-      children: <ThirdTab onClose={onClose}/>,
+      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal}/>,
     },
   ];
   return (
