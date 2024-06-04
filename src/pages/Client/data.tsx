@@ -3,7 +3,6 @@
 import { IClientItems, ITbody, IThead } from "../../types/client.ts";
 import ClientTables from "./client-tables.tsx";
 import img from "../../images/product/product-01.png";
-import ClientLocation from "./client-location.tsx";
 
 export const thead: IThead[] = [
   {
@@ -16,11 +15,11 @@ export const thead: IThead[] = [
   },
   {
     id: 3,
-    name: "Категория услуг",
+    name: "Дата регистрации",
   },
   {
     id: 4,
-    name: "Дата первой записи",
+    name: "Телефон",
   },
   {
     id: 5,
@@ -28,15 +27,15 @@ export const thead: IThead[] = [
   },
   {
     id: 6,
-    name: "Рейтинг",
+    name: "Оборот",
   },
   {
     id: 7,
-    name: "Статус",
+    name: "Возраст",
   },
   {
     id: 8,
-    name: "Тип расписания",
+    name: "Мастера",
   },
   {
     id: 9,
@@ -44,23 +43,7 @@ export const thead: IThead[] = [
   },
   {
     id: 10,
-    name: "Предпочтения",
-  },
-  {
-    id: 11,
-    name: "Контакты",
-  },
-  {
-    id: 12,
-    name: "Телефон",
-  },
-  {
-    id: 13,
-    name: "Место работы",
-  },
-  {
-    id: 14,
-    name: "Самозанятый",
+    name: "Статус",
   },
 ];
 
