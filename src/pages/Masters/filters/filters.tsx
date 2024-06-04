@@ -4,48 +4,29 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import MasterModal from '../master-modal.tsx';
 import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
-import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
-
-interface FilterTypes {
-  searchValue: string;
-  regionValue: string | null;
-  cityValue: string | null;
-  registrationPeriodValue: string | null;
-  serviceCategoryValue: string | null;
-  scheduleTypeValue: string | null;
-  selfEmployedStatusValue: string | null;
-  statusValue: string | null;
-  placeOfWorkValue: string | null;
-}
+import masterStore, { FilterTypes } from '../../../helpers/state_managment/master/masterStore.tsx';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
-const filterObj = {
-  searchValue: '',
-  regionValue: null,
-  cityValue: null,
-  registrationPeriodValue: null,
-  serviceCategoryValue: null,
-  scheduleTypeValue: null,
-  selfEmployedStatusValue: null,
-  statusValue: null,
-  placeOfWorkValue: null
-};
 
 const Filters: React.FC = () => {
+  const { setData, setTotalPage, regionData, setDistrictData, districtData, filterObj } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [filters, setFilters] = useState<FilterTypes>(filterObj);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { setData, setTotalPage, regionData, setDistrictData, districtData } = masterStore();
 
   useEffect(() => {
     getMasters({
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
+      districtId: filters.cityValue ? filters.cityValue : '',
+      statusName: filters.statusValue ? filters.statusValue : '',
+      selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
+      workPlace: filters.placeOfWorkValue ? filters.placeOfWorkValue : '',
       setData,
       setTotalPage
     });
-    if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue)
+    if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue);
   }, [filters]);
 
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
@@ -144,8 +125,8 @@ const Filters: React.FC = () => {
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
               >
-                <Option value="toshkent">Toshkent</Option>
-                <Option value="qarshi">Qarshi</Option>
+                <Option value="">salom</Option>
+                <Option value="">nima gap</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
@@ -166,8 +147,8 @@ const Filters: React.FC = () => {
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
-                <Option value="toshkent">Toshkent</Option>
-                <Option value="qarshi">Qarshi</Option>
+                <Option value={true}>Да</Option>
+                <Option value={false}>Нет</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
@@ -176,8 +157,8 @@ const Filters: React.FC = () => {
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('statusValue', value)}
               >
-                <Option value="toshkent">Toshkent</Option>
-                <Option value="qarshi">Qarshi</Option>
+                <Option value="ACTIVE">Активный</Option>
+                <Option value="BLOCKED">Заблокированный</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
@@ -186,8 +167,9 @@ const Filters: React.FC = () => {
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('placeOfWorkValue', value)}
               >
-                <Option value="2024">2024</Option>
-                <Option value="2023">2023</Option>
+                <Option value="SALON">Салон</Option>
+                <Option value="TO_HOME">Да дому</Option>
+                <Option value="ON_SITE">С выездом</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>

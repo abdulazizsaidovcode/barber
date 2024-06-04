@@ -1,8 +1,7 @@
 import MasterTable from '../../components/Tables/MasterTable.tsx';
 import { thead } from './data.tsx';
 import { CiMenuKebab } from 'react-icons/ci';
-import { MenuProps, Pagination } from 'antd';
-import { Dropdown, Space } from 'antd';
+import { MenuProps, Pagination, Dropdown, Space } from 'antd';
 import Filters from './filters/filters.tsx';
 import React from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
@@ -41,6 +40,10 @@ const items: MenuProps['items'] = [
 
 const MasterTables: React.FC = () => {
   const { data, totalPage } = masterStore();
+  const onChange = (page: number, pageSize: number): void => {
+    console.log('clicked number:', page);
+    console.log('Total page:', pageSize)
+  };
   return (
     <>
       <Filters />
@@ -137,9 +140,11 @@ const MasterTables: React.FC = () => {
           )}
       </MasterTable>
       <Pagination
+        showSizeChanger
         responsive={true}
-        defaultCurrent={0}
+        defaultCurrent={1}
         total={totalPage}
+        onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
       />
     </>
