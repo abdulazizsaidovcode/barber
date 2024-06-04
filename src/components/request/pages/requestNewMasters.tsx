@@ -18,7 +18,7 @@ const RequestNewMasters: React.FC = () => {
 
   return (
     <RequestLayout>
-      <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-[600px] w-full shadow-3 shadow-[0.2px]'>
+      <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5'>
         <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center  px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
@@ -35,7 +35,7 @@ const RequestNewMasters: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='flex mt-5 gap-3 flex-wrap px-5'>
+        <div className='flex mt-5 gap-x-19 gap-y-8 flex-wrap px-5'>
           <NewMastersCard
             salonName='Beauty wave'
             salonCategory='Парикмахер, стилист, Барбер'
@@ -46,6 +46,46 @@ const RequestNewMasters: React.FC = () => {
             salonCreateDate='10.07.2022'
             modal={openDetailModal}
           />
+          <NewMastersCard
+            salonName='Beauty wave'
+            salonCategory='Парикмахер, стилист, Барбер'
+            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
+            ownerImage={opacha}
+            salonOwner='Малика Махмудова'
+            phoneNumber='+998931716380'
+            salonCreateDate='10.07.2022'
+            modal={openDetailModal}
+          />
+          <NewMastersCard
+            salonName='Beauty wave'
+            salonCategory='Парикмахер, стилист, Барбер'
+            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
+            ownerImage={opacha}
+            salonOwner='Малика Махмудова'
+            phoneNumber='+998931716380'
+            salonCreateDate='10.07.2022'
+            modal={openDetailModal}
+          />
+          <NewMastersCard
+            salonName='Beauty wave'
+            salonCategory='Парикмахер, стилист, Барбер'
+            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
+            ownerImage={opacha}
+            salonOwner='Малика Махмудова'
+            phoneNumber='+998931716380'
+            salonCreateDate='10.07.2022'
+            modal={openDetailModal}
+          />
+            <NewMastersCard
+              salonName='Beauty wave'
+              salonCategory='Парикмахер, стилист, Барбер'
+              salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
+              ownerImage={opacha}
+              salonOwner='Малика Махмудова'
+              phoneNumber='+998931716380'
+              salonCreateDate='10.07.2022'
+              modal={openDetailModal}
+            />
         </div>
       </div>
       <NewMastersDetail isOpen={detailIsOpen} onClose={closeDetailModal} openReasonModal={openReasonModal} />
