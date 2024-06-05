@@ -48,7 +48,8 @@ export const precent_list: string = `${base_url}percent`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`;
 
-export const calendar_url: string = `${base_url}dashboard/web/calendar`;
+export const calendar_url: string = `${base_url}workday/time/web/calendar
+`;
 export const dashboard_url = `${base_url}dashboard/`;
 
 
