@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { get_orders_list } from '../../helpers/api';
+import { master_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import axios from 'axios';
-import DefaultLayout from './../../layout/DefaultLayout';
 import { useTranslation } from 'react-i18next';
-import MasterDetail from './../../components/MastervsOrder/masterDetail';
+import DefaultLayout from '../../layout/DefaultLayout';
+import MasterCardInfo from '../../components/MasterCard/MasterCardR';
 
 const DetailMaster: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const [orderDetails, setOrderDetails] = useState<any>(null);
-  // const [, setTableData] = useState<any[]>([]);
 
   const id = location.pathname.substring(8);
-
+  console.log(id);
   useEffect(() => {
     axios
-      .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
+      .get(`${master_url}?page=0&size=10`, config)
       .then((response) => {
-        const orders = response.data.body.object;
-        // setTableData(orders);
+        const master = response.data.body.object;
 
         // Find the order that matches the ID from the URL
-        const matchingOrder = orders.find((order: any) => order.orderId === id);
+        const matchingOrder = master.find((order: any) => order.id === id);
         if (matchingOrder) {
           setOrderDetails(matchingOrder);
         }
@@ -47,9 +45,9 @@ const DetailMaster: React.FC = () => {
             <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black mt-3 border-black rounded-xl border-solid border-1 p-3 flex flex-col lg:flex-row items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
               <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-10">
                 <p className="font-bold text-xl dark:text-black">
-                  {orderDetails.serviceName}
+                  {orderDetails.serviceCategory}
                 </p>
-                <p className="dark:text-gray-300">{orderDetails.orderDate}</p>
+                <p className="dark:text-gray-300">{orderDetails.startedWork}</p>
                 <div className="flex items-center gap-2 lg:gap-3 dark:text-gray-300">
                   <p>{orderDetails.orderFrom}</p>
                   <p>:</p>
@@ -60,7 +58,7 @@ const DetailMaster: React.FC = () => {
                 {t('detail_type')}
               </div>
             </div>
-            <MasterDetail
+            <MasterCardInfo
               OrderData={orderDetails.orderDate}
               OrderEnterTime={orderDetails.orderFrom}
               OrderEndTime={orderDetails.orderTo}
@@ -82,10 +80,15 @@ const DetailMaster: React.FC = () => {
               MasterName={orderDetails.masterFullName}
               MasterType={orderDetails.serviceName}
               MasterImg={orderDetails.masterPhotoPath}
-              MasterPhone={orderDetails.masterPhone}
+              definitionType={
+                orderDetails.masterPhone === undefined
+                  ? 'Mavjud emas'
+                  : orderDetails.masterPhone
+              }
               ClientName={orderDetails.clientFullName}
               ClientPhoto={orderDetails.clientPhotoPath}
               ClientNumber={orderDetails.clientPhone}
+              Status={orderDetails.status}
             />
           </div>
         ) : (

@@ -12,13 +12,15 @@ interface IChat {
   
 
 export const GetChatList = ({ status, fullName, messageStatus, setData }: IChat) => {
+    console.log(status);
+    
     axios.get(`${getChatList_url}${status ? `?status=${status}` : ''}${fullName ? `&fullName=${fullName}` : ''}${messageStatus ? `&messageStatus=${messageStatus}` : ''}`, config)
         .then(res => {
             if (res.data.success === true) {
                 setData(res.data.body)
-                console.log(res.data.body);
+                console.log(res);
                 
-            }
+            } else setData([])
         })
-        .catch(err => console.log(err));
+        .catch(() => setData([]));
 };

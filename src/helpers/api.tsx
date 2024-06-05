@@ -48,7 +48,8 @@ export const precent_list: string = `${base_url}percent`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`;
 
-export const calendar_url: string = `${base_url}dashboard/web/calendar`;
+export const calendar_url: string = `${base_url}workday/time/web/calendar
+`;
 export const dashboard_url = `${base_url}dashboard/`;
 
 
@@ -72,3 +73,4 @@ export const getChatList_url = `${base_url}chat/web`; // get chat list
 // get attachment by id
 
 export const get_attachment_url = `${base_url}/attachment/getFile`; // get chat list
+export const newsletters_url = `${base_url}newsletters`; // newsletters url

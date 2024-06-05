@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '../../../types/product';
 import ProductOne from '../../../images/product/product-01.png';
 import ProductTwo from '../../../images/product/product-02.png';
@@ -8,6 +8,9 @@ import { DatePicker, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import AddMails from './addMails';
 import { TbArrowBigLeftFilled } from 'react-icons/tb';
+import axios from 'axios';
+import { newsletters_url } from '../../../helpers/api';
+import { config } from '../../../helpers/token';
 
 const productData: Product[] = [
     {
@@ -45,6 +48,7 @@ const productData: Product[] = [
 ];
 
 const ChatTable = () => {
+
     const [showAddMails, setShowAddMails] = useState(false);
 
     return (

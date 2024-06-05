@@ -30,5 +30,6 @@
   "order_table_status": "Record status",
   "order_table_master": "Master",
   "detail_type": "Approved",
-  "detail_payment_type": "Didn't start"
+  "detail_payment_type": "Didn't start",
+  "Modal_answer": "Block the master ?"
 }
