@@ -51,9 +51,8 @@ const ChatTable = () => {
     return (
         <section>
             {showAddMails ? (
-                <div>
+                <div className='pt-5'>
                     <div onClick={() => setShowAddMails(false)} className='mb-5 flex'>
-
                         <Buttons className="mb-5">
                             <TbArrowBigLeftFilled />
                         </Buttons>
@@ -61,15 +60,15 @@ const ChatTable = () => {
                     <AddMails />
                 </div>
             ) : (
-                <div  className='pt-5'>
+                <div className='pt-5'>
                     <div className='mb-5 flex gap-2'>
                         <Select
                             className='w-full md:w-40 lg:w-40 xl:w-40 dark:bg-gray-800 dark:text-white'
-                            defaultValue="2024"
+                            defaultValue="Тема"
                             style={{ width: 120 }}
-                            dropdownStyle={{ backgroundColor: '#4b4b64', color: 'white' }}
+                            showSearch
                             options={[
-                                { value: '2024', label: '2024' },
+                                { value: 'Тема', label: 'Тема', disabled: true  },
                                 { value: '2025', label: '2025' },
                                 { value: '2026', label: '2026' },
                             ]}
@@ -77,6 +76,7 @@ const ChatTable = () => {
                         <DatePicker
                             className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white '
                             placeholder='Дата'
+                            onChange={(e) => console.log(e)}
                         />
                         <div onClick={() => setShowAddMails(true)}>
                             <Buttons >
