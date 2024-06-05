@@ -40,42 +40,43 @@ const MasterDetail: React.FC<Props> = ({
   ClientNumber,
 }) => {
   return (
-    <div className="flex gap-4 mt-4 ">
-      <div className="flex flex-col h-[100%] justify-between gap-4">
-        <div className="flex flex-col border-1 dark:bg-[#ffffffdf] text-black dark:text-black  border-black w-[300px] shadow-3 p-3 rounded-xl ">
+    <div className="flex flex-col lg:flex-row gap-4 mt-4">
+      <div className="flex flex-col h-full justify-between gap-4">
+        <div className="flex flex-col   dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
           <div className="flex items-center justify-between">
             <p>Master</p>
             <p>{MasterName}</p>
           </div>
-          <div className="flex items-center justify-center border-1 border-black p-1 rounded-[50%]">
+          <div className="flex items-center justify-center   border-black p-1 rounded-full">
             <img
               src={MasterImg}
               alt="Master"
-              className="w-40 border-1  h-40 rounded-[50%]"
+              className="w-40 border h-40 rounded-full"
             />
           </div>
-          <div className="flex items-center justify-center ">
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-gray-600">{MasterType}</p>
             <p className="text-gray-600">{MasterPhone}</p>
           </div>
         </div>
-        <div className="flex flex-col border-1 dark:bg-[#ffffffdf]  text-black dark:text-black border-black w-[300px] shadow-3 p-3 rounded-xl ">
+        <div className="flex flex-col   dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
           <div className="flex items-center justify-between">
-            <p>Master</p>
+            <p>Client</p>
             <p>{ClientName}</p>
           </div>
-          <div className="flex items-center justify-center border-1 border-black p-1 rounded-[50%]">
+          <div className="flex items-center justify-center    p-1 rounded-full">
             <img
               src={ClientPhoto}
-              alt="Master"
-              className="w-40 border-1  h-40 rounded-[50%]"
+              alt="Client"
+              className="w-40 border h-40 rounded-full"
             />
           </div>
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center">
             <p className="text-gray-600">{ClientNumber}</p>
           </div>
         </div>
       </div>
-      <div className="bg-gray-100 dark:bg-[#ffffffdf]  text-black dark:text-black p-4 shadow-4 border-1 flex flex-col justify-between pl-10 py-5  border-black rounded-xl w-[100%] ">
+      <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4   flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
         <p className="mb-2">
           <strong>Дата записи:</strong> {OrderData}
         </p>

@@ -44,19 +44,19 @@ const NotFound: React.FC = () => {
         </div>
         {orderDetails ? (
           <div>
-            <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black mt-3 border-black rounded-xl border-solid border-1 p-3 flex items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
-              <div className="flex  items-center gap-10">
+            <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black mt-3 border-black rounded-xl border-solid border-1 p-3 flex flex-col lg:flex-row items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
+              <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-10">
                 <p className="font-bold text-xl dark:text-black">
                   {orderDetails.serviceName}
                 </p>
                 <p className="dark:text-gray-300">{orderDetails.orderDate}</p>
-                <div className="flex items-center gap-3 dark:text-gray-300">
+                <div className="flex items-center gap-2 lg:gap-3 dark:text-gray-300">
                   <p>{orderDetails.orderFrom}</p>
-                  <p> : </p>
+                  <p>:</p>
                   <p>{orderDetails.orderTo}</p>
                 </div>
               </div>
-              <div className="rounded-xl bg-[#0aa8da] p-1 px-4 flex items-center justify-center">
+              <div className="mt-2 lg:mt-0 rounded-xl bg-[#0aa8da] p-1 px-4 flex items-center justify-center">
                 {t('detail_type')}
               </div>
             </div>
@@ -80,7 +80,7 @@ const NotFound: React.FC = () => {
               }
               ToPay={orderDetails.toPay}
               MasterName={orderDetails.masterFullName}
-              MasterType={orderDetails.MasterType}
+              MasterType={orderDetails.serviceName}
               MasterImg={orderDetails.masterPhotoPath}
               MasterPhone={orderDetails.masterPhone}
               ClientName={orderDetails.clientFullName}
