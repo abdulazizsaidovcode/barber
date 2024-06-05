@@ -1,32 +1,71 @@
 import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import { IoSearchOutline } from "react-icons/io5";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
 import MasterModal from "../client-modal.tsx";
+import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
+import { getClients } from "../../../helpers/api-function/client/client.tsx";
 
 const { Option } = Select;
-const filterObj = {
-  searchValue: "",
-  regionValue: "Region",
-  cityValue: "City",
-  registrationPeriodValue: null,
-  serviceCategoryValue: "Service category",
-  scheduleTypeValue: "Schedule type",
-  selfEmployedStatusValue: "Self-employed status",
-  statusValue: "Status",
-  placeOfWorkValue: "Place of work",
-};
 
 const Filters: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [filters, setFilters] = useState(filterObj);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {setClientFilterData, setClientTotalPage} = clientFilterStore()
+  const [filters, setFilters] = useState({
+    fullName: '',
+    regionId: '',
+    districtId: '',
+    startDate: null,
+    endDate: null,
+    status: ''
+  });
+
+  
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
-  const resetFilters = (): void => setFilters(filterObj);
-  const handleInputChange = (key: string, value: any) =>
-    setFilters({ ...filters, [key]: value });
+
   const openModal = () => setIsModalOpen(!isModalOpen);
+
+  useEffect(() => {
+    const params: any = {
+      setData: setClientFilterData,
+      setTotalPage: setClientTotalPage,
+      ...filters
+    };
+
+    // Remove empty filter values
+    Object.keys(params).forEach(key => {
+      if (params[key] === '' || params[key] === null) {
+        delete params[key];
+      }
+    });
+
+    getClients(params);
+  }, [filters]);
+
+  const handleInputChange = (key: string, value: any) => {
+    if (key === 'startDate' || key === 'endDate') {
+      value = value ? moment(value).format('YYYY-MM-DD') : null;
+    }
+
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [key]: value
+    }));
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      fullName: '',
+      regionId: '',
+      districtId: '',
+      startDate: null,
+      endDate: null,
+      status: ''
+    });
+  };
 
   const styles = {
     mainContainer: {
@@ -62,17 +101,18 @@ const Filters: React.FC = () => {
             placeholder="Search F.I.O"
             prefix={<IoSearchOutline />}
             style={styles.filterInput}
-            value={filters.searchValue}
-            onChange={(e) => handleInputChange("searchValue", e.target.value)}
+            value={filters.fullName}
+            onChange={(e) => handleInputChange('fullName', e.target.value)}
           />
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
             defaultValue="Region"
             style={styles.filterInput}
-            value={filters.regionValue}
-            onChange={(value) => handleInputChange("regionValue", value)}
+            value={filters.regionId}
+            onChange={(value) => handleInputChange('regionId', value)}
           >
+            <Option value="">Region</Option>
             <Option value="toshkent">Toshkent</Option>
             <Option value="qashqadaryo">Qashqadaryo</Option>
             <Option value="surxandaryo">Surxandaryo</Option>
@@ -82,9 +122,10 @@ const Filters: React.FC = () => {
           <Select
             defaultValue="City"
             style={styles.filterInput}
-            value={filters.cityValue}
-            onChange={(value) => handleInputChange("cityValue", value)}
+            value={filters.districtId}
+            onChange={(value) => handleInputChange('districtId', value)}
           >
+            <Option value="">City</Option>
             <Option value="toshkent">Toshkent</Option>
             <Option value="qarshi">Qarshi</Option>
             <Option value="boysun">Boysun</Option>
@@ -117,79 +158,37 @@ const Filters: React.FC = () => {
           <Row gutter={[16, 16]} style={{ marginTop: "10px" }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <DatePicker
-                placeholder={"Registration period for masters"}
+                placeholder={"Start date"}
                 style={styles.filterInput}
-                value={filters.registrationPeriodValue}
-                onChange={(date) =>
-                  handleInputChange("registrationPeriodValue", date)
-                }
+                value={filters.startDate ? moment(filters.startDate) : null}
+                onChange={(date) => handleInputChange('startDate', date)}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+              <DatePicker
+                placeholder={"End date"}
+                style={styles.filterInput}
+                value={filters.endDate ? moment(filters.endDate) : null}
+                onChange={(date) => handleInputChange('endDate', date)}
               />
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
                 defaultValue="Status"
                 style={styles.filterInput}
-                value={filters.statusValue}
-                onChange={(value) => handleInputChange("statusValue", value)}
-                >
-                <Option value="toshkent">Toshkent</Option>
-                <Option value="qarshi">Qarshi</Option>
-              </Select>
-            </Col>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <Button onClick={resetFilters} style={styles.extraButton}>
-                Reset
-              </Button>
-            </Col>
-          {/* <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select
-              defaultValue="Service category"
-              style={styles.filterInput}
-              value={filters.serviceCategoryValue}
-              onChange={(value) => handleInputChange('serviceCategoryValue', value)}
-            >
-              <Option value="toshkent">Toshkent</Option>
-              <Option value="qarshi">Qarshi</Option>
-            </Select>
-          </Col>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select
-              defaultValue="Schedule type"
-              style={styles.filterInput}
-              value={filters.scheduleTypeValue}
-              onChange={(value) => handleInputChange('scheduleTypeValue', value)}
-            >
-              <Option value="2024">2024</Option>
-              <Option value="2023">2023</Option>
-            </Select>
-          </Col> */}
-          {/* <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select
-              defaultValue="Self-employed status"
-              style={styles.filterInput}
-              value={filters.selfEmployedStatusValue}
-              onChange={(value) =>
-                handleInputChange("selfEmployedStatusValue", value)
-              }
-            >
-              <Option value="toshkent">Toshkent</Option>
-              <Option value="qarshi">Qarshi</Option>
-            </Select>
-          </Col> */}
-          </Row>
-          {/* <Row gutter={[16, 16]} style={{ marginTop: "10px" }}>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <Select
-                defaultValue="Place of work"
-                style={styles.filterInput}
-                value={filters.placeOfWorkValue}
-                onChange={(value) => handleInputChange('placeOfWorkValue', value)}
+                value={filters.status}
+                onChange={(value) => handleInputChange('status', value)}
               >
-                <Option value="2024">2024</Option>
-                <Option value="2023">2023</Option>
+                <Option value="">Status</Option>
+                <Option value="ACTIVE">ACTIVE</Option>
+                <Option value="BLOCK">BLOCK</Option>
+                <Option value="DELETED">DELETED</Option>
               </Select>
             </Col>
-          </Row> */}
+            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+              <Button style={styles.extraButton} onClick={resetFilters}>Reset</Button>
+            </Col>
+          </Row>
         </>
       )}
     </div>
