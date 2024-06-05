@@ -230,7 +230,7 @@ function App() {
           }
         />
         <Route
-          path="/settings/tariff-detail"
+          path="/settings/tariff/:id"
           element={
             <>
               <PageTitle title="Settings | Barber" />

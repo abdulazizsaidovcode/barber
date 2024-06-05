@@ -1,20 +1,62 @@
-import React, { useState } from 'react'
-import DefaultLayout from '../../layout/DefaultLayout'
+import React, { useEffect, useState } from 'react';
+import DefaultLayout from '../../layout/DefaultLayout';
 import Modal from '../../components/modals/modal';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { tarif_add_url, tarif_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
+import toast from 'react-hot-toast';
+
+interface Data {
+    id: number;
+    name: string;
+    functionCount: number;
+    monthPrice: number;
+}
 
 const TariffsFunctionality: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [data, setData] = useState<Data[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [newTariffName, setNewTariffName] = useState('');
 
-    const closeModal = () => setIsOpen(false)
-    const openModal = () => setIsOpen(true)
+    useEffect(() => {
+        fetchData();
+    }, []); // Empty dependency array to run only once on mount
+
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(tarif_url, config);
+            setData(res.data.body);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const addData = async (name: string) => {
+        try {
+            await axios.post(tarif_add_url, { name }, config);
+            fetchData(); // Refresh data after adding a new tariff
+            toast.success('Tariff added successfuly')
+            closeModal();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const closeModal = () => {
+        setIsOpen(false);
+        setNewTariffName(''); // Clear input field when closing modal
+    }
+
+    const openModal = () => setIsOpen(true);
 
     interface TariffsFunctionalityCardProp {
         title: string;
         functions: string;
         sum: string;
-        link: string
+        link: string;
     }
+
     const TariffsFunctionalityCard: React.FC<TariffsFunctionalityCardProp> = ({ title, link, functions, sum }) => {
         return (
             <Link to={link}>
@@ -24,9 +66,11 @@ const TariffsFunctionality: React.FC = () => {
                     <p>{sum}</p>
                 </div>
             </Link>
-        )
+        );
     }
+
     return (
+        
         <>
             <DefaultLayout>
                 <div>
@@ -35,23 +79,36 @@ const TariffsFunctionality: React.FC = () => {
                         <button onClick={openModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>Добавить Тариф</button>
                     </div>
                     <div className='flex flex-wrap gap-5 mt-5'>
-                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/settings/tariff-detail' />
-                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/settings/tariff-detail' />
-                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/settings/tariff-detail' />
+                        {data.map((item, index) => (
+                            <div key={index}> {/* Added key prop */}
+                                <TariffsFunctionalityCard title={item.name} functions={`${item.functionCount} Функций`} sum={`${item.monthPrice} сум`} link={`/settings/tariff/${item.id}`} />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </DefaultLayout>
             <Modal isOpen={isOpen} onClose={closeModal}>
-                <div className="w-[600px] h-[180px]">
-                    <p className="text-xl text-black">Название тарифы:</p>
-                    <input className="w-full border-[1px] border-black p-2 rounded-lg mt-3" type="text" placeholder="Оздоровительные процедуры" />
-                    <div className="flex mt-15 justify-center">
-                        <button className="py-2 px-10 bg-slate-800 text-white">Добавить</button>
+                <div className="w-[500px] h-[160px]">
+                    <p className="text-xl text-black dark:text-white">Название тарифа:</p>
+                    <input 
+                        className="w-full border-[1px] dark:text-black border-black p-2 rounded-lg mt-3" 
+                        type="text" 
+                        placeholder="Оздоровительные процедуры" 
+                        value={newTariffName}
+                        onChange={(e) => setNewTariffName(e.target.value)} // Update state on input change
+                    />
+                    <div className="flex mt-10 justify-center">
+                        <button 
+                            className="py-2 px-10 rounded-lg dark:bg-danger bg-slate-800 text-white" 
+                            onClick={() => addData(newTariffName)} // Add tariff on button click
+                        >
+                            Добавить
+                        </button>
                     </div>
                 </div>
             </Modal>
         </>
-    )
+    );
 }
 
 export default TariffsFunctionality;
