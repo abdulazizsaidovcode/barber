@@ -38,7 +38,7 @@ export const client_url: string = `${base_url}client/web/clients-by-filter`;
 export const login_url: string = `${base_url}auth/admin-login`;
 export const get_orders_list: string = `${base_url}order/web`;
 
-// settings url 
+// settings url
 export const service_category_list: string = `${base_url}category`;
 export const add_service_category: string = `${base_url}category/web`;
 export const del_service_category: string = `${base_url}category/web`;

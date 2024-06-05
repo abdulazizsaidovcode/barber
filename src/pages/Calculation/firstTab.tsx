@@ -49,17 +49,13 @@ const FilterComponent: React.FC = () => {
     console.log(date, dateString);
   };
 
-  const handleOpenOrderDetails = () => {
-    tableData.forEach((item) => {
-      navigate(`/orders/${item.orderId}`);
-    });
-  };
 
   useEffect(() => {
     axios
       .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
       .then((response) => {
         setTableData(response.data.body.object);
+        console.log(response);
         setLoading(false);
       })
       .catch((error) => {
@@ -202,7 +198,7 @@ const FilterComponent: React.FC = () => {
                   <Popover
                     content={
                       <div>
-                        <Button onClick={() => handleOpenOrderDetails()}>
+                        <Button onClick={() => navigate(`/orders/${data.orderId}`)}>
                           Открыть
                         </Button>
                       </div>
