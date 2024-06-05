@@ -37,7 +37,7 @@ import RequestNewMasters from './components/request/pages/requestNewMasters.tsx'
 import RequestFoto from './components/request/pages/requestFoto.tsx';
 import RequestSpecializations from './components/request/pages/requestSpecializations.tsx';
 import RequestProcedures from './components/request/pages/requestProcedures.tsx';
-import DetailMaster from './pages/Masters/detailMaster.tsx';
+import MainTabDetail from './pages/Masters/detail/mainTabDetail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -306,7 +306,7 @@ function App() {
           element={
             <>
               <PageTitle title="Master | Barber" />
-              <DetailMaster />
+              <MainTabDetail />
             </>
           }
         />
