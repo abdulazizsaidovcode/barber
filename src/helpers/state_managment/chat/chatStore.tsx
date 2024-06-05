@@ -8,24 +8,27 @@ interface ChatData {
   setRole: (role: string) => void;
   setChatData: (val: Data[]) => void;
 }
-export interface Data {
-  id: string;
-  imgUrl: string;
-  fullName: string;
-  serviceCategory: string[] | null;
-  startedWork: string
-  orderCount: number
-  rating: number
-  status: null | string,
-  schedule: string
-  canceled: number
-  specialization: string[] | null;
-  totalClient: number
-  phoneNumber: string
-  workPlace: string
-  lat: number
-  lng: number
+interface ChatDto {
+  attachmentIds: string[];
+  content: string;
+  createdAt: "3924-07-04T22:00:00.000+00:00"
+  id: number;
+  read: boolean
+  recipientId: string
+  replayDto: string | null
+  senderId: string
 }
+export interface Data {
+  attachmentId: string | null;
+  chatDto: ChatDto;
+  name: string;
+  newMessageCount: number
+  nickname: string | null
+  phone: string
+  status: null | string,
+  userId: string;
+}
+
 
 const chatStore = create<ChatData>((set) => ({
   role: 'master',

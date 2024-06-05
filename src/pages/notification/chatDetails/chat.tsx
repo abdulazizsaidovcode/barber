@@ -12,7 +12,6 @@ import NewChat from '../newChat';
 import Sms from '../sms/sms';
 import Notselected from '../components/notselected';
 import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
-import { MdPreview } from 'react-icons/md';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const Chatdetail: React.FC = () => {
@@ -41,7 +40,6 @@ const Chatdetail: React.FC = () => {
   useEffect(() => {
     setAdminId(sessionStorage.getItem('userId'));
     connect();
-    console.log(chatData, "salom");
   }, []);
 
   // console.log(chatData, role);
@@ -83,6 +81,8 @@ const Chatdetail: React.FC = () => {
     });
   };
 
+  console.log(recipientId);
+  
 
   //  connect socket with sock js 
   const connect = () => {
@@ -190,7 +190,7 @@ const Chatdetail: React.FC = () => {
       {/* chat list */}
       <div className="flex w-[100%] relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-screen duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-10 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-screen duration-300 flex flex-col`}>
           <div className='flex justify-end mb-4'>
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />

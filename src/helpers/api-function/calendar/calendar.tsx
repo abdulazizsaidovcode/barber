@@ -10,6 +10,15 @@ interface Category {
   new: boolean;
 }
 
+interface ICalendar {
+  localDate?: string,
+  endDate?: string,
+  categoryId?: string,
+  regionId?: number,
+  districtId?: number,
+  isMonth?: boolean
+}
+
 interface ResponseBody {
   success: boolean;
   body: Category[];
@@ -30,14 +39,14 @@ export const getCategoryId = (setCategory: (data: Category[]) => void) => {
     });
 };
 
-export const getCalendar = (
-  localDate?: string,
-  endDate?: string,
-  categoryId?: string,
-  regionId?: number,
-  districtId?: number,
-  isMonth?: boolean
-) => {
+export const getCalendar = ({
+ localDate,
+ endDate,
+ categoryId,
+ regionId,
+ districtId,
+ isMonth
+}: ICalendar) => {
   let url = calendar_url;
 
   const params: { [key: string]: any } = {};
@@ -45,8 +54,8 @@ export const getCalendar = (
   if (localDate) params.localDate = localDate;
   if (endDate) params.endDate = endDate;
   if (categoryId) params.categoryId = categoryId;
-  if (regionId !== undefined) params.regionId = regionId;
-  if (districtId !== undefined) params.districtId = districtId;
+  if (regionId !== 0) params.regionId = regionId;
+  if (districtId !== 0) params.districtId = districtId;
   if (isMonth !== undefined) params.isMonth = isMonth;
 
   const queryString = new URLSearchParams(params).toString();
@@ -57,16 +66,16 @@ export const getCalendar = (
   console.log(url);
   
 
-  // axios
-  //   .get<ResponseBody>(url, config)
-  //   .then((res) => {
-  //     if (res.data.success) {
-  //       console.log(res.data.body);
-  //     } else {
-  //       console.log('Failed to fetch categories.');
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.error('Error fetching categories:', err);
-  //   });
+  axios
+    .get<ResponseBody>(url, config)
+    .then((res) => {
+      if (res.data.success) {
+        console.log(res.data.body);
+      } else {
+        console.log('Failed to fetch categories.');
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching categories:', err);
+    });
   }

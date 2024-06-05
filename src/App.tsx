@@ -194,7 +194,7 @@ function App() {
           }
         />
         <Route
-          path="/service-categories"
+          path="/settings/service-categories"
           element={
             <>
               <PageTitle title="Settings | Barber" />
@@ -203,7 +203,7 @@ function App() {
           }
         />
         <Route
-          path="/specializations"
+          path="/settings/specializations"
           element={
             <>
               <PageTitle title="Settings | Barber" />
@@ -212,7 +212,7 @@ function App() {
           }
         />
         <Route
-          path="/online-booking"
+          path="/settings/online-booking"
           element={
             <>
               <PageTitle title="Settings | Barber" />
@@ -221,7 +221,7 @@ function App() {
           }
         />
         <Route
-          path="/tariffs-functionality"
+          path="/settings/tariffs-functionality"
           element={
             <>
               <PageTitle title="Settings | Barber" />
@@ -230,7 +230,7 @@ function App() {
           }
         />
         <Route
-          path="/tariff-detail"
+          path="/settings/tariff-detail"
           element={
             <>
               <PageTitle title="Settings | Barber" />

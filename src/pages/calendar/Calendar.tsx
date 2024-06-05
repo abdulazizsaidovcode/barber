@@ -1,5 +1,3 @@
-// src/components/Calendar.tsx
-
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
@@ -19,18 +17,68 @@ interface Event {
 }
 
 const Calendar: React.FC = () => {
-  const { setCategory, category, setCategoryId } = calendarStore();
+  const { setCategory, category } = calendarStore();
+  const [regionId, setRegionId] = useState<number | null>(null);
+  const [districtId, setDistrictId] = useState<number | null>(null);
+  const [categoryId, setCategoryIdState] = useState<string | null>(null);
+  const [isMonth, setIsMonth] = useState<boolean>(true);
+  const [currentDate, setCurrentDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
 
   const regionOptions = [
-    { value: "1", label: "Not Identified" },
-    { value: "2", label: "Closed" },
+    { value: 1, label: "Not Identified" },
+    { value: 2, label: "Closed" },
   ];
+
+  const fetchCalendarData = () => {
+    getCalendar({
+      categoryId: categoryId || "",
+      districtId: districtId || 0,
+      endDate: endDate || "",
+      isMonth: isMonth,
+      localDate: currentDate,
+      regionId: regionId || 0
+    });
+  };
 
   useEffect(() => {
     getCategoryId(setCategory);
   }, []);
 
-  getCalendar("2024-05-30","","", 29)  
+  useEffect(() => {
+    fetchCalendarData();
+  }, [regionId, districtId, categoryId, isMonth, currentDate, endDate]);
+
+  const handleButtonClick = (buttonId: string, id: string) => {
+    setCategoryIdState(id);
+    setActiveButton(buttonId);
+  };
+
+  const handleDatesSet = (arg: any) => {
+    if (arg.view.type === "dayGridMonth") {
+      const start = new Date(arg.startStr);
+      const formattedDate = `${start.getFullYear()}-${(start.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
+      setCurrentDate(formattedDate);
+      setEndDate("");
+      setIsMonth(true);
+    } else if (arg.view.type === "timeGridWeek") {
+      const start = new Date(arg.start);
+      const end = new Date(arg.end);
+      const startDate = `${start.getFullYear()}-${(start.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
+      const endDate = `${end.getFullYear()}-${(end.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${(end.getDate() - 1).toString().padStart(2, "0")}`;
+      setCurrentDate(startDate);
+      setEndDate(endDate);
+      setIsMonth(false);
+    }
+  };
+
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const events: Event[] = [
     { title: "25", start: "2024-05-07", color: "#22C55E" },
@@ -46,34 +94,6 @@ const Calendar: React.FC = () => {
     { title: "11", start: "2024-03-07", color: "#3B82F6" },
     { title: "9", start: "2024-03-07", color: "#EF4444" },
   ];
-
-  const [activeButton, setActiveButton] = useState<string | null>(null);
-  const [currentDate, setCurrentDate] = useState<string>("");
-
-  const handleButtonClick = (buttonId: string) => {
-    setActiveButton(buttonId);
-  };
-
-  const handleDatesSet = (arg: any) => {
-    if (arg.view.type === "dayGridMonth") {
-      const start = new Date(arg.startStr);
-      const formattedDate = `${start.getFullYear()}-${(start.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
-      setCurrentDate(formattedDate); // Oyning sanasini year-month-day formatida saqlash
-    } else if (arg.view.type === "timeGridWeek") {
-      const start = new Date(arg.start);
-      const end = new Date(arg.end);
-      const startDate = `${start.getFullYear()}-${(start.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
-      const endDate = `${end.getFullYear()}-${(end.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${(end.getDate() - 1).toString().padStart(2, "0")}`; // Yakuniy sanani 1 kunga qisqartirish
-      setCurrentDate(`${startDate} to ${endDate}`); // Haftaning sanasini year-month-day to year-month-day formatida saqlash
-    }
-  };
-
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Calendar" />
@@ -106,6 +126,7 @@ const Calendar: React.FC = () => {
                 .localeCompare((optionB?.label ?? "").toLowerCase())
             }
             options={regionOptions}
+            onChange={(value) => setRegionId(value)}
           />
           <Select
             showSearch
@@ -120,6 +141,7 @@ const Calendar: React.FC = () => {
                 .localeCompare((optionB?.label ?? "").toLowerCase())
             }
             options={regionOptions}
+            onChange={(value) => setDistrictId(value)}
           />
         </div>
       </div>
@@ -139,8 +161,7 @@ const Calendar: React.FC = () => {
               <button
                 key={i}
                 onClick={() => {
-                  handleButtonClick(item.name);
-                  setCategoryId(item.id);
+                  handleButtonClick(item.name, item.id);
                 }}
                 className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${
                   activeButton === item.name
@@ -174,6 +195,7 @@ const Calendar: React.FC = () => {
       />
       <div>
         <p>Current Date: {currentDate}</p>
+        <p>End Date: {endDate}</p>
       </div>
     </DefaultLayout>
   );
