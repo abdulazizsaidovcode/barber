@@ -33,7 +33,12 @@ const NotFound: React.FC = () => {
   return (
     <div>
       <DefaultLayout>
-        <div>salom</div>
+        <div className="shadow-3 border-black rounded-xl border-solid border-1 p-3 flex items-center justify-between w-[100%]">
+          <p>Детали записи</p>
+          <div className="rounded-md bg-[#ffa723] p-1 flex items-center justify-center">
+            Не начиналась
+          </div>
+        </div>
         {orderDetails ? (
           <div>
             <h2>Order Details</h2>
