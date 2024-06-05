@@ -11,7 +11,7 @@ interface IMaster {
   endDate?: string;
   categoryId?: string;
   statusName?: string;
-  selfEmployed?: boolean;
+  selfEmployed?: boolean | string;
   workPlace?: string;
   page?: number;
   size?: number;
@@ -41,25 +41,35 @@ export const getMasters = ({
         setTotalPage(res.data.body.totalPage);
       }
     })
-    .catch(() => 'error fetching master');
+    .catch(() => console.log('error fetching master'));
 };
 
 export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
   axios.get(region_url, config)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       setRegionData(res.data.body);
     })
-    .catch((err) => console.log(err));
+    .catch(() => console.log('Error fetching region'));
 };
 
 export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, districtId: number) => {
   if (districtId) {
-    axios.get(`${district_url}?regionId=${districtId}`, config)
+    axios.get(`${district_url}/${districtId}`, config)
       .then(res => {
         console.log(res);
         setDistrictData(res.data.body);
       })
-      .catch((err) => console.log(err));
+      .catch(() => console.log('error fetching district'));
   }
+};
+
+export const getCategory = (setCategory: (data: string) => void) => {
+  axios.get(``, config)
+    .then(res => {
+      console.log(res);
+      if (res.data.success === true) setCategory(res.data.body);
+      else console.log('then and error fetching category');
+    })
+    .catch(() => console.log('catch and error fetching category'));
 };
