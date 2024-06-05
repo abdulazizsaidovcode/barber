@@ -37,6 +37,7 @@ import RequestNewMasters from './components/request/pages/requestNewMasters.tsx'
 import RequestFoto from './components/request/pages/requestFoto.tsx';
 import RequestSpecializations from './components/request/pages/requestSpecializations.tsx';
 import RequestProcedures from './components/request/pages/requestProcedures.tsx';
+import DetailMaster from './pages/Masters/detailMaster.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,7 +46,7 @@ function App() {
   const isToken = sessionStorage.getItem('token');
 
   useEffect(() => {
-    setConfig()
+    setConfig();
     window.scrollTo(0, 0);
     if (!isToken) navigate(`/auth/signin`);
   }, [pathname]);
@@ -301,6 +302,15 @@ function App() {
           }
         />
         <Route
+          path="/master/:id"
+          element={
+            <>
+              <PageTitle title="Master | Barber" />
+              <DetailMaster />
+            </>
+          }
+        />
+        <Route
           path="/client"
           element={
             <>
@@ -359,7 +369,7 @@ function App() {
           element={
             <>
               <PageTitle title="Order | Barber" />
-              <OrderDetails  />
+              <OrderDetails />
             </>
           }
         />
