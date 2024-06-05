@@ -1,60 +1,5 @@
 import { create } from 'zustand';
-
-interface MasterData {
-  data: Data[];
-  setData: (data: Data[]) => void;
-  totalPage: number;
-  setTotalPage: (val: number) => void;
-  regionData: RegionData[];
-  setRegionData: (val: RegionData[]) => void;
-  districtData: DistrictData[];
-  setDistrictData: (val: DistrictData[]) => void;
-  filterObj: FilterTypes;
-  filters: FilterTypes;
-  setFilters: (filters: FilterTypes) => void;
-}
-
-export interface Data {
-  id: string;
-  imgUrl: string;
-  fullName: string;
-  serviceCategory: string[] | null;
-  startedWork: string
-  orderCount: number
-  rating: number
-  status: null | string,
-  schedule: string
-  canceled: number
-  specialization: string[] | null;
-  totalClient: number
-  phoneNumber: string
-  workPlace: string
-  lat: number
-  lng: number
-}
-
-export interface RegionData {
-  id: number;
-  name: string;
-}
-
-export interface DistrictData {
-  id: number;
-  name: string;
-  regionId: number;
-}
-
-export interface FilterTypes {
-  searchValue: string;
-  regionValue: string | null;
-  cityValue: string | null;
-  registrationPeriodValue: string | null;
-  serviceCategoryValue: string | null;
-  scheduleTypeValue: string | null;
-  selfEmployedStatusValue: boolean | null;
-  statusValue: string | null;
-  placeOfWorkValue: string | null;
-}
+import { CategoryChild, Data, DistrictData, FilterTypes, MasterData, RegionData } from '../../../types/master.ts';
 
 const masterStore = create<MasterData>((set) => ({
   data: [],
@@ -65,6 +10,8 @@ const masterStore = create<MasterData>((set) => ({
   setRegionData: (val: RegionData[]) => set({ regionData: val }),
   districtData: [],
   setDistrictData: (val: DistrictData[]) => set({ districtData: val }),
+  category: [],
+  setCategory: (val: CategoryChild[]) => set({ category: val }),
   // default filters
   filterObj: {
     searchValue: '', //Поиск по ФИО
