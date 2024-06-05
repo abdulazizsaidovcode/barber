@@ -22,12 +22,16 @@ function NewChat() {
     const { role } = chatStore();
     const { data } = masterStore();
     const { clientData } = clientStore();
+    console.log(data);
+    console.log(clientData);
 
     useEffect(() => {
         if (role === 'master') {
             setDatas(data);
+            
         } else if (role === 'client') {
             setDatas(clientData);
+            
         }
     }, [role, data, clientData]);
 
