@@ -69,4 +69,8 @@ export const newChat_url = `${base_url}chat/web/nachat-chat/send`; // sent messa
 // help url
 export const help_url = `${base_url}help`; // sent message
 export const getChatList_url = `${base_url}chat/web`; // get chat list
+
+// get attachment by id
+
+export const get_attachment_url = `${base_url}/attachment/getFile`; // get chat list
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
