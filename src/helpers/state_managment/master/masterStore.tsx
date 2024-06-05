@@ -9,7 +9,9 @@ interface MasterData {
   setRegionData: (val: RegionData[]) => void;
   districtData: DistrictData[];
   setDistrictData: (val: DistrictData[]) => void;
-  filterObj: FilterTypes
+  filterObj: FilterTypes;
+  filters: FilterTypes;
+  setFilters: (filters: FilterTypes) => void;
 }
 
 export interface Data {
@@ -63,17 +65,31 @@ const masterStore = create<MasterData>((set) => ({
   setRegionData: (val: RegionData[]) => set({ regionData: val }),
   districtData: [],
   setDistrictData: (val: DistrictData[]) => set({ districtData: val }),
+  // default filters
   filterObj: {
-    searchValue: '', // true => Поиск по ФИО
-    regionValue: null, // true => Регион
-    cityValue: null, // true => Город
+    searchValue: '', //Поиск по ФИО
+    regionValue: null, //Регион
+    cityValue: null, //Город
     registrationPeriodValue: null, // false => Период регистраци мастеров
     serviceCategoryValue: null, // false => Категория услуг
     scheduleTypeValue: null, // false => Тип расписания
-    selfEmployedStatusValue: null, // true => Статус самозанятых
-    statusValue: null, // true => Статус
-    placeOfWorkValue: null // true => Место работы
+    selfEmployedStatusValue: null, //Статус самозанятых
+    statusValue: null, //Статус
+    placeOfWorkValue: null //Место работы
   },
+  // update filters
+  filters: {
+    searchValue: '',
+    regionValue: null,
+    cityValue: null,
+    registrationPeriodValue: null,
+    serviceCategoryValue: null,
+    scheduleTypeValue: null,
+    selfEmployedStatusValue: null,
+    statusValue: null,
+    placeOfWorkValue: null
+  },
+  setFilters: (val: FilterTypes) => set({filters: val})
 }));
 
 export default masterStore;
