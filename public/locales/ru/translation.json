@@ -14,6 +14,8 @@
   "orders_name": "Записи",
   "FirstTab_name": "Предстоящие",
   "SecondTab_name": "Завершенные",
+  "detail_payment_type": "Не начиналась",
+  "detail_type": "Одобрена",
   "ThirdTab_name": "Отклонённые",
   "siderbar_settings": "Настройки",
   "siderbar_documents": "Нормативные документы",

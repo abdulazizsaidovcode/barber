@@ -4,15 +4,14 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import MasterModal from '../master-modal.tsx';
 import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
-import masterStore, { FilterTypes } from '../../../helpers/state_managment/master/masterStore.tsx';
+import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const Filters: React.FC = () => {
-  const { setData, setTotalPage, regionData, setDistrictData, districtData, filterObj } = masterStore();
+  const { setData, setTotalPage, setDistrictData, setFilters, regionData, districtData, filters, filterObj } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
-  const [filters, setFilters] = useState<FilterTypes>(filterObj);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {

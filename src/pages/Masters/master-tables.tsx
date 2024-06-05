@@ -140,7 +140,7 @@ const MasterTables: React.FC = () => {
           )}
       </MasterTable>
       <Pagination
-        showSizeChanger
+        showSizeChanger={false}
         responsive={true}
         defaultCurrent={1}
         total={totalPage}

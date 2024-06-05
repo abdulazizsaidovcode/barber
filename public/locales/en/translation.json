@@ -28,5 +28,7 @@
   "order_table_paymentType": "Payment type",
   "order_table_pay": "To pay",
   "order_table_status": "Record status",
-  "order_table_master": "Master"
+  "order_table_master": "Master",
+  "detail_type": "Approved",
+  "detail_payment_type": "Didn't start"
 }

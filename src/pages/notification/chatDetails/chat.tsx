@@ -4,7 +4,7 @@ import Chatusers from '../components/user';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
-import { chat_user_url, client_url, master_url, sockjs_url } from '../../../helpers/api';
+import { sockjs_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -12,9 +12,11 @@ import NewChat from '../newChat';
 import Sms from '../sms/sms';
 import Notselected from '../components/notselected';
 import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
+import { MdPreview } from 'react-icons/md';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const Chatdetail: React.FC = () => {
-  const {role, chatData} = chatStore()
+  const { role, chatData } = chatStore()
 
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
@@ -23,6 +25,7 @@ const Chatdetail: React.FC = () => {
   const [recipientId, setRecipientId] = useState<string | null>(null);
 
   const [adminId, setAdminId] = useState<string | null>('');
+
   // const [chatData, setChatData] = useState<Data[]>([]);
 
   // const [client, setClient] = useState<object | null>(null);
@@ -32,14 +35,16 @@ const Chatdetail: React.FC = () => {
   const [content, setContent] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
 
+
   // ---------- get admin and user ----------- //
 
   useEffect(() => {
     setAdminId(sessionStorage.getItem('userId'));
     connect();
+    console.log(chatData, "salom");
   }, []);
 
-  console.log(chatData, role);
+  // console.log(chatData, role);
 
   // useEffect(() => {
   //   console.log(recipientId);
@@ -77,6 +82,7 @@ const Chatdetail: React.FC = () => {
       }
     });
   };
+
 
   //  connect socket with sock js 
   const connect = () => {
@@ -184,7 +190,12 @@ const Chatdetail: React.FC = () => {
       {/* chat list */}
       <div className="flex w-[100%] relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} transition-all sidebar md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-graymedium drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-[83vh] duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-screen duration-300 flex flex-col`}>
+          <div className='flex justify-end mb-4'>
+            <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
+              <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
+            </button>
+          </div>
           <Chatusers user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative overflow-y-auto">

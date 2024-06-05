@@ -1,6 +1,5 @@
 import React from 'react';
 import { IMasterTableProps } from '../../types/master.ts';
-import { MdOutlineArrowDropDown } from 'react-icons/md';
 
 const MasterTable: React.FC<IMasterTableProps> = ({ thead, children }) => {
   return (
@@ -14,16 +13,7 @@ const MasterTable: React.FC<IMasterTableProps> = ({ thead, children }) => {
                 key={item.id}
                 className="min-w-[150px] p-5 font-medium text-black dark:text-white"
               >
-                <p className={`flex justify-between items-center`}>
-                  {item.name}
-                  <MdOutlineArrowDropDown className={`text-[1.5rem]`} />
-                </p>
-                <input
-                  id={`master${item.id}`}
-                  className={`mt-4 bg-white dark:bg-black outline-0 px-3 py-1`}
-                  placeholder={`search`}
-                  type={`search`}
-                />
+                {item.name}
               </th>
             ))}
           </tr>

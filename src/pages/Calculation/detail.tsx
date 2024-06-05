@@ -4,11 +4,14 @@ import { get_orders_list } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import axios from 'axios';
 import DefaultLayout from './../../layout/DefaultLayout';
+import { useTranslation } from 'react-i18next';
+import MasterDetail from './../../components/MastervsOrder/masterDetail';
 
 const NotFound: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const [orderDetails, setOrderDetails] = useState<any>(null);
-  const [tableData, setTableData] = useState<any[]>([]);
+  // const [, setTableData] = useState<any[]>([]);
 
   const id = location.pathname.substring(8);
 
@@ -17,7 +20,7 @@ const NotFound: React.FC = () => {
       .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
       .then((response) => {
         const orders = response.data.body.object;
-        setTableData(orders);
+        // setTableData(orders);
 
         // Find the order that matches the ID from the URL
         const matchingOrder = orders.find((order: any) => order.orderId === id);
@@ -33,22 +36,60 @@ const NotFound: React.FC = () => {
   return (
     <div>
       <DefaultLayout>
-        <div className="shadow-3 border-black rounded-xl border-solid border-1 p-3 flex items-center justify-between w-[100%]">
-          <p>Детали записи</p>
-          <div className="rounded-md bg-[#ffa723] p-1 flex items-center justify-center">
-            Не начиналась
+        <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black border-black rounded-xl border-solid border-1 p-3 flex items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
+          <p className="dark:text-black">Детали записи</p>
+          <div className="rounded-xl text-white bg-[#ffa723] p-1 px-4 flex items-center justify-center">
+            {t('detail_payment_type')}
           </div>
         </div>
         {orderDetails ? (
           <div>
-            <h2>Order Details</h2>
-            <p>Order ID: {orderDetails.orderId}</p>
-            <p>Customer Name: {orderDetails.clientFullName}</p>
-            <p>Order Status: {orderDetails.orderStatus}</p>
-            {/* Add more fields as necessary */}
+            <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black mt-3 border-black rounded-xl border-solid border-1 p-3 flex flex-col lg:flex-row items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
+              <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-10">
+                <p className="font-bold text-xl dark:text-black">
+                  {orderDetails.serviceName}
+                </p>
+                <p className="dark:text-gray-300">{orderDetails.orderDate}</p>
+                <div className="flex items-center gap-2 lg:gap-3 dark:text-gray-300">
+                  <p>{orderDetails.orderFrom}</p>
+                  <p>:</p>
+                  <p>{orderDetails.orderTo}</p>
+                </div>
+              </div>
+              <div className="mt-2 lg:mt-0 rounded-xl bg-[#0aa8da] p-1 px-4 flex items-center justify-center">
+                {t('detail_type')}
+              </div>
+            </div>
+            <MasterDetail
+              OrderData={orderDetails.orderDate}
+              OrderEnterTime={orderDetails.orderFrom}
+              OrderEndTime={orderDetails.orderTo}
+              price={orderDetails.price}
+              Prepayment={orderDetails.prePayment}
+              Paid={orderDetails.paid}
+              PaymentType={
+                orderDetails.paymentType === null
+                  ? 'null'
+                  : orderDetails.paymentType
+              }
+              Duration={orderDetails.serviceTime}
+              RecNotification={
+                orderDetails.orderRecordingTime === null
+                  ? 'Null'
+                  : orderDetails.orderRecordingTime
+              }
+              ToPay={orderDetails.toPay}
+              MasterName={orderDetails.masterFullName}
+              MasterType={orderDetails.serviceName}
+              MasterImg={orderDetails.masterPhotoPath}
+              MasterPhone={orderDetails.masterPhone}
+              ClientName={orderDetails.clientFullName}
+              ClientPhoto={orderDetails.clientPhotoPath}
+              ClientNumber={orderDetails.clientPhone}
+            />
           </div>
         ) : (
-          <p>Loading order details...</p>
+          <p className="dark:text-white">Loading order details...</p>
         )}
       </DefaultLayout>
     </div>

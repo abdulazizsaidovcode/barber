@@ -42,7 +42,7 @@ const ClientTables: React.FC = () => {
       setTotalPage: setClientTotalPage,
     });
   }, []);
-
+  
   
 
   return (
