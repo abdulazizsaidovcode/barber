@@ -50,10 +50,7 @@ const Specializations: React.FC = () => {
       } else {
         console.log('Failed to fetch categories.');
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Error fetching data');
-    }
+    } catch { }
   };
 
   // GET CHILD DATA
@@ -68,10 +65,7 @@ const Specializations: React.FC = () => {
       } else {
         toast.error('Error fetching child data');
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Error fetching child data');
-    }
+    } catch { }
   };
 
   // ADD CHILD DATA
@@ -92,10 +86,7 @@ const Specializations: React.FC = () => {
       fetchChildData(selectedFatherId);
       setNewCategoryName('');
       toggleInput(selectedFatherId);
-    } catch (error) {
-      console.error(error);
-      toast.error('Error adding category');
-    }
+    } catch { }
   };
 
   // DELETE CHILD DATA
@@ -107,10 +98,7 @@ const Specializations: React.FC = () => {
       setTimeout(() => {
         fetchChildData(fatherId);
       }, 150)
-    } catch (error) {
-      console.error(error);
-      toast.error('Error deleting category');
-    }
+    } catch { }
   };
 
   // UPDATE CHILD DATA
@@ -122,10 +110,7 @@ const Specializations: React.FC = () => {
       toast.success('Category updated successfully');
       fetchChildData(categoryFatherId);
       setIsEditModalOpen(false);
-    } catch (error) {
-      console.error(error);
-      toast.error('Error updating category');
-    }
+    } catch { }
   };
 
   const toggleInput = (id: string) => {

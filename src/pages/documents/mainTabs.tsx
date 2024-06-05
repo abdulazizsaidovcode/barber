@@ -1,7 +1,6 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import All from './all';
-import Master from '../Masters/Mastera';
 import MasterDocument from './masterDocument';
 
 
