@@ -6,13 +6,13 @@ const Settings = () => {
     <DefaultLayout>
       <div>
         <div className='flex justify-between w-[85%] mb-7'>
-          <MainCard text='Категории услуги специализации' link='/service-categories'/>
-          <MainCard text='Онлайн бронирование' link='/online-booking'/>  
+          <MainCard text='Категории услуги специализации' link='/settings/service-categories'/>
+          <MainCard text='Онлайн бронирование' link='/settings/online-booking'/>  
           <MainCard text='Галереи' link=''/>
         </div>
         <div className='flex justify-between w-[85%]'>
-          <MainCard text='Специализации' link='/specializations'/>
-          <MainCard text='Тарифы и функционал' link='/tariffs-functionality'/>
+          <MainCard text='Специализации' link='/settings/specializations'/>
+          <MainCard text='Тарифы и функционал' link='/settings/tariffs-functionality'/>
           <MainCard text='Помощь' link=''/>
         </div>
       </div>

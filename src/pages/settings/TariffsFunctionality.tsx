@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import DefaultLayout from '../../layout/DefaultLayout'
 import Modal from '../../components/modals/modal';
+import { Link } from 'react-router-dom';
 
 const TariffsFunctionality: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -16,11 +17,13 @@ const TariffsFunctionality: React.FC = () => {
     }
     const TariffsFunctionalityCard: React.FC<TariffsFunctionalityCardProp> = ({ title, link, functions, sum }) => {
         return (
-            <div onClick={() => window.location.href = `${link}`} className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
-                <p className='font-bold text-black dark:text-white'>{title}</p>
-                <p>{functions}</p>
-                <p>{sum}</p>
-            </div>
+            <Link to={link}>
+                <div className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
+                    <p className='font-bold text-black dark:text-white'>{title}</p>
+                    <p>{functions}</p>
+                    <p>{sum}</p>
+                </div>
+            </Link>
         )
     }
     return (
@@ -32,9 +35,9 @@ const TariffsFunctionality: React.FC = () => {
                         <button onClick={openModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>Добавить Тариф</button>
                     </div>
                     <div className='flex flex-wrap gap-5 mt-5'>
-                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/tariff-detail' />
-                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/tariff-detail' />
-                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/tariff-detail' />
+                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/settings/tariff-detail' />
+                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/settings/tariff-detail' />
+                        <TariffsFunctionalityCard title='Free' functions='10 Функций' sum='0 сум' link='/settings/tariff-detail' />
                     </div>
                 </div>
             </DefaultLayout>
