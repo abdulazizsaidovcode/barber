@@ -99,9 +99,10 @@ const MasterCardInfo: React.FC<Props> = ({
       </div>
       <Skeleton loading={isLoading} active>
         <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
-          <p className="mb-2">
-            <strong>Дата записи:</strong> {OrderData}
-          </p>
+          <div className='flex items-center justify-between'>
+            <p className="mb-2 text-2xl font-bold">Profile:</p>
+            <p className="mb-2">Profile:</p>
+          </div>
           <p className="mb-2">
             <strong>Время записи:</strong> {OrderEnterTime} : {OrderEndTime}
           </p>
