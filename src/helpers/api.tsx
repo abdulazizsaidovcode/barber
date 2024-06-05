@@ -74,3 +74,4 @@ export const getChatList_url = `${base_url}chat/web`; // get chat list
 
 export const get_attachment_url = `${base_url}/attachment/getFile`; // get chat list
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
+export const messages_url = `${base_url}chat/messages`; // newsletters url

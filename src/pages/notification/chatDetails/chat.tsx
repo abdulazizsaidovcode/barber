@@ -4,7 +4,7 @@ import Chatusers from '../components/user';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
-import { sockjs_url } from '../../../helpers/api';
+import { messages_url, sockjs_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -13,6 +13,8 @@ import Sms from '../sms/sms';
 import Notselected from '../components/notselected';
 import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import { config } from '../../../helpers/token.tsx';
 
 const Chatdetail: React.FC = () => {
   const { role, chatData } = chatStore()
@@ -81,8 +83,7 @@ const Chatdetail: React.FC = () => {
     });
   };
 
-  console.log(recipientId);
-  
+
 
   //  connect socket with sock js 
   const connect = () => {
@@ -123,10 +124,27 @@ const Chatdetail: React.FC = () => {
       createdAt: new Date(),
       attachmentIds: []
     };
+    if (content) {
+      stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+      setContent('');
+      console.log('Message sent:', content);
 
-    stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-    console.log('Message sent:', content);
+    } else {
+      alert('toldiiiiiir ❗️')
+    }
+
+
   };
+  useEffect(() => {
+    if (recipientId) {
+      axios.get(`${messages_url}/${adminId}/${recipientId}`, config)
+        .then(res => {
+          setMessages(res.data.body);
+        }).catch(err => {
+          console.error(err);
+        })
+    }
+  }, [recipientId])
 
   // const messageDelete = () => {
   //   if (stompClient && stompClient.connected) {
@@ -160,8 +178,8 @@ const Chatdetail: React.FC = () => {
 
 
   return (
-    <div className="">
-      <div className="w-full pb-5 flex gap-10 items-center flex-wrap ">
+    <div className="h-[92%]">
+      <div className="w-full py-5 flex gap-10 items-center flex-wrap ">
         <button onClick={toggleSidebar} className="md:hidden text-black mb-2">
           <CgMenuLeft className="text-[1.5rem] font-bold" />
         </button>
@@ -188,9 +206,9 @@ const Chatdetail: React.FC = () => {
       </div>
 
       {/* chat list */}
-      <div className="flex w-[100%] relative">
+      <div className="flex w-[100%] h-full relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-10 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-screen duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-0 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-full duration-300 flex flex-col`}>
           <div className='flex justify-end mb-4'>
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
@@ -198,8 +216,8 @@ const Chatdetail: React.FC = () => {
           </div>
           <Chatusers user={chatData} role={role} userIds={setRecipientId} />
         </div>
-        <div className="w-full relative overflow-y-auto">
-          {recipientId ? <Sms sendMessage={sendMessage} chat={'salom'} contents={setContent} /> : <Notselected />}
+        <div className="w-full relative ">
+          {recipientId ? <Sms senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} /> : <Notselected />}
         </div>
       </div>
 

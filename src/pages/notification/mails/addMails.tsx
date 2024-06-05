@@ -1,11 +1,7 @@
 import { Buttons } from '../../../components/buttons'
-import { UploadOutlined, PlusOutlined, FileTextTwoTone } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
-import { Button, Upload, UploadProps, message } from 'antd';
-import axios from 'axios';
-import { newsletters_url } from '../../../helpers/api';
-import { config } from '@fullcalendar/core/internal';
-import Icon from '@ant-design/icons/lib/components/Icon';
+import { FileTextTwoTone } from '@ant-design/icons';
+import { useState } from 'react';
+
 
 function AddMails() {
     const [fileName, setFileName] = useState<string>("Выберите изображение");
@@ -26,8 +22,6 @@ function AddMails() {
 
 
     };
-
-
 
     const postMail = () => {
         const obj = {
