@@ -14,7 +14,7 @@ import Notselected from '../components/notselected';
 import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
 
 const Chatdetail: React.FC = () => {
-  const {role, chatData} = chatStore()
+  const { role, chatData } = chatStore()
 
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
