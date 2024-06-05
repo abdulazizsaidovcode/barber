@@ -62,7 +62,7 @@ const FileUploader: React.FC = () => {
                     </div>
                     <div className='flex gap-3 flex-wrap'>
                         {selectedFiles.map((file, index) => (
-                            <div className='border-[1px] border-[#000] p-3 w-max h-17 rounded-md flex' key={index}>
+                            <div className='border-[1px] border-[#000] dark:border-white p-3 w-max h-17 rounded-md flex' key={index}>
                                 <div className='flex'>
                                     <div className='bg-black dark:bg-danger px-3 flex rounded-md justify-center items-center'>
                                         <p className='text-sm text-white'>{file.type}</p>

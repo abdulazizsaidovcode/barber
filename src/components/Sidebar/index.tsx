@@ -122,7 +122,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('dashboard') &&
                     'bg-gray dark:bg-[#9c0a36]'
                   }`}
@@ -134,7 +134,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/master"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -157,7 +157,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/client"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('client') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -168,7 +168,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/calendar"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('calendar') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -179,7 +179,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/orders"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('orders') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -191,7 +191,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/finance"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('finance') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -202,7 +202,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/Mutual_settlements"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${
                     pathname.includes('Mutual_settlements') &&
                     'bg-gray dark:bg-[#9c0a36]'
                   }`}
@@ -218,7 +218,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/gallery"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black hover:bg-gray dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
                     pathname.includes('gallery') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -231,7 +231,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Document --> */}
                 <NavLink
                   to="/documents"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-slate-950 dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black hover:bg-gray dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-ou dark:text-white ${
                     pathname.includes('documents') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -245,7 +245,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/profile"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 hover:bg-gray px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
                     pathname.includes('profile') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -282,7 +282,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
+                        className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                           (pathname === '/forms' ||
                             pathname.includes('forms')) &&
                           'bg-gray dark:bg-meta-4'
@@ -382,7 +382,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/cards"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black hover:bg-gray dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gary dark:text-white ${
                     pathname.includes('cards') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -396,7 +396,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/Chat"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${
                     pathname.includes('Chat') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -407,7 +407,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/settings"
-                  className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${
                     pathname.includes('settings') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
@@ -452,7 +452,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             {/* <li>
               <NavLink
                 to="/chart"
-                className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
+                className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                   pathname.includes('chart') && 'bg-gray dark:bg-meta-4'
                 }`}
               >
@@ -499,7 +499,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <React.Fragment>
                     <NavLink
                       to="#"
-                      className={`border group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
+                      className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                         (pathname === '/ui' || pathname.includes('ui')) &&
                         'bg-gray dark:bg-meta-4'
                       }`}
@@ -609,7 +609,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <React.Fragment>
                     <NavLink
                       to="#"
-                      className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
+                      className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                         (pathname === '/auth' || pathname.includes('auth')) &&
                         'bg-gray dark:bg-meta-4'
                       }`}
