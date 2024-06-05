@@ -42,11 +42,11 @@ const MasterCardInfo: React.FC<Props> = ({
   ClientNumber,
   Status,
 }) => {
- const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
 
-    const toggleSwitch = () => {
-        setIsSwitchOn(!isSwitchOn);
-    };
+  const toggleSwitch = () => {
+    setIsSwitchOn(!isSwitchOn);
+  };
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-4">
       <div className="flex flex-col h-full justify-between gap-4">
@@ -75,7 +75,7 @@ const MasterCardInfo: React.FC<Props> = ({
             </div>
           </div>
           <div>
-            <Switch isOn={false} handleToggle={toggleSwitch} />
+            <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
           </div>
         </div>
       </div>
