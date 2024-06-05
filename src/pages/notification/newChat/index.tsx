@@ -10,6 +10,7 @@ import axios from 'axios';
 import { newChat_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
+import { GetChatList } from '../../../helpers/api-function/chat/chat';
 
 
 function NewChat() {
@@ -19,19 +20,16 @@ function NewChat() {
     const [recipientPhone, setRecipientPhone] = useState<string | null>(null);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-    const { role } = chatStore();
+    const { role, setChatData } = chatStore();
     const { data } = masterStore();
     const { clientData } = clientStore();
-    console.log(data);
-    console.log(clientData);
 
     useEffect(() => {
         if (role === 'master') {
             setDatas(data);
-            
+
         } else if (role === 'client') {
             setDatas(clientData);
-            
         }
     }, [role, data, clientData]);
 
@@ -60,7 +58,8 @@ function NewChat() {
             message: content,
             status: role
         }
-        if ( recipientId && recipientName && content.trim()) {
+
+        if (recipientId && recipientName && content.trim()) {
             console.log(editMessage);
 
             axios.post(`${newChat_url}`, editMessage, config)
@@ -69,6 +68,20 @@ function NewChat() {
                     if (res.data.success === true) {
                         openModal()
                         toast.success('Сообщение отправлено');
+
+                        if (role === 'master') {
+                            GetChatList({
+                                status: "MASTER",
+                                setData: setChatData
+                            })
+
+                        }
+                        if (role === 'client') {
+                            GetChatList({
+                                status: "CLIENT",
+                                setData: setChatData
+                            })
+                        }
                     }
                 }).catch((err) => {
                     console.error(err);
@@ -79,9 +92,9 @@ function NewChat() {
         }
     }
 
-    
+
     return (
-        <div className='z-10 '>
+        <div className=' z-1 '>
             <div onClick={openModal}>
                 <Buttons>Начать</Buttons>
             </div>

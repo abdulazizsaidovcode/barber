@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Product } from '../../../types/product';
 import ProductOne from '../../../images/product/product-01.png';
 import ProductTwo from '../../../images/product/product-02.png';
@@ -8,9 +8,6 @@ import { DatePicker, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import AddMails from './addMails';
 import { TbArrowBigLeftFilled } from 'react-icons/tb';
-import axios from 'axios';
-import { newsletters_url } from '../../../helpers/api';
-import { config } from '../../../helpers/token';
 
 const productData: Product[] = [
     {
@@ -59,13 +56,12 @@ const ChatTable = () => {
 
                         <Buttons className="mb-5">
                             <TbArrowBigLeftFilled />
-
                         </Buttons>
                     </div>
                     <AddMails />
                 </div>
             ) : (
-                <div>
+                <div  className='pt-5'>
                     <div className='mb-5 flex gap-2'>
                         <Select
                             className='w-full md:w-40 lg:w-40 xl:w-40 dark:bg-gray-800 dark:text-white'

@@ -11,7 +11,7 @@ import { GetChatList } from '../../helpers/api-function/chat/chat.tsx';
 
 const Natification = () => {
   const { setData, setTotalPage } = masterStore();
-  const { setClientTotalPage } = clientStore();
+  const { setClientData,setClientTotalPage } = clientStore();
   const { role, setChatData } = chatStore();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Natification = () => {
         setData: setChatData
       })
       getClients({
-        setData,
+        setData: setClientData,
         setTotalPage: setClientTotalPage
       });
       console.log('role client');
@@ -57,7 +57,7 @@ const Natification = () => {
         setData: setChatData
       })
       getClients({
-        setData,
+        setData:setClientData,
         setTotalPage: setClientTotalPage
       });
       console.log('role client');
