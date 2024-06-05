@@ -144,19 +144,18 @@ const ServiceCategories = () => {
                         </div>
                     ))}
                 </div>
-
             </div>
             <Modal isOpen={addIsOpen} onClose={addCloseModal}>
-                <div className="w-[500px] h-[180px]">
-                    <p className="text-xl text-black">Category Name:</p>
+                <div className="w-[500px] h-[160px]">
+                    <p className="text-xl text-black dark:text-white">Category Name:</p>
                     <input
-                        className="w-full border-[1px] border-black p-2 rounded-lg mt-3"
+                        className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
                         type="text"
                         placeholder="Health Procedures"
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
-                    <div className="flex mt-15 justify-center">
-                        <button onClick={addData} className="py-2 px-10 bg-slate-800 text-white">Add</button>
+                    <div className="flex mt-10 justify-center">
+                        <button onClick={addData} className="py-2 rounded-lg dark:bg-danger px-10 bg-slate-800 text-white">Add</button>
                     </div>
                     <Toaster
                         position="top-center"
@@ -167,7 +166,7 @@ const ServiceCategories = () => {
             <DelModal isOpen={delIsOpen} onClose={delCloseModal} onDelete={deleteData} />
             <EditModal
                 isOpen={editIsOpen}
-                onClose={editCloseModal}
+                onClose={editCloseModal}    
                 value={editedCategoryName}
                 onChange={(e) => setEditedCategoryName(e.target.value)}
                 onSave={updateData}

@@ -14,28 +14,29 @@ export const fetchData = (setData: (data: Data[]) => void) => {
     .then((res) => {
       setData(res.data.body);
     })
-    .catch((err) => {
-      console.error(err);
-      toast.error('Error fetching data');
-    });
+    .catch(() => {});
 };
 
 // Add percent
 export const addPercent = (percent: string, setData: (data: Data[]) => void, toggleInput: () => void) => {
-  axios.post(add_precent_list, { percent }, config)
-    .then((res) => {
-      if (!res.data.success) {
-        toast('Something went wrong', { icon: '⚠️' });
-      } else {
-        toast.success('Successfully added');
-        fetchData(setData);
-        toggleInput();
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      toast.error('Error adding percent');
-    });
+  const percentValue = parseFloat(percent);
+
+  if (percentValue < 0 || percentValue > 100) {
+    toast('Percent value must be between 0 and 100', { icon: '⚠️' });
+    return;
+  } else {
+    axios.post(add_precent_list, { percent }, config)
+      .then((res) => {
+        if (!res.data.success) {
+          toast('Something went wrong', { icon: '⚠️' });
+        } else {
+          toast.success('Successfully added');
+          fetchData(setData);
+          toggleInput();
+        }
+      })
+      .catch(() => {});
+  }
 };
 
 // Edit percent
@@ -49,10 +50,7 @@ export const editPercent = (changedTitle: string, editItemId: number | null, set
         closeEditModal();
         toast.success('Successfully edited');
       })
-      .catch(err => {
-        console.error(err);
-        toast.error('Error editing percent');
-      });
+      .catch(() => {});
   }
 };
 
@@ -64,9 +62,6 @@ export const deletePercent = (id: number | null, setData: (data: Data[]) => void
         toast.success('Successfully deleted!');
         fetchData(setData);
       })
-      .catch((err) => {
-        console.error(err);
-        toast.error('Error deleting percent');
-      });
+      .catch(() => {});
   }
 };

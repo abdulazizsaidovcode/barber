@@ -62,10 +62,10 @@ const DetailsFirstTab: React.FC = () => {
             <tbody>
                 {storagePaths.map((path, index) => (
                     <tr key={path.id} className='table-row'>
-                        <td className='px-4 py-7'>{path.component}</td>
-                        <td className='px-4 py-7'>{path.mount}</td>
-                        <td className='px-4 py-7'>{path.name}</td>
-                        <td className='px-4 py-7' key={index}>
+                        <td className='px-4 py-7 dark:text-white'>{path.component}</td>
+                        <td className='px-4 py-7 dark:text-white'>{path.mount}</td>
+                        <td className='px-4 py-7 dark:text-white'>{path.name}</td>
+                        <td className='px-4 py-7 dark:text-white' key={index}>
                             <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
                         </td>
                     </tr>

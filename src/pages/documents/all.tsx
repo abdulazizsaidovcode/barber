@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
+import FileUploader from '../../components/FileDowlander';
 
 const All: React.FC = () => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -51,7 +52,7 @@ const All: React.FC = () => {
                         <div className='mt-3 flex gap-3 items-center mb-2text-slate-700 dark:text-slate-300'>
                             <p>Отображать в приложениях</p>
                             <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
-                        </div> 
+                        </div>
                     </div>
                     <Link to="/regulations">
                         <button
@@ -61,6 +62,8 @@ const All: React.FC = () => {
                             Сохранить изменения
                         </button>
                     </Link>
+
+                    <FileUploader />
                 </Accordion>
             </div>
         </div>
