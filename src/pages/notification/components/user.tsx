@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import admin from '../../../images/user/admin-panel.png';
 import { Data } from '../../../helpers/state_managment/master/masterStore';
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
+
 
 interface Props {
     user: Data[];
@@ -10,7 +12,7 @@ interface Props {
 const Chatusers = ({ user, role, userIds }: Props) => {
     let i = 0
     const [userId, setUserId] = useState('');
-    const [chatData, setChatData] = useState<any>(null);
+    const [chatData, setChatData] = useState<any>([]);
 
     useEffect(() => {
         setChatData(user)
@@ -19,13 +21,13 @@ const Chatusers = ({ user, role, userIds }: Props) => {
         userIds(userId)
     }, [userId])
     console.log(user);
-    
+
 
 
     return (
         <div className='h-full overflow-y-auto'>
             <ul>
-                {chatData ?
+                {chatData.length > 0 ?
                     chatData.map((item: any) =>
                         <li key={i++} onClick={() => setUserId(item.id)} className='flex gap-2 items-center  md:my-1 border p-2'>
                             <img src={item.attachmentId ? item.attachmentId : admin} alt="user img" className='w-10 rounded-full bg-slate-300 p-1' />
@@ -50,7 +52,8 @@ const Chatusers = ({ user, role, userIds }: Props) => {
                     )
                     :
                     <div className='w-full flex items-center mt-3 flex-col'>
-                        <p>{role} not found</p>
+                        <HiOutlineChatBubbleBottomCenterText className='text-4xl'/>
+                        <p>{role == "client" ? "никакой переписки с клиентом" : "никакой переписки с мастером"}</p>
                     </div>}
             </ul>
         </div>

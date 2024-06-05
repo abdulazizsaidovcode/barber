@@ -3,8 +3,9 @@ import { create } from 'zustand';
 
 interface ChatData {
   role: string;
-  setRole: (role: string) => void;
   chatData: Data[];
+  messageStatus: "",
+  setRole: (role: string) => void;
   setChatData: (val: Data[]) => void;
 }
 export interface Data {
@@ -28,8 +29,9 @@ export interface Data {
 
 const chatStore = create<ChatData>((set) => ({
   role: 'master',
-  setRole: (role: string) => set({ role: role }),
   chatData: [],
+  messageStatus: "",
+  setRole: (role: string) => set({ role: role }),
   setChatData: (val: Data[]) => set({ chatData: val }),
 }));
 
