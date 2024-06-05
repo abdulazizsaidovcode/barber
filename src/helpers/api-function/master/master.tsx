@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { district_url, master_url, region_url } from '../../api.tsx';
 import { config } from '../../token.tsx';
-import { Data, DistrictData, RegionData } from '../../state_managment/master/masterStore.tsx';
+import { CategoryChild, Data, DistrictData, RegionData } from '../../../types/master.ts';
 
 interface IMaster {
   fullName?: string;
@@ -39,37 +39,38 @@ export const getMasters = ({
       if (res.data.success === true) {
         setData(res.data.body.object);
         setTotalPage(res.data.body.totalPage);
-      }
+      } else setData([])
     })
-    .catch(() => console.log('error fetching master'));
+    .catch(() => setData([]));
 };
 
 export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
   axios.get(region_url, config)
     .then(res => {
-      // console.log(res);
-      setRegionData(res.data.body);
+      if (res.data.success === true) setRegionData(res.data.body);
+      else setRegionData([])
     })
-    .catch(() => console.log('Error fetching region'));
+    .catch(() => setRegionData([]));
 };
 
 export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, districtId: number) => {
   if (districtId) {
-    axios.get(`${district_url}/${districtId}`, config)
+    axios.get(`${district_url}?regionId=${districtId}`, config)
       .then(res => {
         console.log(res);
-        setDistrictData(res.data.body);
+        if (res.data.success === true) setDistrictData(res.data.body)
+        else setDistrictData([])
       })
-      .catch(() => console.log('error fetching district'));
+      .catch(() => setDistrictData([]));
   }
 };
 
-export const getCategory = (setCategory: (data: string) => void) => {
+export const getCategory = (setCategoryChild: (data: CategoryChild[]) => void) => {
   axios.get(``, config)
     .then(res => {
       console.log(res);
-      if (res.data.success === true) setCategory(res.data.body);
-      else console.log('then and error fetching category');
+      if (res.data.success === true) setCategoryChild(res.data.body);
+      else setCategoryChild([])
     })
-    .catch(() => console.log('catch and error fetching category'));
+    .catch(() => setCategoryChild([]));
 };

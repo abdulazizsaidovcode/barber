@@ -1,11 +1,15 @@
 import { Buttons } from '../../../components/buttons'
-import { FileTextTwoTone } from '@ant-design/icons';
+import { FileAddOutlined, FileTextTwoTone } from '@ant-design/icons';
+import axios from 'axios';
 import { useState } from 'react';
+import { BsPerson, BsPersonAdd } from 'react-icons/bs';
 
 
 function AddMails() {
     const [fileName, setFileName] = useState<string>("Выберите изображение");
+    const [photoName, setPhotoName] = useState<string>("Выберите изображение");
     const [file, setFile] = useState<string | null>(null);
+    const [photo, setPhoto] = useState<string | null>(null);
     const [subject, setSubject] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [toWhom, setToWhom] = useState<string>(''); // You might need a different type or multiple states for "toWhom"
@@ -17,10 +21,18 @@ function AddMails() {
         if (selectedFile) {
             setFileName(selectedFile.name);
         } else {
-            setFileName("Выберите изображение");
+            setFileName("Выберите file");
         }
+    };
+    const handleUploadImg = (info: any) => {
+        setPhoto(info.target.files[0]);
+        const selectedFile = info.target.files[0];
 
-
+        if (selectedFile) {
+            setPhotoName(selectedFile.name);
+        } else {
+            setPhotoName("Выберите изображение");
+        }
     };
 
     const postMail = () => {
@@ -33,12 +45,7 @@ function AddMails() {
         };
         console.log(obj);
 
-        // axios.post(`${newsletters_url}/save`, obj, config)
-        //     .then(res => {
-        //         console.log(res.data);
-        //     }).catch(err => {
-        //         console.error(err);
-        //     })
+
     };
 
     return (
@@ -53,29 +60,37 @@ function AddMails() {
                 required
             />
             <div className='flex gap-3 h-max mt-8 mb-10'>
-                <div className='w-2/3'>
+                <div className='w-2/3 h-full'>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Описание:</label>
                     <textarea
                         id="message"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        className="block p-2.5 w-full h-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 "
+                        className="block p-2.5 w-full h-32 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 "
                         placeholder="Write your thoughts here..."
                     ></textarea>
                 </div>
                 <div className='h-max'>
-                    <p className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Прикрепить картинку</p>
 
+                </div>
+                <div className=''>
+                    <p className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Прикрепить картинку</p>
+                    <label htmlFor="attachmentId " className="h-32 cursor-pointer active:scale-90 duration-200 flex flex-col justify-center items-center border rounded p-3">
+                        <BsPersonAdd className='text-4xl mb-3' />
+                        <span
+                            className='font-inika text-sm text-center text-black hover:text-blue-800 duration-300 ml-2 tracking-wider'>{photoName}</span>
+                    </label>
+                    <input id="attachmentId" type="file" className="hidden" onChange={handleUploadImg} />
                 </div>
                 <div>
                     <p className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Вложить файл</p>
-                    <label htmlFor="attachmentId"
-                        className="cursor-pointer active:scale-90 duration-200 flex flex-col justify-center items-center border rounded p-3">
-                        <FileTextTwoTone className='text-4xl mb-3' />
+                    <label htmlFor="fileId"
+                        className="h-32 cursor-pointer active:scale-90 duration-200 flex flex-col justify-center items-center border rounded p-3">
+                        <FileAddOutlined className='text-4xl mb-3' />
                         <span
-                            className='font-inika text-xl text-black hover:text-blue-800 duration-300 ml-2 tracking-wider'>{fileName}</span>
+                            className='font-inika text-sm text-center text-black hover:text-blue-800 duration-300 ml-2 tracking-wider'>{fileName}</span>
                     </label>
-                    <input id="attachmentId" type="file" className="hidden" onChange={handleUpload} />
+                    <input id="fileId" type="file" className="hidden" onChange={handleUpload} />
                 </div>
             </div>
 
@@ -105,7 +120,7 @@ function AddMails() {
                     <p>Клиентам</p>
                 </div>
             </div>
-            <div className='mt-5'>
+            <div className='mt-5 flex gap-2' >
                 <Buttons>Назвад</Buttons>
                 <div onClick={postMail}>
                     <Buttons>Отправить</Buttons>
