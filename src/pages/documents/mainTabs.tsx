@@ -13,7 +13,7 @@ const items = [
     key: '1',
     label: (
       <span
-        className="dark:text-white text-black text-lg md:text-xl lg:text-2xl" // Responsive font sizes
+        className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
       >
         Общее
       </span>
