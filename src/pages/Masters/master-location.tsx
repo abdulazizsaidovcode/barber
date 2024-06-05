@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { APIProvider, Map, Marker, InfoWindow } from '@vis.gl/react-google-maps';
 import Filters from './filters/filters.tsx';
-import masterStore, { Data } from '../../helpers/state_managment/master/masterStore.tsx';
+import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 
 const MasterLocation: React.FC = () => {
   const API_KEY: string = 'AIzaSyA1XGfEqBwWmScDF1KREhDpYHVdJX0VxuE';
