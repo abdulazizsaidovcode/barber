@@ -4,7 +4,6 @@ import { master_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import MasterDetail from '../../components/MastervsOrder/masterDetail';
 import DefaultLayout from '../../layout/DefaultLayout';
 import MasterCardInfo from '../../components/MasterCard/MasterCardR';
 
