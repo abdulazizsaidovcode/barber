@@ -51,7 +51,7 @@ const MasterCard: React.FC<MasterCardProps> = ({ masterName, specialistTitle, ph
                         <div className="flex justify-between mb-3">
                             <h1>Остановить</h1>
                             <div className="bg-gray-300 p-1 rounded-full">
-                            <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
+                                <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
                             </div>
                         </div>
                         <div className="flex justify-between">

@@ -1,40 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import FileUploader from '../../components/FileDowlander';
 import axios from 'axios';
-import { help_url } from '../../helpers/api';
+import { get_attachment_url, help_url } from '../../helpers/api';
+import { MdEdit } from 'react-icons/md';
+import { config } from '../../helpers/token';
+
+interface DataItem {
+    id: number;
+    text: string;
+    active: boolean;
+    attachment: any;
+}
 
 interface AllProp {
     title: string;
-    showSwitch: boolean;
     status: string;
-    data: { text: string; active: boolean }[];
+    data: DataItem[];
 }
 
 const All: React.FC = () => {
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
     const [accordionItems, setAccordionItems] = useState<AllProp[]>([]);
+    const [switchStates, setSwitchStates] = useState<{ [key: number]: boolean }>({});
 
     useEffect(() => {
-        // Initialize accordion items
+        // Initialize accordion items   
         setAccordionItems([
             {
                 title: 'О сервисе',
-                showSwitch: true,
                 status: 'ABOUT_SERVICE',
                 data: []
             },
             {
                 title: 'Политика конфиденциальности',
-                showSwitch: true,                                           
                 status: 'PRIVACY_POLICY',
                 data: []
             },
             {
                 title: 'Лицензионное соглашение',
-                showSwitch: true,
+                status: 'ABOUT_SERVICE',
+                data: []
+            },
+            {
+                title: 'Лицензии',
                 status: 'ABOUT_SERVICE',
                 data: []
             }
@@ -43,7 +52,7 @@ const All: React.FC = () => {
 
     const fetchData = async (status: string, index: number) => {
         try {
-            const res = await axios.get(`${help_url}?HELP_STATUS=${status}`);
+            const res = await axios.get(`${help_url}?HELP_STATUS=${status}`, config);
             const newData = res.data.body;
             setAccordionItems(prevState => {
                 const updatedItems = [...prevState];
@@ -55,16 +64,20 @@ const All: React.FC = () => {
         }
     };
 
-    const handleToggle = (index: number, dataIndex: number) => {
-        setAccordionItems(prevState => {
-            const updatedItems = [...prevState];
-            updatedItems[index].data[dataIndex].active = !updatedItems[index].data[dataIndex].active;
-            return updatedItems;
-        });
+    const fetchAttachmentData = async () => {
+        try {
+            const res = await axios.get(`${get_attachment_url}/d4405ded-50d5-4d0d-a039-e4638ddd3e18`);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const toggleSwitch = () => {
-        setIsSwitchOn(!isSwitchOn);
+    const toggleSwitch = (index: number) => {
+        setSwitchStates(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }));
     };
 
     return (
@@ -72,37 +85,35 @@ const All: React.FC = () => {
             <div className='flex flex-col gap-3 mb-3 text-slate-700 dark:text-slate-300'>
                 {accordionItems.map((item, index) => (
                     <Accordion onClick={() => fetchData(item.status, index)} key={index} title={item.title}>
-                        {item.data.length !== 0 && item.data.map((dataItem, dataIndex) => (
-                            <div key={dataIndex} className='border-[1px] p-5 rounded-2xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300'>
-                                <p>{dataItem.text}</p>
+                        {item.data.length !== 0 && item.data.map((dataItem, i) => (
+                            <div key={i}>
+                                <div className='border-[1px] p-5 rounded-2xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300'>
+                                    <p>{dataItem.text}</p>
+
+                                </div>
+                                <div className='mt-3 flex gap-3 items-center text-slate-700 dark:text-slate-300'>
+                                    <p>Отображать в приложениях</p>
+                                    <Switch
+                                        isOn={switchStates[dataItem.id] !== undefined ? switchStates[dataItem.id] : dataItem.active}
+                                        handleToggle={() => toggleSwitch(dataItem.id)}
+                                    />
+                                </div>
+                                <button
+                                    className="p-[6px] dark:border-[#fff] border-[#000] border-[1px] rounded-lg"
+                                >
+                                    <MdEdit size={20} className="dark:text-white" />
+                                </button>
                             </div>
                         ))}
-                        {item.showSwitch && (
-                            <div className='mt-3 flex gap-3 items-center text-slate-700 dark:text-slate-300'>
-                                <p>Отображать в приложениях</p>
-                                <Switch isOn={item.data.some(dataItem => dataItem.active)} handleToggle={() => handleToggle(index, 0)} />
-                            </div>
-                        )}
                     </Accordion>
                 ))}
-                <Accordion title='Лицензии'>
-                    <p className='mb-2 text-slate-700 dark:text-slate-300'>Вложения</p>
-                    <div className="flex flex-row flex-wrap bg-gray-100">
-                        <div className='mt-3 flex gap-3 items-center mb-2text-slate-700 dark:text-slate-300'>
-                            <p>Отображать в приложениях</p>
-                            <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
-                        </div>
-                    </div>
-                    <Link to='/'>
-                        <button
-                            className={`bg-[#0e0608] text-white px-3 py-2 rounded-lg ${!isSwitchOn ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            disabled={!isSwitchOn}
-                        >
-                            Сохранить изменения
-                        </button>
-                    </Link>
-                    <FileUploader />
-                </Accordion>
+                <button
+                    className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg ${!Object.values(switchStates).some(state => state) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={!Object.values(switchStates).some(state => state)}
+                >
+                    Сохранить изменения
+                </button>
+                <FileUploader />
             </div>
         </div>
     );
