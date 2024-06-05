@@ -13,7 +13,7 @@ interface SmsProp {
 }
 interface ChatList {
   content: string,
-  name: string
+  senderName: string
   createdAt: string,
   id: string,
   read: boolean,
@@ -21,6 +21,7 @@ interface ChatList {
   replayDto: string | null,
   senderId: string,
   userImgId: string | null,
+  receiverName: string,
 }
 
 const Sms = ({ senderId, sendMessage, chat, setContent, content }: SmsProp) => {
@@ -69,7 +70,7 @@ const Sms = ({ senderId, sendMessage, chat, setContent, content }: SmsProp) => {
                       src={`${item.userImgId ? item.userImgId : "https://picsum.photos/50/50"}`}
                       alt="User Avatar"
                     />
-                    <div className="font-medium">{item.name}</div>
+                    <div className="font-medium">{item.senderId == senderId ? item.senderName : item.receiverName}</div>
                   </div>
                   <p className={` ${item.senderId == senderId ? "bg-white rounded-lg py-2 px-3 shadow mb-2 max-w-sm w-max" : " bg-lime-500 text-white rounded-lg py-2 px-3 shadow mb-2 max-w-max"}`} >
                     {item.content ? item.content : "(null)"}

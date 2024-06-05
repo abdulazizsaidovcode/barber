@@ -208,7 +208,7 @@ const Chatdetail: React.FC = () => {
       {/* chat list */}
       <div className="flex w-[100%] h-full relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-0 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-full duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-1 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-full duration-300 flex flex-col`}>
           <div className='flex justify-end mb-4'>
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
