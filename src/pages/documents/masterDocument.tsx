@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 

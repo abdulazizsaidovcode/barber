@@ -232,7 +232,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/documents"
                   className={`border group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-slate-950 dark:text-white ${
-                    pathname.includes('gallery') && 'bg-gray dark:bg-[#9c0a36]'
+                    pathname.includes('documents') && 'bg-gray dark:bg-[#9c0a36]'
                   }`}
                 >
                   <IoDocumentTextOutline />
