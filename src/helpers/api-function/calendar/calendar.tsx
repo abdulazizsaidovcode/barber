@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { config } from '../../token';
 import { calendar_url, service_category_list } from '../../api';
+import { CalendarData } from '../../state_managment/calendar/calendarStore';
 
 interface Category {
   categoryFatherId: any;
@@ -11,12 +12,13 @@ interface Category {
 }
 
 interface ICalendar {
-  localDate?: string,
+  localDate: string,
   endDate?: string,
   categoryId?: string,
   regionId?: number,
   districtId?: number,
-  isMonth?: boolean
+  isMonth: boolean,
+  setData: (val: CalendarData[]) => void
 }
 
 interface ResponseBody {
@@ -45,7 +47,8 @@ export const getCalendar = ({
  categoryId,
  regionId,
  districtId,
- isMonth
+ isMonth,
+ setData
 }: ICalendar) => {
   let url = calendar_url;
 
@@ -63,14 +66,11 @@ export const getCalendar = ({
   if (queryString) {
     url = `${calendar_url}?${queryString}`;
   }
-  console.log(url);
-  
-
   axios
-    .get<ResponseBody>(url, config)
+    .get(url, config)
     .then((res) => {
       if (res.data.success) {
-        console.log(res.data.body);
+        setData(res.data.body);
       } else {
         console.log('Failed to fetch categories.');
       }
