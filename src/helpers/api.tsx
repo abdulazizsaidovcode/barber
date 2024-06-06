@@ -45,6 +45,7 @@ export const del_service_category: string = `${base_url}category/web`;
 export const edit_service_category: string = `${base_url}category/web`;
 export const add_precent_list: string = `${base_url}percent`;
 export const precent_list: string = `${base_url}percent`;
+export const master_full_data: string = `${base_url}user/web/master-full-info/`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`;
 
