@@ -32,6 +32,7 @@ type MasterCardInfoProps = {
   ServiceCategory: [];
   Specialization: [];
   scheduleType: string;
+  StatusNow: string;
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
@@ -60,6 +61,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   ServiceCategory,
   Specialization,
   scheduleType,
+  StatusNow,
 }) => {
   const { t } = useTranslation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -88,7 +90,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center">
               <div className="bg-green-500 rounded-[50%] w-3 h-3"></div>
-              <p>{MasterName}</p>
+              <p>{StatusNow}</p>
             </div>
             <div className="flex items-center justify-center border-black p-1 rounded-full">
               <img

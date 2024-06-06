@@ -45,6 +45,7 @@ const DetailMaster: React.FC = () => {
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
+            StatusNow={orderDetails.masterChatStatus }
             Specialization={orderDetails.masterSpecialization[1]}
             ServiceCategory={orderDetails.masterServiceCategory}
             GenderType={orderDetails.directionByGender}
