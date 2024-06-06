@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { master_url } from '../../../helpers/api';
-import { config } from '../../../helpers/token';
+import { master_full_data } from '../../../helpers/api';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import DefaultLayout from '../../../layout/DefaultLayout';
 import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
+import { config } from '../../../helpers/token';
 
 const DetailMaster: React.FC = () => {
   const { t } = useTranslation();
@@ -17,18 +16,20 @@ const DetailMaster: React.FC = () => {
   console.log(id);
 
   useEffect(() => {
-    setIsLoading(true); // Set loading to true when fetching starts
-    axios
-      .get(`${master_url}?page=0&size=10`, config)
-      .then((response) => {
-        const master = response.data.body.object;
+    if (!id) {
+      console.error('ID is required!');
+      return;
+    }
 
-        // Find the order that matches the ID from the URL
-        const matchingOrder = master.find((order: any) => order.id === id);
-        if (matchingOrder) {
-          setOrderDetails(matchingOrder);
-        }
-        setIsLoading(false); // Set loading to false when fetching is done
+    setIsLoading(true); // Set loading to true when fetching starts
+
+    axios
+      .get(`${master_full_data}${id}`, config)
+      .then((response) => {
+        const master = response.data.body;
+        console.log(master);
+        setOrderDetails(master);
+        setIsLoading(false); // Set loading to false when data is fetched
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
@@ -38,9 +39,12 @@ const DetailMaster: React.FC = () => {
 
   return (
     <div>
-      {orderDetails ? (
+      {isLoading ? (
+        <p className="dark:text-white">Loading order details...</p>
+      ) : orderDetails ? (
         <div>
           <MasterCardInfo
+            Number={orderDetails.phoneNumber}
             Region={orderDetails.region}
             City={orderDetails.city}
             Age={orderDetails.age}
@@ -60,7 +64,7 @@ const DetailMaster: React.FC = () => {
           />
         </div>
       ) : (
-        <p className="dark:text-white">Loading order details...</p>
+        <p className="dark:text-white">No order details found.</p>
       )}
     </div>
   );
