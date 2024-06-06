@@ -94,7 +94,7 @@ function NewChat() {
 
 
     return (
-        <div className=' z-1 '>
+        <div className=' z-0 '>
             <div onClick={openModal}>
                 <Buttons>Начать</Buttons>
             </div>

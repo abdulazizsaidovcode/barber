@@ -99,9 +99,10 @@ const Sms = ({ senderId, sendMessage, chat, setContent, content }: SmsProp) => {
                   <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
                 </div>
                 <FaCheck />
-                <button onClick={sendMessage}>
-                  <IoSend />
-                </button>
+                {content.trim() &&
+                  <button onClick={sendMessage}>
+                    <IoSend />
+                  </button>}
               </div>
             </div>
           </div>

@@ -2,8 +2,15 @@ import DefaultLayout from '../../layout/DefaultLayout.tsx';
 import { Tabs } from 'antd';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
 import { items } from './data.tsx';
+import { useEffect } from 'react';
+import { getRegion } from '../../helpers/api-function/master/master.tsx';
+import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore.tsx';
 
 const Client = () => {
+  const {setRegionData} = clientFilterStore()
+  useEffect(() => {
+    getRegion(setRegionData)
+  }, [])
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Client" />

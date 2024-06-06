@@ -45,6 +45,7 @@ export const del_service_category: string = `${base_url}category/web`;
 export const edit_service_category: string = `${base_url}category/web`;
 export const add_precent_list: string = `${base_url}percent`;
 export const precent_list: string = `${base_url}percent`;
+export const master_full_data: string = `${base_url}user/web/master-full-info/`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`;
 
@@ -77,6 +78,9 @@ export const tarif_detail = `${base_url}tariff/web`;
 export const tarif_put_url = `${base_url}tariff/web`;
 // get attachment by id
 
-export const get_attachment_url = `${base_url}/attachment/getFile`; // get chat list
+export const getFileId = `${base_url}attachment/getFile/`; // get chat list
+export const postFileId = `${base_url}attachment/upload`; // get chat list
+export const postFilelist = `${base_url}attachment/upload/list`; // get chat list
+
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url
