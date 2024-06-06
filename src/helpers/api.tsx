@@ -73,7 +73,8 @@ export const getChatList_url = `${base_url}chat/web`; // get chat list
 // help url
 export const tarif_url = `${base_url}tariff/web/list`;
 export const tarif_add_url = `${base_url}tariff/web`;
-
+export const tarif_detail = `${base_url}tariff/web`;
+export const tarif_put_url = `${base_url}tariff/web`;
 // get attachment by id
 
 export const get_attachment_url = `${base_url}/attachment/getFile`; // get chat list

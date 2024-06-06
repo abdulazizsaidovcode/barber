@@ -7,7 +7,7 @@ interface SwitchProps {
 }
 
 const Switch: React.FC<SwitchProps> = ({ isOn, handleToggle, key }) => {
-  console.log(isOn);
+  // console.log(isOn);
   return (
     <div
       key={key}
