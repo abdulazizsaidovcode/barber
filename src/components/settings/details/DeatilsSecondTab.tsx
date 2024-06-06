@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, InputNumber, Checkbox } from 'antd';
 import Accordion from '../../accordion/accordion';
 import FunctionlityCard from './FunctionlityCard';
+import { Buttons } from '../../buttons';
 
 interface SecondTabData {
   bookingDuration: number;
@@ -16,9 +17,10 @@ interface SecondTabData {
 interface DetailsSecondTabProps {
   data: SecondTabData;
   setData: React.Dispatch<React.SetStateAction<SecondTabData>>;
+  onSave: () => void
 }
 
-const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData }) => {
+const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSave }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentField, setCurrentField] = useState<keyof SecondTabData | null>(null);
   const [currentValue, setCurrentValue] = useState<number>(0);
@@ -54,7 +56,9 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData }) =>
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <InputNumber value={currentValue} onChange={handleValueChange} />
+        <div>
+          <InputNumber value={currentValue} onChange={handleValueChange} />
+        </div>
       </Modal>
 
       <div className='w-full flex justify-between px-5'>
@@ -130,6 +134,11 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData }) =>
             </div>
           </Accordion>
         </div>
+      </div>
+      <div className='ms-5 mt-3'>
+        <Buttons onClick={onSave}>
+          Сохранить изменения
+        </Buttons>
       </div>
     </>
   );

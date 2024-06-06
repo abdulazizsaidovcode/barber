@@ -107,7 +107,7 @@ const TariffDetail: React.FC = () => {
           Ограничения
         </span>
       ),
-      children: <DetailsSecondTab data={secondTabData} setData={setSecondTabData} />,
+      children: <DetailsSecondTab onSave={updateData} data={secondTabData} setData={setSecondTabData} />,
     },
   ];
 
@@ -127,7 +127,6 @@ const TariffDetail: React.FC = () => {
           </Tabs.TabPane>
         ))}
       </Tabs>
-      <Button onClick={updateData}>Сохранить изменения</Button>
     </DefaultLayout>
   );
 };
