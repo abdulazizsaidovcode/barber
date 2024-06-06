@@ -1,8 +1,7 @@
 import { Buttons } from '../../../components/buttons'
-import { FileAddOutlined, FileTextTwoTone } from '@ant-design/icons';
-import axios from 'axios';
+import { FileAddOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { BsPerson, BsPersonAdd } from 'react-icons/bs';
+import { BsPersonAdd } from 'react-icons/bs';
 
 
 function AddMails() {

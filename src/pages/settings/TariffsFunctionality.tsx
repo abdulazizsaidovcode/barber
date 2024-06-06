@@ -62,7 +62,7 @@ const TariffsFunctionality: React.FC = () => {
             <Link to={link}>
                 <div className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
                     <p className='font-bold text-black dark:text-white'>{title}</p>
-                    <p>{functions}</p>
+                    <p>{functions}</p>  
                     <p>{sum}</p>
                 </div>
             </Link>
@@ -70,7 +70,7 @@ const TariffsFunctionality: React.FC = () => {
     }
 
     return (
-        
+
         <>
             <DefaultLayout>
                 <div>
@@ -81,7 +81,7 @@ const TariffsFunctionality: React.FC = () => {
                     <div className='flex flex-wrap gap-5 mt-5'>
                         {data.map((item, index) => (
                             <div key={index}> {/* Added key prop */}
-                                <TariffsFunctionalityCard title={item.name} functions={`${item.functionCount} Функций`} sum={`${item.monthPrice} сум`} link={`/settings/tariff/${item.id}`} />
+                                <TariffsFunctionalityCard title={item.name} functions={`${item.functionCount} Функций`} sum={`${item.monthPrice === null ? '0' : item.monthPrice} сум`} link={`/settings/tariff/${item.id}`} />
                             </div>
                         ))}
                     </div>
@@ -90,17 +90,17 @@ const TariffsFunctionality: React.FC = () => {
             <Modal isOpen={isOpen} onClose={closeModal}>
                 <div className="w-[500px] h-[160px]">
                     <p className="text-xl text-black dark:text-white">Название тарифа:</p>
-                    <input 
-                        className="w-full border-[1px] dark:text-black border-black p-2 rounded-lg mt-3" 
-                        type="text" 
-                        placeholder="Оздоровительные процедуры" 
+                    <input
+                        className="w-full border-[1px] dark:text-black border-black p-2 rounded-lg mt-3"
+                        type="text"
+                        placeholder="Оздоровительные процедуры"
                         value={newTariffName}
-                        onChange={(e) => setNewTariffName(e.target.value)} // Update state on input change
+                        onChange={(e) => setNewTariffName(e.target.value)}
                     />
                     <div className="flex mt-10 justify-center">
-                        <button 
-                            className="py-2 px-10 rounded-lg dark:bg-danger bg-slate-800 text-white" 
-                            onClick={() => addData(newTariffName)} // Add tariff on button click
+                        <button
+                            className="py-2 px-10 rounded-lg dark:bg-danger bg-slate-800 text-white"
+                            onClick={() => addData(newTariffName)}
                         >
                             Добавить
                         </button>

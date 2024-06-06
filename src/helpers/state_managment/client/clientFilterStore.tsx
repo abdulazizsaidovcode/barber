@@ -1,10 +1,16 @@
 import { create } from 'zustand';
+import { DistrictData, RegionData } from '../../../types/master';
 
 interface ClientFilterData {
     clientFilterData: FilterData[];
     setClientFilterData: (data: FilterData[] | any) => void;
     totalPage: number;
     setClientTotalPage: (val: number) => void;
+    regionData: RegionData[];
+  setRegionData: (val: RegionData[]) => void;
+  districtData: DistrictData[];
+  setDistrictData: (val: DistrictData[]) => void;
+   
 }
 
 export interface FilterData {
@@ -33,7 +39,11 @@ const clientFilterStore = create<ClientFilterData>((set) => ({
     clientFilterData: [],
     setClientFilterData: (val: FilterData[]) => set({ clientFilterData: val }),
     totalPage: 0,
-    setClientTotalPage: (val: number) => set({ totalPage: val })
+    setClientTotalPage: (val: number) => set({ totalPage: val }),
+    regionData: [],
+    setRegionData: (val: RegionData[]) => set({ regionData: val }),
+    districtData: [],
+    setDistrictData: (val: DistrictData[]) => set({ districtData: val }),
 }));
 
 export default clientFilterStore;

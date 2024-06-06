@@ -17,6 +17,8 @@ const Chatusers = ({ user, role, userIds }: Props) => {
     }, [user])
     useEffect(() => {
         userIds(userId)
+        console.log(userId);
+        
     }, [userId])
 
     const formatDateTime = (dateTimeString: string) => {
@@ -35,8 +37,8 @@ const Chatusers = ({ user, role, userIds }: Props) => {
             <ul>
                 {chatData.length > 0 ?
                     chatData.map((item: any) =>
-                        <li key={i++} onClick={() => setUserId(item.userId)} className='flex gap-2 items-center  md:my-1 border p-3 my-2'>
-                            <img src={item.attachmentId ? item.attachmentId : admin} alt="user img" className='w-10 rounded-full bg-slate-300 p-1' />
+                        <li key={i++} onClick={() => setUserId(item.userId)} className={`${item.userId == userId ? "dark:bg-[#9c0936] bg-gray" : ""} flex gap-2 items-center  md:my-1 border p-3 my-2`}>
+                            <img src={item.attachmentId ? item.attachmentId : admin} alt="user img" className='w-10 h-10 rounded-full bg-slate-300 p-1' />
                             <div className={`flex gap-1 flex-col w-full relative`}>
                                 <div className='flex gap-3 justify-between w-full'>
                                     <div className={`flex  gap-1 flex-col items-start}`}>

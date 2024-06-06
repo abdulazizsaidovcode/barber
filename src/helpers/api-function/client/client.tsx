@@ -10,7 +10,7 @@ interface IClient {
     startDate?: string;
     endDate?: string;
     categoryId?: string;
-    statusName?: string;
+    status?: string;
     selfEmployed?: boolean;
     workPlace?: string;
     page?: number;
@@ -26,7 +26,7 @@ export const getClients = ({
     startDate,
     endDate,
     categoryId,
-    statusName,
+    status,
     selfEmployed,
     workPlace,
     page = 0,
@@ -34,12 +34,12 @@ export const getClients = ({
     setData,
     setTotalPage
 }: IClient) => {
-    axios.get(`${client_url}?${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${startDate ? `startDate=${startDate}&` : ''}${endDate ? `endDate=${endDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${statusName ? `statusName=${statusName}&` : ''}${selfEmployed ? `selfEmployed=${selfEmployed}&` : ''}${workPlace ? `workPlace=${workPlace}&` : ''}page=${page}&size=${size}`, config)
+    axios.get(`${client_url}?${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${startDate ? `startDate=${startDate}&` : ''}${endDate ? `endDate=${endDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${status ? `status=${status}&` : ''}${selfEmployed ? `selfEmployed=${selfEmployed}&` : ''}${workPlace ? `workPlace=${workPlace}&` : ''}page=${page}&size=${size}`, config)
         .then(res => {
             if (res.data.success === true) {
                 setData(res.data.body.object)
                 setTotalPage(res.data.body.totalPage)
-            }
+            } else setData([])
         })
-        .catch(err => console.log(err));
+        .catch(() => setData([]));
 };

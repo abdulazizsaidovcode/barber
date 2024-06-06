@@ -9,9 +9,10 @@ interface EditModalProps {
     onChange?: (e: any) => void;
     defaultValue?: any;
     value?: any;
+    type?: string
 }
 
-const EditModal: React.FC<EditModalProps> = ({ isOpen, defaultValue, value, onClose, onSave, onChange }) => {
+const EditModal: React.FC<EditModalProps> = ({ isOpen, defaultValue, value, onClose, onSave, onChange, type }) => {
     const handleSave = () => {
         if (defaultValue == value) {
             toast.error("No changes detected. Please modify the value before saving.");
@@ -29,6 +30,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, defaultValue, value, onCl
                     </div>
                     <div className="flex justify-center mt-10">
                         <input
+                            type={type ? type : "text"}
                             defaultValue={defaultValue}
                             value={value}
                             onChange={onChange}

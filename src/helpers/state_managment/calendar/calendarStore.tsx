@@ -1,17 +1,22 @@
 import { create } from "zustand";
 
 interface CategoryList {
-  categoryFatherId: any;
-  categoryFatherName: any;
+  categoryFatherId: string | null;
+  categoryFatherName: string | null;
   id: string;
   name: string;
   new: boolean;
 }
 
-// interface CalendarDataMont {
-
-// }
-
+export interface CalendarData {
+  canceledOrders?: number | null;
+  completedOrders?: number | null;
+  date: string | null;
+  dayOfWeek: string | null;
+  pendingOrders?: number | null;
+  toBeConfirmedOrders?: number | null;
+  time?: string | null
+}
 
 interface CalendarStore {
   show: boolean;
@@ -19,16 +24,29 @@ interface CalendarStore {
   date: string;
   category: CategoryList[];
   categoryId: string;
+  calendarData: CalendarData[];
   setShow: (val: boolean) => void;
   setCategory: (val: CategoryList[]) => void;
   setCategoryId: (val: string) => void;
   setDate: (val: string) => void;
   setLoading: (val: boolean) => void;
-}  
+  setCalendarData: (val: CalendarData[]) => void;
+}
 
 const calendarStore = create<CalendarStore>((set) => ({
   show: false,
   loading: false,
+  calendarData: [
+    {
+      canceledOrders: 0,
+      completedOrders: 0,
+      pendingOrders: 0,
+      toBeConfirmedOrders: 0,
+      date: "",
+      dayOfWeek: "",
+      time: null,
+    },
+  ],
   category: [
     {
       categoryFatherId: null,
@@ -45,6 +63,7 @@ const calendarStore = create<CalendarStore>((set) => ({
   setCategoryId: (val: string) => set({ categoryId: val }),
   setDate: (val: string) => set({ date: val }),
   setLoading: (val: boolean) => set({ loading: val }),
+  setCalendarData: (val: CalendarData[]) => set({ calendarData: val }),
 }));
 
 export default calendarStore;

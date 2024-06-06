@@ -8,16 +8,24 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Select } from "antd";
 import calendarStore from "../../helpers/state_managment/calendar/calendarStore";
-import { getCalendar, getCategoryId } from "../../helpers/api-function/calendar/calendar";
+import {
+  getCalendar,
+  getCategoryId,
+} from "../../helpers/api-function/calendar/calendar";
 
-interface Event {
+export interface Event {
   title: string;
   start: string;
   color: string;
 }
 
 const Calendar: React.FC = () => {
-  const { setCategory, category } = calendarStore();
+  const {
+    setCategory,
+    category,
+    setCalendarData,
+    calendarData,
+  } = calendarStore();
   const [regionId, setRegionId] = useState<number | null>(null);
   const [districtId, setDistrictId] = useState<number | null>(null);
   const [categoryId, setCategoryIdState] = useState<string | null>(null);
@@ -31,14 +39,17 @@ const Calendar: React.FC = () => {
   ];
 
   const fetchCalendarData = () => {
-    getCalendar({
-      categoryId: categoryId || "",
-      districtId: districtId || 0,
-      endDate: endDate || "",
-      isMonth: isMonth,
-      localDate: currentDate,
-      regionId: regionId || 0
-    });
+    if (currentDate && isMonth !== null) {
+      getCalendar({
+        categoryId: categoryId || "",
+        districtId: districtId || 0,
+        endDate: endDate || "",
+        isMonth: isMonth,
+        localDate: currentDate,
+        regionId: regionId || 0,
+        setData: setCalendarData,
+      });
+    }
   };
 
   useEffect(() => {
@@ -56,10 +67,12 @@ const Calendar: React.FC = () => {
 
   const handleDatesSet = (arg: any) => {
     if (arg.view.type === "dayGridMonth") {
-      const start = new Date(arg.startStr);
-      const formattedDate = `${start.getFullYear()}-${(start.getMonth() + 1)
+      const end = new Date(arg.endStr);
+      const lastDayOfMonth = new Date(end.getFullYear(), end.getMonth() + 1, 0); // Get the last day of the month
+      const formattedDate = `${lastDayOfMonth.getFullYear()}-${lastDayOfMonth
+        .getMonth()
         .toString()
-        .padStart(2, "0")}-${start.getDate().toString().padStart(2, "0")}`;
+        .padStart(2, "0")}-27`;
       setCurrentDate(formattedDate);
       setEndDate("");
       setIsMonth(true);
@@ -80,35 +93,61 @@ const Calendar: React.FC = () => {
 
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
-  const events: Event[] = [
-    { title: "25", start: "2024-05-07", color: "#22C55E" },
-    { title: "21", start: "2024-05-07", color: "#F97316" },
-    { title: "9", start: "2024-05-07", color: "#EF4444" },
-    { title: "11", start: "2024-05-07", color: "#3B82F6" },
-    { title: "21", start: "2024-05-03", color: "#F97316" },
-    { title: "25", start: "2024-05-03", color: "#22C55E" },
-    { title: "11", start: "2024-05-03", color: "#3B82F6" },
-    { title: "9", start: "2024-05-03", color: "#EF4444" },
-    { title: "21", start: "2024-03-07", color: "#F97316" },
-    { title: "25", start: "2024-03-07", color: "#22C55E" },
-    { title: "11", start: "2024-03-07", color: "#3B82F6" },
-    { title: "9", start: "2024-03-07", color: "#EF4444" },
-  ];
+  // { title: "25", start: "2024-05-07", color: "#22C55E" },
+
+  console.log(calendarData);
+  
+  const events: Event[] = calendarData.flatMap((item) => {
+    const dateTime = item.time ? `${item.date}T${item.time}` : `${item.date}`;
+    const events: Event[] = [];
+
+    if (item.completedOrders !== null && item.completedOrders !== undefined) {
+      events.push({
+        title: `${item.completedOrders}`,
+        start: dateTime,
+        color: "#22C55E",
+      });
+    }
+    if (item.canceledOrders !== null && item.canceledOrders !== undefined) {
+      events.push({
+        title: `${item.canceledOrders}`,
+        start: dateTime,
+        color: "#EF4444",
+      });
+    }
+    if (item.pendingOrders !== null && item.pendingOrders !== undefined) {
+      events.push({
+        title: `${item.pendingOrders}`,
+        start: dateTime,
+        color: "#F97316",
+      });
+    }
+    if (item.toBeConfirmedOrders !== null && item.toBeConfirmedOrders !== undefined) {
+      events.push({
+        title: `${item.toBeConfirmedOrders}`,
+        start: dateTime,
+        color: "#3B82F6",
+      });
+    }
+
+    return events;
+  });
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Calendar" />
       <div className="grid md:grid-cols-2 gap-5 my-5">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-green-500 flex justify-center items-center rounded-lg text-white">
+        <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
+          <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white p-1">
             Завершён
           </div>
-          <div className="bg-blue-500 flex justify-center items-center rounded-lg text-white">
+          <div className="bg-blue-500 flex justify-center text-center items-center rounded-lg text-white p-1">
             Одобрен
           </div>
-          <div className="bg-orange-500 flex justify-center items-center rounded-lg text-white">
+          <div className="bg-orange-500 flex justify-center text-center items-center rounded-lg text-white p-1">
             На одобрении
           </div>
-          <div className="bg-red-500 flex justify-center items-center rounded-lg text-white">
+          <div className="bg-red-500 flex justify-center text-center items-center rounded-lg text-white p-1">
             Отклонён
           </div>
         </div>
@@ -145,11 +184,11 @@ const Calendar: React.FC = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-7 gap-3 my-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 text-sm gap-3 my-3">
         <button
           disabled
           className={
-            "inline-block rounded bg-[#2C3E50] cursor-not-allowed px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-lg focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            "inline-block rounded bg-[#2C3E50] cursor-not-allowed text-center px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-lg focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
           }
         >
           Все категории
@@ -188,15 +227,20 @@ const Calendar: React.FC = () => {
           center: "title",
           end: "dayGridMonth,timeGridWeek",
         }}
+        // Haftalik darajasining soatlarini belgilash
+        slotMinTime="00:00:00"
+        slotMaxTime="24:00:00"
+        // Soatlar ko'rsatilgan formatni belgilash
+        slotLabelFormat={{
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false, // 24 soatlik formatda
+        }}
         datesSet={handleDatesSet}
         eventAdd={() => {}}
         eventBackgroundColor="#fff"
         events={events}
       />
-      <div>
-        <p>Current Date: {currentDate}</p>
-        <p>End Date: {endDate}</p>
-      </div>
     </DefaultLayout>
   );
 };

@@ -31,11 +31,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) => {
 
     return (
         <div
-            className="fixed inset-0 z-9999 flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50"
+            className="fixed inset-0 z-999 flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50"
             onClick={onClose}
         >
             <div
-                className={`bg-white dark:text-gray-400 dark:bg-[#30303d] relative rounded-lg shadow-lg p-6 ${mt}`}
+                className={`bg-white dark:text-gray-400 dark:bg-[#30303d] z-999 relative rounded-lg shadow-lg p-6 ${mt}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div>
