@@ -20,6 +20,11 @@ type MasterCardInfoProps = {
   Region: string;
   City: string;
   Number: string;
+  Telegram: string;
+  Instagram: string;
+  CompOrders: string;
+  rejectedOrderCount: string;
+  Clients:string;
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
@@ -36,6 +41,11 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   Region,
   City,
   Number,
+  Telegram,
+  Instagram,
+  CompOrders,
+  rejectedOrderCount,
+  Clients
 }) => {
   const { t } = useTranslation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -101,9 +111,37 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <p className="text-black font-bold mb-2 mt-2">Контакты:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
-            <div className="flex items-center justify-start mt-4">
-              <strong>Telefon</strong>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Telefon :</strong>
               <p>{Number}</p>
+            </div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Telegram :</strong>
+              <p>{Telegram}</p>
+            </div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Instagram :</strong>
+              <p>{Instagram}</p>
+            </div>
+          </div>
+        </Skeleton>
+        <Skeleton loading={isLoading} active>
+          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+            <div className="flex items-center justify-between">
+              <p className="text-black font-bold mb-2 mt-2">Indicators:</p>
+            </div>
+            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Completed Orders :</strong>
+              <p>{CompOrders}</p>
+            </div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Cancelled orders :</strong>
+              <p>{rejectedOrderCount}</p>
+            </div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Clients :</strong>
+              <p>{Clients}</p>
             </div>
           </div>
         </Skeleton>

@@ -44,6 +44,31 @@ const DetailMaster: React.FC = () => {
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
+            Telegram={
+              orderDetails.telegramLink === null
+                ? 'Mavjud emas'
+                : orderDetails.telegramLink
+            }
+            Clients={
+              orderDetails.clientCount === null
+                ? 'Mavjud emas'
+                : orderDetails.clientCount
+            }
+            rejectedOrderCount={
+              orderDetails.rejectedOrderCount === null
+                ? 'Mavjud emas'
+                : orderDetails.rejectedOrderCount
+            }
+            CompOrders={
+              orderDetails.completedOrderCount === null
+                ? 'Mavjud emas'
+                : orderDetails.completedOrderCount
+            }
+            Instagram={
+              orderDetails.instagramLink === null
+                ? 'Mavjud emas'
+                : orderDetails.instagramLink
+            }
             Number={orderDetails.phoneNumber}
             Region={orderDetails.region}
             City={orderDetails.city}
