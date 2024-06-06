@@ -15,6 +15,7 @@ const DetailMaster: React.FC = () => {
   const id = location.pathname.substring(8);
   console.log(id);
 
+  const MasterImgFake = '/path/to/fake-image.png'; // Replace with your actual path
   useEffect(() => {
     if (!id) {
       console.error('ID is required!');
@@ -44,10 +45,24 @@ const DetailMaster: React.FC = () => {
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
+            Specialization={orderDetails.masterSpecialization[1]}
+            ServiceCategory={orderDetails.masterServiceCategory}
+            GenderType={orderDetails.directionByGender}
+            PlaceOfWork={orderDetails.placeOfWork}
+            StartData={
+              orderDetails.startDate === null
+                ? 'Mavjud emas'
+                : orderDetails.startDate
+            }
             Telegram={
               orderDetails.telegramLink === null
                 ? 'Mavjud emas'
                 : orderDetails.telegramLink
+            }
+            Level={
+              orderDetails.masterFeedbackCount === null
+                ? 'Mavjud emas'
+                : orderDetails.masterFeedbackCount
             }
             Clients={
               orderDetails.clientCount === null
@@ -70,15 +85,38 @@ const DetailMaster: React.FC = () => {
                 : orderDetails.instagramLink
             }
             Number={orderDetails.phoneNumber}
-            Region={orderDetails.region}
-            City={orderDetails.city}
-            Age={orderDetails.age}
-            Gender={orderDetails.Gender}
-            UserName={orderDetails.Username}
-            SurName={orderDetails.surname}
-            Location={orderDetails.location}
-            MasterName={orderDetails.masterFullName}
-            MasterImg={orderDetails.masterPhotoPath}
+            Region={
+              orderDetails.regionName === null
+                ? 'Mavjud emas'
+                : orderDetails.regionName
+            }
+            City={
+              orderDetails.districtName === null
+                ? 'Mavjud emas'
+                : orderDetails.districtName
+            }
+            Age={orderDetails.age === null ? 'Mavjud emas' : orderDetails.age}
+            Gender={
+              orderDetails.gender === null ? 'Mavjud emas' : orderDetails.gender
+            }
+            UserName={
+              orderDetails.nickname === null
+                ? 'Mavjud emas'
+                : orderDetails.nickname
+            }
+            SurName={orderDetails.lastName}
+            Location={
+              orderDetails.address === null
+                ? 'Manzil Mavjud emas'
+                : orderDetails.address
+            }
+            scheduleType={orderDetails.scheduleType}
+            MasterName={orderDetails.firstName}
+            MasterImg={
+              orderDetails.masterImgPath === null
+                ? MasterImgFake
+                : orderDetails.masterImgPath
+            }
             definitionType={
               orderDetails.masterPhone === undefined
                 ? 'Mavjud emas'
