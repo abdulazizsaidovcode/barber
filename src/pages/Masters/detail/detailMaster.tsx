@@ -41,35 +41,20 @@ const DetailMaster: React.FC = () => {
       {orderDetails ? (
         <div>
           <MasterCardInfo
-            OrderData={orderDetails.orderDate}
-            OrderEnterTime={orderDetails.orderFrom}
-            OrderEndTime={orderDetails.orderTo}
-            price={orderDetails.price}
-            Prepayment={orderDetails.prePayment}
-            Paid={orderDetails.paid}
-            PaymentType={
-              orderDetails.paymentType === null
-                ? 'null'
-                : orderDetails.paymentType
-            }
-            Duration={orderDetails.serviceTime}
-            RecNotification={
-              orderDetails.orderRecordingTime === null
-                ? 'Null'
-                : orderDetails.orderRecordingTime
-            }
-            ToPay={orderDetails.toPay}
+            Region={orderDetails.region}
+            City={orderDetails.city}
+            Age={orderDetails.age}
+            Gender={orderDetails.Gender}
+            UserName={orderDetails.Username}
+            SurName={orderDetails.surname}
+            Location={orderDetails.location}
             MasterName={orderDetails.masterFullName}
-            MasterType={orderDetails.serviceName}
             MasterImg={orderDetails.masterPhotoPath}
             definitionType={
               orderDetails.masterPhone === undefined
                 ? 'Mavjud emas'
                 : orderDetails.masterPhone
             }
-            ClientName={orderDetails.clientFullName}
-            ClientPhoto={orderDetails.clientPhotoPath}
-            ClientNumber={orderDetails.clientPhone}
             Status={orderDetails.status}
             isLoading={isLoading}
           />

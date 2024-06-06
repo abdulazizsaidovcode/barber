@@ -6,48 +6,34 @@ import { useTranslation } from 'react-i18next';
 import TextArea from 'antd/es/input/TextArea';
 import toast, { Toaster } from 'react-hot-toast';
 
-interface Props {
-  OrderData: string;
-  OrderEnterTime: string;
-  OrderEndTime: string;
-  price: string;
-  Prepayment: string;
-  Paid: string;
-  PaymentType: string;
-  Duration: string;
-  RecNotification: string;
-  ToPay: string;
+type MasterCardInfoProps = {
   MasterName: string;
-  MasterType: string;
   MasterImg: string;
   definitionType: string;
-  ClientName: string;
-  ClientPhoto: string;
-  ClientNumber: string;
   Status: string;
-  isLoading: boolean; // Add isLoading prop to indicate loading state
-}
+  isLoading: boolean;
+  SurName: string;
+  Location: any;
+  UserName: string;
+  Gender: string;
+  Age: string;
+  Region: string;
+  City: string;
+};
 
-const MasterCardInfo: React.FC<Props> = ({
-  OrderData,
-  OrderEnterTime,
-  OrderEndTime,
-  price,
-  Prepayment,
-  Paid,
-  PaymentType,
-  Duration,
-  RecNotification,
-  ToPay,
+const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   MasterName,
-  MasterType,
   MasterImg,
   definitionType,
-  ClientName,
-  ClientPhoto,
-  ClientNumber,
   Status,
-  isLoading, // Destructure isLoading prop
+  isLoading,
+  SurName,
+  Location,
+  UserName,
+  Gender,
+  Age,
+  Region,
+  City,
 }) => {
   const { t } = useTranslation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -63,9 +49,12 @@ const MasterCardInfo: React.FC<Props> = ({
   const toggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };
+
   const toas = () => {
-    toast.success('Send your massage');
+    toast.success('Send your message');
+    closeSendModal();
   };
+
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-4">
       <div className="flex flex-col h-full justify-between gap-4">
@@ -106,39 +95,40 @@ const MasterCardInfo: React.FC<Props> = ({
         </Skeleton>
       </div>
       <Skeleton loading={isLoading} active>
-        <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
+        <div className="bg-gray-100  dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
           <div className="flex items-center justify-between">
             <p className="mb-2 text-2xl font-bold">Profile:</p>
             <div
               onClick={openSendModal}
               className="bg-green-500 p-2 rounded-xl text-white px-5 cursor-pointer"
             >
-              Send Massage
+              Send Message
             </div>
           </div>
-          <p className="mb-2">
-            <strong>Время записи:</strong> {OrderEnterTime} : {OrderEndTime}
+          <div className="w-[100%]  bg-black h-[1px] flex items-center mb-4 mt-3"></div>
+          <p className="mb-5">
+            <strong>Name:</strong> {MasterName}
           </p>
-          <p className="mb-2">
-            <strong>Стоимость:</strong> {price}
+          <p className="mb-5">
+            <strong>SurName:</strong> {SurName}
           </p>
-          <p className="mb-2">
-            <strong>Предоплата:</strong> {Prepayment}
+          <p className="mb-5">
+            <strong>User Name:</strong> {UserName}
           </p>
-          <p className="mb-2">
-            <strong>Оплачено:</strong> {Paid}
+          <p className="mb-5">
+            <strong>Gender:</strong> {Gender}
           </p>
-          <p className="mb-2">
-            <strong>Тип оплаты:</strong> {PaymentType}
+          <p className="mb-5">
+            <strong>Age:</strong> {Age}
           </p>
-          <p className="mb-2">
-            <strong>Длительность:</strong> {Duration}
+          <p className="mb-5">
+            <strong>Region:</strong> {Region}
           </p>
-          <p className="mb-2">
-            <strong>Уведомление о записи:</strong> {RecNotification}
+          <p className="mb-5">
+            <strong>City:</strong> {City}
           </p>
-          <p className="mt-4 text-xl text-yellow-600">
-            <strong>К оплате:</strong> {ToPay}
+          <p className="mb-5">
+            <strong>Location:</strong> {Location}
           </p>
         </div>
       </Skeleton>
@@ -155,16 +145,16 @@ const MasterCardInfo: React.FC<Props> = ({
       </Modal>
       <Modal isOpen={SendOpen} onClose={closeSendModal}>
         <div className="w-[45rem]">
-          <p className="text-2xl text-black dark:text-white">Send massage:</p>
+          <p className="text-2xl text-black dark:text-white">Send message:</p>
           <TextArea
             className="mt-4"
             rows={4}
-            placeholder="Enter your massage"
+            placeholder="Enter your message"
           />
           <div className="flex items-center justify-center">
             <Button
               onClick={toas}
-              className="text-white mt-4 px-50"
+              className="text-black mt-4 px-50 dark:text-white"
               size="large"
             >
               Send
@@ -172,7 +162,7 @@ const MasterCardInfo: React.FC<Props> = ({
           </div>
         </div>
       </Modal>
-      <Toaster position='top-center' reverseOrder={false}/>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
