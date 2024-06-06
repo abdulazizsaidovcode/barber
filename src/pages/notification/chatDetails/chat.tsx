@@ -15,9 +15,13 @@ import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { config } from '../../../helpers/token.tsx';
+import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
+import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
 
 const Chatdetail: React.FC = () => {
-  const { role, chatData } = chatStore()
+  const { role, chatData, setChatData } = chatStore()
+  const { setData } = masterStore();
+
 
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
@@ -35,6 +39,10 @@ const Chatdetail: React.FC = () => {
   const [messages, setMessages] = useState<any>([]);
   const [content, setContent] = useState<string>('');
   const [stompClient, setStompClient] = useState<any>([]);
+
+  // filter
+  const [fullName, setFullName] = useState<string>('');
+  const [messageStatus, setMessageStatus] = useState('ALL_MESSAGES');
 
 
   // ---------- get admin and user ----------- //
@@ -83,7 +91,12 @@ const Chatdetail: React.FC = () => {
     });
   };
 
+  // chat/web?status=MASTER&fullName=m
+  // chat/web?status=MASTER 
 
+  // chat/web
+  // chat/web?status=MASTER&messageStatus=READ
+  // chat/web&messageStatus=READ
 
   //  connect socket with sock js 
   const connect = () => {
@@ -188,15 +201,32 @@ const Chatdetail: React.FC = () => {
           placeholder="Поиск по ФИО"
           prefix={<IoSearchOutline />}
           className="w-56"
+          onChange={(e) => {
+            const value = e.target.value;
+            setFullName(value);
+            GetChatList({
+              status: role,
+              fullName: value,
+              setData: setChatData
+            });
+          }}
         />
         <Select
-          defaultValue="Все сообщения"
-          className="w-56 "
+          defaultValue="ALL_MESSAGES"
+          className="w-56"
           dropdownClassName="my-custom-dropdown"
+          onChange={(value) => {
+            setMessageStatus(value);
+            GetChatList({
+              status: role,
+              messageStatus: value,
+              setData: setChatData
+            });
+          }}
           options={[
-            { value: 'Все сообщения', label: 'Все сообщения' },
-            { value: 'Непрочитанные', label: 'Непрочитанные' },
-            { value: 'Прочитанные', label: 'Прочитанные' },
+            { value: 'ALL_MESSAGES', label: 'Все сообщения' },
+            { value: 'UNREAD', label: 'Непрочитанные' },
+            { value: 'READ', label: 'Прочитанные' },
           ]}
         />
 
@@ -208,7 +238,7 @@ const Chatdetail: React.FC = () => {
       {/* chat list */}
       <div className="flex w-[100%] h-full relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-1 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-full duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z-0 top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-full duration-300 flex flex-col`}>
           <div className='flex justify-end mb-4'>
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
