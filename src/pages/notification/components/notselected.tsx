@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Notselected = () => {
     return (
         <div className='flex justify-center items-center h-full'>
