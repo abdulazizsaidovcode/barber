@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, InputNumber, Checkbox, Button } from 'antd';
+import { Modal, InputNumber, Checkbox } from 'antd';
 import Accordion from '../../accordion/accordion';
 import FunctionlityCard from './FunctionlityCard';
 
