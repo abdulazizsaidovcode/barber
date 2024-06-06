@@ -22,7 +22,7 @@ export interface Data {
   name: string;
   newMessageCount: number
   nickname: string | null
-  phone: string
+  phone: string 
   status: null | string,
   userId: string;
 }
