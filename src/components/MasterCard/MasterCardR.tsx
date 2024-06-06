@@ -3,6 +3,8 @@ import { Skeleton, Button } from 'antd';
 import Switch from './../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
 import { useTranslation } from 'react-i18next';
+import TextArea from 'antd/es/input/TextArea';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface Props {
   OrderData: string;
@@ -50,14 +52,20 @@ const MasterCardInfo: React.FC<Props> = ({
   const { t } = useTranslation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [SendOpen, setSendOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const openSendModal = () => setSendOpen(true);
+  const closeSendModal = () => setSendOpen(false);
+
   const toggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };
-
+  const toas = () => {
+    toast.success('Send your massage');
+  };
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-4">
       <div className="flex flex-col h-full justify-between gap-4">
@@ -99,9 +107,14 @@ const MasterCardInfo: React.FC<Props> = ({
       </div>
       <Skeleton loading={isLoading} active>
         <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
-          <div className='flex items-center justify-between'>
+          <div className="flex items-center justify-between">
             <p className="mb-2 text-2xl font-bold">Profile:</p>
-            <p className="mb-2">Profile:</p>
+            <div
+              onClick={openSendModal}
+              className="bg-green-500 p-2 rounded-xl text-white px-5 cursor-pointer"
+            >
+              Send Massage
+            </div>
           </div>
           <p className="mb-2">
             <strong>Время записи:</strong> {OrderEnterTime} : {OrderEndTime}
@@ -140,6 +153,26 @@ const MasterCardInfo: React.FC<Props> = ({
           </Button>
         </div>
       </Modal>
+      <Modal isOpen={SendOpen} onClose={closeSendModal}>
+        <div className="w-[45rem]">
+          <p className="text-2xl text-black dark:text-white">Send massage:</p>
+          <TextArea
+            className="mt-4"
+            rows={4}
+            placeholder="Enter your massage"
+          />
+          <div className="flex items-center justify-center">
+            <Button
+              onClick={toas}
+              className="text-white mt-4 px-50"
+              size="large"
+            >
+              Send
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <Toaster position='top-center' reverseOrder={false}/>
     </div>
   );
 };
