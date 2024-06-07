@@ -25,7 +25,6 @@ const Calendar: React.FC = () => {
     category,
     setCalendarData,
     calendarData,
-    setDistrictData,
     districtData,
     setRegionData,
     regionData,
