@@ -22,7 +22,7 @@ export const getMe = (token?: string) => {
 };
 
 // swagger url
-const base_url: string = 'http://45.67.35.86:8080/';
+const base_url: string = 'http://192.168.0.103/';
 
 // get region url
 export const region_url: string = `${base_url}region`;
