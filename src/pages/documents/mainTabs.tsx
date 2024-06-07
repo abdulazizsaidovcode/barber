@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { Tabs } from 'antd';
 import All from './all';
 import MasterDocument from './masterDocument';
+import ClientDocument from './clientTab';
 
 
 const onChange = (key: string) => {
@@ -36,8 +37,8 @@ const items = [
       <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
         Клиенты
       </span>
-    )
-
+    ),
+    children: <ClientDocument/>
   }
 ];
 

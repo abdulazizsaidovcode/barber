@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { tarif_add_url, tarif_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface Data {
     id: number;
@@ -27,9 +27,7 @@ const TariffsFunctionality: React.FC = () => {
         try {
             const res = await axios.get(tarif_url, config);
             setData(res.data.body);
-        } catch (error) {
-            console.error(error);
-        }
+        } catch { }
     }
 
     const addData = async (name: string) => {
@@ -38,9 +36,7 @@ const TariffsFunctionality: React.FC = () => {
             fetchData(); // Refresh data after adding a new tariff
             toast.success('Tariff added successfuly')
             closeModal();
-        } catch (error) {
-            console.error(error);
-        }
+        } catch { }
     }
 
     const closeModal = () => {
@@ -62,7 +58,7 @@ const TariffsFunctionality: React.FC = () => {
             <Link to={link}>
                 <div className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
                     <p className='font-bold text-black dark:text-white'>{title}</p>
-                    <p>{functions}</p>  
+                    <p>{functions}</p>
                     <p>{sum}</p>
                 </div>
             </Link>
@@ -107,6 +103,10 @@ const TariffsFunctionality: React.FC = () => {
                     </div>
                 </div>
             </Modal>
+            <Toaster
+                position='top-center'
+                reverseOrder={false}
+            />
         </>
     );
 }

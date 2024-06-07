@@ -17,7 +17,7 @@ interface SecondTabData {
 interface DetailsSecondTabProps {
   data: SecondTabData;
   setData: React.Dispatch<React.SetStateAction<SecondTabData>>;
-  onSave: () => void
+  onSave: () => void;
 }
 
 const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSave }) => {
@@ -48,6 +48,10 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
     }
   };
 
+  const handleCheckboxChange = (field: keyof SecondTabData, isChecked: boolean) => {
+    setData(prevData => ({ ...prevData, [field]: isChecked ? 0 : prevData[field] }));
+  };
+
   return (
     <>
       <Modal
@@ -69,7 +73,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                 <FunctionlityCard editOnClick={() => showModal('bookingDuration')} title={`${data.bookingDuration}`} />
               </div>
               <div className='w-[30%] flex items-center justify-between'>
-                <Checkbox className='dark:text-white'>Не ограничено</Checkbox>
+                <Checkbox
+                  className='dark:text-white'
+                  checked={data.bookingDuration === 0}
+                  onChange={(e) => handleCheckboxChange('bookingDuration', e.target.checked)}
+                >
+                  Не ограничено
+                </Checkbox>
               </div>
             </div>
           </Accordion>
@@ -79,7 +89,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                 <FunctionlityCard editOnClick={() => showModal('bookingPerMonth')} title={`${data.bookingPerMonth}`} />
               </div>
               <div className='w-[30%] flex items-center justify-between'>
-                <Checkbox className='dark:text-white'>Не ограничено</Checkbox>
+                <Checkbox
+                  className='dark:text-white'
+                  checked={data.bookingPerMonth === 0}
+                  onChange={(e) => handleCheckboxChange('bookingPerMonth', e.target.checked)}
+                >
+                  Не ограничено
+                </Checkbox>
               </div>
             </div>
           </Accordion>
@@ -89,7 +105,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                 <FunctionlityCard editOnClick={() => showModal('prePaymentCount')} title={`${data.prePaymentCount}`} />
               </div>
               <div className='w-[30%] flex items-center justify-between'>
-                <Checkbox className='dark:text-white'>Не ограничено</Checkbox>
+                <Checkbox
+                  className='dark:text-white'
+                  checked={data.prePaymentCount === 0}
+                  onChange={(e) => handleCheckboxChange('prePaymentCount', e.target.checked)}
+                >
+                  Не ограничено
+                </Checkbox>
               </div>
             </div>
           </Accordion>
@@ -103,7 +125,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                   <FunctionlityCard editOnClick={() => showModal('numberOfAlbums')} title={`${data.numberOfAlbums}`} />
                 </div>
                 <div className='w-[30%] flex items-center justify-between'>
-                  <Checkbox className='dark:text-white flex items-center'>Не ограничено</Checkbox>
+                  <Checkbox
+                    className='dark:text-white'
+                    checked={data.numberOfAlbums === 0}
+                    onChange={(e) => handleCheckboxChange('numberOfAlbums', e.target.checked)}
+                  >
+                    Не ограничено
+                  </Checkbox>
                 </div>
               </div>
             </div>
@@ -114,7 +142,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                   <FunctionlityCard editOnClick={() => showModal('numberOfFoto')} title={`${data.numberOfFoto}`} />
                 </div>
                 <div className='w-[30%] flex items-center justify-between'>
-                  <Checkbox className='dark:text-white flex items-center'>Не ограничено</Checkbox>
+                  <Checkbox
+                    className='dark:text-white'
+                    checked={data.numberOfFoto === 0}
+                    onChange={(e) => handleCheckboxChange('numberOfFoto', e.target.checked)}
+                  >
+                    Не ограничено
+                  </Checkbox>
                 </div>
               </div>
             </div>

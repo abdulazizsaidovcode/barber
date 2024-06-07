@@ -6,6 +6,7 @@ import DeatilsFirstTab from './DeatilsFirstTab';
 import axios from 'axios';
 import { tarif_detail, tarif_put_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface FuncReq {
   number: number;
@@ -58,9 +59,7 @@ const TariffDetail: React.FC = () => {
         monthPrice: res.data.body.monthPrice,
         yearPrice: res.data.body.yearPrice
       });
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
+    } catch { }
   };
 
   const updateData = async () => {
@@ -79,11 +78,9 @@ const TariffDetail: React.FC = () => {
       yearPrice: secondTabData.yearPrice
     };
     try {
-      const res = await axios.put(tarif_put_url, payload, config);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+      await axios.put(tarif_put_url, payload, config);
+      toast.success('Tariff updated successfuly')
+    } catch { }
   };
 
   const onChange = (key: string) => {
@@ -127,6 +124,10 @@ const TariffDetail: React.FC = () => {
           </Tabs.TabPane>
         ))}
       </Tabs>
+      <Toaster
+        position='top-center'
+        reverseOrder={false}
+      />
     </DefaultLayout>
   );
 };

@@ -35,7 +35,7 @@ const RequestNewMasters: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='flex mt-5 gap-x-19 gap-y-8 flex-wrap px-5'>
+        <div className='flex mt-5 gap-x-3 gap-y-8 flex-wrap px-5'>
           <NewMastersCard
             salonName='Beauty wave'
             salonCategory='Парикмахер, стилист, Барбер'
