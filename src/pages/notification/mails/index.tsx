@@ -1,65 +1,104 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, DatePickerProps, Select } from 'antd';
-import { Product } from '../../../types/product';
-import ProductOne from '../../../images/product/product-01.png';
-import ProductTwo from '../../../images/product/product-02.png';
-import ProductThree from '../../../images/product/product-03.png';
-import ProductFour from '../../../images/product/product-04.png';
+import { DatePicker, DatePickerProps, Dropdown, Menu, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import AddMails from './addMails';
 import { TbArrowBigLeftFilled } from 'react-icons/tb';
 import { Moment } from 'moment';
+import MailStore from '../../../helpers/state_managment/chat/mailStore';
+import MasterTable from '../../../components/Tables/MasterTable';
+import { truncateText } from '../../../helpers/splitText';
+import { PiDotsThreeOutlineVertical } from "react-icons/pi";
+import Modal from '../../../components/modals/modal';
+import axios from 'axios';
+import { newsletters_url } from '../../../helpers/api';
+import { config } from '../../../helpers/token';
+import toast from 'react-hot-toast';
+import { GetChatLetters } from '../../../helpers/api-function/chat/mail';
+import { MdOutlineSpeakerNotesOff } from 'react-icons/md';
 
-const productData: Product[] = [
-    {
-        image: ProductOne,
-        name: 'Apple Watch Series 7',
-        category: 'Electronics',
-        price: 296,
-        sold: 22,
-        profit: 45,
-    },
-    {
-        image: ProductTwo,
-        name: 'Macbook Pro M1',
-        category: 'Electronics',
-        price: 546,
-        sold: 12,
-        profit: 125,
-    },
-    {
-        image: ProductThree,
-        name: 'Dell Inspiron 15',
-        category: 'Electronics',
-        price: 443,
-        sold: 64,
-        profit: 247,
-    },
-    {
-        image: ProductFour,
-        name: 'HP Probook 450',
-        category: 'Electronics',
-        price: 499,
-        sold: 72,
-        profit: 103,
-    },
-];
 
 const ChatTable: React.FC = () => {
-    
+    const { chatData, setLetterData } = MailStore();
 
     const [dates, setDate] = useState<Moment | any | null>(null);
     const [showAddMails, setShowAddMails] = useState(false);
+    const [selectedMailId, setSelectedMailId] = useState<number | null>(null);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [options, setOptions] = useState<{ value: string, label: string }[]>([]);
 
-    const handleChange: DatePickerProps['onChange'] = (date, dateString) => {
+    const handleChange: DatePickerProps['onChange'] = (date) => {
         setDate(date);
         if (date) {
-            console.log('Selected Date: ', dateString); // Tanlangan sana
-            console.log('Year: ', date.year());
-            console.log('Month: ', date.month() + 1); // `moment.js` da oy 0-dan boshlanadi, shuning uchun +1 qilish kerak
-            console.log('Day: ', date.date());
+            GetChatLetters({
+                date: `${date.year()}-${date.month() < 10 ? `0${date.month() + 1}` : date.month() + 1}-${date.date() < 10 ? `0${date.date()}` : date.date()}`,
+                setLetterData: setLetterData
+            });
         }
     };
+
+    const handleChangeTema: any = (date: any) => {
+        if (date) {
+            GetChatLetters({
+                subject: date,
+                setLetterData: setLetterData
+            });
+        }
+    };
+
+    useEffect(() => {
+        const newOptions = chatData.map((item: any) => ({
+            value: item.content,
+            label: item.content,
+        }));
+        setOptions(newOptions);
+    }, [chatData]);
+
+    const thead = [
+        { id: 1, name: 'Картинка' },
+        { id: 2, name: 'Тема' },
+        { id: 3, name: 'Кому' },
+        { id: 4, name: 'Дата' },
+        { id: 5, name: 'Вложения' },
+        { id: 6, name: 'Описание' },
+        { id: 7, name: ' ' },
+    ];
+
+    const openModal = () => {
+        setModalOpen(!modalOpen);
+    };
+
+    const handleMenuClick = (id: number) => {
+        setSelectedMailId(id);
+        openModal();
+    };
+
+    function deleteMail(id: any) {
+        if (selectedMailId) {
+            axios.delete(`${newsletters_url}?id=${id}`, config)
+                .then(res => {
+                    GetChatLetters({
+                        setLetterData: setLetterData
+                    });
+                    openModal()
+                    toast.success('Успешно удалено');
+                }).catch(err => {
+                    console.error(err.data);
+                })
+        }
+    }
+
+    const items = (id: number) => [
+        {
+            key: '1',
+            onClick: () => { },
+            label: "Открыть",
+        },
+        {
+            key: '2',
+            onClick: () => handleMenuClick(id),
+            label: "Удалить",
+        },
+    ];
 
     return (
         <section>
@@ -80,11 +119,8 @@ const ChatTable: React.FC = () => {
                             defaultValue='Тема'
                             style={{ width: 120 }}
                             showSearch
-                            options={[
-                                { value: 'Тема', label: 'Тема', disabled: true },
-                                { value: '2025', label: '2025' },
-                                { value: '2026', label: '2026' },
-                            ]}
+                            onChange={handleChangeTema}
+                            options={[...options]}
                         />
                         <DatePicker
                             className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
@@ -95,72 +131,68 @@ const ChatTable: React.FC = () => {
                             <Buttons>Создать рассылку</Buttons>
                         </div>
                     </div>
-                    <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>
-                        <div className='py-6 px-4 md:px-6 xl:px-7.5'>
-                            <h4 className='text-xl font-semibold text-black dark:text-white'>
-                                Top Products
-                            </h4>
-                        </div>
-                        <div className='grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5'>
-                            <div className='col-span-3 flex items-center'>
-                                <p className='font-medium'>Картинка</p>
-                            </div>
-                            <div className='col-span-2 hidden items-center sm:flex'>
-                                <p className='font-medium'>Тема</p>
-                            </div>
-                            <div className='col-span-1 flex items-center'>
-                                <p className='font-medium'>Кому</p>
-                            </div>
-                            <div className='col-span-1 flex items-center'>
-                                <p className='font-medium'>Дата</p>
-                            </div>
-                            <div className='col-span-1 flex items-center'>
-                                <p className='font-medium'>Вложения</p>
-                            </div>
-                            <div className='col-span-1 flex items-center'>
-                                <p className='font-medium'>Описание</p>
-                            </div>
-                        </div>
-                        {productData.map((product, key) => (
-                            <div
-                                className='grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5'
-                                key={key}
-                            >
-                                <div className='col-span-3 flex items-center'>
-                                    <div className='flex flex-col gap-4 sm:flex-row sm:items-center'>
-                                        <div className='h-12.5 w-15 rounded-md'>
-                                            <img src={product.image} alt='Product' />
-                                        </div>
-                                        <p className='text-sm text-black dark:text-white'>
-                                            {product.name}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className='col-span-2 hidden items-center sm:flex'>
-                                    <p className='text-sm text-black dark:text-white'>
-                                        {product.category}
-                                    </p>
-                                </div>
-                                <div className='col-span-1 flex items-center'>
-                                    <p className='text-sm text-black dark:text-white'>
-                                        ${product.price}
-                                    </p>
-                                </div>
-                                <div className='col-span-1 flex items-center'>
-                                    <p className='text-sm text-black dark:text-white'>
-                                        {product.sold}
-                                    </p>
-                                </div>
-                                <div className='col-span-1 flex items-center'>
-                                    <p className='text-sm text-meta-3'>
-                                        ${product.profit}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+
+                    <MasterTable thead={thead}>
+                        {chatData.length > 0 ? (
+                            chatData.map((item, key) => (
+                                <tr
+                                    key={item.id}
+                                    className='border-b border-[#eee] dark:border-strokedark'
+                                >
+                                    <td className='min-w-[150px] p-5'>
+                                        <img
+                                            src={item.attachmentId ? item.attachmentId : ""}
+                                            alt="img"
+                                            className='w-16 h-10 scale-[1.4] rounded-md bg-gray p-2 object-cover'
+                                        />
+                                    </td>
+                                    <td className="min-w-[150px] p-5">
+                                        <p className="text-black dark:text-white">{item.subject}</p>
+                                    </td>
+                                    <td className="min-w-[150px] p-5">
+                                        <p className="text-black dark:text-white">{item.toWhom}</p>
+                                    </td>
+                                    <td className="min-w-[150px] p-5">
+                                        <p className="text-black dark:text-white">{item.date}</p>
+                                    </td>
+                                    <td className="min-w-[150px] p-5">
+                                        <p className="text-black dark:text-white">{truncateText(item.fileId, 10)}</p>
+                                    </td>
+                                    <td className="min-w-[150px] p-5">
+                                        <p className="text-black dark:text-white">{truncateText(item.content, 30)}</p>
+                                    </td>
+                                    <td className="min-w-[150px] p-5">
+                                        <Dropdown overlay={<Menu items={items(item.id)} />} placement="bottomLeft" arrow>
+                                            <PiDotsThreeOutlineVertical />
+                                        </Dropdown>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr className='border-b border-[#eee] dark:border-strokedark flex justify-center md:w-[30vw] w-[100vw]'>
+                                <td
+                                    className="min-w-full text-center py-10 text-xl font-bold flex gap-5 items-center"
+                                    colSpan={12}
+                                >
+                                    <p>письмо недоступно!</p>
+                                    <MdOutlineSpeakerNotesOff />
+                                </td>
+                            </tr>
+                        )}
+                    </MasterTable>
                 </div>
             )}
+            <Modal isOpen={modalOpen} onClose={openModal}>
+                <div className='dark:text-gray-400 pt-10 px-10'>
+                    <div className='flex justify-center flex-col items-center mt-4'>
+                        <p>Вы уверены, что хотите открыть этот рассылки ?</p>
+                        <div className='flex gap-10 mt-16'>
+                            <Buttons bWidth={"w-40"} onClick={() => openModal()}>закрывать</Buttons>
+                            <Buttons bWidth={"w-40"} onClick={() => deleteMail(selectedMailId)}>удалить</Buttons>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </section>
     );
 };

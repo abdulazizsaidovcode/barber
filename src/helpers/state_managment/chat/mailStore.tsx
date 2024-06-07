@@ -10,26 +10,16 @@ interface ChatLetters {
   setLetterData: (val: Data[]) => void;
 }
 
-interface ChatDto {
-  attachmentIds: string[];
-  content: string;
-  createdAt: "3924-07-04T22:00:00.000+00:00";
-  id: number;
-  read: boolean;
-  recipientId: string;
-  replayDto: string | null;
-  senderId: string;
-}
 
 export interface Data {
   attachmentId: string | null;
-  chatDto: ChatDto;
-  name: string;
-  newMessageCount: number;
-  nickname: string | null;
-  phone: string;
-  status: null | string;
-  userId: string;
+  content: string;
+  date: string;
+  fileId: string;
+  fileName: string | null;
+  id: number;
+  subject: null | string;
+  toWhom: string;
 }
 
 const MailStore = create<ChatLetters>((set) => ({

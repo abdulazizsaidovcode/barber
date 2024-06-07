@@ -96,33 +96,36 @@ const Chatdetail: React.FC = () => {
 
   //  connect socket with sock js 
   const connect = () => {
-    const socket = new SockJS(sockjs_url);
-    const stomp = Stomp.over(socket);
+    if (adminId) {
+      const socket = new SockJS(sockjs_url);
+      const stomp = Stomp.over(socket);
 
-    stomp.connect({}, (frame: any) => {
-      console.log('Connected: ' + frame);
-      setStompClient(stomp);
-      stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
-        const receivedMessages = JSON.parse(response.body);
-        setMessages((prevState: any) => [...prevState, receivedMessages]);
+      stomp.connect({}, (frame: any) => {
+        console.log('Connected: ' + frame);
+        setStompClient(stomp);
+        stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
+          const receivedMessages = JSON.parse(response.body);
+          setMessages((prevState: any) => [...prevState, receivedMessages]);
 
+        });
+      }, (error: any) => {
+        console.error('Error connecting: ', error);
       });
-    }, (error: any) => {
-      console.error('Error connecting: ', error);
-    });
-    // onStompError: (frame) => {
-    //       console.error('Error: ' + frame.headers['message']);
-    //     },
-    //     onDisconnect(frame) {
-    //       console.error('Error: ' + frame.headers['message']);
-    //     },
-    //     onWebSocketError(res){
-    //       console.log(res)
-    //     }
-    //   });
-    //   client.activate();
-    //   setStompClient(client);
-  };
+      // onStompError: (frame) => {
+      //       console.error('Error: ' + frame.headers['message']);
+      //     },
+      //     onDisconnect(frame) {
+      //       console.error('Error: ' + frame.headers['message']);
+      //     },
+      //     onWebSocketError(res){
+      //       console.log(res)
+      //     }
+      //   });
+      //   client.activate();
+      //   setStompClient(client);
+    };
+  }
+
 
   const sendMessage = () => {
     const chatMessage = {

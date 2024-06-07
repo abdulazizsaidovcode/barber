@@ -22,7 +22,7 @@ const Natification = () => {
     GetChatLetters({
       setLetterData: setLetterData
     });
-  }, [setLetterData]);
+  }, [setLetterData]); 
 
   useEffect(() => {
     if (role === 'master') {
