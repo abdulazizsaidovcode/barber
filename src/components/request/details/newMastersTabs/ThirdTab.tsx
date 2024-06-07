@@ -43,11 +43,11 @@ const ThirdTab: React.FC<{ onClose: () => void, openReasonModal: () => void }> =
         </button>
         <button className="py-2 px-7 bg-[#c2c2c2] rounded-xl text-[#000] dark:bg-danger dark:text-white">
           Одобрить
-        </button>
+        </button>                         
       </div>
       <Modal isOpen={imgIsOpen} onClose={closeImgModal}>
-        <div className="flex justify-center items-center h-full w-full">
-          <img className="max-w-full max-h-full rounded-md" src={img} alt="Modal Image" />
+        <div className="flex justify-center items-center h-[350px] w-[600px]">
+          <img className="h-[350px] w-[600px] rounded-md" src={img} alt="Modal Image" />
         </div>
       </Modal>
 

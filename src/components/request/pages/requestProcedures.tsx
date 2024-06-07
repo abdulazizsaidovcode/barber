@@ -33,7 +33,7 @@ const RequestProcedures: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='flex mt-5 gap-x-10 gap-y-8 flex-wrap px-5'>
+        <div className='flex mt-5 gap-x-6 gap-y-8 flex-wrap px-5'>
           <SpecializationsCard
             ownerImage={opacha}
             salonOwner='Малика Махмудова'

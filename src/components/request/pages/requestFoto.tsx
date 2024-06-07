@@ -25,7 +25,7 @@ const RequestFoto: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='flex mt-5 gap-x-7 gap-y-8 flex-wrap px-5'>
+        <div className='flex mt-5 gap-x-3 gap-y-8 flex-wrap px-5'>
           <FotoCard
             ownerImage={opacha}
             salonOwner='Малика Махмудова'

@@ -18,8 +18,8 @@ const SecondTab: React.FC = () => {
         openModal={openModal}
       />
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="flex justify-center items-center h-full w-full">
-          <img className="max-w-full max-h-full rounded-md" src={img} alt="Modal Image" />
+        <div className="flex justify-center items-center h-[350px] w-[600px]">
+          <img className=" h-[350px] w-[600px] rounded-md" src={img} alt="Modal Image" />
         </div>
       </Modal>
     </div>

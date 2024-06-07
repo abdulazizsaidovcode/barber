@@ -1,36 +1,67 @@
-import React, { useState } from 'react'
-import RequestLayout from '../../../pages/request/request'
-import NewMastersCard from '../cards/newMastersCard'
+import React, { useEffect, useState, useCallback } from 'react';
+import RequestLayout from '../../../pages/request/request';
+import NewMastersCard from '../cards/newMastersCard';
 import { GoPlus } from "react-icons/go";
 import { CiMenuKebab } from "react-icons/ci";
-import opacha from '../../../images/Group 940396.png'
 import NewMastersDetail from '../details/newMastersDetail';
 import Modal from '../../modals/modal';
 import axios from 'axios';
 import { new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 
+interface Data {
+  id: string;
+  address: string;
+  categoryIsNew: string;
+  categoryName: string[];
+  createdAt: string;
+  salonName: string;
+  firstName: string;
+  lastName: string;
+  attachmentId: string;
+  phoneNumber: string;
+}
+
 const RequestNewMasters: React.FC = () => {
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [reasonIsOpen, setReasonIsOpen] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Data[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = useCallback(async () => {
     try {
       const res = await axios.get(new_masters_url, config);
-      console.log(res.data.body);
-    } catch { }
-  }
+      setData(res.data.body);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
-  const openDetailModal = () => setDetailIsOpen(true)
-  const closeDetailModal = () => setDetailIsOpen(false)
+  const openDetailModal = () => setDetailIsOpen(true);
+  const closeDetailModal = () => setDetailIsOpen(false);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <RequestLayout>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5'>
-        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center  px-5'>
+        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
@@ -47,19 +78,27 @@ const RequestNewMasters: React.FC = () => {
           </div>
         </div>
         <div className='flex mt-5 gap-x-3 gap-y-8 flex-wrap px-5'>
-          <NewMastersCard
-            salonName='Beauty wave'
-            salonCategory='Парикмахер, стилист, Барбер'
-            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
-            ownerImage={opacha}
-            salonOwner='Малика Махмудова'
-            phoneNumber='+998931716380'
-            salonCreateDate='10.07.2022'
-            modal={openDetailModal}
-          />
+          {data.map((item, index) => (
+            <div key={index}>
+              <NewMastersCard
+                salonName={`${item.salonName}`}
+                salonCategory={`${item.categoryName}`}
+                salonAddress={`${item.address}`}
+                ownerImage={item.attachmentId}
+                salonOwner={`${item.firstName} ${item.lastName}`}
+                phoneNumber={`${item.phoneNumber}`}
+                salonCreateDate={`${item.createdAt}`}
+                modal={openDetailModal}
+              />
+            </div>
+          ))}
         </div>
       </div>
-      <NewMastersDetail isOpen={detailIsOpen} onClose={closeDetailModal} openReasonModal={openReasonModal} />
+      <NewMastersDetail
+        isOpen={detailIsOpen}
+        onClose={closeDetailModal}
+        openReasonModal={openReasonModal}
+      />
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className='w-[700px] h-[320px]'>
           <div>
@@ -83,7 +122,7 @@ const RequestNewMasters: React.FC = () => {
         </div>
       </Modal>
     </RequestLayout>
-  )
-}
+  );
+};
 
-export default RequestNewMasters
+export default RequestNewMasters;

@@ -43,7 +43,7 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({ isOpen, openReasonModal,
     },
   ];
   return (
-    <Modal isOpen={isOpen} onClose={onClose} mt='mt-[500px]'>
+    <Modal isOpen={isOpen} onClose={onClose} mt='mt-[550px]'>
       <div className='w-[1300px] h-[1100px]'>
         <Tabs
           className="dark:bg-boxdark bg-white p-2 w-full"
