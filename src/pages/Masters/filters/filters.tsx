@@ -10,7 +10,7 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const Filters: React.FC = () => {
-  const { setData, setTotalPage, setDistrictData, setFilters, regionData, districtData, filters, filterObj } = masterStore();
+  const { setData, setTotalPage, setDistrictData, setFilters, regionData, districtData, filters, filterObj, category } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -19,6 +19,7 @@ const Filters: React.FC = () => {
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       districtId: filters.cityValue ? filters.cityValue : '',
+      categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
       workPlace: filters.placeOfWorkValue ? filters.placeOfWorkValue : '',
@@ -124,8 +125,9 @@ const Filters: React.FC = () => {
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
               >
-                <Option value="">salom</Option>
-                <Option value="">nima gap</Option>
+                {category.length > 0 && category.map(item => (
+                  <Option value={item.id} key={item.id}>{item.name}</Option>
+                ))}
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
