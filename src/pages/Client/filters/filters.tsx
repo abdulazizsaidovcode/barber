@@ -1,4 +1,4 @@
-import { Button, Col, DatePicker, Input, Row, Select, Table } from "antd";
+import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import { IoSearchOutline } from "react-icons/io5";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
@@ -98,31 +98,6 @@ const Filters: React.FC = () => {
       backgroundColor: "#f0f0f0",
     },
   };
-
-  // Define columns for the Table
-  const columns = [
-    {
-      title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
-    },
-    {
-      title: "Region",
-      dataIndex: "region",
-      key: "region",
-    },
-    {
-      title: "District",
-      dataIndex: "district",
-      key: "district",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-    // Add other columns as needed
-  ];
 
   return (
     <div style={styles.mainContainer}>

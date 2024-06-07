@@ -45,7 +45,6 @@ const Calendar: React.FC = () => {
     return { value: item.id, label: item.name };
   }) || [];
 
-  console.log(regionData);
 
   const fetchCalendarData = () => {
     if (currentDate && isMonth !== null) {
@@ -108,7 +107,6 @@ const Calendar: React.FC = () => {
 
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
-  console.log(calendarData);
 
   const events: Event[] = calendarData.flatMap((item) => {
     const dateTime = item.time ? `${item.date}T${item.time}` : `${item.date}`;
