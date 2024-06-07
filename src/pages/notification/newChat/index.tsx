@@ -94,60 +94,62 @@ function NewChat() {
 
 
     return (
-        <div className=' z-0 '>
-            <div onClick={openModal}>
+        <section>
+            <div className='relative z-0' onClick={openModal}>
                 <Buttons>Начать</Buttons>
             </div>
-            <Modal isOpen={modalOpen} onClose={openModal}>
-                <div className='dark:text-gray-400'>
-                    <div className='flex gap-10'>
-                        <div>
-                            <p>Имя или фамилия мастера:</p>
-                            <Select
-                                className='z-100 w-full mt-3'
-                                placeholder="выберите номер"
-                                value={recipientName || undefined} // Use value instead of defaultValue
-                                showSearch
-                                onChange={handleChange}
-                                onBlur={() => setRecipientName(recipientName)} // Close the Select on blur
-                            >
-                                {datas && datas.map((item: any) => (
-                                    <Option key={item.id} value={item.fullName}>{item.fullName}</Option>
-                                ))}
-                            </Select>
+            <div className='z-1'>
+                <Modal isOpen={modalOpen} onClose={openModal}>
+                    <div className='dark:text-gray-400'>
+                        <div className='flex gap-10'>
+                            <div>
+                                <p>Имя или фамилия мастера:</p>
+                                <Select
+                                    className='z-100 w-full mt-3'
+                                    placeholder="выберите номер"
+                                    value={recipientName || undefined} // Use value instead of defaultValue
+                                    showSearch
+                                    onChange={handleChange}
+                                    onBlur={() => setRecipientName(recipientName)} // Close the Select on blur
+                                >
+                                    {datas && datas.map((item: any) => (
+                                        <Option key={item.id} value={item.fullName}>{item.fullName}</Option>
+                                    ))}
+                                </Select>
+                            </div>
+                            <div>
+                                <p>Телефон мастера:</p>
+                                <Select
+                                    className='z-100 w-full mt-3'
+                                    placeholder="выберите номер"
+                                    value={recipientPhone || undefined} // Use value instead of defaultValue
+                                    showSearch
+                                    onChange={handleChange}
+                                    onBlur={() => setRecipientPhone(recipientPhone)} // Close the Select on blur
+                                >
+                                    {datas && datas.map((item: any) => (
+                                        <Option key={item.id} value={item.phoneNumber}>{item.phoneNumber}</Option>
+                                    ))}
+                                </Select>
+                            </div>
                         </div>
-                        <div>
-                            <p>Телефон мастера:</p>
-                            <Select
-                                className='z-100 w-full mt-3'
-                                placeholder="выберите номер"
-                                value={recipientPhone || undefined} // Use value instead of defaultValue
-                                showSearch
-                                onChange={handleChange}
-                                onBlur={() => setRecipientPhone(recipientPhone)} // Close the Select on blur
-                            >
-                                {datas && datas.map((item: any) => (
-                                    <Option key={item.id} value={item.phoneNumber}>{item.phoneNumber}</Option>
-                                ))}
-                            </Select>
+                        <div className='mt-5'>
+                            <label className="block mb-2 text-sm font-medium text-gray-900">Сообщение</label>
+                            <textarea id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-700 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                        </div>
+                        <div className='flex justify-center mt-4'>
+                            <div onClick={sentNotification}>
+                                <Buttons>Отправить</Buttons >
+                            </div>
                         </div>
                     </div>
-                    <div className='mt-5'>
-                        <label className="block mb-2 text-sm font-medium text-gray-900">Сообщение</label>
-                        <textarea id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-700 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
-                    </div>
-                    <div className='flex justify-center mt-4'>
-                        <div onClick={sentNotification}>
-                            <Buttons>Отправить</Buttons >
-                        </div>
-                    </div>
-                </div>
-            </Modal>
-            <Toaster
-                position="top-center"
-                reverseOrder={false}
-            />
-        </div>
+                </Modal>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+                />
+            </div>
+        </section>
     );
 }
 

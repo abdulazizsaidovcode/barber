@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { DatePicker, DatePickerProps, Select } from 'antd';
 import { Product } from '../../../types/product';
 import ProductOne from '../../../images/product/product-01.png';
 import ProductTwo from '../../../images/product/product-02.png';
 import ProductThree from '../../../images/product/product-03.png';
 import ProductFour from '../../../images/product/product-04.png';
-import { DatePicker, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import AddMails from './addMails';
 import { TbArrowBigLeftFilled } from 'react-icons/tb';
+import { Moment } from 'moment';
 
 const productData: Product[] = [
     {
@@ -44,16 +45,28 @@ const productData: Product[] = [
     },
 ];
 
-const ChatTable = () => {
-
+const ChatTable: React.FC = () => {
+    const [dates, setDate] = useState<Moment | any | null>(null);
     const [showAddMails, setShowAddMails] = useState(false);
+
+    const handleChange: DatePickerProps['onChange'] = (date, dateString) => {
+        setDate(date);
+        if (date) {
+            console.log('Selected Date: ', dateString); // Tanlangan sana
+            console.log('Year: ', date.year());
+            console.log('Month: ', date.month() + 1); // `moment.js` da oy 0-dan boshlanadi, shuning uchun +1 qilish kerak
+            console.log('Day: ', date.date());
+        } else {
+            console.log('No date selected');
+        }
+    };
 
     return (
         <section>
             {showAddMails ? (
                 <div className='pt-5'>
-                    <div onClick={() => setShowAddMails(false)} className='mb-5 flex'>
-                        <Buttons className="mb-5">
+                    <div className='mb-5 flex'>
+                        <Buttons onClick={() => setShowAddMails(false)}>
                             <TbArrowBigLeftFilled />
                         </Buttons>
                     </div>
@@ -64,83 +77,84 @@ const ChatTable = () => {
                     <div className='mb-5 flex gap-2'>
                         <Select
                             className='w-full md:w-40 lg:w-40 xl:w-40 dark:bg-gray-800 dark:text-white'
-                            defaultValue="Тема"
+                            defaultValue='Тема'
                             style={{ width: 120 }}
                             showSearch
                             options={[
-                                { value: 'Тема', label: 'Тема', disabled: true  },
+                                { value: 'Тема', label: 'Тема', disabled: true },
                                 { value: '2025', label: '2025' },
                                 { value: '2026', label: '2026' },
                             ]}
                         />
                         <DatePicker
-                            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white '
+                            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
                             placeholder='Дата'
-                            onChange={(e) => console.log(e)}
+                            onChange={handleChange}
                         />
                         <div onClick={() => setShowAddMails(true)}>
-                            <Buttons >
-                                Создать рассылку
-                            </Buttons>
+                            <Buttons>Создать рассылку</Buttons>
                         </div>
-
                     </div>
-                    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                        <div className="py-6 px-4 md:px-6 xl:px-7.5">
-                            <h4 className="text-xl font-semibold text-black dark:text-white">
+                    <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>
+                        <div className='py-6 px-4 md:px-6 xl:px-7.5'>
+                            <h4 className='text-xl font-semibold text-black dark:text-white'>
                                 Top Products
                             </h4>
                         </div>
-                        <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-                            <div className="col-span-3 flex items-center">
-                                <p className="font-medium">Картинка</p>
+                        <div className='grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5'>
+                            <div className='col-span-3 flex items-center'>
+                                <p className='font-medium'>Картинка</p>
                             </div>
-                            <div className="col-span-2 hidden items-center sm:flex">
-                                <p className="font-medium">Тема</p>
+                            <div className='col-span-2 hidden items-center sm:flex'>
+                                <p className='font-medium'>Тема</p>
                             </div>
-                            <div className="col-span-1 flex items-center">
-                                <p className="font-medium">Кому</p>
+                            <div className='col-span-1 flex items-center'>
+                                <p className='font-medium'>Кому</p>
                             </div>
-                            <div className="col-span-1 flex items-center">
-                                <p className="font-medium">Дата</p>
+                            <div className='col-span-1 flex items-center'>
+                                <p className='font-medium'>Дата</p>
                             </div>
-                            <div className="col-span-1 flex items-center">
-                                <p className="font-medium">Вложения</p>
+                            <div className='col-span-1 flex items-center'>
+                                <p className='font-medium'>Вложения</p>
                             </div>
-                            <div className="col-span-1 flex items-center">
-                                <p className="font-medium">Описание</p>
+                            <div className='col-span-1 flex items-center'>
+                                <p className='font-medium'>Описание</p>
                             </div>
                         </div>
                         {productData.map((product, key) => (
                             <div
-                                className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+                                className='grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5'
                                 key={key}
                             >
-                                <div className="col-span-3 flex items-center">
-                                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                                        <div className="h-12.5 w-15 rounded-md">
-                                            <img src={product.image} alt="Product" />
+                                <div className='col-span-3 flex items-center'>
+                                    <div className='flex flex-col gap-4 sm:flex-row sm:items-center'>
+                                        <div className='h-12.5 w-15 rounded-md'>
+                                            <img src={product.image} alt='Product' />
                                         </div>
-                                        <p className="text-sm text-black dark:text-white">
+                                        <p className='text-sm text-black dark:text-white'>
                                             {product.name}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="col-span-2 hidden items-center sm:flex">
-                                    <p className="text-sm text-black dark:text-white">
+                                <div className='col-span-2 hidden items-center sm:flex'>
+                                    <p className='text-sm text-black dark:text-white'>
                                         {product.category}
                                     </p>
                                 </div>
-                                <div className="col-span-1 flex items-center">
-                                    <p className="text-sm text-black dark:text-white">
+                                <div className='col-span-1 flex items-center'>
+                                    <p className='text-sm text-black dark:text-white'>
                                         ${product.price}
                                     </p>
                                 </div>
-                                <div className="col-span-1 flex items-center">
-                                    <p className="text-sm text-black dark:text-white">{product.sold}</p>
+                                <div className='col-span-1 flex items-center'>
+                                    <p className='text-sm text-black dark:text-white'>
+                                        {product.sold}
+                                    </p>
                                 </div>
-                                <div className="col-span-1 flex items-center">
-                                    <p className="text-sm text-meta-3">${product.profit}</p>
+                                <div className='col-span-1 flex items-center'>
+                                    <p className='text-sm text-meta-3'>
+                                        ${product.profit}
+                                    </p>
                                 </div>
                             </div>
                         ))}

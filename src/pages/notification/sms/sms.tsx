@@ -4,28 +4,11 @@ import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';
 import { IoSend } from 'react-icons/io5';
 import Notselected from '../components/notselected';
-interface SmsProp {
-  senderId: string | null,
-  sendMessage: () => void,
-  chat: ChatList[],
-  content: string
-  setContent: (val: string) => void
-}
-interface ChatList {
-  content: string,
-  senderName: string
-  createdAt: string,
-  id: string,
-  read: boolean,
-  recipientId: string,
-  replayDto: string | null,
-  senderId: string,
-  userImgId: string | null,
-  receiverName: string,
-}
+import { ChatSentSmsType, ChatSentSmstList } from '../../../types/chat';
 
-const Sms = ({ senderId, sendMessage, chat, setContent, content }: SmsProp) => {
-  const [chats, setChats] = useState<ChatList[]>([]);
+
+const Sms = ({ senderId, sendMessage, chat, setContent, content }: ChatSentSmsType) => {
+  const [chats, setChats] = useState<ChatSentSmstList[]>([]);
   // const [content, setContent] = useState<any>('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -42,9 +25,6 @@ const Sms = ({ senderId, sendMessage, chat, setContent, content }: SmsProp) => {
   // useEffect(() => {
   //   contents(content)
   // }, [content]);
-
-  // sented qismini sozlash
-
 
 
   const formatDateTime = (dateTimeString: string) => {

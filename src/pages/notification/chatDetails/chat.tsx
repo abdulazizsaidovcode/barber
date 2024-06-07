@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
-import Chatusers from '../components/user';
+import ChatusersList from '../components/user';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -16,19 +16,15 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { config } from '../../../helpers/token.tsx';
 import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
-import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
 
 const Chatdetail: React.FC = () => {
   const { role, chatData, setChatData } = chatStore()
-  const { setData } = masterStore();
-
 
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
 
   const [recipientId, setRecipientId] = useState<string | null>(null);
-
   const [adminId, setAdminId] = useState<string | null>('');
 
   // const [chatData, setChatData] = useState<Data[]>([]);
@@ -238,13 +234,13 @@ const Chatdetail: React.FC = () => {
       {/* chat list */}
       <div className="flex w-[100%] h-full relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} z- top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5 y border md:py-5 h-full duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5  border md:py-5 h-full duration-300 flex flex-col`}>
           <div className='flex justify-end mb-4'>
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
             </button>
           </div>
-          <Chatusers user={chatData} role={role} userIds={setRecipientId} />
+          <ChatusersList user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative ">
           {recipientId ? <Sms senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} /> : <Notselected />}
