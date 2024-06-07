@@ -28,6 +28,9 @@ const base_url: string = 'http://192.168.0.103/';
 export const region_url: string = `${base_url}region`;
 export const district_url: string = `${base_url}district`;
 
+// child category list url
+export const child_category_list: string = `${base_url}category/child`;
+
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
 
