@@ -21,7 +21,7 @@ const TariffsFunctionality: React.FC = () => {
 
     useEffect(() => {
         fetchData();
-    }, []); // Empty dependency array to run only once on mount
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -33,7 +33,7 @@ const TariffsFunctionality: React.FC = () => {
     const addData = async (name: string) => {
         try {
             await axios.post(tarif_add_url, { name }, config);
-            fetchData(); // Refresh data after adding a new tariff
+            fetchData(); 
             toast.success('Tariff added successfuly')
             closeModal();
         } catch { }
@@ -41,7 +41,7 @@ const TariffsFunctionality: React.FC = () => {
 
     const closeModal = () => {
         setIsOpen(false);
-        setNewTariffName(''); // Clear input field when closing modal
+        setNewTariffName('');
     }
 
     const openModal = () => setIsOpen(true);
