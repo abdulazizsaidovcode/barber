@@ -84,7 +84,8 @@ export interface FilterTypes {
   cityValue: string | null;
   registrationPeriodValue: string | null;
   serviceCategoryValue: string | null;
-  scheduleTypeValue: string | null;
+  // reels two
+  // scheduleTypeValue: string | null;
   selfEmployedStatusValue: boolean | null;
   statusValue: string | null;
   placeOfWorkValue: string | null;
