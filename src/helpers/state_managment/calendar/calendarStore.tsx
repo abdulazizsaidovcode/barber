@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { CategoryChild, DistrictData, RegionData } from "../../../types/master";
 
 interface CategoryList {
   categoryFatherId: string | null;
@@ -31,6 +32,10 @@ interface CalendarStore {
   setDate: (val: string) => void;
   setLoading: (val: boolean) => void;
   setCalendarData: (val: CalendarData[]) => void;
+  regionData: RegionData[];
+  setRegionData: (val: RegionData[]) => void;
+  districtData: DistrictData[];
+  setDistrictData: (val: DistrictData[]) => void;
 }
 
 const calendarStore = create<CalendarStore>((set) => ({
@@ -64,6 +69,10 @@ const calendarStore = create<CalendarStore>((set) => ({
   setDate: (val: string) => set({ date: val }),
   setLoading: (val: boolean) => set({ loading: val }),
   setCalendarData: (val: CalendarData[]) => set({ calendarData: val }),
+  districtData: [],
+  setDistrictData: (val: DistrictData[]) => set({ districtData: val }),
+  regionData: [],
+  setRegionData: (val: RegionData[]) => set({ regionData: val }),
 }));
 
 export default calendarStore;
