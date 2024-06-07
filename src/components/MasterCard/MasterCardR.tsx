@@ -8,7 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 type MasterCardInfoProps = {
   MasterName: string;
-  MasterImg: string;
+  MasterImg: any;
   definitionType: string;
   Status: string;
   isLoading: boolean;
@@ -24,7 +24,15 @@ type MasterCardInfoProps = {
   Instagram: string;
   CompOrders: string;
   rejectedOrderCount: string;
-  Clients:string;
+  Clients: string;
+  Level: string;
+  StartData: string;
+  PlaceOfWork: string;
+  GenderType: [];
+  ServiceCategory: [];
+  Specialization: [];
+  scheduleType: string;
+  StatusNow: string;
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
@@ -45,7 +53,15 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   Instagram,
   CompOrders,
   rejectedOrderCount,
-  Clients
+  Clients,
+  Level,
+  StartData,
+  PlaceOfWork,
+  GenderType,
+  ServiceCategory,
+  Specialization,
+  scheduleType,
+  StatusNow,
 }) => {
   const { t } = useTranslation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -74,7 +90,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center">
               <div className="bg-green-500 rounded-[50%] w-3 h-3"></div>
-              <p>{MasterName}</p>
+              <p>{StatusNow}</p>
             </div>
             <div className="flex items-center justify-center border-black p-1 rounded-full">
               <img
@@ -143,47 +159,81 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <strong>Clients :</strong>
               <p>{Clients}</p>
             </div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Level :</strong>
+              <p>{Level}⭐</p>
+            </div>
+            <div className="flex items-center justify-between mt-4 ">
+              <strong>Start work :</strong>
+              <p>{StartData}</p>
+            </div>
           </div>
         </Skeleton>
       </div>
-      <Skeleton loading={isLoading} active>
-        <div className="bg-gray-100  dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
-          <div className="flex items-center justify-between">
-            <p className="mb-2 text-2xl font-bold">Profile:</p>
-            <div
-              onClick={openSendModal}
-              className="bg-green-500 p-2 rounded-xl text-white px-5 cursor-pointer"
-            >
-              Send Message
+      <div className="w-[100%] flex flex-col items-center justify-center gap-4">
+        <Skeleton loading={isLoading} active>
+          <div className="bg-gray-100  dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+            <div className="flex items-center justify-between">
+              <p className="  text-xl font-bold">Profile:</p>
+              <div
+                onClick={openSendModal}
+                className="bg-green-500 p-2 rounded-xl text-white px-3 cursor-pointer"
+              >
+                Send Message
+              </div>
             </div>
+            <div className="w-[100%]  bg-black h-[1px] flex items-center mb-4 mt-3 "></div>
+            <p className="mb-5">
+              <strong>Name:</strong> {MasterName}
+            </p>
+            <p className="mb-5">
+              <strong>SurName:</strong> {SurName}
+            </p>
+            <p className="mb-5">
+              <strong>User Name:</strong> {UserName}
+            </p>
+            <p className="mb-5">
+              <strong>Gender:</strong> {Gender}
+            </p>
+            <p className="mb-5">
+              <strong>Age:</strong> {Age}
+            </p>
+            <p className="mb-5">
+              <strong>Region:</strong> {Region}
+            </p>
+            <p className="mb-5">
+              <strong>City:</strong> {City}
+            </p>
+            <p className="mb-5">
+              <strong>Location:</strong> {Location}
+            </p>
           </div>
-          <div className="w-[100%]  bg-black h-[1px] flex items-center mb-4 mt-3"></div>
-          <p className="mb-5">
-            <strong>Name:</strong> {MasterName}
-          </p>
-          <p className="mb-5">
-            <strong>SurName:</strong> {SurName}
-          </p>
-          <p className="mb-5">
-            <strong>User Name:</strong> {UserName}
-          </p>
-          <p className="mb-5">
-            <strong>Gender:</strong> {Gender}
-          </p>
-          <p className="mb-5">
-            <strong>Age:</strong> {Age}
-          </p>
-          <p className="mb-5">
-            <strong>Region:</strong> {Region}
-          </p>
-          <p className="mb-5">
-            <strong>City:</strong> {City}
-          </p>
-          <p className="mb-5">
-            <strong>Location:</strong> {Location}
-          </p>
-        </div>
-      </Skeleton>
+        </Skeleton>
+        <Skeleton loading={isLoading} active>
+          <div className="bg-gray-100  dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+            <div className="flex items-center ">
+              <p className=" text-xl font-bold">Profession information:</p>
+            </div>
+            <div className="w-[100%]  bg-black h-[1px] flex items-center mb-4 mt-3 "></div>
+            <p className="mb-5">
+              <strong>Place of work:</strong> {PlaceOfWork}
+            </p>
+            <p className="mb-5">
+              <strong>Direction by gender:</strong> {GenderType}
+            </p>
+            <p className="mb-5">
+              <strong>Service category:</strong> {ServiceCategory}
+            </p>
+            <p className="mb-5">
+              <strong>Specialization:</strong> {Specialization}
+            </p>
+
+            <p className="mb-5">
+              <strong>Schedule Type :</strong> {scheduleType}
+            </p>
+          </div>
+        </Skeleton>
+      </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <p className="text-2xl font-bold">{t('Modal_answer')}</p>
         <div className="flex items-center justify-end mt-10 gap-4">
