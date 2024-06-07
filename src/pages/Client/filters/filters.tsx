@@ -1,7 +1,7 @@
+import React, { useState, useEffect } from "react";
 import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import { IoSearchOutline } from "react-icons/io5";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import React, { useState, useEffect } from "react";
 import moment from "moment";
 import MasterModal from "../client-modal.tsx";
 import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
@@ -48,7 +48,6 @@ const Filters: React.FC = () => {
 
     // Fetch clients data
     getClients(params);
-    
   }, [filters]);
 
   const handleInputChange = (key: string, value: any) => {
@@ -113,41 +112,44 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
+            placeholder="Region"
             style={styles.filterInput}
-            value={filters.regionId}
+            value={filters.regionId || 0}
             onChange={(value) => {
               handleInputChange("regionId", value);
               getDistrict(setDistrictData, value);
             }}
           >
-             {regionData.length > 0 ? (
-              <>
-                {regionData.map((item) => (
-                  <Option value={item.id} key={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </>
+            <Option value={0} disabled>
+              Select region
+            </Option>
+            {regionData.length > 0 ? (
+              regionData.map((item) => (
+                <Option value={item.id} key={item.id}>
+                  {item.name}
+                </Option>
+              ))
             ) : (
-              <Option disabled>No districts available</Option>
+              <Option disabled>No regions available</Option>
             )}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
+            placeholder="District"
             style={styles.filterInput}
-            value={filters.districtId}
+            value={filters.districtId || 0}
             onChange={(value) => handleInputChange("districtId", value)}
           >
-            <option selected disabled>Region</option>
+            <Option value={0} disabled>
+              Select district
+            </Option>
             {districtData.length > 0 ? (
-              <>
-                {districtData.map((item) => (
-                  <Option value={item.id} key={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </>
+              districtData.map((item) => (
+                <Option value={item.id} key={item.id}>
+                  {item.name}
+                </Option>
+              ))
             ) : (
               <Option disabled>No districts available</Option>
             )}
@@ -180,7 +182,7 @@ const Filters: React.FC = () => {
           <Row gutter={[16, 16]} style={{ marginTop: "10px" }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <DatePicker
-                placeholder={"Start date"}
+                placeholder="Start date"
                 style={styles.filterInput}
                 value={filters.startDate ? moment(filters.startDate) : null}
                 onChange={(date) => handleInputChange("startDate", date)}
@@ -188,7 +190,7 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <DatePicker
-                placeholder={"End date"}
+                placeholder="End date"
                 style={styles.filterInput}
                 value={filters.endDate ? moment(filters.endDate) : null}
                 onChange={(date) => handleInputChange("endDate", date)}
@@ -196,9 +198,9 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Status"
+                placeholder="Status"
                 style={styles.filterInput}
-                value={filters.status}
+                value={filters.status || null}
                 onChange={(value) => handleInputChange("status", value)}
               >
                 <Option value="ACTIVE">ACTIVE</Option>

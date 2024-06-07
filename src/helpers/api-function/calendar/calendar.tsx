@@ -72,10 +72,10 @@ export const getCalendar = ({
       if (res.data.success) {
         setData(res.data.body);
       } else {
-        console.log('Failed to fetch categories.');
+        setData([])
       }
     })
-    .catch((err) => {
-      console.error('Error fetching categories:', err);
+    .catch(() => {
+      setData([])
     });
   }

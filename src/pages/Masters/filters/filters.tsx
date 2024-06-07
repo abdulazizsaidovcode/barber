@@ -29,6 +29,8 @@ const Filters: React.FC = () => {
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       districtId: filters.cityValue ? filters.cityValue : '',
+      startDate: datePicker(0),
+      endDate: datePicker(1),
       categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
@@ -43,6 +45,21 @@ const Filters: React.FC = () => {
   const resetFilters = (): void => setFilters(filterObj);
   const handleInputChange = (key: string, value: any) => setFilters({ ...filters, [key]: value });
   const openModal = (): void => setIsModalOpen(!isModalOpen);
+
+  function datePicker(num: number) {
+    let date, month, year;
+
+    if (filters.registrationPeriodValue && filters.registrationPeriodValue[0]) {
+      date = filters.registrationPeriodValue[num].date();
+      month = filters.registrationPeriodValue[num].month() + 1;
+      year = filters.registrationPeriodValue[num].year();
+
+      if (month > 0 && month < 10) month = `0${month}`
+      if (date > 0 && date < 10) date = `0${date}`
+
+      return `${year}-${month}-${date}`;
+    }
+  }
 
   const styles = {
     mainContainer: {

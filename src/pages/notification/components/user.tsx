@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
 import admin from '../../../images/user/admin-panel.png';
-import { Data } from '../../../helpers/state_managment/chat/chatStore'
 import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
-interface Props {
-    user: Data[];
-    role: string;
-    userIds: any;
-}
-const Chatusers = ({ user, role, userIds }: Props) => {
+import { ChatusersListType } from '../../../types/chat';
+
+const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
     let i = 0
     const [userId, setUserId] = useState('');
     const [chatData, setChatData] = useState<any>([]);
@@ -70,4 +66,4 @@ const Chatusers = ({ user, role, userIds }: Props) => {
     )
 }
 
-export default Chatusers
+export default ChatusersList

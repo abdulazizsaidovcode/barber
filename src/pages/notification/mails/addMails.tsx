@@ -43,8 +43,6 @@ function AddMails() {
             toWhom
         };
         console.log(obj);
-
-
     };
 
     return (
