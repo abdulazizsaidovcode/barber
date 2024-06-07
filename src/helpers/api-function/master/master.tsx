@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { district_url, master_url, region_url } from '../../api.tsx';
+import { child_category_list, district_url, master_url, region_url } from '../../api.tsx';
 import { config } from '../../token.tsx';
 import { CategoryChild, Data, DistrictData, RegionData } from '../../../types/master.ts';
 
@@ -57,7 +57,6 @@ export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, dis
   if (districtId) {
     axios.get(`${district_url}?regionId=${districtId}`, config)
       .then(res => {
-        console.log(res);
         if (res.data.success === true) setDistrictData(res.data.body)
         else setDistrictData([])
       })
@@ -66,9 +65,8 @@ export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, dis
 };
 
 export const getCategory = (setCategoryChild: (data: CategoryChild[]) => void) => {
-  axios.get(``, config)
+  axios.get(child_category_list, config)
     .then(res => {
-      console.log(res);
       if (res.data.success === true) setCategoryChild(res.data.body);
       else setCategoryChild([])
     })

@@ -5,6 +5,7 @@ import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface StylesType {
   container: string;
@@ -32,6 +33,7 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     navigate(goPage)
+    toast.success('Tizimga muvaffaqiyatli kirdingiz✔')
   }, [goPage]);
 
   const styles: StylesType = {
@@ -45,6 +47,10 @@ export const Login: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <div className={styles.card}>
         <div className={`flex justify-center items-center`}>
           <img src={logo} alt={`bookers logo`} className={`w-24 h-24 rounded-full`} />
