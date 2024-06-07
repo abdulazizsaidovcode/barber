@@ -77,7 +77,10 @@ const TariffsFunctionality: React.FC = () => {
                     <div className='flex flex-wrap gap-5 mt-5'>
                         {data.map((item, index) => (
                             <div key={index}> {/* Added key prop */}
-                                <TariffsFunctionalityCard title={item.name} functions={`${item.functionCount} Функций`} sum={`${item.monthPrice === null ? '0' : item.monthPrice} сум`} link={`/settings/tariff/${item.id}`} />
+                                <TariffsFunctionalityCard
+                                    title={item.name} functions={item.functionCount == 0 ? 'не настроено' : `${item.functionCount} Функций`}
+                                    sum={item.monthPrice == 0 ? 'не настроено' : `${item.monthPrice} сум`} link={`/settings/tariff/${item.id}`}
+                                />
                             </div>
                         ))}
                     </div>

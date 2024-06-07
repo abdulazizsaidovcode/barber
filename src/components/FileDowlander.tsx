@@ -8,7 +8,12 @@ interface UploadedFile {
     type: string;
 }
 
-const FileUploader: React.FC = () => {
+interface FileUploaderProps {
+    id: string;
+    title?: string;
+}
+
+const FileUploader: React.FC<FileUploaderProps> = ({ id, title = "Вложения" }) => {
     const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
     const [removedFiles, setRemovedFiles] = useState<UploadedFile[]>([]);
 
@@ -36,7 +41,7 @@ const FileUploader: React.FC = () => {
     };
 
     const handleUploadButtonClick = () => {
-        const fileInput = document.getElementById('fileInput');
+        const fileInput = document.getElementById(id);
         if (fileInput) {
             fileInput.click();
         }
@@ -52,13 +57,12 @@ const FileUploader: React.FC = () => {
         return bytes / (1024 * 1024); // 1 megabayt = 1024 kilobayt * 1024
     };
 
-
     return (
         <div>
             {selectedFiles.length > 0 && (
                 <div className='flex w-[100%] flex-col flex-wrap'>
                     <div>
-                        <h2 className='my-3'>Вложения</h2>
+                        <h2 className='my-3'>{title}</h2>
                     </div>
                     <div className='flex gap-3 flex-wrap'>
                         {selectedFiles.map((file, index) => (
@@ -82,9 +86,9 @@ const FileUploader: React.FC = () => {
                     </div>
                 </div>
             )}
-            <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+            <input type="file" id={id} style={{ display: 'none' }} onChange={handleFileChange} />
             <button className='flex items-center my-3' onClick={handleUploadButtonClick}>Вложить файл<MdFileDownload className='ms-1 text-[#000] dark:text-white' /></button>
-        </div >
+        </div>
     );
 }
 

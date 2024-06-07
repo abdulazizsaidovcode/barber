@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
-import { MdEdit } from 'react-icons/md';
 import FileUploader from '../../components/FileDowlander';
 
 
@@ -18,7 +17,7 @@ const ClientDocument: React.FC = () => {
       <div className="flex flex-col gap-3 mb-3 ">
         <Accordion title='Пользовательское соглашение'>
           <div>
-            <FileUploader />
+            <FileUploader id='fileinput3'/>
           </div>
           <div className='flex gap-3'>
             <p>Отображать в приложениях</p>

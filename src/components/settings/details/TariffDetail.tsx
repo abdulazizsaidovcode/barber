@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs, Button } from 'antd';
 import DefaultLayout from '../../../layout/DefaultLayout';
-import DetailsSecondTab from './DeatilsSecondTab';
-import DeatilsFirstTab from './DeatilsFirstTab';
 import axios from 'axios';
 import { tarif_detail, tarif_put_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
+import DetailsSecondTab from './DeatilsSecondTab';
+import DetailsFirstTab from './DeatilsFirstTab';
 
 interface FuncReq {
   number: number;
@@ -39,7 +39,7 @@ const TariffDetail: React.FC = () => {
   const id = window.location.pathname.substring(17);
   useEffect(() => {
     fetchData(id);
-  }, [window.location.pathname]);
+  }, [id]);
 
   const fetchData = async (id: string) => {
     try {
@@ -59,7 +59,9 @@ const TariffDetail: React.FC = () => {
         monthPrice: res.data.body.monthPrice,
         yearPrice: res.data.body.yearPrice
       });
-    } catch { }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   const updateData = async () => {
@@ -69,19 +71,22 @@ const TariffDetail: React.FC = () => {
         number: Number(key),
         isActive: newState[Number(key)]
       })),
-      bookingDuration: secondTabData.bookingDuration,
-      bookingPerMonth: secondTabData.bookingPerMonth,
-      prePaymentCount: secondTabData.prePaymentCount,
-      numberOfAlbums: secondTabData.numberOfAlbums,
-      numberOfFoto: secondTabData.numberOfFoto,
-      monthPrice: secondTabData.monthPrice,
-      yearPrice: secondTabData.yearPrice
+      bookingDuration: secondTabData.bookingDuration ?? 0,
+      bookingPerMonth: secondTabData.bookingPerMonth ?? 0,
+      prePaymentCount: secondTabData.prePaymentCount ?? 0,
+      numberOfAlbums: secondTabData.numberOfAlbums ?? 0,
+      numberOfFoto: secondTabData.numberOfFoto ?? 0,
+      monthPrice: secondTabData.monthPrice ?? 0,
+      yearPrice: secondTabData.yearPrice ?? 0
     };
     try {
       await axios.put(tarif_put_url, payload, config);
-      toast.success('Tariff updated successfuly')
-    } catch { }
+      toast.success('Tariff updated successfully');
+    } catch (error) {
+      console.error('Error updating tariff:', error);
+    }
   };
+
 
   const onChange = (key: string) => {
     console.log(key);
@@ -95,7 +100,7 @@ const TariffDetail: React.FC = () => {
           Основной функционал
         </span>
       ),
-      children: <DeatilsFirstTab newState={newState} setNewState={setNewState} />,
+      children: <DetailsFirstTab newState={newState} setNewState={setNewState} />,
     },
     {
       key: '2',

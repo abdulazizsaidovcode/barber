@@ -86,3 +86,8 @@ export const postFilelist = `${base_url}attachment/upload/list`; // get chat lis
 
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url
+
+
+export const new_masters_url = `${base_url}user/web/new-master`; // newsletters url
+
+

@@ -6,10 +6,21 @@ import { CiMenuKebab } from "react-icons/ci";
 import opacha from '../../../images/Group 940396.png'
 import NewMastersDetail from '../details/newMastersDetail';
 import Modal from '../../modals/modal';
+import axios from 'axios';
+import { new_masters_url } from '../../../helpers/api';
+import { config } from '../../../helpers/token';
 
 const RequestNewMasters: React.FC = () => {
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [reasonIsOpen, setReasonIsOpen] = useState(false);
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(new_masters_url, config);
+      console.log(res.data.body);
+    } catch { }
+  }
 
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
@@ -46,46 +57,6 @@ const RequestNewMasters: React.FC = () => {
             salonCreateDate='10.07.2022'
             modal={openDetailModal}
           />
-          <NewMastersCard
-            salonName='Beauty wave'
-            salonCategory='Парикмахер, стилист, Барбер'
-            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
-            ownerImage={opacha}
-            salonOwner='Малика Махмудова'
-            phoneNumber='+998931716380'
-            salonCreateDate='10.07.2022'
-            modal={openDetailModal}
-          />
-          <NewMastersCard
-            salonName='Beauty wave'
-            salonCategory='Парикмахер, стилист, Барбер'
-            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
-            ownerImage={opacha}
-            salonOwner='Малика Махмудова'
-            phoneNumber='+998931716380'
-            salonCreateDate='10.07.2022'
-            modal={openDetailModal}
-          />
-          <NewMastersCard
-            salonName='Beauty wave'
-            salonCategory='Парикмахер, стилист, Барбер'
-            salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
-            ownerImage={opacha}
-            salonOwner='Малика Махмудова'
-            phoneNumber='+998931716380'
-            salonCreateDate='10.07.2022'
-            modal={openDetailModal}
-          />
-            <NewMastersCard
-              salonName='Beauty wave'
-              salonCategory='Парикмахер, стилист, Барбер'
-              salonAddress='Ташкентская область г. Ташкент ул. Алишера Навои, дом 62, кв 45'
-              ownerImage={opacha}
-              salonOwner='Малика Махмудова'
-              phoneNumber='+998931716380'
-              salonCreateDate='10.07.2022'
-              modal={openDetailModal}
-            />
         </div>
       </div>
       <NewMastersDetail isOpen={detailIsOpen} onClose={closeDetailModal} openReasonModal={openReasonModal} />

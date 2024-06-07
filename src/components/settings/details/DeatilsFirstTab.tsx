@@ -53,7 +53,6 @@ interface DetailsFirstTabProps {
 
 const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState }) => {
   useEffect(() => {
-    // Ensuring the initial state is set only once when the component mounts
     setNewState(newState);
   }, [newState, setNewState]);
 

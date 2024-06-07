@@ -70,7 +70,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
           <Accordion title='Ограничение длительности бронирования (день)'>
             <div className='flex justify-between'>
               <div className='w-[66%]'>
-                <FunctionlityCard editOnClick={() => showModal('bookingDuration')} title={`${data.bookingDuration}`} />
+                <FunctionlityCard editOnClick={() => showModal('bookingDuration')} title={data.bookingDuration === null ? "0" : `${data.bookingDuration}`} />
               </div>
               <div className='w-[30%] flex items-center justify-between'>
                 <Checkbox
@@ -86,7 +86,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
           <Accordion title='Ограничение бронирований в месяц'>
             <div className='flex justify-between'>
               <div className='w-[66%]'>
-                <FunctionlityCard editOnClick={() => showModal('bookingPerMonth')} title={`${data.bookingPerMonth}`} />
+                <FunctionlityCard editOnClick={() => showModal('bookingPerMonth')} title={data.bookingPerMonth === null ? "0" :`${data.bookingPerMonth}`} />
               </div>
               <div className='w-[30%] flex items-center justify-between'>
                 <Checkbox
@@ -102,7 +102,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
           <Accordion title='Ограничение бронирований с предоплатой в месяц'>
             <div className='flex justify-between'>
               <div className='w-[66%]'>
-                <FunctionlityCard editOnClick={() => showModal('prePaymentCount')} title={`${data.prePaymentCount}`} />
+                <FunctionlityCard editOnClick={() => showModal('prePaymentCount')} title={data.prePaymentCount === null ? "0" :`${data.prePaymentCount}`} />
               </div>
               <div className='w-[30%] flex items-center justify-between'>
                 <Checkbox
@@ -122,7 +122,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
               <p className='mt-3 mb-3 dark:text-white'>Количество альбомов</p>
               <div className='flex justify-between'>
                 <div className='w-[66%]'>
-                  <FunctionlityCard editOnClick={() => showModal('numberOfAlbums')} title={`${data.numberOfAlbums}`} />
+                  <FunctionlityCard editOnClick={() => showModal('numberOfAlbums')} title={data.numberOfAlbums === null ? "0" :`${data.numberOfAlbums}`} />
                 </div>
                 <div className='w-[30%] flex items-center justify-between'>
                   <Checkbox
@@ -139,7 +139,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
               <p className='mt-3 mb-3 dark:text-white'>Количество фото в 1 альбоме</p>
               <div className='flex justify-between'>
                 <div className='w-[66%]'>
-                  <FunctionlityCard editOnClick={() => showModal('numberOfFoto')} title={`${data.numberOfFoto}`} />
+                  <FunctionlityCard editOnClick={() => showModal('numberOfFoto')} title={data.numberOfFoto === null ? "0" :`${data.numberOfFoto}`} />
                 </div>
                 <div className='w-[30%] flex items-center justify-between'>
                   <Checkbox
@@ -157,13 +157,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
             <div className='flex flex-col justify-between'>
               <p className='mt-3 mb-3 dark:text-white'>В месяц</p>
               <div className='w-[65%]'>
-                <FunctionlityCard editOnClick={() => showModal('monthPrice')} title={`${data.monthPrice}`} />
+                <FunctionlityCard editOnClick={() => showModal('monthPrice')} title={data.monthPrice === null ? "0" :`${data.monthPrice}`} />
               </div>
             </div>
             <div className='flex flex-col justify-between'>
               <p className='mt-3 mb-3 dark:text-white'>В год</p>
               <div className='w-[65%]'>
-                <FunctionlityCard editOnClick={() => showModal('yearPrice')} title={`${data.yearPrice}`} />
+                <FunctionlityCard editOnClick={() => showModal('yearPrice')} title={data.yearPrice === null ? "0" :`${data.yearPrice}`} />
               </div>
             </div>
           </Accordion>

@@ -67,7 +67,7 @@ const All: React.FC = () => {
         </Accordion>
         <Accordion title='Лицензии'>
           <div>
-            <FileUploader/>
+            <FileUploader id='fileinput1'/>
           </div>
           <div className='flex gap-3'>
             <p>Отображать в приложениях</p>
@@ -76,7 +76,7 @@ const All: React.FC = () => {
         </Accordion>
         <Accordion title='Сертификаты и прочие документы'>
           <div>
-            <FileUploader/>
+            <FileUploader id='fileinput1'/>
           </div>
           <div className='flex gap-3'>
             <p>Отображать в приложениях</p>

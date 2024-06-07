@@ -20,13 +20,13 @@ const FirstTabCard: React.FC<FirstTabCardProp> = ({ category, price, duration, d
                     <p className='text-2xl'>{category}</p>
                 </div>
                 <div className='my-3'><hr /></div>
-                <div className='flex justify-between w-[100%]'>
+                <div className='flex    '>
                     <div className='flex flex-col gap-7'>
                         <p className='text-xl font-semibold'>Цена</p>
                         <p className='text-xl font-semibold'>Длительность</p>
                         <p className='text-xl font-semibold'>Описание</p>
                     </div>
-                    <div className='flex flex-col gap-7'>
+                    <div className='flex flex-col ms-10 gap-7'>
                         <p className='text-xl'>{price}</p>
                         <p className='text-xl'>{duration}</p>
                         <p className='text-xl'>{description}</p>

@@ -35,7 +35,7 @@ const MasterDocument: React.FC = () => {
         </Accordion>
         <Accordion title='Спецификация услуг'>
           <div>
-            <FileUploader />
+            <FileUploader id='fileinput4'/>
           </div>
           <div className='flex gap-3'>
             <p>Отображать в приложениях</p>
