@@ -25,7 +25,6 @@ export const handleSubmit = (
           res.data.status === "ACCEPTED" ? setGoPage('/') : setGoPage('/auth/signin')
           sessionStorage.setItem('token', `Bearer ${res.data.body}`)
           if (res.data.body) getMe(res.data.body)
-          toast.success('Tizimga muvaffaqiyatli kirdingiz✔')
         }
       })
       .catch(() => {

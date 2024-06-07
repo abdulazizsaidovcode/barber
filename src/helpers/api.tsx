@@ -31,6 +31,9 @@ export const district_url: string = `${base_url}district`;
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
 
+// help url
+export const help_url: string = `${base_url}help`;
+
 // client url
 export const client_url: string = `${base_url}client/web/clients-by-filter`;
 
@@ -49,11 +52,8 @@ export const master_full_data: string = `${base_url}user/web/master-full-info/`;
 
 export const chat_user_url: string = `${base_url}chat/support-service`;
 
-export const calendar_url: string = `${base_url}workday/time/web/calendar
-`;
+export const calendar_url: string = `${base_url}workday/time/web/calendar`;
 export const dashboard_url = `${base_url}dashboard/`;
-
-
 
 //finance
 export const finance_list = (month: string | null, year: number | null) => {
@@ -68,7 +68,6 @@ export const sockjs_url = `${base_url}ws`;
 export const newChat_url = `${base_url}chat/web/nachat-chat/send`; // sent message
 
 // help url
-export const help_url = `${base_url}help`; // sent message
 export const getChatList_url = `${base_url}chat/web`; // get chat list
 
 // help url
