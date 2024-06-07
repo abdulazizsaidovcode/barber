@@ -18,8 +18,9 @@ const masterStore = create<MasterData>((set) => ({
     regionValue: null, //Регион
     cityValue: null, //Город
     registrationPeriodValue: null, // false => Период регистраци мастеров
-    serviceCategoryValue: null, // false => Категория услуг
-    scheduleTypeValue: null, // false => Тип расписания
+    serviceCategoryValue: null, //Категория услуг
+    // reels two
+    // scheduleTypeValue: null, // false => Тип расписания
     selfEmployedStatusValue: null, //Статус самозанятых
     statusValue: null, //Статус
     placeOfWorkValue: null //Место работы
@@ -31,7 +32,8 @@ const masterStore = create<MasterData>((set) => ({
     cityValue: null,
     registrationPeriodValue: null,
     serviceCategoryValue: null,
-    scheduleTypeValue: null,
+    // reels two
+    // scheduleTypeValue: null,
     selfEmployedStatusValue: null,
     statusValue: null,
     placeOfWorkValue: null

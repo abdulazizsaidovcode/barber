@@ -10,7 +10,17 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const Filters: React.FC = () => {
-  const { setData, setTotalPage, setDistrictData, setFilters, regionData, districtData, filters, filterObj, category } = masterStore();
+  const {
+    setData,
+    setTotalPage,
+    setDistrictData,
+    setFilters,
+    regionData,
+    districtData,
+    filters,
+    filterObj,
+    category
+  } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -130,18 +140,18 @@ const Filters: React.FC = () => {
                 ))}
               </Select>
             </Col>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <Select
-                defaultValue="Тип расписания"
-                style={styles.filterInput}
-                onChange={(value) => handleInputChange('scheduleTypeValue', value)}
-              >
-                <Option value="2024">2024</Option>
-                <Option value="2023">2023</Option>
-              </Select>
-            </Col>
-          </Row>
-          <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
+
+            {/*reels two*/}
+            {/*<Col xs={24} sm={12} md={6} style={styles.filterGroup}>*/}
+            {/*  <Select*/}
+            {/*    defaultValue="Тип расписания"*/}
+            {/*    style={styles.filterInput}*/}
+            {/*    onChange={(value) => handleInputChange('scheduleTypeValue', value)}*/}
+            {/*  >*/}
+            {/*    <Option value="2024">2024</Option>*/}
+            {/*    <Option value="2023">2023</Option>*/}
+            {/*  </Select>*/}
+            {/*</Col>*/}
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
                 defaultValue="Статус самозанятых"
@@ -152,6 +162,8 @@ const Filters: React.FC = () => {
                 <Option value={false}>Нет</Option>
               </Select>
             </Col>
+          </Row>
+          <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
                 defaultValue="Статус"
