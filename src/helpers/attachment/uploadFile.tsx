@@ -3,6 +3,7 @@ import { config } from '../token';
 import { postFileId, postFilelist } from '../api';
 
 interface UploadFileResponse {
+  body: string;
   url: string;
 }
 
@@ -12,9 +13,9 @@ interface UploadFileParams {
 }
 
 interface UploadFilesParams {
-    files: FileList;
-    setUploadResponse?: (response: string) => void;
-  }
+  files: FileList;
+  setUploadResponse?: (response: string) => void;
+}
 // file ketadi
 
 export const uploadFile = async ({ file, setUploadResponse }: UploadFileParams) => {
@@ -41,29 +42,29 @@ export const uploadFile = async ({ file, setUploadResponse }: UploadFileParams) 
 // file list ketadi
 
 export const uploadFiles = async ({ files, setUploadResponse }: UploadFilesParams) => {
-    const formData = new FormData();
-    
-    // Fayllarni FormData ga qo'shish
-    Array.from(files).forEach(file => {
-      formData.append('files', file);
+  const formData = new FormData();
+
+  // Fayllarni FormData ga qo'shish
+  Array.from(files).forEach(file => {
+    formData.append('files', file);
+  });
+
+  try {
+    const response = await axios.post(postFilelist, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        ...config.headers, // Assuming config contains the token and any other headers
+      },
     });
-  
-    try {
-      const response = await axios.post(postFilelist, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          ...config.headers, // Assuming config contains the token and any other headers
-        },
-      });
-  
-      if (setUploadResponse) {
-        setUploadResponse(response.data.message || 'Files uploaded successfully');
-      }
-    } catch (error) {
-      console.error('Error uploading files:', error);
-      if (setUploadResponse) {
-        setUploadResponse('Error uploading files');
-      }
-      // Handle the error appropriately
+
+    if (setUploadResponse) {
+      setUploadResponse(response.data.message || 'Files uploaded successfully');
     }
-  };
+  } catch (error) {
+    console.error('Error uploading files:', error);
+    if (setUploadResponse) {
+      setUploadResponse('Error uploading files');
+    }
+    // Handle the error appropriately
+  }
+};
