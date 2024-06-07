@@ -8,11 +8,21 @@ import masterStore from '../../helpers/state_managment/master/masterStore';
 import clientStore from '../../helpers/state_managment/client/clientstore';
 import chatStore from '../../helpers/state_managment/chat/chatStore.tsx';
 import { GetChatList } from '../../helpers/api-function/chat/chat.tsx';
+import MailStore from '../../helpers/state_managment/chat/mailStore.tsx';
+import { GetChatLetters } from '../../helpers/api-function/chat/mail.tsx';
 
 const Natification = () => {
   const { setData, setTotalPage } = masterStore();
-  const { setClientData,setClientTotalPage } = clientStore();
+  const { setClientData, setClientTotalPage } = clientStore();
   const { role, setChatData } = chatStore();
+
+  const { setLetterData } = MailStore()
+
+  useEffect(() => {
+    GetChatLetters({
+      setLetterData: setLetterData
+    });
+  }, [setLetterData]);
 
   useEffect(() => {
     if (role === 'master') {
@@ -57,7 +67,7 @@ const Natification = () => {
         setData: setChatData
       })
       getClients({
-        setData:setClientData,
+        setData: setClientData,
         setTotalPage: setClientTotalPage
       });
       console.log('role client');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePicker, DatePickerProps, Select } from 'antd';
 import { Product } from '../../../types/product';
 import ProductOne from '../../../images/product/product-01.png';
@@ -46,6 +46,8 @@ const productData: Product[] = [
 ];
 
 const ChatTable: React.FC = () => {
+    
+
     const [dates, setDate] = useState<Moment | any | null>(null);
     const [showAddMails, setShowAddMails] = useState(false);
 
@@ -56,8 +58,6 @@ const ChatTable: React.FC = () => {
             console.log('Year: ', date.year());
             console.log('Month: ', date.month() + 1); // `moment.js` da oy 0-dan boshlanadi, shuning uchun +1 qilish kerak
             console.log('Day: ', date.date());
-        } else {
-            console.log('No date selected');
         }
     };
 
