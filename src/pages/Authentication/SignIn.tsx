@@ -5,7 +5,7 @@ import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 import { useNavigate } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 interface StylesType {
   container: string;
@@ -32,8 +32,7 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(goPage)
-    toast.success('Tizimga muvaffaqiyatli kirdingiz✔')
+    navigate(goPage);
   }, [goPage]);
 
   const styles: StylesType = {
