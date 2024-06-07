@@ -82,7 +82,7 @@ export interface FilterTypes {
   searchValue: string;
   regionValue: string | null;
   cityValue: string | null;
-  registrationPeriodValue: string | null;
+  registrationPeriodValue: string | null | any;
   serviceCategoryValue: string | null;
   // reels two
   // scheduleTypeValue: string | null;

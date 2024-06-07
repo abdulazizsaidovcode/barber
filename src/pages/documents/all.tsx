@@ -6,10 +6,7 @@ import { MdEdit } from 'react-icons/md';
 
 const All: React.FC = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
-
-  const toggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOn);
-  };
+  const toggleSwitch = () => setIsSwitchOn(!isSwitchOn)
 
   return (
     <div className="p-2">

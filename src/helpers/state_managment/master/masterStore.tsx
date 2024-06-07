@@ -17,10 +17,10 @@ const masterStore = create<MasterData>((set) => ({
     searchValue: '', //Поиск по ФИО
     regionValue: null, //Регион
     cityValue: null, //Город
-    registrationPeriodValue: null, // false => Период регистраци мастеров
+    registrationPeriodValue: null, //Период регистраци мастеров
     serviceCategoryValue: null, //Категория услуг
     // reels two
-    // scheduleTypeValue: null, // false => Тип расписания
+    // scheduleTypeValue: null, //Тип расписания
     selfEmployedStatusValue: null, //Статус самозанятых
     statusValue: null, //Статус
     placeOfWorkValue: null //Место работы
@@ -38,7 +38,7 @@ const masterStore = create<MasterData>((set) => ({
     statusValue: null,
     placeOfWorkValue: null
   },
-  setFilters: (val: FilterTypes) => set({filters: val})
+  setFilters: (val: FilterTypes) => set({ filters: val })
 }));
 
 export default masterStore;
