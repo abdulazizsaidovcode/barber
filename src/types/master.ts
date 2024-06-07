@@ -65,7 +65,7 @@ export interface RegionData {
 export interface DistrictData {
   id: number;
   name: string;
-  regionId: number;
+  regionId: number | string;
 }
 
 // category child global interface
