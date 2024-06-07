@@ -1,13 +1,10 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { Tabs } from 'antd';
 import All from './all';
 import MasterDocument from './masterDocument';
 import ClientDocument from './clientTab';
 
-
-const onChange = (key: string) => {
-  console.log(key);
-};
+const onChange = (key: string) => console.log(key)
 
 const items = [
   {
@@ -18,8 +15,6 @@ const items = [
       </span>
     ),
     children: <All />
-
-
   },
   {
     key: '2',
@@ -29,7 +24,6 @@ const items = [
       </span>
     ),
     children: <MasterDocument />
-
   },
   {
     key: '3',
