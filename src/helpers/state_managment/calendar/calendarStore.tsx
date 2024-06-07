@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CategoryChild, DistrictData, RegionData } from "../../../types/master";
+import { DistrictData, RegionData } from "../../../types/master";
 
 interface CategoryList {
   categoryFatherId: string | null;
