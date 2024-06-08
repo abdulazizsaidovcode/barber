@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, DatePickerProps, Dropdown, Menu, Select } from 'antd';
+import { DatePicker, DatePickerProps, Dropdown, Input, Menu, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import AddMails from './addMails';
 import { TbArrowBigLeftFilled } from 'react-icons/tb';
@@ -15,6 +15,7 @@ import { config } from '../../../helpers/token';
 import toast from 'react-hot-toast';
 import { GetChatLetters } from '../../../helpers/api-function/chat/mail';
 import { MdOutlineSpeakerNotesOff } from 'react-icons/md';
+import { SearchOutlined } from '@ant-design/icons';
 
 
 const ChatTable: React.FC = () => {
@@ -37,9 +38,13 @@ const ChatTable: React.FC = () => {
     };
 
     const handleChangeTema: any = (date: any) => {
-        if (date) {
+        if (date.target.value.trim()!== '') {
             GetChatLetters({
-                subject: date,
+                subject: date.target.value,
+                setLetterData: setLetterData
+            });
+        }else{
+            GetChatLetters({
                 setLetterData: setLetterData
             });
         }
@@ -114,13 +119,12 @@ const ChatTable: React.FC = () => {
             ) : (
                 <div className='pt-5'>
                     <div className='mb-5 flex gap-2'>
-                        <Select
+                        <Input
                             className='w-full md:w-40 lg:w-40 xl:w-40 dark:bg-gray-800 dark:text-white'
                             defaultValue='Тема'
                             style={{ width: 120 }}
-                            showSearch
                             onChange={handleChangeTema}
-                            options={[...options]}
+                            suffix={<SearchOutlined />}
                         />
                         <DatePicker
                             className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
@@ -134,7 +138,7 @@ const ChatTable: React.FC = () => {
 
                     <MasterTable thead={thead}>
                         {chatData.length > 0 ? (
-                            chatData.map((item, key) => (
+                            chatData.map((item) => (
                                 <tr
                                     key={item.id}
                                     className='border-b border-[#eee] dark:border-strokedark'
