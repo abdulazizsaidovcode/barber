@@ -59,9 +59,8 @@ export const add_precent_list: string = `${base_url}percent`;
 export const precent_list: string = `${base_url}percent`;
 export const master_full_data: string = `${base_url}user/web/master-full-info/`;
 export const master_service_id: string = `${base_url}service/web/`;
-
+export const master_gallery_id: string = `${base_url}gallery/web/`;
 export const chat_user_url: string = `${base_url}chat/support-service`;
-
 export const calendar_url: string = `${base_url}workday/time/web/calendar`;
 export const dashboard_url = `${base_url}dashboard/`;
 
