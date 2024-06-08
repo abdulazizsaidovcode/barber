@@ -38,6 +38,7 @@ import RequestFoto from './components/request/pages/requestFoto.tsx';
 import RequestSpecializations from './components/request/pages/requestSpecializations.tsx';
 import RequestProcedures from './components/request/pages/requestProcedures.tsx';
 import MainTabDetail from './pages/Masters/detail/mainTabDetail.tsx';
+import Reviews from './pages/reviews/reviews.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -316,6 +317,15 @@ function App() {
             <>
               <PageTitle title="client | Barber" />
               <Client />
+            </>
+          }
+        />
+        <Route
+          path="/reviews"
+          element={
+            <>
+              <PageTitle title="Reviews | Barber" />
+              <Reviews />
             </>
           }
         />

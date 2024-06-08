@@ -1,9 +1,9 @@
 {
   "dashboard_main_text": "Общие показатели",
   "sidebar_menu_text": "МЕНЮ",
-  "siderbar_dashboard": "Панель приборов",
-  "master": "Владелец",
-  "siderbar_client": "Клиент",
+  "siderbar_dashboard": "Главная",
+  "master": "Мастера",
+  "siderbar_client": "Клинеты",
   "siderbar_calendar": "Календарь",
   "siderbar_calculation": "Записи",
   "siderbar_finance": "Финансы",
