@@ -1,4 +1,5 @@
 import React from 'react';
+import { getFileId } from '../../../helpers/api';
 
 interface NewMastersCardProp {
   salonName: string;
@@ -24,7 +25,7 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({ salonName, ownerImage, s
       </div>
       <div className='flex gap-3 mt-3'>
         <div>
-          <img src={ownerImage} alt="" />
+          <img className='w-10 h-10 rounded-full' src={!ownerImage ? ' ' : getFileId + ownerImage} alt="" />
         </div>
         <div>
           <p className='text-[14px] dark:text-[#000]'>{salonOwner}</p>

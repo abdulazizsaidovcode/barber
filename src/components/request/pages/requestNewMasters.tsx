@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import RequestLayout from '../../../pages/request/request';
 import NewMastersCard from '../cards/newMastersCard';
 import { GoPlus } from "react-icons/go";
@@ -22,17 +22,10 @@ interface Data {
   phoneNumber: string;
 }
 
-interface DetailData {
-  id: string;
-  // add other detailed data fields here
-}
-
 const RequestNewMasters: React.FC = () => {
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [reasonIsOpen, setReasonIsOpen] = useState(false);
   const [data, setData] = useState<Data[]>([]);
-  const [detailData, setDetailData] = useState<DetailData | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -42,31 +35,24 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
-    } catch { }
-  };
+    } catch (err) { }
+  }
 
   const fetchFullData = async (id: string) => {
     try {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
-      setDetailData(res.data.body);
+      console.log(res.data.body);
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
-  const openDetailModal = (id: string) => {
-    setSelectedId(id);
-    fetchFullData(id);
-    setDetailIsOpen(true);
-  };
-
-  const closeDetailModal = () => {
-    setDetailIsOpen(false);
-    setDetailData(null);
-  };
-
+  fetchFullData('f1886ad4-aaa5-4d77-bb44-ba6f184fb82f');
+  
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
+  const openDetailModal = () => setDetailIsOpen(true);
+  const closeDetailModal = () => setDetailIsOpen(false);
 
   return (
     <RequestLayout>
@@ -75,7 +61,7 @@ const RequestNewMasters: React.FC = () => {
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
-              <p className='text-sm'>2</p>
+              <p className='text-sm'>{data.length}</p>
             </div>
           </div>
           <div className='flex gap-2'>
@@ -98,7 +84,7 @@ const RequestNewMasters: React.FC = () => {
                 salonOwner={`${item.firstName} ${item.lastName}`}
                 phoneNumber={`${item.phoneNumber}`}
                 salonCreateDate={`${item.createdAt}`}
-                modal={() => openDetailModal(item.id)}
+                modal={openDetailModal}
               />
             </div>
           ))}
@@ -108,17 +94,16 @@ const RequestNewMasters: React.FC = () => {
         isOpen={detailIsOpen}
         onClose={closeDetailModal}
         openReasonModal={openReasonModal}
-        detailData={detailData}
       />
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className='w-[700px] h-[320px]'>
           <div>
-            <p className='font-bold text-xl text-[#000] dark:text:white'>Причина оклонения:</p>
+            <p className='font-bold text-xl text-[#000] dark:text-white'>Причина оклонения:</p>
           </div>
           <div className='mt-4'>
             <textarea
               rows={10}
-              className="block p-2.5 w-full text-sm text-gray-900 dark:bg-[#30303d] rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:text:white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 dark:bg-[#30303d] rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Write your thoughts here..."
             />
           </div>

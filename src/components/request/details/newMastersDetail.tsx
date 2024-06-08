@@ -9,8 +9,69 @@ interface NewMastersDetail {
   isOpen: boolean;
   onClose: () => void;
   openReasonModal: () => void
+  masterId?: string;
+  firstName?: string;
+  lastName?: string;
+  nickname?: string;
+  phoneNumber?: string;
+  age?: string;
+  gender?: string;
+  address?: string;
+  masterImgPath?: string;
+  startDate?: string;
+  districtName?: string;
+  placeOfWork?: string;
+  regionName?: string;
+  status?: string;
+  block?: boolean;
+  instagramLink?: string;
+  telegramLink?: string;
+  clientCount?: string;
+  completedOrderCount?: string;
+  masterFeedbackCount?: string;
+  rejectedOrderCount?: string;
+  deleteMasterDate?: string;
+  directionByGender?: string[];
+  masterServiceCategory?: string[];
+  masterSpecialization?: string[];
+  newOrUpdateCategory?: boolean;
+  masterChatStatus?: string;
+  scheduleType?: string;
 }
-const NewMastersDetail: React.FC<NewMastersDetail> = ({ isOpen, openReasonModal, onClose }) => {
+
+const NewMastersDetail: React.FC<NewMastersDetail> = ({
+  isOpen,
+  openReasonModal,
+  onClose,
+  masterId,
+  firstName,
+  lastName,
+  nickname,
+  phoneNumber,
+  age,
+  gender,
+  address,
+  masterImgPath,
+  startDate,
+  districtName,
+  placeOfWork,
+  regionName,
+  status,
+  block,
+  instagramLink,
+  telegramLink,
+  clientCount,
+  completedOrderCount,
+  masterFeedbackCount,
+  rejectedOrderCount,
+  deleteMasterDate,
+  directionByGender,
+  masterServiceCategory,
+  masterSpecialization,
+  newOrUpdateCategory,
+  masterChatStatus,
+  scheduleType
+}) => {
   const items = [
     {
       key: '1',
@@ -39,7 +100,7 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({ isOpen, openReasonModal,
           Галерея
         </span>
       ),
-      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal}/>,
+      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} />,
     },
   ];
   return (
