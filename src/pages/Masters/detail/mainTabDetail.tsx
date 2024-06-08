@@ -3,6 +3,8 @@ import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import DetailMaster from './detailMaster';
 import DefaultLayout from '../../../layout/DefaultLayout';
+import Gallery from './galery';
+import Service from './service';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -25,7 +27,7 @@ const items: TabsProps['items'] = [
         Процедуры
       </span>
     ),
-    children: 'Content of Tab Pane 2',
+    children: <Service />,
   },
   {
     key: '3',
@@ -34,7 +36,7 @@ const items: TabsProps['items'] = [
         Галерея
       </span>
     ),
-    children: 'Content of Tab Pane 2',
+    children: <Gallery />,
   },
   {
     key: '4',
