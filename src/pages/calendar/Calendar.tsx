@@ -6,12 +6,17 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import { Select } from "antd";
 import calendarStore from "../../helpers/state_managment/calendar/calendarStore";
-import { getCalendar, getCategoryId } from "../../helpers/api-function/calendar/calendar";
-import { getDistrict, getRegion } from "../../helpers/api-function/master/master";
-import FilterComponent from "./filterComponent";
-import EventLegendComponent from "./eventLegendComponent";
-import CategoryButtonsComponent from "./categoryButtonsComponent";
+import { RxReload } from "react-icons/rx";
+import {
+  getCalendar,
+  getCategoryId,
+} from "../../helpers/api-function/calendar/calendar";
+import {
+  getDistrict,
+  getRegion,
+} from "../../helpers/api-function/master/master";
 
 export interface Event {
   title: string;
@@ -25,11 +30,11 @@ const Calendar: React.FC = () => {
     category,
     setCalendarData,
     calendarData,
+    setDistrictData,
     districtData,
     setRegionData,
     regionData,
   } = calendarStore();
-  
   const [regionId, setRegionId] = useState<number | null>(null);
   const [districtId, setDistrictId] = useState<number | null>(null);
   const [categoryId, setCategoryIdState] = useState<string | null>(null);
@@ -37,14 +42,17 @@ const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
-  const regionOptions = regionData?.map((item) => {
-    return { value: item.id, label: item.name };
-  }) || [];
+  const regionOptions =
+    regionData?.map((item) => {
+      return { value: item.id, label: item.name };
+    }) || [];
 
-  const districtOptions = districtData?.map((item) => {
-    return { value: item.id, label: item.name };
-  }) || [];
+  const districtOptions =
+    districtData?.map((item) => {
+      return { value: item.id, label: item.name };
+    }) || [];
 
+  console.log(regionData);
 
   const fetchCalendarData = () => {
     if (currentDate && isMonth !== null) {
@@ -100,13 +108,12 @@ const Calendar: React.FC = () => {
     }
   };
 
+  const [activeButton, setActiveButton] = useState<string | null>(null);
+
   const resetFilters = () => {
     setRegionId(null);
     setDistrictId(null);
   };
-
-  const [activeButton, setActiveButton] = useState<string | null>(null);
-
 
   const events: Event[] = calendarData.flatMap((item) => {
     const dateTime = item.time ? `${item.date}T${item.time}` : `${item.date}`;
@@ -151,23 +158,93 @@ const Calendar: React.FC = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Calendar" />
       <div className="grid md:grid-cols-2 gap-5 my-5">
-        <EventLegendComponent />
-        <FilterComponent
-          regionOptions={regionOptions}
-          districtOptions={districtOptions}
-          regionId={regionId}
-          districtId={districtId}
-          setRegionId={setRegionId}
-          setDistrictId={setDistrictId}
-          getDistrict={getDistrict}
-          resetFilters={resetFilters}
-        />
+        <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
+          <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+            Завершён
+          </div>
+          <div className="bg-blue-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+            Одобрен
+          </div>
+          <div className="bg-orange-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+            На одобрении
+          </div>
+          <div className="bg-red-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+            Отклонён
+          </div>
+        </div>
+        <div className="grid grid-cols-2 items-center gap-5">
+          <Select
+            showSearch
+            placeholder="Регион"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? "")
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? "").toLowerCase())
+            }
+            options={regionOptions}
+            value={regionId} // Add value prop
+            onChange={(value) => {
+              setRegionId(value);
+              getDistrict(setDistrictData, value);
+            }}
+          />
+          <div className="flex gap-3 items-center w-full">
+            <Select
+              className="w-full"
+              showSearch
+              placeholder="Город"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={districtOptions}
+              value={districtId} // Add value prop
+              onChange={(value) => setDistrictId(value)}
+            />
+            <RxReload size={20} onClick={resetFilters} className="cursor-pointer" />
+          </div>
+        </div>
       </div>
-      <CategoryButtonsComponent
-        category={category}
-        activeButton={activeButton}
-        handleButtonClick={handleButtonClick}
-      />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 text-sm gap-3 my-3">
+        <button
+          onClick={() => {
+            handleButtonClick("", "");
+          }}
+          className={
+            "inline-block rounded bg-[#2C3E50] text-center px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-lg focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+          }
+        >
+          Все категории
+        </button>
+        {category.length !== 0 &&
+          category.map((item, i) => {
+            if (!item) return null;
+            return (
+              <button
+                key={i}
+                onClick={() => {
+                  handleButtonClick(item.name, item.id);
+                }}
+                className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${
+                  activeButton === item.name
+                    ? "bg-[#2C3E50] text-white"
+                    : "border-[#2C3E50] text-[#2C3E50] hover:shadow-xl hover:bg-[#DDDDDD] dark:border-[#DDDDDD] dark:hover:border-[#2C3E50] dark:hover:text-[#2C3E50] dark:text-[#DDDDDD]"
+                }`}
+              >
+                {item.name}
+              </button>
+            );
+          })}
+      </div>
       <FullCalendar
         schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         plugins={[
@@ -182,12 +259,14 @@ const Calendar: React.FC = () => {
           center: "title",
           end: "dayGridMonth,timeGridWeek",
         }}
+        // Haftalik darajasining soatlarini belgilash
         slotMinTime="00:00:00"
         slotMaxTime="24:00:00"
+        // Soatlar ko'rsatilgan formatni belgilash
         slotLabelFormat={{
           hour: "2-digit",
           minute: "2-digit",
-          hour12: false,
+          hour12: false, // 24 soatlik formatda
         }}
         datesSet={handleDatesSet}
         eventAdd={() => {}}
