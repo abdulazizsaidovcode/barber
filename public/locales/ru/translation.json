@@ -2,7 +2,7 @@
   "dashboard_main_text": "Общие показатели",
   "sidebar_menu_text": "МЕНЮ",
   "siderbar_dashboard": "Панель приборов",
-  "siderbar_master": "Владелец",
+  "master": "Владелец",
   "siderbar_client": "Клиент",
   "siderbar_calendar": "Календарь",
   "siderbar_calculation": "Записи",
@@ -31,5 +31,19 @@
   "order_table_paymentType": "Тип оплаты",
   "order_table_pay": "К оплате",
   "order_table_status": "Статус записи",
-  "order_table_master": "Мастер"
+  "Open":"Открыть",
+  "Block":"Заблокировать",
+  "Unblock":"Разблокировать",
+  "Open_help":"Открыть справку",
+  "discount":"Сделать скидку",
+  "Download_help":"Скачать справку",
+  "Download":"Скачать",
+  "Download_pdf":"Скачать PDF",
+  "Write":"Написать",
+  "Search_by_name":"Поиск по ФИО",
+  "Region":"Регион",
+  "City":"Город",
+  "Photo":"Фото",
+  "Service_category":"Категория услуг"
+  
 }

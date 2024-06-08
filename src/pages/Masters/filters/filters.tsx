@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react';
 import MasterModal from '../master-modal.tsx';
 import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
 import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
+import { useTranslation } from 'react-i18next';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
+
 
 const Filters: React.FC = () => {
   const {
@@ -23,6 +25,7 @@ const Filters: React.FC = () => {
   } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getMasters({
@@ -92,7 +95,7 @@ const Filters: React.FC = () => {
       <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Input
-            placeholder="Поиск по ФИО"
+            placeholder={t("Search_by_name")}
             prefix={<IoSearchOutline />}
             style={styles.filterInput}
             value={filters.searchValue}
@@ -101,7 +104,7 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            defaultValue="Регион"
+            defaultValue=""
             style={styles.filterInput}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
@@ -112,7 +115,7 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            defaultValue="Город"
+            defaultValue=""
             style={styles.filterInput}
             onChange={(value) => handleInputChange('cityValue', value)}
           >
@@ -130,7 +133,7 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton} onClick={openModal}>Download</Button>
+          <Button style={styles.extraButton} onClick={openModal}>{t("Download")}</Button>
           <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
         </Col>
       </Row>

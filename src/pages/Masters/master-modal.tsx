@@ -1,5 +1,6 @@
 import { Modal } from 'antd';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface IMasterModalProps {
   openModal: () => void;
@@ -7,10 +8,11 @@ interface IMasterModalProps {
 }
 
 const MasterModal: React.FC<IMasterModalProps> = ({ openModal, isModalOpen }) => {
+  const { t } = useTranslation();
   return (
     <>
       <Modal
-        title="Download pdf"
+        title={t("Download_pdf")}
         open={isModalOpen}
         onCancel={openModal}
         footer={null}

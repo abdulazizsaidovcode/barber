@@ -2,7 +2,7 @@
   "dashboard_main_text": "Umumiy ko'rsatkichlar",
   "sidebar_menu_text": "MENYU",
   "siderbar_dashboard": "Boshqaruv paneli",
-  "siderbar_master": "Usta",
+  "master": "Usta",
   "siderbar_client": "Mijoz",
   "siderbar_calendar": "Kalendar",
   "siderbar_calculation": "Buyurtmalar",
@@ -31,5 +31,19 @@
   "order_table_paymentType": "To'lov turi",
   "order_table_pay": "To'lash",
   "order_table_status": "Yozuv holati",
-  "order_table_master": "Usta"
+  "Open":"Ochiq",
+  "Block":"Bloklash",
+  "Unblock":"Blokdan chiqarish",
+  "Open_help":"Yordamni ochish",
+  "discount":"Chegirma qilish uchun",
+  "Download_help":"Yuklab olish yordami",
+  "Download":"Yuklab olish",
+  "Download_pdf":"PDF ni yuklab olish",
+  "Write":"Yozish" ,
+  "Search_by_name":"Ism bo'yicha qidirish",
+  "Region":"Mintaqa",
+  "City":"Shahar",
+  "Photo":"Rasm",
+  "Service_category":"Xizmat kategoriyasi"
+
 }
