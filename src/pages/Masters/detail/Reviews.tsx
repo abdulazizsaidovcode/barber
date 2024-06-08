@@ -4,6 +4,7 @@ import { master_full_data } from '../../../helpers/api';
 import axios from 'axios';
 import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
 import { config } from '../../../helpers/token';
+import toast from 'react-hot-toast';
 
 const Reviews: React.FC = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const Reviews: React.FC = () => {
   const MasterImgFake = '/path/to/fake-image.png'; // Replace with your actual path
   useEffect(() => {
     if (!id) {
-      console.error('ID is required!');
+      toast.error('Id topilamdi !');
       return;
     }
 
@@ -41,7 +42,8 @@ const Reviews: React.FC = () => {
       {isLoading ? (
         <p className="dark:text-white">Loading order details...</p>
       ) : orderDetails ? (
-        <div>
+        <div className="flex flex-col gap-3 ">
+          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[100%] shadow-3 p-3 rounded-xl"></div>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[100%] shadow-3 p-3 rounded-xl"></div>
         </div>
       ) : (

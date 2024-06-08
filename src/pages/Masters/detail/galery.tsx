@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getFileId, master_gallery_id } from '../../../helpers/api';
+import {  master_gallery_id } from '../../../helpers/api';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
 import ProcedureItem from '../../../components/MasterCard/master_galery';
@@ -24,7 +24,7 @@ const Gallery: React.FC = () => {
         setOrderDetails(masterArray);
       })
       .catch((error) => {
-        console.error('There was an error fetching the data!', error);
+        console.error('Gallery ga oid malumotlar topilmadi', error);
       });
   };
 

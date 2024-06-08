@@ -15,7 +15,7 @@ const items: TabsProps['items'] = [
   {
     key: '1',
     label: (
-      <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+      <span className="dark:text-white text-black text-sm md:text-base lg:text-lg xl:text-xl">
         Основная информация
       </span>
     ),
@@ -24,7 +24,7 @@ const items: TabsProps['items'] = [
   {
     key: '2',
     label: (
-      <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+      <span className="dark:text-white text-black text-sm md:text-base lg:text-lg xl:text-xl">
         Процедуры
       </span>
     ),
@@ -33,7 +33,7 @@ const items: TabsProps['items'] = [
   {
     key: '3',
     label: (
-      <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+      <span className="dark:text-white text-black text-sm md:text-base lg:text-lg xl:text-xl">
         Галерея
       </span>
     ),
@@ -42,7 +42,7 @@ const items: TabsProps['items'] = [
   {
     key: '4',
     label: (
-      <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+      <span className="dark:text-white text-black text-sm md:text-base lg:text-lg xl:text-xl">
         Отзывы
       </span>
     ),
