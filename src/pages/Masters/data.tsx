@@ -2,6 +2,7 @@ import { IMasterItems, IThead } from '../../types/master.ts';
 import MasterTables from './master-tables.tsx';
 import MasterLocation from './master-location.tsx';
 
+
 export const thead: IThead[] = [
   {
     id: 1,

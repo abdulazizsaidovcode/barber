@@ -6,9 +6,11 @@ import Filters from './filters/filters.tsx';
 import React from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import images from '../../images/user/user-01.png';
+import { useTranslation } from 'react-i18next';
 
 const MasterTables: React.FC = () => {
   const { data, totalPage } = masterStore();
+  const { t } = useTranslation();
 
   const onChange = (page: number, pageSize: number): void => {
     console.log('clicked number:', page);
@@ -18,31 +20,31 @@ const MasterTables: React.FC = () => {
   const getItems = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <a href={`/master/${id}`}>Открыть</a>,
+      label: <a href={`/master/${id}`}>{t("Open")}</a>,
     },
     {
       key: '2',
-      label: 'Заблокировать',
+      label: t('Block'),
     },
     {
       key: '3',
-      label: 'Разблокировать',
+      label: t('Unblock'),
     },
     {
       key: '4',
-      label: 'Открыть справку',
+      label: t("Open_help"),
     },
     {
       key: '5',
-      label: 'Сделать скидку',
+      label: t("discount"),
     },
     {
       key: '6',
-      label: 'Скачать справку',
+      label: t("Download_help"),
     },
     {
       key: '7',
-      label: 'Написать',
+      label: t("Write"),
     },
   ];
 
@@ -54,11 +56,10 @@ const MasterTables: React.FC = () => {
           data.map((item, key) => (
             <tr
               key={item.id}
-              className={`${
-                key === data.length - 1
-                  ? ''
-                  : 'border-b border-[#eee] dark:border-strokedark'
-              }`}
+              className={`${key === data.length - 1
+                ? ''
+                : 'border-b border-[#eee] dark:border-strokedark'
+                }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
