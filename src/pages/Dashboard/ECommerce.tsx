@@ -19,16 +19,16 @@ import { config } from '../../helpers/token';
 const ECommerce: React.FC = () => {
   const [data, setData] = useState(
     {
-      "clientCanselOrder":0,
-      "clientCount":0,
+      "clientCanselOrder": 0,
+      "clientCount": 0,
       "customerDissatisfaction": 0,
-      "income":0,
-      "masterAverageClient":0,
-      "masterCanselOrder":0,
-      "masterCount":0,
-      "masterDissatisfaction":0,
-      "negativeFeedbackInService":0,
-      "orderCount":0,
+      "income": 0,
+      "masterAverageClient": 0,
+      "masterCanselOrder": 0,
+      "masterCount": 0,
+      "masterDissatisfaction": 0,
+      "negativeFeedbackInService": 0,
+      "orderCount": 0,
       "positiveFeedbackInService": 0,
       "theOutgoingClient": 0,
       "theOutgoingMaster": 0,
@@ -42,17 +42,19 @@ const ECommerce: React.FC = () => {
     axios
       .get(`${dashboard_url}web/statistic`, config)
       .then((response) => {
-        setData(response.data.body);  
+        setData(response.data.body);
+        console.log(response.data.body);
+
       })
       .catch(() => {
         console.error('There was an error fetching the data!');
       });
   }, []);
 
-  
 
- 
- 
+
+
+
   return (
     <DefaultLayout>
       <div className='block mb-5 md:flex md:justify-between lg:flex lg:justify-between xl:flex xl:justify-between'>
@@ -67,7 +69,7 @@ const ECommerce: React.FC = () => {
             options={[
               { value: '2024', label: '2024' },
               { value: '2025', label: '2025' },
-              { value: '2026', label: '2026' },           
+              { value: '2026', label: '2026' },
             ]}
           />
           <DatePicker
@@ -82,22 +84,22 @@ const ECommerce: React.FC = () => {
       </div>
 
 
-      
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Мастера" total={data.masterCount} /> 
+        <CardDataStats title="Мастера" total={data.masterCount} />
         <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
         <CardDataStats title="Заказы" total={data.orderCount ? data.orderCount : 0} />
         <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
         <CardDataStats title="Оборот общий" total={data.totalTurnover ? data.totalTurnover : 0} />
         <CardDataStats title="Доход" total={data.income ? data.income : 0} />
-        <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction? data.customerDissatisfaction: 0} />
-       <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction? data.masterDissatisfaction:0 } />
-        <CardDataStats title="Клиентов на 1 мастера усредненно" total={data.masterAverageClient ? data.masterAverageClient :0 } />
+        <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction ? data.customerDissatisfaction : 0} />
+        <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction ? data.masterDissatisfaction : 0} />
+        <CardDataStats title="Клиентов на 1 мастера усредненно" total={data.masterAverageClient ? data.masterAverageClient : 0} />
         <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} />
       </div>
       <div className='flex mt-7 justify-between flex-row flex-wrap gap-2'>
-        
-         <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
+
+        <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
         <Select
           className='mt-4'
           defaultValue="2024"
@@ -108,8 +110,8 @@ const ECommerce: React.FC = () => {
             { value: '2026', label: '2026' },
           ]}
         />
-       
-       
+
+
         <h1 className='font-semibold text-black text-2xl dark:text-white'>Subscription rates for client masters</h1>
         <div className='flex gap-2'>
           <Select
@@ -125,14 +127,14 @@ const ECommerce: React.FC = () => {
             defaultValue=''
             style={{ width: 200 }}
             options={[
-              { value: '' , label: 'January' },
+              { value: '', label: 'January' },
               { value: 'February', label: 'February' },
               { value: 'March', label: 'March' },
               { value: 'Aprel', label: 'Aprel' },
               { value: 'May', label: 'May' },
             ]}
           />
-       </div> 
+        </div>
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
