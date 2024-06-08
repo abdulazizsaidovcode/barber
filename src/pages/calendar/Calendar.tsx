@@ -52,8 +52,6 @@ const Calendar: React.FC = () => {
       return { value: item.id, label: item.name };
     }) || [];
 
-  console.log(regionData);
-
   const fetchCalendarData = () => {
     if (currentDate && isMonth !== null) {
       getCalendar({

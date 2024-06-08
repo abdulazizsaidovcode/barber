@@ -7,7 +7,7 @@ interface CategoryList {
   id: string;
   name: string;
   new: boolean;
-}
+}[]
 
 export interface CalendarData {
   canceledOrders?: number | null;
@@ -52,15 +52,7 @@ const calendarStore = create<CalendarStore>((set) => ({
       time: null,
     },
   ],
-  category: [
-    {
-      categoryFatherId: null,
-      categoryFatherName: null,
-      id: "",
-      name: "",
-      new: true,
-    },
-  ],
+  category: [],
   date: "",
   categoryId: "",
   setShow: (val: boolean) => set({ show: val }),
