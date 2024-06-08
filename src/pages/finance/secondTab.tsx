@@ -1,8 +1,7 @@
 // FilterComponent.tsx
 import React, { useState } from 'react';
-import { Select, Input, Button, Row, Col } from 'antd';
+import { Select, Button, Row, Col } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
 
 const { Option } = Select;
