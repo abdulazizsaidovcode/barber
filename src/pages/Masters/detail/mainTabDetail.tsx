@@ -5,6 +5,7 @@ import DetailMaster from './detailMaster';
 import DefaultLayout from '../../../layout/DefaultLayout';
 import Gallery from './galery';
 import Service from './service';
+import Reviews from './Reviews';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -45,7 +46,7 @@ const items: TabsProps['items'] = [
         Отзывы
       </span>
     ),
-    children: 'Content of Tab Pane 2',
+    children: <Reviews />,
   },
 ];
 
