@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import RequestLayout from '../../../pages/request/request';
 import NewMastersCard from '../cards/newMastersCard';
 import { GoPlus } from "react-icons/go";
@@ -22,10 +22,43 @@ interface Data {
   phoneNumber: string;
 }
 
+interface MasterDetailData {
+  masterId: string;
+  firstName: string;
+  lastName: string;
+  nickname: string;
+  phoneNumber: string;
+  age: string;
+  gender: string;
+  address: string;
+  masterImgPath: string;
+  startDate: string;
+  districtName: string;
+  placeOfWork: string;
+  regionName: string;
+  status: string;
+  block: boolean;
+  instagramLink: string;
+  telegramLink: string;
+  clientCount: string;
+  completedOrderCount: string;
+  masterFeedbackCount: string;
+  rejectedOrderCount: string;
+  deleteMasterDate: string;
+  directionByGender: string[];
+  masterServiceCategory: string[];
+  masterSpecialization: string[];
+  newOrUpdateCategory: boolean;
+  masterChatStatus: string;
+  scheduleType: string;
+  facebookLink: string;
+}
+
 const RequestNewMasters: React.FC = () => {
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [reasonIsOpen, setReasonIsOpen] = useState(false);
   const [data, setData] = useState<Data[]>([]);
+  const [selectedMaster, setSelectedMaster] = useState<MasterDetailData | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -35,23 +68,22 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
+      console.log(res.data.body);
     } catch (err) { }
   }
 
   const fetchFullData = async (id: string) => {
     try {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
+      setSelectedMaster(res.data.body);
       console.log(res.data.body);
-    } catch (error) {
-      console.log(error);
-    }
+      
+      setDetailIsOpen(true);
+    } catch {}
   }
 
-  fetchFullData('f1886ad4-aaa5-4d77-bb44-ba6f184fb82f');
-  
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
-  const openDetailModal = () => setDetailIsOpen(true);
   const closeDetailModal = () => setDetailIsOpen(false);
 
   return (
@@ -84,7 +116,7 @@ const RequestNewMasters: React.FC = () => {
                 salonOwner={`${item.firstName} ${item.lastName}`}
                 phoneNumber={`${item.phoneNumber}`}
                 salonCreateDate={`${item.createdAt}`}
-                modal={openDetailModal}
+                modal={() => fetchFullData(item.id)}
               />
             </div>
           ))}
@@ -94,6 +126,7 @@ const RequestNewMasters: React.FC = () => {
         isOpen={detailIsOpen}
         onClose={closeDetailModal}
         openReasonModal={openReasonModal}
+        {...selectedMaster}
       />
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className='w-[700px] h-[320px]'>
