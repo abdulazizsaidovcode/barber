@@ -22,7 +22,7 @@ export const getMe = (token?: string) => {
 };
 
 // swagger url
-const base_url: string = 'http://192.168.0.103/';
+const base_url: string = 'http://192.168.0.107/';
 
 // get region url
 export const region_url: string = `${base_url}region`;
@@ -87,7 +87,6 @@ export const postFilelist = `${base_url}attachment/upload/list`; // get chat lis
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url
 
-
+// requestes url
 export const new_masters_url = `${base_url}user/web/new-master`; // newsletters url
-
-
+export const masters_fulldata_url = `${base_url}user/web/master-full-info`

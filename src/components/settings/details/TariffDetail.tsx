@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs, Button } from 'antd';
+import { Tabs } from 'antd';
 import DefaultLayout from '../../../layout/DefaultLayout';
 import axios from 'axios';
 import { tarif_detail, tarif_put_url } from '../../../helpers/api';
@@ -7,11 +7,6 @@ import { config } from '../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
 import DetailsSecondTab from './DeatilsSecondTab';
 import DetailsFirstTab from './DeatilsFirstTab';
-
-interface FuncReq {
-  number: number;
-  isActive: boolean;
-}
 
 interface SecondTabData {
   bookingDuration: number;
@@ -37,6 +32,7 @@ const TariffDetail: React.FC = () => {
   });
 
   const id = window.location.pathname.substring(17);
+
   useEffect(() => {
     fetchData(id);
   }, [id]);
@@ -44,10 +40,12 @@ const TariffDetail: React.FC = () => {
   const fetchData = async (id: string) => {
     try {
       const res = await axios.get(`${tarif_detail}/${id}`, config);
-      const newState = res.data.body.funcReqList.reduce((acc: { [key: number]: boolean }, item: FuncReq) => {
-        acc[item.number] = item.isActive;
+      const funcReqList = res.data.body.funcReqList;
+      const newState = funcReqList.reduce((acc: { [key: number]: boolean }, number: number) => {
+        acc[number] = true;
         return acc;
       }, {});
+
       setNewState(newState);
       setName(res.data.body.name);
       setSecondTabData({
@@ -67,10 +65,7 @@ const TariffDetail: React.FC = () => {
   const updateData = async () => {
     const payload = {
       id: id,
-      funcReqList: Object.keys(newState).map(key => ({
-        number: Number(key),
-        isActive: newState[Number(key)]
-      })),
+      funcReqList: Object.keys(newState).filter(key => newState[Number(key)]).map(key => Number(key)),
       bookingDuration: secondTabData.bookingDuration ?? 0,
       bookingPerMonth: secondTabData.bookingPerMonth ?? 0,
       prePaymentCount: secondTabData.prePaymentCount ?? 0,
@@ -86,7 +81,6 @@ const TariffDetail: React.FC = () => {
       console.error('Error updating tariff:', error);
     }
   };
-
 
   const onChange = (key: string) => {
     console.log(key);

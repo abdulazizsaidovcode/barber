@@ -3,7 +3,6 @@ import { Checkbox } from 'antd';
 import Accordion from '../../accordion/accordion';
 import FunctionlityCard from './FunctionlityCard';
 import { Buttons } from '../../buttons';
-import Modal from '../../modals/modal';
 import EditModal from '../modals/editModal';
 
 interface SecondTabData {

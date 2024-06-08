@@ -33,7 +33,7 @@ const TariffsFunctionality: React.FC = () => {
     const addData = async (name: string) => {
         try {
             await axios.post(tarif_add_url, { name }, config);
-            fetchData(); 
+            fetchData();
             toast.success('Tariff added successfuly')
             closeModal();
         } catch { }
@@ -79,7 +79,7 @@ const TariffsFunctionality: React.FC = () => {
                             <div key={index}> {/* Added key prop */}
                                 <TariffsFunctionalityCard
                                     title={item.name} functions={item.functionCount == 0 ? 'не настроено' : `${item.functionCount} Функций`}
-                                    sum={item.monthPrice == 0 ? 'не настроено' : `${item.monthPrice} сум`} link={`/settings/tariff/${item.id}`}
+                                    sum={item.monthPrice === 0 || item.monthPrice === null ? 'не настроено' : `${item.monthPrice} сум`} link={`/settings/tariff/${item.id}`}
                                 />
                             </div>
                         ))}
