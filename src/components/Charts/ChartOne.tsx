@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const ChartOne = () => {
-  const [data , setData] = useState([
+  const [data, setData] = useState([
     {
       "name": "JANUARY",
       "incomeTotal": 0
@@ -60,7 +60,7 @@ const ChartOne = () => {
     }
   ]);
 
-  
+
   const [options, setOptions] = useState({
     chart: {
       type: 'line',
@@ -83,7 +83,7 @@ const ChartOne = () => {
     },
     yaxis: {
       labels: {
-        formatter: function (val) {
+        formatter: function (val: string) {
           return val.toLocaleString();
         }
       }
