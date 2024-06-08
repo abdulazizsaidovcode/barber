@@ -1,5 +1,5 @@
 // hamma qushimcha yullar xam uzi api url lar shu joyga yozamiz(mi) shunday qilib?
-// +998886700770 12345
+// +998886700770 123
 // http://45.67.35.86:8080/swagger-ui/index.html#/
 
 // get me
@@ -7,15 +7,21 @@ import axios from 'axios';
 import { config } from './token.tsx';
 
 export const getMe = (token?: string) => {
-  axios.get(`${base_url}user/me`, token ? {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  } : config)
-    .then(res => {
+  axios
+    .get(
+      `${base_url}user/me`,
+      token
+        ? {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        : config,
+    )
+    .then((res) => {
       if (res.data.success === true) {
         sessionStorage.setItem('userInfo', JSON.stringify(res.data.body));
-        sessionStorage.setItem('userId', res.data.body.id)
+        sessionStorage.setItem('userId', res.data.body.id);
       }
     })
     .catch(() => console.log('user info error'));
@@ -60,9 +66,12 @@ export const dashboard_url = `${base_url}dashboard/`;
 
 //finance
 export const finance_list = (month: string | null, year: number | null) => {
-  if (month !== null && year !== null) return `${base_url}finance/web?month=${month}&year=${year}`;
-  else if (month !== null && year === null) return `${base_url}finance/web?month=${month}`;
-  else if (month === null && year !== null) return `${base_url}finance/web?month=${year}`;
+  if (month !== null && year !== null)
+    return `${base_url}finance/web?month=${month}&year=${year}`;
+  else if (month !== null && year === null)
+    return `${base_url}finance/web?month=${month}`;
+  else if (month === null && year !== null)
+    return `${base_url}finance/web?month=${year}`;
   else return `${base_url}finance/web`;
 };
 
@@ -89,4 +98,4 @@ export const messages_url = `${base_url}chat/messages`; // newsletters url
 
 // requestes url
 export const new_masters_url = `${base_url}user/web/new-master`; // newsletters url
-export const masters_fulldata_url = `${base_url}user/web/master-full-info`
+export const masters_fulldata_url = `${base_url}user/web/master-full-info`;

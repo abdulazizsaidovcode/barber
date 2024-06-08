@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { master_full_data } from '../../../helpers/api';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
 import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
 import { config } from '../../../helpers/token';
 
 const DetailMaster: React.FC = () => {
-  const { t } = useTranslation();
   const location = useLocation();
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true); // Add loading state
@@ -45,7 +43,7 @@ const DetailMaster: React.FC = () => {
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
-            StatusNow={orderDetails.masterChatStatus }
+            StatusNow={orderDetails.masterChatStatus}
             Specialization={orderDetails.masterSpecialization[1]}
             ServiceCategory={orderDetails.masterServiceCategory}
             GenderType={orderDetails.directionByGender}
