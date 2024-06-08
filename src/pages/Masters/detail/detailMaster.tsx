@@ -23,7 +23,7 @@ const DetailMaster: React.FC = () => {
     setIsLoading(true); // Set loading to true when fetching starts
 
     axios
-      .get(`${master_full_data}${id}`, config)
+      .get(`${master_full_data}/${id}`, config)
       .then((response) => {
         const master = response.data.body;
         console.log(master);
