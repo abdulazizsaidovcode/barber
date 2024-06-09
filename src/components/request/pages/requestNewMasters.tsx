@@ -6,7 +6,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import NewMastersDetail from '../details/newMastersDetail';
 import Modal from '../../modals/modal';
 import axios from 'axios';
-import { masters_fulldata_url, new_masters_url } from '../../../helpers/api';
+import { masters_fulldata_url, masters_gallery_url, new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 
 interface Data {
@@ -68,19 +68,26 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
-      console.log(res.data.body);
-    } catch (err) { }
+    } catch { }
   }
 
   const fetchFullData = async (id: string) => {
     try {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
       setSelectedMaster(res.data.body);
-      console.log(res.data.body);
-      
       setDetailIsOpen(true);
-    } catch {}
+    } catch { }
   }
+  const fetchGallery = async (id: string) => {
+    try {
+      const res = await axios.get(`${masters_gallery_url}/${id}`, config);
+      console.log(res.data.body);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  fetchGallery('ceea53ed-fc0c-45cd-bc57-ee655880096b')
 
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
