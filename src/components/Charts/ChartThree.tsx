@@ -1,7 +1,10 @@
 import { DatePicker } from 'antd';
 import { ApexOptions } from 'apexcharts';
+import axios from 'axios';
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { dashboard_url } from '../../helpers/api';
+import { config } from '@fullcalendar/core/internal';
 
 interface ChartThreeState {
   series: number[];
@@ -62,6 +65,18 @@ const ChartThree: React.FC = () => {
     }));
   };
   handleReset;
+
+  function getData(value: string | number) {
+    axios
+      .get(`${dashboard_url}web/masterVsClient?year=${value}`, config)
+      .then((response) => {
+        const { data } = response;
+        
+      })
+      .catch(() => {
+        console.error('There was an error fetching the data!');
+      });
+  }
 
   return (
     <div>

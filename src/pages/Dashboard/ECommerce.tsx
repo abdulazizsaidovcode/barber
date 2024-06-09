@@ -138,25 +138,24 @@ const ECommerce: React.FC = () => {
         </div>
       </section>
 
-      <div className='flex justify-between flex-wrap mt-5'>
-        <div className='flex justify-between gap-3 '>
-          <h1 className='font-semibold text-black text-xl dark:text-white'>Income dynamics</h1>
-          <DatePicker picker="year" style={{ height: 35 }} />
+      {/* Income dynamics */}
+
+      <div className="mt-4 w-full gap-5 flex">
+        <div className='w-1/2'>
+          <ChartOne />
         </div>
-        <div className='flex gap-3 '>
-          <h1 className='font-semibold text-black text-xl dark:text-white'>Profit dynamics</h1>
-          <DatePicker picker="year" style={{ height: 35 }} />
+        <div className='w-1/2'>
+          <ChartFour />
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5 ">
-        <ChartOne />
-        <ChartFour />
-      </div>
+      {/* Income dynamics */}
+
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartSex />
         <ChartSeven />
         <ChartEight />
       </div>
+
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
       </div>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
