@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
+import { DatePicker } from 'antd';
+import { config } from '../../helpers/token';
 
 const options: ApexOptions = {
   colors: ['#000000', '#D9D9D9'],
@@ -74,15 +76,23 @@ interface ChartTwoState {
 
 const ChartTwo: React.FC = () => {
   const [clientData, setClientData] = useState([]);
+  const [dates, setDates] = useState<string | number>(new Date().getFullYear());
   const [series, setSeries] = useState<ChartTwoState['series']>([
     { name: 'MasterCount', data: [] },
     { name: 'Client Count', data: [] },
   ]);
 
-  const currentYear = new Date().getFullYear();
   useEffect(() => {
+    getData(dates);
+  }, [dates]);
+
+  const handleYearChange = (date: any, dateString: any) => {
+    setDates(dateString);
+  };
+
+  function getData(value: string | number) {
     axios
-      .get(`${dashboard_url}web/masterVsClient?year=${currentYear}`)
+      .get(`${dashboard_url}web/masterVsClient?year=${value}`, config)
       .then((response) => {
         const { data } = response;
         if (data && data.body) {
@@ -91,22 +101,25 @@ const ChartTwo: React.FC = () => {
             clientCount: item.clientCount ? item.clientCount : 0,
           }));
           setClientData(newData);
+
           setSeries([
             { name: 'MasterCount', data: newData.map((item: any) => item.masterCount) },
             { name: 'Client Count', data: newData.map((item: any) => item.clientCount) },
-
           ]);
         }
       })
       .catch(() => {
         console.error('There was an error fetching the data!');
       });
-  }, [currentYear]);
+  }
 
   return (
-    <div className="col-span-12 rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-
-      <div>
+    <div>
+      <div className='flex justify-between items-center mb-5'>
+        <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
+        <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+      </div>
+      <div className="col-span-12 rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
         <div id="chartTwo" className="-ml-5 -mb-9">
           <ReactApexChart
             options={options}

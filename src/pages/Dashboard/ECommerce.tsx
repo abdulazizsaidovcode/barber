@@ -117,7 +117,7 @@ const ECommerce: React.FC = () => {
           <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} />
           <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
           <CardDataStats title="Заказы" total={data.orderCount ? data.orderCount : 0} />
-          <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
+          <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.masterCanselOrder ? data.masterCanselOrder : 0}`} />
           <CardDataStats title="Оборот общий" total={data.totalTurnover ? data.totalTurnover : 0} />
           <CardDataStats title="Доход" total={data.income ? data.income : 0} />
           <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction ? data.customerDissatisfaction : 0} />
@@ -131,23 +131,10 @@ const ECommerce: React.FC = () => {
 
       <section className='flex justify-between mt-20 gap-5'>
         <div className='flex flex-col w-1/2'>
-          <div className='flex justify-between items-center'>
-            <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
-            <DatePicker picker="year" style={{ height: 35 }} />
-          </div>
-          <div className="col-span-12 md:col-span-6 mt-5">
-            <ChartTwo />
-          </div>
+          <ChartTwo />
         </div>
-        <div className="mt-4 flex flex-col w-1/2">
-          <div className='flex gap-2 justify-between items-center'>
-            <h1 className='font-semibold text-black text-2xl dark:text-white'>Subscription rates for client masters</h1>
-            <DatePicker picker="year" style={{ height: 35 }} />
-            <DatePicker picker="month" style={{ height: 35 }} />
-          </div>
-          <div className=" mt-5">
-            <ChartThree />
-          </div>
+        <div className="flex flex-col w-1/2">
+          <ChartThree />
         </div>
       </section>
 
