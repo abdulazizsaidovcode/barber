@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
-import { DatePicker } from 'antd';
+import { DatePicker, Skeleton } from 'antd';
 import { config } from '../../helpers/token';
 
 const initialOptions: ApexOptions = {
@@ -123,7 +123,7 @@ const ChartFour: React.FC = () => {
     setLoading(true);
     setError('');
     axios
-      .get(`${dashboard_url}web/month-profit?year=${year}` , config)
+      .get(`${dashboard_url}web/month-profit?year=${year}`, config)
       .then((response) => {
         if (response.data.body && response.data.body.length > 0) {
           setChart(response.data.body);
@@ -184,12 +184,29 @@ const ChartFour: React.FC = () => {
       <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
         <div>
           <div id="chartOne" className="-ml-5">
-            <ReactApexChart
-              options={options}
-              series={state.series}
-              type="line"
-              height={350}
-            />
+            {loading ? (
+              <Skeleton active paragraph={{ rows: 10 }} />
+            ) : error ? (
+              <div>{error}</div>
+            ) : (
+              <div>
+                <div id="chartOne" className="-ml-5">
+                  <ReactApexChart
+                    options={options}
+                    series={state.series}
+                    type="line"
+                    height={350}
+                  />
+                </div>
+              </div>
+            )}
+            {/* {loading ? "" :
+              <ReactApexChart
+                options={options}
+                series={state.series}
+                type="line"
+                height={350}
+              />} */}
           </div>
         </div>
       </div>
