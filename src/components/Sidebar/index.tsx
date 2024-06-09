@@ -7,8 +7,8 @@ import { BsCurrencyDollar, BsFillPersonLinesFill } from 'react-icons/bs';
 import { IoChatbubbleEllipsesOutline, IoDocumentTextOutline } from 'react-icons/io5';
 import { MdOutlineShoppingBag, MdReviews } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-import { GiHairStrands } from "react-icons/gi";
-import { PiHandshakeBold } from "react-icons/pi";
+import { GiHairStrands } from 'react-icons/gi';
+import { PiHandshakeBold } from 'react-icons/pi';
 import '../../i18n';
 
 interface SidebarProps {
@@ -93,7 +93,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('dashboard') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname === '/' && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <AiOutlineDashboard />
@@ -103,7 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/master"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('master') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <GiHairStrands />
@@ -113,7 +113,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/client"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('client') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('client') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <BsFillPersonLinesFill />
@@ -133,7 +133,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/calendar"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('calendar') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('calendar') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <CiCalendar />
@@ -143,7 +143,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/orders"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('orders') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('orders') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <MdOutlineShoppingBag />
@@ -153,7 +153,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/finance"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('finance') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('finance') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <BsCurrencyDollar />
@@ -163,7 +163,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/mutual_settlements"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('Mutual_settlements') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('mutual_settlements') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
                   <PiHandshakeBold />
@@ -173,20 +173,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/reviews"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray  dark:text-white ${pathname.includes('Mutual_settlements') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('reviews') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
-                  <BsCurrencyDollar />
+                  <MdReviews />
                   {t('Отзывы')}
                 </NavLink>
               </li>
               <li>
                 <NavLink
                   to="/chat"
-                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('Chat') && 'bg-gray dark:bg-[#9c0a36]'
+                  className={`shadow-1 shadow-[#000] dark:hover:text-black dark:shadow-white group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-gray dark:text-white ${pathname.includes('chat') && 'bg-gray dark:bg-[#9c0a36]'
                     }`}
                 >
-                  <MdReviews />
+                  <IoChatbubbleEllipsesOutline />
                   {t('siderbar_chat')}
                 </NavLink>
               </li>
