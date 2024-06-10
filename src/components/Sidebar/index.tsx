@@ -9,7 +9,6 @@ import { MdOutlineShoppingBag, MdReviews } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { GiHairStrands } from 'react-icons/gi';
 import { PiHandshakeBold } from 'react-icons/pi';
-import { LuMenu } from "react-icons/lu";
 import '../../i18n';
 
 interface SidebarProps {
