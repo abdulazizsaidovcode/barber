@@ -6,6 +6,8 @@ import axios from 'axios';
 import DefaultLayout from './../../layout/DefaultLayout';
 import { useTranslation } from 'react-i18next';
 import MasterDetail from './../../components/MastervsOrder/masterDetail';
+import { getFileId } from './../../helpers/api';
+import userImg from '../../images/user.png';
 
 const NotFound: React.FC = () => {
   const { t } = useTranslation();
@@ -68,24 +70,33 @@ const NotFound: React.FC = () => {
               Prepayment={orderDetails.prePayment}
               Paid={orderDetails.paid}
               PaymentType={
-                orderDetails.paymentType === null
-                  ? 'null'
+                !orderDetails.paymentType ||
+                orderDetails.paymentType.length === 0
+                  ? 'Mavjud emas'
                   : orderDetails.paymentType
               }
               Duration={orderDetails.serviceTime}
               RecNotification={
-                orderDetails.orderRecordingTime === null
-                  ? 'Null'
-                  : orderDetails.orderRecordingTime
+                orderDetails.recordDurationTime === null
+                  ? 'Mavjud emas'
+                  : orderDetails.recordDurationTime
               }
+              MasterNumber={orderDetails.masterPhone}
+              MasterStatus={orderDetails.masterSpecialist}
+              Status=""
+              isLoading={false}
               ToPay={orderDetails.toPay}
               MasterName={orderDetails.masterFullName}
               MasterType={orderDetails.serviceName}
-              MasterImg={orderDetails.masterPhotoPath}
-              MasterPhone={orderDetails.masterPhone}
+              MasterImg={
+                orderDetails.masterPhotoId
+                  ? getFileId + orderDetails.masterPhotoId
+                  : userImg
+              }
               ClientName={orderDetails.clientFullName}
-              ClientPhoto={orderDetails.clientPhotoPath}
+              ClientPhoto={getFileId + orderDetails.clientPhotoId}
               ClientNumber={orderDetails.clientPhone}
+              masterFeedback={orderDetails.masterFeedback}
             />
           </div>
         ) : (

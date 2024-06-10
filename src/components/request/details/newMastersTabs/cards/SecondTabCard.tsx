@@ -1,19 +1,19 @@
 import React from 'react';
-import img from '../../../../../images/Image.png';
+import { Image } from 'antd';
 
-interface FirstTabCardProp {
+interface SecondTabCardProp {
     category: string;
     price: string;
     duration: string;
     description: string;
-    openModal: () => void
+    image: string;
 }
 
-const FirstTabCard: React.FC<FirstTabCardProp> = ({ category, price, duration, description, openModal }) => {
+const SecondTabCard: React.FC<SecondTabCardProp> = ({ category, price, duration, description, image }) => {
     return (
         <div className='bg-[#cccccc] dark:bg-white px-4 flex w-full h-60 py-3'>
-            <div className='w-[22%] mx-1 flex items-center' onClick={openModal}>
-                <img src={img} alt={category} />
+            <div className='w-[22%] mx-1 flex items-center'>
+                <Image width={280} height={200} src={image} />
             </div>
             <div className='w-[70%] mx-1'>
                 <div>
@@ -37,4 +37,4 @@ const FirstTabCard: React.FC<FirstTabCardProp> = ({ category, price, duration, d
     );
 }
 
-export default FirstTabCard;
+export default SecondTabCard;

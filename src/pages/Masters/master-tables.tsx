@@ -7,6 +7,7 @@ import React from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import images from '../../images/user/user-01.png';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const MasterTables: React.FC = () => {
   const { data, totalPage } = masterStore();
@@ -20,7 +21,7 @@ const MasterTables: React.FC = () => {
   const getItems = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <a href={`/master/${id}`}>{t("Open")}</a>,
+      label: <Link to={`/master/${id}`} >{t("Open")}</Link>,
     },
     {
       key: '2',

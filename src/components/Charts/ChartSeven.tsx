@@ -12,7 +12,7 @@ const options: ApexOptions = {
         type: 'donut',
     },
     colors: ['#000000', '#D9D9D9', '#E4E8EF',],
-    labels: ['Desktop', 'Tablet', 'Mobile',],
+    labels: ['Карта', 'Виртуальная карта', 'Наличные',],
     legend: {
         show: true,
         position: 'bottom',

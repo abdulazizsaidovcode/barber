@@ -10,6 +10,23 @@
   "Download": "Скачать",
   "Download_pdf": "Скачать PDF",
   "dashboard_main_text": "Общие показатели",
+<<<<<<< HEAD
+=======
+  "sidebar_menu_text": "МЕНЮ",
+  "siderbar_dashboard": "Главная",
+  "master": "Мастера",
+  "siderbar_client": "Клинеты",
+  "siderbar_calendar": "Календарь",
+  "siderbar_calculation": "Записи",
+  "siderbar_finance": "Финансы",
+  "siderbar_gallery": "Галерея",
+  "siderbar_profile": "Профиль",
+  "siderbar_cards": "Карты",
+  "siderbar_chat": "Чат",
+  "orders_name": "Записи",
+  "FirstTab_name": "Предстоящие",
+  "SecondTab_name": "Завершенные",
+>>>>>>> 52c43b15b92b00363fd93efe659188e645518d97
   "detail_payment_type": "Не начиналась",
   "detail_type": "Одобрена",
   "Dynamics_of_connecting_masters_and_clients": "Динамика подключения мастеров и клиентов",

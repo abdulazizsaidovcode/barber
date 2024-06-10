@@ -1,14 +1,24 @@
-import React from 'react'
-import Modal from '../../modals/modal'
+import React from 'react';
+import Modal from '../../modals/modal';
 import { Tabs } from 'antd';
 import FirstTab from './newMastersTabs/FirstTab';
 import SecondTab from './newMastersTabs/SecondTab';
 import ThirdTab from './newMastersTabs/ThirdTab';
 
-interface NewMastersDetail {
+interface ServiceData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
+}
+
+interface NewMastersDetailProps {
   isOpen: boolean;
   onClose: () => void;
-  openReasonModal: () => void
+  openReasonModal: () => void;
   masterId?: string;
   firstName?: string;
   lastName?: string;
@@ -37,9 +47,13 @@ interface NewMastersDetail {
   newOrUpdateCategory?: boolean;
   masterChatStatus?: string;
   scheduleType?: string;
+  facebookLink?: string;
+  serviceData: ServiceData[]; // Add service data prop
+  confirmMasters: (id: string, callback: () => void) => void; // Add confirmMasters function
+  fetchData: () => void; // Add fetchData function
 }
 
-const NewMastersDetail: React.FC<NewMastersDetail> = ({
+const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   isOpen,
   openReasonModal,
   onClose,
@@ -70,19 +84,39 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({
   masterSpecialization,
   newOrUpdateCategory,
   masterChatStatus,
-  scheduleType
+  scheduleType,
+  facebookLink,
+  serviceData, // Destructure service data
+  confirmMasters, // Destructure confirmMasters function
+  fetchData // Destructure fetchData function
 }) => {
   const items = [
     {
       key: '1',
       label: (
-        <span
-          className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
-        >
+        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
           Основная информация
         </span>
       ),
-      children: <FirstTab />,
+      children: <FirstTab
+        phoneNumber={phoneNumber}
+        nickname={nickname}
+        masterImgPath={masterImgPath}
+        firstName={firstName}
+        lastName={lastName}
+        age={age}
+        address={address}
+        instagramLink={instagramLink}
+        telegramLink={telegramLink}
+        directionByGender={directionByGender}
+        masterChatStatus={masterChatStatus}
+        masterServiceCategory={masterServiceCategory}
+        masterSpecialization={masterServiceCategory}
+        regionName={regionName}
+        facebookLink={facebookLink}
+        districtName={districtName}
+        scheduleType={scheduleType}
+      />,
     },
     {
       key: '2',
@@ -91,7 +125,7 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({
           Процедуры
         </span>
       ),
-      children: <SecondTab />,
+      children: <SecondTab serviceData={serviceData} />, // Pass service data to the second tab
     },
     {
       key: '3',
@@ -100,7 +134,7 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({
           Галерея
         </span>
       ),
-      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} />,
+      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} confirmMasters={() => confirmMasters(masterId || '', fetchData)} />, // Pass confirmMasters function and fetchData function
     },
   ];
   return (
@@ -116,4 +150,4 @@ const NewMastersDetail: React.FC<NewMastersDetail> = ({
   )
 }
 
-export default NewMastersDetail
+export default NewMastersDetail;

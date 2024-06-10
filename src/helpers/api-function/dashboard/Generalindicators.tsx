@@ -3,6 +3,7 @@ import { dashboard_url } from '../../api.tsx';
 import { config } from '../../token.tsx';
 import { Data } from '../../state_managment/dashboard/dashboardStore.tsx';
 
+
 interface DGeneralIndecator {
     year?: string;
     localDate?: string;
@@ -14,7 +15,7 @@ interface DGeneralIndecator {
 
 export const DGeneralIndecators = ({ year, localDate, starDate, endDate, setDashdata }: DGeneralIndecator) => {
     console.log("salom");
-    
+
     axios.get(`${dashboard_url}web/statistic${year ? `?year=${year}` : "?year=0"}${localDate ? `&localDate=${localDate}` : ""}${starDate ? `&starDate=${starDate}` : ""}${endDate ? `&endDate=${endDate}` : ""}`, config)
         .then((response) => {
             setDashdata(response.data.body);

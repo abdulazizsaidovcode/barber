@@ -1,23 +1,26 @@
 import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { dashboard_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
 
 interface ChartThreeState {
     series: number[];
+    labels: string[];
 }
 
-const options: ApexOptions = {
+const initialOptions: ApexOptions = {
     chart: {
         fontFamily: 'Satoshi, sans-serif',
         type: 'donut',
     },
-    colors: ['#000000', '#D9D9D9', '#E4E8EF',],
-    labels: ['Desktop', 'Tablet', 'Mobile',],
+    colors: ['#000000', '#D9D9D9', '#E4E8EF'],
+    labels: [],
     legend: {
         show: true,
         position: 'bottom',
     },
-
     plotOptions: {
         pie: {
             donut: {
@@ -51,33 +54,52 @@ const options: ApexOptions = {
 
 const ChartEight: React.FC = () => {
     const [state, setState] = useState<ChartThreeState>({
-        series: [65, 34, 12,],
+        series: [],
+        labels: [],
     });
 
-    const handleReset = () => {
-        setState((prevState) => ({
-            ...prevState,
-            series: [65, 34, 12,],
-        }));
+    const [options, setOptions] = useState<ApexOptions>(initialOptions);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios
+            .get(`${dashboard_url}web/popular/services/by/category`,config)
+            .then((response) => {
+                const data = response.data.body;
+                const categories = data.map((item: any) => item.categoryName);
+                const series = data.map((item: any) => item.percent);
+
+                setState({
+                    series: series,
+                    labels: categories,
+                });
+
+                setOptions((prevOptions) => ({
+                    ...prevOptions,
+                    labels: categories,
+                }));
+            })
+            .catch(() => {
+                console.error('There was an error fetching the data!');
+            });
     };
-    handleReset;
 
     return (
-        <>
-            <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-                <h1 className='font-semibold text-black text-xl dark:text-white'>Popular services by category</h1>
-                <div className="mb-2">
-                    <div id="chartThree" className="mx-auto flex justify-center">
-                        <ReactApexChart
-                            options={options}
-                            series={state.series}
-                            type="donut"
-                        />
-                    </div>
+        <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+            <h1 className='font-semibold text-black text-xl dark:text-white'>Popular services by category</h1>
+            <div className="mb-2">
+                <div id="chartThree" className="mx-auto flex justify-center">
+                    <ReactApexChart
+                        options={options}
+                        series={state.series}
+                        type="donut"
+                    />
                 </div>
             </div>
-        </>
-
+        </div>
     );
 };
 

@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
+import { DatePicker, Skeleton } from 'antd';
+import { config } from '../../helpers/token';
 
 const initialOptions: ApexOptions = {
   legend: {
@@ -121,7 +123,7 @@ const ChartFour: React.FC = () => {
     setLoading(true);
     setError('');
     axios
-      .get(`${dashboard_url}web/month-profit?year=${year}`)
+      .get(`${dashboard_url}web/month-profit?year=${year}`, config)
       .then((response) => {
         if (response.data.body && response.data.body.length > 0) {
           setChart(response.data.body);
@@ -159,8 +161,6 @@ const ChartFour: React.FC = () => {
       },
     }));
   }, [chart]);
-  
-  
 
   const [state, setState] = useState<ChartOneState>({
     series: [
@@ -171,36 +171,46 @@ const ChartFour: React.FC = () => {
     ],
   });
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setYear(parseInt(e.target.value, 10));
+  const handleYearChange = (date: any, dateString: any) => {
+    setYear(parseInt(dateString, 10));
   };
 
   return (
-    <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
-      <div>
-        <input
-          type="number"
-          value={year}
-          onChange={handleYearChange}
-          className="mb-4 p-2 border border-gray-300 rounded"
-          placeholder="Enter year"
-        />
-        {loading ? (
-          <div>Loading...</div>
-        ) : error ? (
-          <div>{error}</div>
-        ) : (
-          <div id="chartOne" className="-ml-5">
-            <ReactApexChart
-              options={options}
-              series={state.series}
-              type="line"
-              height={350}
-            />
-          </div>
-        )}
+    <>
+      <div className='flex gap-3 mb-5'>
+        <h1 className='font-semibold text-black text-xl dark:text-white '>Profit dynamics</h1>
+        <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
       </div>
-    </div>
+      <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
+        <div>
+          <div id="chartOne" className="-ml-5">
+            {loading ? (
+              <Skeleton active paragraph={{ rows: 10 }} />
+            ) : error ? (
+              <div>{error}</div>
+            ) : (
+              <div>
+                <div id="chartOne" className="-ml-5">
+                  <ReactApexChart
+                    options={options}
+                    series={state.series}
+                    type="line"
+                    height={350}
+                  />
+                </div>
+              </div>
+            )}
+            {/* {loading ? "" :
+              <ReactApexChart
+                options={options}
+                series={state.series}
+                type="line"
+                height={350}
+              />} */}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

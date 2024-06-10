@@ -1,30 +1,23 @@
 // main help types
 export interface HelpTypes {
-  dataAboutService: HelpList[];
-  setDataAboutService: (val: HelpList[]) => void;
-  dataPrivacyPolicy: HelpList[];
-  setDataPrivacyPolicy: (val: HelpList[]) => void;
-  dataLicenseAgreement: HelpList[];
-  setDataLicenseAgreement: (val: HelpList[]) => void;
-  dataLicenses: HelpList[]
-  setDataLicenses: (val: HelpList[]) => void;
-  dataCertificates: HelpList[],
-  setDataCertificates: (val: HelpList[]) => void;
-  dataUsingApplication: HelpList[];
-  setDataUsingApplication: (val: HelpList[]) => void;
-  dataOffer: HelpList[];
-  setDataOffer: (val: HelpList[]) => void;
-  dataServiceSpecification: HelpList[];
-  setDataServiceSpecification: (val: HelpList[]) => void;
-  dataTermsOfUse: HelpList[];
-  setDataTermsOfUse: (val: HelpList[]) => void;
+  dataAll: HelpList[];
+  setDataAll: (val: HelpList[]) => void;
+  dataMaster: HelpList[];
+  setDataMaster: (val: HelpList[]) => void;
+  dataClient: HelpList[];
+  setDataClient: (val: HelpList[]) => void;
+  // oneHelp: HelpList | null
+  // setOneHelp: (val: HelpList) => void;
+  // switchStates: { [key: string]: boolean },
+  // setSwitchStates: (val: { [key: string]: boolean }) => void
 }
 
 // help list types
 export interface HelpList {
-  id: string;
-  name: string;
-  categoryFatherId: string;
-  categoryFatherName: string;
-  isNew: boolean;
+  id: number;
+  helpStatus: string;
+  text: null | string;
+  attachmentList: null | string | number;
+  attachments: null | string | number;
+  active: boolean;
 }
