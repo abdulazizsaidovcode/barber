@@ -3,26 +3,21 @@ import React from 'react';
 interface SwitchProps {
   isOn: boolean;
   handleToggle: () => void;
-  key?: any
 }
 
-const Switch: React.FC<SwitchProps> = ({ isOn, handleToggle, key }) => {
-  // console.log(isOn);
+const Switch: React.FC<SwitchProps> = ({ isOn, handleToggle }) => {
   return (
     <div
-      key={key}
       onClick={handleToggle}
-      className={`w-15 h-5 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out ${
-        isOn ? 'bg-[#eaeaea]' : 'bg-[#eaeaea]'
+      className={`w-15 h-2 flex items-center rounded-full cursor-pointer transition duration-300 ease-in-out ${
+        isOn ? 'bg-slate-900' : 'bg-slate-500'
       }`}
     >
-      <div className="bg-slate-700 w-full rounded-full h-1 flex items-center m-2">
-        <div
-          className={`bg-black w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
-            isOn ? 'translate-x-5' : 'translate-x-0'
-          }`}
-        />
-      </div>
+      <div
+        className={`bg-black w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
+          isOn ? 'translate-x-10' : 'translate-x-0'
+        }`}
+      />
     </div>
   );
 };

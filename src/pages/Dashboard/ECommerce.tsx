@@ -57,9 +57,9 @@ const ECommerce: React.FC = () => {
             {t("dashboard_main_text")}
           </h1>
           <div className='gap-5 flex flex-col md:flex-row md:gap-10 lg:flex-row lg:gap-10 xl:flex-row xl:gap-5'>
-            <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
-            <DatePicker placeholder="Select local date" onChange={handleLocalDateChange} />
-            <RangePicker onChange={handleRangeChange} />
+            <DatePicker placeholder={t("Select_year")} onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+            <DatePicker placeholder={t("Select_local_date")} onChange={handleLocalDateChange} />
+            <RangePicker onChange={handleRangeChange} placeholder={[t("Select_start_date"), t("Select_end_date")]} />
           </div>
         </div>
 

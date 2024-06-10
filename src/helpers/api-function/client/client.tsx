@@ -15,8 +15,7 @@ interface IClient {
     workPlace?: string;
     page?: number;
     size?: number;
-    setData: (val: Data[]) => void;
-    setTotalPage: (val: number) => void;
+    
 }
 
 export const getClients = ({

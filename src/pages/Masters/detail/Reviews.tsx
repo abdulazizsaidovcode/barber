@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { master_full_data } from '../../../helpers/api';
 import axios from 'axios';
-import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
 import { config } from '../../../helpers/token';
 import toast from 'react-hot-toast';
 

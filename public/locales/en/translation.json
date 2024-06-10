@@ -1,11 +1,22 @@
 {
   "dashboard_main_text": "General indicators",
+  "Download":"Download",
+  "Download_pdf":"Download pdf",
   "sidebar_menu_text": "MENU",
   "siderbar_dashboard": "Dashboard",
   "master": "Master",
   "siderbar_client": "Client",
+  "Orders":"Orders",
   "siderbar_calendar": "Calendar",
   "siderbar_calculation": "Orders",
+  "Canceled_client_master":"Canceled client/master",
+  "Total_turnover":"Total turnover",
+  "Income":"Income",
+  "Customer_churn":"Customer churn",
+  "Master_churn":"Master churn",
+  "Clients_per_1_specialist_on_average":"Clients per 1 specialist on average",
+  "Dynamics_of_connecting_masters_and_clients":"Dynamics of connecting_masters_and_client_",:"Subscription rates for client masters",
+  "Subscription_rates_for_client_masters":"Subscription rates for client masters",
   "siderbar_finance": "Finance",
   "siderbar_gallery": "Gallery",
   "siderbar_profile": "Profile",
@@ -40,9 +51,14 @@
   "Search_by_name":"Search by name",
   "Region":"Region",
   "City":"City",
-  "Download":"Download",
-  "Download_pdf":"Download pdf",
+  
+  "Service_category":"Service category",
+  "Select_local_date":"Select local date",
+  "Select_year":"Select year",
+  "Select_month": "Select month",
+  "Select_start_date":"Start date",
+  "Select_end_date":"End date",
+
   "Photo":"Photo",
-  "Service_category":"Service category"
 
 }

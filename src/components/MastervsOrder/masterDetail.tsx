@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Skeleton, Button } from 'antd';
-import Switch from './../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
 import { useTranslation } from 'react-i18next';
+import { getAttachment } from './../../helpers/attachment/getAttachment';
 
 interface Props {
   OrderData: string;
@@ -16,18 +16,21 @@ interface Props {
   RecNotification: string;
   ToPay: string;
   MasterName: string;
-  MasterType: string;
   MasterImg: string;
-  definitionType: string;
+  MasterType: string;
   ClientName: string;
   ClientPhoto: string;
   ClientNumber: string;
   Status: string;
-  isLoading: boolean; // Add isLoading prop
+  MasterNumber: string;
+  isLoading: boolean;
+  masterFeedback: string;
+  MasterStatus: string;
 }
 
 const MasterCardInfo: React.FC<Props> = ({
   OrderData,
+  masterFeedback,
   OrderEnterTime,
   OrderEndTime,
   price,
@@ -37,21 +40,20 @@ const MasterCardInfo: React.FC<Props> = ({
   Duration,
   RecNotification,
   ToPay,
+  MasterNumber,
   MasterName,
-  MasterType,
   MasterImg,
-  definitionType,
   ClientName,
-  ClientPhoto,
   ClientNumber,
-  Status,
-  isLoading, // Destructure isLoading prop
+  isLoading,
+  ClientPhoto,
+  MasterStatus,
 }) => {
   const { t } = useTranslation();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = () => setIsOpen(true);
+  const openMdal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   const toggleSwitch = () => {
@@ -63,8 +65,8 @@ const MasterCardInfo: React.FC<Props> = ({
       <div className="flex flex-col h-full justify-between gap-4">
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
-            <div className="flex items-center">
-              <div className="bg-green-500 rounded-[50%] w-3 h-3"></div>
+            <div className="flex items-center justify-between">
+              <p className="font-bold">Master:</p>
               <p>{MasterName}</p>
             </div>
             <div className="flex items-center justify-center border-black p-1 rounded-full">
@@ -74,25 +76,27 @@ const MasterCardInfo: React.FC<Props> = ({
                 className="w-40 border h-40 rounded-full"
               />
             </div>
-            <div className="flex items-center mt-3 justify-between">
-              <p className="text-gray-600">Ta'rif:</p>
-              <p className="text-gray-600">{definitionType}</p>
+            <div className="flex items-center mt-3 flex-col gap-1 justify-center">
+              <p className="text-gray-600">{MasterStatus}</p>
+              <p className="text-gray-600">{MasterNumber}</p>
             </div>
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold">Status:</p>
-              <div className="bg-green-500 px-6 rounded-xl font-bold">
-                {Status}
-              </div>
+              <p className="font-bold">Client:</p>
+              <p>{ClientName}</p>
             </div>
-            <div className="flex items-center justify-start mt-4">
-              <p>Заблокировать</p>
-              <div onClick={() => openModal()}>
-                <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
-              </div>
+            <div className="flex items-center justify-center border-black p-1 rounded-full">
+              <img
+                src={ClientPhoto}
+                alt="Master"
+                className="w-40 border h-40 rounded-full"
+              />
+            </div>
+            <div className="flex items-center mt-3 flex-col gap-1 justify-center">
+              <p className="text-gray-600">{ClientNumber}</p>
             </div>
           </div>
         </Skeleton>
@@ -123,7 +127,10 @@ const MasterCardInfo: React.FC<Props> = ({
           <p className="mb-2">
             <strong>Уведомление о записи:</strong> {RecNotification}
           </p>
-          <p className="mt-4 text-xl text-yellow-600">
+          <p className="mb-2  ">
+            <strong>Master Feedback : </strong> {masterFeedback}
+          </p>
+          <p className="mt-4 text-xl text-orange-600">
             <strong>К оплате:</strong> {ToPay}
           </p>
         </div>

@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Skeleton, Button, Modal, Input } from 'antd';
+import { Skeleton, Button, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import Switch from './../settings/details/TableSwitcher';
 import toast, { Toaster } from 'react-hot-toast';
-import axios from 'axios'; // Import axios for making API requests
+import axios from 'axios';
 import { client_block_put, client_send_message } from '../../helpers/api';
 import { config } from './../../helpers/token';
 import { useLocation } from 'react-router-dom';
+import Modal from '../modals/modal';
 
 const { TextArea } = Input;
 
 type DetailClientProps = {
-  ClientId: string; // Add ClientId prop
+  ClientId: string;
   ClientName: string;
   ClientImg: string;
   turnover: string;
@@ -35,7 +36,7 @@ type DetailClientProps = {
 };
 
 const DetailClient: React.FC<DetailClientProps> = ({
-  ClientId, // Destructure ClientId from props
+  ClientId,
   ClientName,
   ClientImg,
   turnover,
@@ -57,14 +58,13 @@ const DetailClient: React.FC<DetailClientProps> = ({
   StatusNow,
 }) => {
   const { t } = useTranslation();
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
-  const [pendingSwitchState, setPendingSwitchState] = useState(false); // State to hold the pending switch state
-  const [message, setMessage] = useState(''); // State to hold the message
+  const [pendingSwitchState, setPendingSwitchState] = useState(true);
+  const [message, setMessage] = useState('');
   const location = useLocation();
   const id = location.pathname.substring(11);
-
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -73,15 +73,15 @@ const DetailClient: React.FC<DetailClientProps> = ({
   const closeSendModal = () => setSendOpen(false);
 
   const handleSwitchClick = () => {
-    setPendingSwitchState(!isSwitchOn); // Set the pending switch state to the opposite of current state
+    setPendingSwitchState(!isSwitchOn);
     openModal();
   };
 
   const confirmToggleSwitch = async () => {
-    setIsSwitchOn(pendingSwitchState); // Apply the pending switch state
+    setIsSwitchOn(pendingSwitchState);
     try {
       const response = await axios.put(
-        `${client_block_put}?isBlock=${pendingSwitchState}&clientId${id}`,
+        `${client_block_put}?isBlock=${pendingSwitchState}&clientId=${id}`,
         config,
       );
 
@@ -100,7 +100,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
 
     try {
       const response = await axios.put(
-        `${client_send_message}`, // Replace with your actual endpoint for sending messages
+        `${client_send_message}`,
         {
           clientId: ClientId,
           message: `${message}`,
@@ -237,31 +237,16 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </p>
         </div>
       </Skeleton>
-      <Modal
-        title={t('Modal_answer')}
-        visible={isOpen}
-        onCancel={closeModal}
-        footer={[
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <p className="text-2xl font-bold">{t('Modal_answer')}</p>
+        <div className="flex items-center gap-2 justify-end mt-3">
           <Button key="back" onClick={closeModal}>
             {t('No')}
-          </Button>,
-          <Button key="submit" type="primary" onClick={confirmToggleSwitch}>
-            {t('Ok')}
-          </Button>,
-        ]}
-      >
-        <p className="text-2xl font-bold">{t('Modal_answer')}</p>
+          </Button>
+          <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
+        </div>
       </Modal>
-      <Modal
-        title={t('Send message')}
-        visible={SendOpen}
-        onCancel={closeSendModal}
-        footer={[
-          <Button key="submit" type="primary" onClick={handleSendMessage}>
-            {t('Send')}
-          </Button>,
-        ]}
-      >
+      <Modal isOpen={SendOpen} onClose={closeSendModal}>
         <div className="w-[45rem]">
           <p className="text-2xl text-black dark:text-white">
             {t('Send message')}:
@@ -270,9 +255,14 @@ const DetailClient: React.FC<DetailClientProps> = ({
             className="mt-4"
             rows={4}
             placeholder={t('Enter your message')}
-            value={message} // Bind the value to the message state
-            onChange={(e) => setMessage(e.target.value)} // Update the message state on change
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
+          <div className="flex justify-end mt-2">
+            <Button key="submit" type="primary" onClick={handleSendMessage}>
+              {t('Send')}
+            </Button>
+          </div>
         </div>
       </Modal>
       <Toaster position="top-center" reverseOrder={false} />
