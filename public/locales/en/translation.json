@@ -57,5 +57,8 @@
   "Select_month": "Select month",
   "Select_start_date": "Start date",
   "Select_end_date": "End date",
-  "Photo": "Photo"
+  "Photo": "Photo",
+  "Income_dynamics": "Income dynamics",
+  "Profit_dynamics": "Profit dynamics",
+  "Master_rating": "Master rating"
 }

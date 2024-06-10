@@ -58,5 +58,8 @@
   "Photo": "Фото",
   "Total_turnover": "Оборот общий",
   "Income": "Доход",
-  "ThirdTab_name": "Отклонённые"
+  "ThirdTab_name": "Отклонённые",
+  "Income_dynamics": "Динамика доходов",
+  "Profit_dynamics": "Динамика прибыли",
+  "Master_rating": "Мастер рейтинг"
 }
