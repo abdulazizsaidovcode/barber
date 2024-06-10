@@ -2,24 +2,16 @@ import { create } from 'zustand';
 import { HelpList, HelpTypes } from '../../../types/help.ts';
 
 const financeStore = create<HelpTypes>((set) => ({
-  dataAboutService: [],
-  setDataAboutService: (val: HelpList[]) => set({ dataAboutService: val }),
-  dataPrivacyPolicy: [],
-  setDataPrivacyPolicy: (val: HelpList[]) => set({ dataPrivacyPolicy: val }),
-  dataLicenseAgreement: [],
-  setDataLicenseAgreement: (val: HelpList[]) => set({ dataLicenseAgreement: val }),
-  dataLicenses: [],
-  setDataLicenses: (val: HelpList[]) => set({ dataLicenses: val }),
-  dataCertificates: [],
-  setDataCertificates: (val: HelpList[]) => set({ dataCertificates: val }),
-  dataUsingApplication: [],
-  setDataUsingApplication: (val: HelpList[]) => set({ dataUsingApplication: val }),
-  dataOffer: [],
-  setDataOffer: (val: HelpList[]) => set({ dataOffer: val }),
-  dataServiceSpecification: [],
-  setDataServiceSpecification: (val: HelpList[]) => set({ dataServiceSpecification: val }),
-  dataTermsOfUse: [],
-  setDataTermsOfUse: (val: HelpList[]) => set({ dataTermsOfUse: val })
+  dataAll: [],
+  setDataAll: (val: HelpList[]) => set({ dataAll: val }),
+  dataMaster: [],
+  setDataMaster: (val: HelpList[]) => set({ dataMaster: val }),
+  dataClient: [],
+  setDataClient: (val: HelpList[]) => set({ dataClient: val }),
+  // oneHelp: null,
+  // setOneHelp: (val: HelpList) => set({ oneHelp: val }),
+  // switchStates: {},
+  // setSwitchStates: (val: { [key: string]: boolean }) => set({ switchStates: val })
 }));
 
 export default financeStore;
