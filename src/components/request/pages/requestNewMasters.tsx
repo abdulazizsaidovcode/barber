@@ -63,11 +63,22 @@ interface ServiceData {
   description: string;
 }
 
+interface GalleryData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
+}
+
 const RequestNewMasters: React.FC = () => {
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [reasonIsOpen, setReasonIsOpen] = useState(false);
   const [data, setData] = useState<Data[]>([]);
   const [serviceData, setServiceData] = useState<ServiceData[]>([]);
+  const [galleryData, setGalleryData] = useState<GalleryData[]>([]);
   const [selectedMaster, setSelectedMaster] = useState<MasterDetailData | null>(null);
 
   useEffect(() => {
@@ -96,28 +107,26 @@ const RequestNewMasters: React.FC = () => {
       console.log(res.data.body);
     } catch { }
   }
+  useEffect(() => {
+    fetchGallery('ae020024-2465-4fb8-87aa-d60eaa1a9422')
+  }, [])
 
-  const confirmMasters = async (id: string) => {
+
+  const confirmMasters = async (id: string, callback: () => void) => {
     try {
-      const res = await axios.put(`${masters_confirm_url}/${id}`, config);
-      console.log(res.data.body);
+      await axios.put(`${masters_confirm_url}/${id}`, {}, config);
+      callback();
     } catch (error) {
       console.log(error);
-
     }
   }
 
-  confirmMasters('0e84b065-cf7e-4799-b0a3-43b3233d0ae6')
   const fetchService = async (id: string) => {
     try {
       const res = await axios.get(`${masters_service_url}/${id}`, config);
       setServiceData(res.data.body);
     } catch { }
   }
-
-  useEffect(() => {
-    fetchGallery('ceea53ed-fc0c-45cd-bc57-ee655880096b');
-  }, []);
 
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
@@ -169,6 +178,8 @@ const RequestNewMasters: React.FC = () => {
         openReasonModal={openReasonModal}
         {...selectedMaster}
         serviceData={serviceData || []} // Ensure serviceData is always an array
+        confirmMasters={confirmMasters} // Pass confirmMasters function
+        fetchData={fetchData} // Pass fetchData function
       />
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className='w-[700px] h-[320px]'>

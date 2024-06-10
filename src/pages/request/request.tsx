@@ -29,7 +29,7 @@ const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, new
                 </button>
                 <div
                     className={`${
-                        isSidebarOpen ? 'md:mt-5 mt-27 left-0 top-0 z-10 w-full' : 'hidden'
+                        isSidebarOpen ? '-mt-8 left-0 top-0 z-10 w-full' : 'hidden'
                     } md:flex md:w-1/4 md:static bg-white dark:bg-gray-800 h-full transition-all duration-300 ease-in-out transform`}>
                     {isMobileView && (
                         <button onClick={toggleSidebar} className="text-black dark:text-blue-950 bg-transparent">

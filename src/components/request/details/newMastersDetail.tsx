@@ -49,6 +49,8 @@ interface NewMastersDetailProps {
   scheduleType?: string;
   facebookLink?: string;
   serviceData: ServiceData[]; // Add service data prop
+  confirmMasters: (id: string, callback: () => void) => void; // Add confirmMasters function
+  fetchData: () => void; // Add fetchData function
 }
 
 const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
@@ -84,7 +86,9 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   masterChatStatus,
   scheduleType,
   facebookLink,
-  serviceData // Destructure service data
+  serviceData, // Destructure service data
+  confirmMasters, // Destructure confirmMasters function
+  fetchData // Destructure fetchData function
 }) => {
   const items = [
     {
@@ -130,7 +134,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
           Галерея
         </span>
       ),
-      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} />,
+      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} confirmMasters={() => confirmMasters(masterId || '', fetchData)} />, // Pass confirmMasters function and fetchData function
     },
   ];
   return (
