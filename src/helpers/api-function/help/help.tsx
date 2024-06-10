@@ -8,7 +8,10 @@ export const getHelp = async (setData: (val: HelpList[]) => void, status: string
   await axios.get(`${help_url}?HELP_STATUS=${status}`, config)
     .then(res => {
       if (res.data.success === true) setData(res.data.body);
-      else setData([])
+      else setData([]);
     })
-    .catch(() => setData([]));
+    .catch((err) => {
+      if (err?.response?.data?.success === false) console.log(err.response.data.message);
+      setData([]);
+    });
 };
