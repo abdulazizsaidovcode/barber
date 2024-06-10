@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IoIosNotifications, IoMdSettings } from 'react-icons/io';
-import { CiSquareQuestion } from 'react-icons/ci';
+import { MdOutlineQuestionMark } from "react-icons/md";
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import LanguageSelector from './LanguageSelector';
@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
             </Link>
             <Link to="/request/new-masters">
               <div className={`${getButtonClass('/request')} rounded-full flex justify-center items-center w-[40px] h-[40px]`}>
-                <CiSquareQuestion className="text-2xl" />
+                <MdOutlineQuestionMark className="text-2xl" />
               </div>
             </Link>
             <Link to="/settings">
