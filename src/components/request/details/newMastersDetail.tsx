@@ -5,6 +5,16 @@ import FirstTab from './newMastersTabs/FirstTab';
 import SecondTab from './newMastersTabs/SecondTab';
 import ThirdTab from './newMastersTabs/ThirdTab';
 
+interface ServiceData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
+}
+
 interface NewMastersDetailProps {
   isOpen: boolean;
   onClose: () => void;
@@ -38,6 +48,9 @@ interface NewMastersDetailProps {
   masterChatStatus?: string;
   scheduleType?: string;
   facebookLink?: string;
+  serviceData: ServiceData[]; // Add service data prop
+  confirmMasters: (id: string, callback: () => void) => void; // Add confirmMasters function
+  fetchData: () => void; // Add fetchData function
 }
 
 const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
@@ -72,7 +85,10 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   newOrUpdateCategory,
   masterChatStatus,
   scheduleType,
-  facebookLink
+  facebookLink,
+  serviceData, // Destructure service data
+  confirmMasters, // Destructure confirmMasters function
+  fetchData // Destructure fetchData function
 }) => {
   const items = [
     {
@@ -109,7 +125,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
           Процедуры
         </span>
       ),
-      children: <SecondTab />,
+      children: <SecondTab serviceData={serviceData} />, // Pass service data to the second tab
     },
     {
       key: '3',
@@ -118,7 +134,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
           Галерея
         </span>
       ),
-      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} />,
+      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} confirmMasters={() => confirmMasters(masterId || '', fetchData)} />, // Pass confirmMasters function and fetchData function
     },
   ];
   return (

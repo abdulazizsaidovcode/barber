@@ -6,7 +6,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import NewMastersDetail from '../details/newMastersDetail';
 import Modal from '../../modals/modal';
 import axios from 'axios';
-import { masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
+import { masters_confirm_url, masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 
 interface Data {
@@ -53,10 +53,32 @@ interface MasterDetailData {
   facebookLink: string;
 }
 
+interface ServiceData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
+}
+
+interface GalleryData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
+}
+
 const RequestNewMasters: React.FC = () => {
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [reasonIsOpen, setReasonIsOpen] = useState(false);
   const [data, setData] = useState<Data[]>([]);
+  const [serviceData, setServiceData] = useState<ServiceData[]>([]);
+  const [galleryData, setGalleryData] = useState<GalleryData[]>([]);
   const [selectedMaster, setSelectedMaster] = useState<MasterDetailData | null>(null);
 
   useEffect(() => {
@@ -67,9 +89,7 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch { }
   }
 
   const fetchFullData = async (id: string) => {
@@ -77,35 +97,36 @@ const RequestNewMasters: React.FC = () => {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
       setSelectedMaster(res.data.body);
       setDetailIsOpen(true);
-    } catch (error) {
-      console.error(error);
-    }
+      fetchService(id); // Fetch service data for the selected master
+    } catch { }
   }
 
   const fetchGallery = async (id: string) => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
       console.log(res.data.body);
+    } catch { }
+  }
+  useEffect(() => {
+    fetchGallery('ae020024-2465-4fb8-87aa-d60eaa1a9422')
+  }, [])
+
+
+  const confirmMasters = async (id: string, callback: () => void) => {
+    try {
+      await axios.put(`${masters_confirm_url}/${id}`, {}, config);
+      callback();
     } catch (error) {
       console.log(error);
     }
   }
-
 
   const fetchService = async (id: string) => {
     try {
       const res = await axios.get(`${masters_service_url}/${id}`, config);
-      console.log(res.data.body);
-    } catch (error) {
-      console.log(error);
-    }
+      setServiceData(res.data.body);
+    } catch { }
   }
-
-  
-  useEffect(() => {
-    fetchGallery('ceea53ed-fc0c-45cd-bc57-ee655880096b');
-    fetchService('a2113057-55d2-413e-b881-87adc5d58597');
-  }, []);
 
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
@@ -114,37 +135,41 @@ const RequestNewMasters: React.FC = () => {
   return (
     <RequestLayout newMastersCount={data.length}>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5'>
-        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
+        <div className='w-full bg-[#cccccc] dark:bg:white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
-            <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
+            <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white'>
               <p className='text-sm'>{data.length}</p>
             </div>
           </div>
           <div className='flex gap-2'>
-            <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
+            <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white'>
               <GoPlus />
             </div>
-            <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
+            <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white'>
               <CiMenuKebab className='rotate-180' />
             </div>
           </div>
         </div>
-        <div className='flex mt-5 gap-x-3 gap-y-8 flex-wrap px-5'>
-          {data.map((item, index) => (
-            <div key={index}>
-              <NewMastersCard
-                salonName={item.salonName || 'не настроено'}
-                salonCategory={item.categoryName}
-                salonAddress={item.address || 'не настроено'}
-                ownerImage={item.attachmentId}
-                salonOwner={`${item.firstName} ${item.lastName || ''}`}
-                phoneNumber={item.phoneNumber || 'не настроено'}
-                salonCreateDate={item.createdAt || 'не настроено'}
-                modal={() => fetchFullData(item.id)}
-              />
-            </div>
-          ))}
+        <div className='flex mt-5 gap-x-2 gap-y-8 flex-wrap px-5'>
+          {data.length === 0 ?
+            <div className='h-[510px]'>
+              <p>New Masters Not found</p>
+            </div> :
+            data.map((item, index) => (
+              <div key={index}>
+                <NewMastersCard
+                  salonName={item.salonName || 'не настроено'}
+                  salonCategory={item.categoryName}
+                  salonAddress={item.address || 'не настроено'}
+                  ownerImage={item.attachmentId}
+                  salonOwner={`${item.firstName} ${item.lastName || ''}`}
+                  phoneNumber={item.phoneNumber || 'не настроено'}
+                  salonCreateDate={item.createdAt || 'не настроено'}
+                  modal={() => fetchFullData(item.id)}
+                />
+              </div>
+            ))}
         </div>
       </div>
       <NewMastersDetail
@@ -152,16 +177,19 @@ const RequestNewMasters: React.FC = () => {
         onClose={closeDetailModal}
         openReasonModal={openReasonModal}
         {...selectedMaster}
+        serviceData={serviceData || []} // Ensure serviceData is always an array
+        confirmMasters={confirmMasters} // Pass confirmMasters function
+        fetchData={fetchData} // Pass fetchData function
       />
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className='w-[700px] h-[320px]'>
           <div>
-            <p className='font-bold text-xl text-[#000] dark:text-white'>Причина оклонения:</p>
+            <p className='font-bold text-xl text-[#000] dark:text:white'>Причина оклонения:</p>
           </div>
           <div className='mt-4'>
             <textarea
               rows={10}
-              className="block p-2.5 w-full text-sm text-gray-900 dark:bg-[#30303d] rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 dark:bg-[#30303d] rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:text:white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Write your thoughts here..."
             />
           </div>

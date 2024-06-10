@@ -4,52 +4,43 @@ import RequestSidebar from '../../components/request/sidebar/RequestSidebar';
 import { CgMenuLeft } from 'react-icons/cg';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, newMastersCount: number }) => {
-    const [sidebarWidth, setSidebarWidth] = useState('w-max');
-    const [siteBar, setSiteBar] = useState<boolean>(false);
-    const [siteBarClass, setSiteBarClass] = useState<string>('');
+const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, newMastersCount?: number }) => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth >= 768) {
-                setSidebarWidth('w-1/4');
-            } else {
-                setSidebarWidth('fixed z-10 left-0');
-            }
+            setIsMobileView(window.innerWidth < 768);
         };
 
         window.addEventListener('resize', handleResize);
-        handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const toggleSidebar = () => {
-        setSidebarWidth((currentWidth) => (currentWidth === 'w-max' ? 'fixed' : 'w-max'));
-        setSiteBarClass(() => {
-            if (siteBar) {
-                setSiteBar(false);
-                return 'translate-x-0 left-0 ';
-            } else {
-                setSiteBar(true);
-                return '-translate-x-full -left-10';
-            }
-        });
+        setIsSidebarOpen(!isSidebarOpen);
     };
 
     return (
         <DefaultLayout padding={true}>
-            <div className='w-full flex justify-between'>
-                <button onClick={toggleSidebar} className="md:hidden text-black mb-2">
+            <div className="w-full md:flex md:justify-between">
+                <button onClick={toggleSidebar} className="md:hidden ms-4 text-black mb-2">
                     <CgMenuLeft className="text-[1.5rem] font-bold" />
                 </button>
                 <div
-                    className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] mr-3 transition-all  md:translate-x-0 -translate-x-full drop-shadow-1 md:static fixed md:px-3 p-5 md:py-5 h-full duration-300 flex flex-col`}>
+                    className={`${
+                        isSidebarOpen ? '-mt-8 left-0 top-0 z-10 w-full' : 'hidden'
+                    } md:flex md:w-1/4 md:static bg-white dark:bg-gray-800 h-full transition-all duration-300 ease-in-out transform`}>
+                    {isMobileView && (
+                        <button onClick={toggleSidebar} className="text-black dark:text-blue-950 bg-transparent">
+                            <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
+                        </button>
+                    )}
                     <RequestSidebar newMastersCount={newMastersCount} />
-                    <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
-                        <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
-                    </button>
                 </div>
-                <div className='w-3/4 p-2'>{children}</div>
+                <div className="w-full md:w-3/4 p-2">
+                    {children}
+                </div>
             </div>
         </DefaultLayout>
     );
