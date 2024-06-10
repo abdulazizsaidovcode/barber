@@ -27,7 +27,7 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({
   const displayArray = (array: string[] | undefined) => (array && array.length > 0 ? array.join(', ') : 'не настроено');
   
   return (
-    <div onClick={modal} className="lg:w-[280px] md:w-[310px] w-[400px] cursor-pointer h-[200px] rounded-xl shadow-lg p-3 bg-white">
+    <div onClick={modal} className="lg:w-[280px] md:w-[310px] w-[320px] cursor-pointer h-[200px] rounded-xl shadow-lg p-3 bg-white">
       <div>
         <p className="text-xl font-bold text-black">{displayValue(salonName)}</p>
         <p className="text-md font-bold text-black">{displayArray(salonCategory)}</p>

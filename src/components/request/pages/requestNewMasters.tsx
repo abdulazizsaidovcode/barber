@@ -6,7 +6,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import NewMastersDetail from '../details/newMastersDetail';
 import Modal from '../../modals/modal';
 import axios from 'axios';
-import { masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
+import { masters_confirm_url, masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 
 interface Data {
@@ -78,7 +78,7 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
-    } catch {}
+    } catch { }
   }
 
   const fetchFullData = async (id: string) => {
@@ -97,6 +97,17 @@ const RequestNewMasters: React.FC = () => {
     } catch { }
   }
 
+  const confirmMasters = async (id: string) => {
+    try {
+      const res = await axios.put(`${masters_confirm_url}/${id}`, config);
+      console.log(res.data.body);
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  confirmMasters('0e84b065-cf7e-4799-b0a3-43b3233d0ae6')
   const fetchService = async (id: string) => {
     try {
       const res = await axios.get(`${masters_service_url}/${id}`, config);
@@ -132,20 +143,24 @@ const RequestNewMasters: React.FC = () => {
           </div>
         </div>
         <div className='flex mt-5 gap-x-2 gap-y-8 flex-wrap px-5'>
-          {data.map((item, index) => (
-            <div key={index}>
-              <NewMastersCard
-                salonName={item.salonName || 'не настроено'}
-                salonCategory={item.categoryName}
-                salonAddress={item.address || 'не настроено'}
-                ownerImage={item.attachmentId}
-                salonOwner={`${item.firstName} ${item.lastName || ''}`}
-                phoneNumber={item.phoneNumber || 'не настроено'}
-                salonCreateDate={item.createdAt || 'не настроено'}
-                modal={() => fetchFullData(item.id)}
-              />
-            </div>
-          ))}
+          {data.length === 0 ?
+            <div className='h-[510px]'>
+              <p>New Masters Not found</p>
+            </div> :
+            data.map((item, index) => (
+              <div key={index}>
+                <NewMastersCard
+                  salonName={item.salonName || 'не настроено'}
+                  salonCategory={item.categoryName}
+                  salonAddress={item.address || 'не настроено'}
+                  ownerImage={item.attachmentId}
+                  salonOwner={`${item.firstName} ${item.lastName || ''}`}
+                  phoneNumber={item.phoneNumber || 'не настроено'}
+                  salonCreateDate={item.createdAt || 'не настроено'}
+                  modal={() => fetchFullData(item.id)}
+                />
+              </div>
+            ))}
         </div>
       </div>
       <NewMastersDetail
