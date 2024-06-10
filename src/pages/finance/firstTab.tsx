@@ -1,47 +1,79 @@
-import React, { useEffect } from 'react';
-import { DatePicker, InputNumber, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { DatePicker } from 'antd';
 import MasterTable from '../../components/Tables/MasterTable';
 import financeStore from '../../helpers/state_managment/finance/financeStore.tsx';
 import { getFinance } from '../../helpers/api-function/finance/finance.tsx';
 import CurrentYear from '../../helpers/date.tsx';
+import axios from 'axios';
+import { base_url } from '../../helpers/api.tsx';
+import { config } from '../../helpers/token.tsx';
 
-const { Option } = Select;
+// const { Option } = Select;
+
+interface FinanceData {
+  addressName: string;
+  nonCashTurnover: number;
+  turnoverTotal: number;
+  totalIncome: number;
+  // qo'shimcha qiymatlar kerak bo'lsa, shu yerga qo'shing
+}
+interface Year {
+  benefit: number;
+  expense: string;
+  income: number;
+}
+
+interface DataResponse {
+  object: FinanceData[];
+}
 
 const FirstTab: React.FC = () => {
-  const { data, setData, yearVal, setYearVal, monthVal, setMonthVal } = financeStore()
+  const { data, setData, yearVal, setYearVal, monthVal, setMonthVal } = financeStore();
+  const [year, setYear] = useState<Year | null>(null);
 
   useEffect(() => {
-    getFinance(monthVal, yearVal, setData)
-  }, [])
+    if (monthVal && yearVal) {
+      getFinance(monthVal, yearVal, setData);
+    }
+  }, [monthVal, yearVal, setData]);
 
-  const handleMonthChange = (value: string | null, dateString: any) => {
-    setMonthVal(dateString)
-    getFinance(monthVal, yearVal, setData)
-  }
-  const handleYearChange = (value: number | null, dateString: any) => {
-    setYearVal(dateString)
-    getFinance(monthVal, yearVal, setData)
-  }
-  console.log(data && data.object);
+  const handleMonthChange = (value: any, dateString: any) => {
+    const month = value ? value.format('MM') : null;
+    setMonthVal(month);
+    if (month && yearVal) {
+      getFinance(month, yearVal, setData);
+    }
+  };
+
+  const handleYearChange = (value: any, dateString: any) => {
+    const year = value ? value.format('YYYY') : null;
+    setYearVal(year);
+    if (monthVal && year) {
+      getFinance(monthVal, year, setData);
+    }
+  };
+
+  useEffect(() => {
+    if (yearVal) {
+      axios.get(`${base_url}finance/web/year?year=${yearVal}`, config)
+        .then((res) => {
+          setYear(res.data.body);
+        }).catch(() => console.log('error'));
+    }
+  }, [yearVal])
 
   // Create an array for summary data
-  // const summaryData = [
-  //   { label: 'Оборот', value: data.object.reduce((acc: number, item: any) => acc + item.nonCashTurnover, 0) >= 0 ? data.object.reduce((acc: number, item: any) => acc + item.nonCashTurnover, 0) : 'N/A' },
-  //   // { label: 'Income', value: data?.object.totalIncome || 'N/A' },
-  //   // { label: 'Consumption', value: data?.object.totalConsumption || 'N/A' },
-  //   // { label: 'Profit', value: data?.object.totalProfit || 'N/A' },
-  // ];
-  // console.log(data.object.reduce((acc: number, item: any) => acc + item.nonCashTurnover, 0));
-
+  const summaryData = data.object ? [
+    { label: 'Оборот', value: data.object.reduce((acc: number, item: FinanceData) => acc + item.nonCashTurnover, 0) },
+    { label: 'Доход ', value: data.object.reduce((acc: number, item: FinanceData) => acc + item.turnoverTotal, 0) },
+    { label: 'Расход ', value: data.object.reduce((acc: number, item: FinanceData) => acc + item.totalIncome, 0) },
+  ] : [];
 
   const tableHeaders = [
     { id: 1, name: 'Регион' },
     { id: 2, name: 'Оборот безналичный' },
     { id: 3, name: 'Оборот Общий' },
     { id: 4, name: 'Доходы всего' },
-    { id: 5, name: 'Доход “Free”' },
-    { id: 6, name: 'Доход “premium”' },
-    { id: 7, name: 'Доход “Exlusive”' },
   ];
 
   return (
@@ -51,24 +83,12 @@ const FirstTab: React.FC = () => {
           {/* Left Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+              <DatePicker onChange={handleMonthChange} picker="month" style={{ height: 35 }} />
             </div>
             <div className="">
-              {[
-                { label: 'Turnover', value: '49 000 000' },
-                { label: 'Income', value: '60 500 000' },
-                { label: 'Consumption', value: '30 500 000' },
-                { label: 'Profit', value: '30 000 000' },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '10px',
-                  }}
-                >
-                  <p className="w-[100px] ml-[10px] dark:text-white">
+              {summaryData && summaryData.map((item) => (
+                <div key={item.label} className="flex items-center mb-[10px]">
+                  <p className="mr-[10px] w-[100px] dark:text-white">
                     {item.label}:
                   </p>
                   <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
@@ -81,19 +101,33 @@ const FirstTab: React.FC = () => {
           {/* Right Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <DatePicker onChange={handleMonthChange} picker="month" style={{ height: 35 }} />
+              <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
             </div>
             <div>
-              {/* {summaryData && summaryData.map((item) => (
-                <div key={item.label} className="flex items-center mb-[10px]">
-                  <p className="mr-[10px] w-[100px] dark:text-white">
-                    {item.label}:
-                  </p>
-                  <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
-                    <p className="dark:text-white">{item.value}</p>
-                  </div>
+              <div className="flex items-center mb-[10px]">
+                <p className="mr-[10px] w-[100px] dark:text-white">
+                  Оборот
+                </p>
+                <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
+                  <p className="dark:text-white">{year ? year.income : 0}</p>
                 </div>
-              ))} */}
+              </div>
+              <div className="flex items-center mb-[10px]">
+                <p className="mr-[10px] w-[100px] dark:text-white">
+                  Доход
+                </p>
+                <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
+                  <p className="dark:text-white">{year ? year.benefit : 0}</p>
+                </div>
+              </div>
+              <div className="flex items-center mb-[10px]">
+                <p className="mr-[10px] w-[100px] dark:text-white">
+                  Расход
+                </p>
+                <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
+                  <p className="dark:text-white">{year ? year.expense : 0}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -106,15 +140,12 @@ const FirstTab: React.FC = () => {
           <p>Тарифы</p>
         </div>
         <MasterTable thead={tableHeaders}>
-          {data.object ? data.object.map((data: any, index: any) => (
+          {data.object ? data.object.map((data: FinanceData, index: number) => (
             <tr key={index} className="dark:text-white">
               <td className="p-5">{data.addressName}</td>
               <td className="p-5">{data.nonCashTurnover}</td>
               <td className="p-5">{data.turnoverTotal}</td>
               <td className="p-5">{data.totalIncome}</td>
-              {/* <td className="p-5">{data.incomeSimple}</td>
-              <td className="p-5">{data.incomePremium}</td>
-              <td className="p-5">{data.incomeVip}</td> */}
             </tr>
           )) :
             <tr className={`border-b border-[#eee] dark:border-strokedark`}>
@@ -126,12 +157,12 @@ const FirstTab: React.FC = () => {
               </td>
             </tr>
           }
-          {data && data.object && data.object &&
-            <tr className="dark:text-white text-bold">
+          {data && data.object &&
+            <tr className="dark:text-gray font-bold">
               <td className="p-5">Итого</td>
-              <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.nonCashTurnover, 0)}</td>
-              <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.turnoverTotal, 0)}</td>
-              <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.totalIncome, 0)}</td>
+              <td className="p-5">{data.object.reduce((acc: number, item: FinanceData) => acc + item.nonCashTurnover, 0)}</td>
+              <td className="p-5">{data.object.reduce((acc: number, item: FinanceData) => acc + item.turnoverTotal, 0)}</td>
+              <td className="p-5">{data.object.reduce((acc: number, item: FinanceData) => acc + item.totalIncome, 0)}</td>
             </tr>}
         </MasterTable>
       </div>
