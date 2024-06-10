@@ -60,5 +60,6 @@
   "Photo": "Photo",
   "Income_dynamics": "Income dynamics",
   "Profit_dynamics": "Profit dynamics",
-  "Master_rating": "Master rating"
+  "Master_rating": "Master rating",
+  "Payment_type_for_completed_entries": "Payment type for completed entries"
 }
