@@ -199,8 +199,8 @@ const ChartNine: React.FC = () => {
       <div className='flex justify-between flex-wrap'>
         <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Total_income")} {year ? year : ""}</h1>
         <div className='flex gap-3'>
-          <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
-          <DatePicker onChange={handleMonthChange} picker="month" style={{ height: 35 }} />
+          <DatePicker onChange={handleYearChange} placeholder={t("Select_year")} picker="year" style={{ height: 35 }} />
+          <DatePicker onChange={handleMonthChange} placeholder={t("Select_month")} picker="month" style={{ height: 35 }} />
         </div>
       </div>
       {loading ? (
