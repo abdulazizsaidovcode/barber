@@ -6,13 +6,12 @@ import { CiMenuKebab } from "react-icons/ci";
 import NewMastersDetail from '../details/newMastersDetail';
 import Modal from '../../modals/modal';
 import axios from 'axios';
-import { masters_fulldata_url, masters_gallery_url, new_masters_url } from '../../../helpers/api';
+import { masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 
 interface Data {
   id: string;
   address: string;
-  categoryIsNew: string;
   categoryName: string[];
   createdAt: string;
   salonName: string;
@@ -68,7 +67,9 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
-    } catch { }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const fetchFullData = async (id: string) => {
@@ -76,8 +77,11 @@ const RequestNewMasters: React.FC = () => {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
       setSelectedMaster(res.data.body);
       setDetailIsOpen(true);
-    } catch { }
+    } catch (error) {
+      console.error(error);
+    }
   }
+
   const fetchGallery = async (id: string) => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
@@ -87,14 +91,28 @@ const RequestNewMasters: React.FC = () => {
     }
   }
 
-  fetchGallery('ceea53ed-fc0c-45cd-bc57-ee655880096b')
+
+  const fetchService = async (id: string) => {
+    try {
+      const res = await axios.get(`${masters_service_url}/${id}`, config);
+      console.log(res.data.body);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  
+  useEffect(() => {
+    fetchGallery('ceea53ed-fc0c-45cd-bc57-ee655880096b');
+    fetchService('a2113057-55d2-413e-b881-87adc5d58597');
+  }, []);
 
   const openReasonModal = () => setReasonIsOpen(true);
   const closeReasonModal = () => setReasonIsOpen(false);
   const closeDetailModal = () => setDetailIsOpen(false);
 
   return (
-    <RequestLayout>
+    <RequestLayout newMastersCount={data.length}>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5'>
         <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
@@ -116,13 +134,13 @@ const RequestNewMasters: React.FC = () => {
           {data.map((item, index) => (
             <div key={index}>
               <NewMastersCard
-                salonName={`${item.salonName}`}
-                salonCategory={`${item.categoryName}`}
-                salonAddress={`${item.address}`}
+                salonName={item.salonName || 'не настроено'}
+                salonCategory={item.categoryName}
+                salonAddress={item.address || 'не настроено'}
                 ownerImage={item.attachmentId}
-                salonOwner={`${item.firstName} ${item.lastName}`}
-                phoneNumber={`${item.phoneNumber}`}
-                salonCreateDate={`${item.createdAt}`}
+                salonOwner={`${item.firstName} ${item.lastName || ''}`}
+                phoneNumber={item.phoneNumber || 'не настроено'}
+                salonCreateDate={item.createdAt || 'не настроено'}
                 modal={() => fetchFullData(item.id)}
               />
             </div>

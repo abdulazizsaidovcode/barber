@@ -57,8 +57,8 @@ const Filters: React.FC = () => {
       month = filters.registrationPeriodValue[num].month() + 1;
       year = filters.registrationPeriodValue[num].year();
 
-      if (month > 0 && month < 10) month = `0${month}`
-      if (date > 0 && date < 10) date = `0${date}`
+      if (month > 0 && month < 10) month = `0${month}`;
+      if (date > 0 && date < 10) date = `0${date}`;
 
       return `${year}-${month}-${date}`;
     }
@@ -95,16 +95,17 @@ const Filters: React.FC = () => {
       <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Input
-            placeholder={t("Search_by_name")}
+            placeholder={t('Search_by_name')}
+            value={filters.searchValue}
             prefix={<IoSearchOutline />}
             style={styles.filterInput}
-            value={filters.searchValue}
             onChange={(e) => handleInputChange('searchValue', e.target.value)}
           />
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            defaultValue=""
+            placeholder={`Регион`}
+            value={filters.regionValue}
             style={styles.filterInput}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
@@ -115,7 +116,8 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            defaultValue=""
+            placeholder={`Город`}
+            value={filters.cityValue}
             style={styles.filterInput}
             onChange={(value) => handleInputChange('cityValue', value)}
           >
@@ -133,7 +135,7 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton} onClick={openModal}>{t("Download")}</Button>
+          <Button style={styles.extraButton} onClick={openModal}>{t('Download')}</Button>
           <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
         </Col>
       </Row>
@@ -144,6 +146,8 @@ const Filters: React.FC = () => {
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Space direction="vertical" size={12}>
                 <RangePicker
+                  placeholder={['Дата начала', 'Дата окончания']}
+                  value={filters.registrationPeriodValue}
                   style={styles.filterInput}
                   onChange={(date) => handleInputChange('registrationPeriodValue', date)}
                 />
@@ -151,7 +155,8 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Категория услуг"
+                placeholder={`Категория услуг`}
+                value={filters.serviceCategoryValue}
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
               >
@@ -174,7 +179,8 @@ const Filters: React.FC = () => {
             {/*</Col>*/}
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Статус самозанятых"
+                placeholder={`Статус самозанятых`}
+                value={filters.statusValue}
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
@@ -186,7 +192,8 @@ const Filters: React.FC = () => {
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Статус"
+                placeholder={`Статус`}
+                value={filters.statusValue}
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('statusValue', value)}
               >
@@ -196,7 +203,8 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                defaultValue="Место работы"
+                placeholder={`Место работы`}
+                value={filters.placeOfWorkValue}
                 style={styles.filterInput}
                 onChange={(value) => handleInputChange('placeOfWorkValue', value)}
               >
