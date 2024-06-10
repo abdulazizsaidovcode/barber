@@ -10,12 +10,11 @@ interface FinanceStore {
 }
 
 export interface Data {
+  // object: any;
   addressName: string;
   nonCashTurnover: number;
   turnoverTotal: number;
   totalIncome: number;
-  mastersNumber: number;
-  clientNumber: number;
 }
 
 const financeStore = create<FinanceStore>((set) => ({
