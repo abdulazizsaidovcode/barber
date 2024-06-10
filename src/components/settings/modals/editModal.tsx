@@ -24,9 +24,9 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, defaultValue, value, onCl
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
-                <div className="w-[500px] h-max">
+                <div className="sm:w-[500px] w-[300px] h-max">
                     <div className="flex justify-center">
-                        <p className="text-xl dark:text-white text-black">Are you sure you want to edit the title?</p>
+                        <p className="text-xl dark:text-white text-black text-center">Are you sure you want to edit the title?</p>
                     </div>
                     <div className="flex justify-center mt-10">
                         <input
@@ -38,11 +38,11 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, defaultValue, value, onCl
                         />
                     </div>
                     <div className="flex justify-around mt-10">
-                        <button onClick={onClose} className="text-white rounded-lg dark:bg-danger bg-[#000] py-2 px-10">
+                        <button onClick={onClose} className="text-white rounded-lg dark:bg-danger bg-[#000] sm:py-2 py-1 px-6 sm:px-10">
                             Close
                         </button>
                         <button
-                            className="text-white rounded-lg dark:bg-white dark:text-[#000] bg-gray py-2 px-14"
+                            className="text-white rounded-lg dark:bg-white dark:text-[#000] bg-gray sm:py-2 py-1 px-6 sm:px-10"
                             onClick={handleSave}
                         >
                             Save

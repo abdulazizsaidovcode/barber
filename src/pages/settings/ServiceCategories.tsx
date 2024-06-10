@@ -132,8 +132,8 @@ const ServiceCategories = () => {
                     Add Category
                 </button>
             </div>
-            <div className="mt-4 w-[75%]">
-                <div className="mt-4 w-[75%]">
+            <div className="mt-4 md:w-[75%] w-full">
+                <div className="mt-4 md:w-[75%] w-full">
                     {data.map(item => (
                         <div key={item.id}>
                             <ServiceCategoriesCard

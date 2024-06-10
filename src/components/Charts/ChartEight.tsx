@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
+import { useTranslation } from 'react-i18next';
 
 interface ChartThreeState {
     series: number[];
@@ -53,6 +54,7 @@ const initialOptions: ApexOptions = {
 };
 
 const ChartEight: React.FC = () => {
+    const { t } = useTranslation();
     const [state, setState] = useState<ChartThreeState>({
         series: [],
         labels: [],
@@ -66,7 +68,7 @@ const ChartEight: React.FC = () => {
 
     const fetchData = () => {
         axios
-            .get(`${dashboard_url}web/popular/services/by/category`,config)
+            .get(`${dashboard_url}web/popular/services/by/category`, config)
             .then((response) => {
                 const data = response.data.body;
                 const categories = data.map((item: any) => item.categoryName);
@@ -89,7 +91,7 @@ const ChartEight: React.FC = () => {
 
     return (
         <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-            <h1 className='font-semibold text-black text-xl dark:text-white'>Popular services by category</h1>
+            <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Popular_services_by_category")}</h1>
             <div className="mb-2">
                 <div id="chartThree" className="mx-auto flex justify-center">
                     <ReactApexChart

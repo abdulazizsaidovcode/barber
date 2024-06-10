@@ -16,7 +16,7 @@ import { DGeneralIndecators } from '../../helpers/api-function/dashboard/General
 import dashboardStore from '../../helpers/state_managment/dashboard/dashboardStore';
 
 const ECommerce: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { RangePicker } = DatePicker;
   const { data, setData } = dashboardStore();
 
@@ -57,23 +57,23 @@ const ECommerce: React.FC = () => {
             {t("dashboard_main_text")}
           </h1>
           <div className='gap-5 flex flex-col md:flex-row md:gap-10 lg:flex-row lg:gap-10 xl:flex-row xl:gap-5'>
-            <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
-            <DatePicker placeholder="Select local date" onChange={handleLocalDateChange} />
-            <RangePicker onChange={handleRangeChange} />
+            <DatePicker placeholder={t("Select_year")} onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+            <DatePicker placeholder={t("Select_local_date")} onChange={handleLocalDateChange} />
+            <RangePicker onChange={handleRangeChange} placeholder={[t("Select_start_date"), t("Select_end_date")]} />
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-          {data.masterCount !== undefined ? <CardDataStats title="Мастера" total={data.masterCount} /> : <Skeleton.Input active />}
-          {data.clientCount !== undefined ? <CardDataStats title="Клиенты" total={data.clientCount} /> : <Skeleton.Input active />}
-          {data.orderCount !== undefined ? <CardDataStats title="Заказы" total={data.orderCount} /> : <Skeleton.Input active />}
-          {data.clientCanselOrder !== undefined && data.masterCanselOrder !== undefined ? <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder} / ${data.masterCanselOrder}`} /> : <Skeleton.Input active />}
-          {data.totalTurnover !== undefined ? <CardDataStats title="Оборот общий" total={data.totalTurnover} /> : <Skeleton.Input active />}
-          {data.income !== undefined ? <CardDataStats title="Доход" total={data.income} /> : <Skeleton.Input active />}
-          {data.customerDissatisfaction !== undefined ? <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction} /> : <Skeleton.Input active />}
-          {data.masterDissatisfaction !== undefined ? <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction} /> : <Skeleton.Input active />}
-          {data.masterAverageClient !== undefined ? <CardDataStats title="Клиентов на 1 мастера усредненно" total={data.masterAverageClient} /> : <Skeleton.Input active />}
-          {data.positiveFeedbackInService !== undefined && data.negativeFeedbackInService !== undefined ? <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} /> : <Skeleton.Input active />}
+          {data.masterCount !== undefined ? <CardDataStats title={t("master")} total={data.masterCount} /> : <Skeleton.Input active />}
+          {data.clientCount !== undefined ? <CardDataStats title={t("siderbar_client")} total={data.clientCount} /> : <Skeleton.Input active />}
+          {data.orderCount !== undefined ? <CardDataStats title={t("Orders")} total={data.orderCount} /> : <Skeleton.Input active />}
+          {data.clientCanselOrder !== undefined && data.masterCanselOrder !== undefined ? <CardDataStats title={t("Canceled_client_master")} total={`${data.clientCanselOrder} / ${data.masterCanselOrder}`} /> : <Skeleton.Input active />}
+          {data.totalTurnover !== undefined ? <CardDataStats title={t("Total_turnover")} total={data.totalTurnover} /> : <Skeleton.Input active />}
+          {data.income !== undefined ? <CardDataStats title={t("Income")} total={data.income} /> : <Skeleton.Input active />}
+          {data.customerDissatisfaction !== undefined ? <CardDataStats title={t("Customer_churn")} total={data.customerDissatisfaction} /> : <Skeleton.Input active />}
+          {data.masterDissatisfaction !== undefined ? <CardDataStats title={t("Master_churn")} total={data.masterDissatisfaction} /> : <Skeleton.Input active />}
+          {data.masterAverageClient !== undefined ? <CardDataStats title={t("Clients_per_1_specialist_on_average")} total={data.masterAverageClient} /> : <Skeleton.Input active />}
+          {data.positiveFeedbackInService !== undefined && data.negativeFeedbackInService !== undefined ? <CardDataCharts title={t("Clients_per_1_specialist_on_average")} firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} /> : <Skeleton.Input active />}
         </div>
       </section>
 

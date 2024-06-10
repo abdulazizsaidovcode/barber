@@ -15,6 +15,15 @@ interface ServiceData {
   description: string;
 }
 
+interface GalleryData {
+  id: number;
+  albumName: string;
+  resGalleryAttachments: [
+    { attachmentId: string; main: boolean; newStatus: boolean }
+  ];
+  createdAt: string;
+}
+
 interface NewMastersDetailProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,6 +58,7 @@ interface NewMastersDetailProps {
   scheduleType?: string;
   facebookLink?: string;
   serviceData: ServiceData[]; // Add service data prop
+  galleryData: GalleryData[]; // Add gallery data prop
   confirmMasters: (id: string, callback: () => void) => void; // Add confirmMasters function
   fetchData: () => void; // Add fetchData function
 }
@@ -63,32 +73,21 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   nickname,
   phoneNumber,
   age,
-  gender,
   address,
   masterImgPath,
-  startDate,
   districtName,
-  placeOfWork,
   regionName,
-  status,
-  block,
   instagramLink,
   telegramLink,
-  clientCount,
-  completedOrderCount,
-  masterFeedbackCount,
-  rejectedOrderCount,
-  deleteMasterDate,
   directionByGender,
   masterServiceCategory,
-  masterSpecialization,
-  newOrUpdateCategory,
   masterChatStatus,
   scheduleType,
   facebookLink,
-  serviceData, // Destructure service data
-  confirmMasters, // Destructure confirmMasters function
-  fetchData // Destructure fetchData function
+  serviceData, 
+  galleryData,
+  confirmMasters,
+  fetchData
 }) => {
   const items = [
     {
@@ -134,7 +133,11 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
           Галерея
         </span>
       ),
-      children: <ThirdTab onClose={onClose} openReasonModal={openReasonModal} confirmMasters={() => confirmMasters(masterId || '', fetchData)} />, // Pass confirmMasters function and fetchData function
+      children: <ThirdTab
+        galleryData={galleryData} // Pass gallery data to the third tab
+        onClose={onClose}
+        openReasonModal={openReasonModal}
+        confirmMasters={() => confirmMasters(masterId || '', fetchData)} />, // Pass confirmMasters function and fetchData function
     },
   ];
   return (

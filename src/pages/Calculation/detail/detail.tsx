@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { get_orders_list } from '../../helpers/api';
-import { config } from '../../helpers/token';
+import { get_orders_list } from '../../../helpers/api';
+import { config } from '../../../helpers/token';
 import axios from 'axios';
-import DefaultLayout from './../../layout/DefaultLayout';
+import DefaultLayout from '../../../layout/DefaultLayout';
 import { useTranslation } from 'react-i18next';
-import MasterDetail from './../../components/MastervsOrder/masterDetail';
-import { getFileId } from './../../helpers/api';
-import userImg from '../../images/user.png';
+import { getFileId } from '../../../helpers/api';
+import userImg from '../../../images/user.png';
+import MasterCardInfo from '../../../components/MastervsOrder/masterDetail';
 
 const NotFound: React.FC = () => {
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ const NotFound: React.FC = () => {
 
   return (
     <div>
-      <DefaultLayout>
+      <>
         <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black border-black rounded-xl border-solid border-1 p-3 flex items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
           <p className="dark:text-black">Детали записи</p>
           <div className="rounded-xl text-white bg-[#ffa723] p-1 px-4 flex items-center justify-center">
@@ -62,7 +62,7 @@ const NotFound: React.FC = () => {
                 {t('detail_type')}
               </div>
             </div>
-            <MasterDetail
+            <MasterCardInfo
               OrderData={orderDetails.orderDate}
               OrderEnterTime={orderDetails.orderFrom}
               OrderEndTime={orderDetails.orderTo}
@@ -102,7 +102,7 @@ const NotFound: React.FC = () => {
         ) : (
           <p className="dark:text-white">Loading order details...</p>
         )}
-      </DefaultLayout>
+      </>
     </div>
   );
 };

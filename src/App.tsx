@@ -31,7 +31,7 @@ import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
 import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
-import OrderDetails from './pages/Calculation/detail.tsx';
+import OrderDetails from './pages/Calculation/detail/detail.tsx';
 import { setConfig } from './helpers/token.tsx';
 import RequestNewMasters from './components/request/pages/requestNewMasters.tsx';
 import RequestFoto from './components/request/pages/requestFoto.tsx';
@@ -40,6 +40,9 @@ import RequestProcedures from './components/request/pages/requestProcedures.tsx'
 import MainTabDetail from './pages/Masters/detail/mainTabDetail.tsx';
 import Reviews from './pages/reviews/reviews.tsx';
 import DetailClient from './pages/Client/detail/detail.tsx';
+import TabsComponentForSecondDetail from './pages/Calculation/detail/secondTab.tsx';
+import ThirdTab from './pages/Calculation/detail/third.tab.tsx';
+import { FirstTab } from './pages/Calculation/detail/firstTab.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -389,7 +392,25 @@ function App() {
           element={
             <>
               <PageTitle title="Order | Barber" />
-              <OrderDetails />
+              <FirstTab />
+            </>
+          }
+        />
+        <Route
+          path="orders_completed/:id"
+          element={
+            <>
+              <PageTitle title="Order | Barber" />
+              <TabsComponentForSecondDetail />
+            </>
+          }
+        />
+        <Route
+          path="orders_rejected1/:id"
+          element={
+            <>
+              <PageTitle title="Order | Barber" />
+              <ThirdTab />
             </>
           }
         />
@@ -397,5 +418,5 @@ function App() {
     </>
   );
 }
-
+// Rejected
 export default App;
