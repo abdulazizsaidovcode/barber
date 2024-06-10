@@ -107,23 +107,23 @@ const ECommerce: React.FC = () => {
             {t("dashboard_main_text")}
           </h1>
           <div className='gap-5 flex flex-col md:flex-row md:gap-10 lg:flex-row lg:gap-10 xl:flex-row xl:gap-5'>
-            <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
-            <DatePicker placeholder="Select local date" onChange={handleLocalDateChange} />
-            <RangePicker onChange={handleRangeChange} />
+            <DatePicker placeholder={t("Select_year")} onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+            <DatePicker placeholder={t("Select_local_date")} onChange={handleLocalDateChange} />
+            <RangePicker onChange={handleRangeChange} placeholder={[t("Select_start_date"), t("Select_end_date")]} />
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-          <CardDataStats title="Мастера" total={data.masterCount ? data.masterCount : 0} />
-          <CardDataStats title="Клиенты" total={data.clientCount ? data.clientCount : 0} />
-          <CardDataStats title="Заказы" total={data.orderCount ? data.orderCount : 0} />
-          <CardDataStats title="Отмененные клиент/мастер" total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
-          <CardDataStats title="Оборот общий" total={data.totalTurnover ? data.totalTurnover : 0} />
-          <CardDataStats title="Доход" total={data.income ? data.income : 0} />
-          <CardDataStats title="Отток клиентов" total={data.customerDissatisfaction ? data.customerDissatisfaction : 0} />
-          <CardDataStats title="Отток мастеров" total={data.masterDissatisfaction ? data.masterDissatisfaction : 0} />
-          <CardDataStats title="Клиентов на 1 мастера усредненно" total={data.masterAverageClient ? data.masterAverageClient : 0} />
-          <CardDataCharts title="Клиентов на 1 мастера усредненно" firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} />
+          <CardDataStats title={t("master")} total={data.masterCount ? data.masterCount : 0} />
+          <CardDataStats title={t("siderbar_client")} total={data.clientCount ? data.clientCount : 0} />
+          <CardDataStats title={t("Orders")} total={data.orderCount ? data.orderCount : 0} />
+          <CardDataStats title={t("Canceled_client_master")} total={`${data.clientCanselOrder ? data.clientCanselOrder : 0} / ${data.clientCanselOrder ? data.clientCanselOrder : 0}`} />
+          <CardDataStats title={t("Total_turnover")} total={data.totalTurnover ? data.totalTurnover : 0} />
+          <CardDataStats title={t("Income")} total={data.income ? data.income : 0} />
+          <CardDataStats title={t("Customer_churn")} total={data.customerDissatisfaction ? data.customerDissatisfaction : 0} />
+          <CardDataStats title={t("Master_churn")} total={data.masterDissatisfaction ? data.masterDissatisfaction : 0} />
+          <CardDataStats title={t("Clients_per_1_specialist_on_average")} total={data.masterAverageClient ? data.masterAverageClient : 0} />
+          <CardDataCharts title={t("Clients_per_1_specialist_on_average")} firstTotal={data.positiveFeedbackInService} secondTotal={data.negativeFeedbackInService} />
         </div>
       </section>
 
@@ -132,8 +132,8 @@ const ECommerce: React.FC = () => {
       <section className='flex justify-between mt-20 gap-5'>
         <div className='flex flex-col w-1/2'>
           <div className='flex justify-between items-center'>
-            <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
-            <DatePicker picker="year" style={{ height: 35 }} />
+            <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>{t("Dynamics_of_connecting_masters_and_clients")}</h1>
+            <DatePicker picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
           </div>
           <div className="col-span-12 md:col-span-6 mt-5">
             <ChartTwo />
@@ -141,9 +141,9 @@ const ECommerce: React.FC = () => {
         </div>
         <div className="mt-4 flex flex-col w-1/2">
           <div className='flex gap-2 justify-between items-center'>
-            <h1 className='font-semibold text-black text-2xl dark:text-white'>Subscription rates for client masters</h1>
-            <DatePicker picker="year" style={{ height: 35 }} />
-            <DatePicker picker="month" style={{ height: 35 }} />
+            <h1 className='font-semibold text-black text-2xl dark:text-white'>{t("Subscription_rates_for_client_masters")}</h1>
+            <DatePicker picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
+            <DatePicker picker="month" placeholder={t("Select_month")} style={{ height: 35 }} />
           </div>
           <div className=" mt-5">
             <ChartThree />
