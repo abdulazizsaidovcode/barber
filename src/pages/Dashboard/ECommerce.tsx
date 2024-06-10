@@ -16,7 +16,7 @@ import { DGeneralIndecators } from '../../helpers/api-function/dashboard/General
 import dashboardStore from '../../helpers/state_managment/dashboard/dashboardStore';
 
 const ECommerce: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { RangePicker } = DatePicker;
   const { data, setData } = dashboardStore();
 

@@ -4,7 +4,6 @@
   "Canceled_client_master": "Bekor qilingan mijoz/master",
   "Clients_per_1_specialist_on_average": "O'rtacha 1 mutaxassisga mijozlar",
   "Customer_churn": "Mijozlarning noroziligi",
-
   "dashboard_main_text": "Umumiy ko'rsatkichlar",
   "Dynamics_of_connecting_masters_and_clients": "Mijozlarni va masterlarni ulashish",
   "detail_type": "Tasdiqlangan",
@@ -12,7 +11,6 @@
   "Download_help": "Yuklab olish yordami",
   "Download": "Yuklab olish",
   "Download_pdf": "PDF ni yuklab olish",
-
   "order_table_client": "Mijoz",
   "Orders": "Buyurtmalar",
   "order_table_procedure": "Protsedura",
@@ -28,11 +26,9 @@
   "order_table_status": "Yozuv holati",
   "Open": "Ochiq",
   "Open_help": "Yordamni ochish",
-
-  "Modal_answer": "Master bloklansinmi ? ",
+  "Modal_answer": "Master bloklansinmi?",
   "Master_churn": "Masterlarning noroziligi",
   "master": "Master",
-
   "Search_by_name": "Ism bo'yicha qidirish",
   "SecondTab_name": "Bajarildi",
   "Service_category": "Xizmat kategoriyasi",
@@ -58,7 +54,6 @@
   "siderbar_documents": "Normativ hujjatlar",
   "siderbar_Mutual_settlements": "Hisoblar",
   "Subscription_rates_for_client_masters": "Mijoz ustalari uchun obuna tariflari",
-
   "Unblock": "Blokdan chiqarish",
   "Write": "Yozish",
   "Region": "Mintaqa",
