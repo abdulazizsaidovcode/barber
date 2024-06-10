@@ -1,45 +1,82 @@
-import React from 'react';
-import { Tabs } from 'antd';
-import FirstTab from './firstTab';
-import SecondTab from './secondTab'; // Make sure the file name is correctly referenced.
-import ThirdTab from './thirdTab';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from "react";
+import { Tabs } from "antd";
+import FirstTab from "./firstTab";
+import { useTranslation } from "react-i18next";
+import { getOrder } from "../../helpers/api-function/order/orderFunction";
+import orderStore from "../../helpers/state_managment/order/orderStore";
 
 const onChange = (key: string) => {
   console.log(key);
 };
 
+
+
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
+
+  const {setData, setTotalPage} = orderStore()
+
+  useEffect(() => {
+    getOrder({
+      status: "Upcoming",
+      setData: setData,
+      setTotalPage: setTotalPage
+    });
+  }, [])
   const items = [
     {
-      key: '1',
+      key: "1",
       label: (
         <span
+          onClick={() => {
+            getOrder({
+              status: "Upcoming",
+              setData: setData,
+              setTotalPage: setTotalPage
+            });
+          }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl" // Responsive font sizes
         >
-          {t('FirstTab_name')}
+          {t("FirstTab_name")}
         </span>
       ),
       children: <FirstTab />,
     },
     {
-      key: '2',
+      key: "2",
       label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t('SecondTab_name')}
+        <span
+          onClick={() => {
+            getOrder({
+              status: "Completed",
+              setData: setData,
+              setTotalPage: setTotalPage
+            });
+          }}
+          className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
+        >
+          {t("SecondTab_name")}
         </span>
       ),
-      children: <SecondTab />,
+      children: <FirstTab />,
     },
     {
-      key: '3',
+      key: "3",
       label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t('ThirdTab_name')}
+        <span
+          onClick={() => {
+            getOrder({
+              status: "Rejected",
+              setData: setData,
+              setTotalPage: setTotalPage
+            });
+          }}
+          className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
+        >
+          {t("ThirdTab_name")}
         </span>
       ),
-      children: <ThirdTab />,
+      children: <FirstTab />,
     },
   ];
   return (

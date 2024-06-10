@@ -48,6 +48,8 @@ export const client_url: string = `${base_url}client/web/clients-by-filter`;
 
 //login url
 export const login_url: string = `${base_url}auth/admin-login`;
+
+// order url
 export const get_orders_list: string = `${base_url}order/web`;
 
 // settings url

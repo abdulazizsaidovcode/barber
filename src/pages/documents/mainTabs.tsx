@@ -4,8 +4,6 @@ import All from './all';
 import MasterDocument from './masterDocument';
 import ClientDocument from './clientTab';
 
-const onChange = (key: string) => console.log(key)
-
 const items = [
   {
     key: '1',
@@ -41,7 +39,6 @@ const MainTabs: React.FC = () => (
     className="dark:bg-boxdark bg-white p-2 w-full" // Use w-full for full width and responsive background colors
     defaultActiveKey="1"
     items={items}
-    onChange={onChange}
   />
 );
 

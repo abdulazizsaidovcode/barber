@@ -6,27 +6,15 @@ import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 
 const Documents = () => {
   const {
-    setDataAboutService,
-    setDataPrivacyPolicy,
-    setDataLicenseAgreement,
-    setDataLicenses,
-    setDataCertificates,
-    setDataUsingApplication,
-    setDataOffer,
-    setDataServiceSpecification,
-    setDataTermsOfUse
+    setDataAll,
+    setDataMaster,
+    setDataClient
   } = helpStore();
 
   useEffect(() => {
-    getHelp(setDataAboutService, 'ABOUT_SERVICE');
-    getHelp(setDataPrivacyPolicy, 'PRIVACY_POLICY');
-    getHelp(setDataLicenseAgreement, 'LICENSE_AGREEMENT');
-    getHelp(setDataLicenses, 'LICENSES');
-    getHelp(setDataCertificates, 'CERTIFICATES');
-    getHelp(setDataUsingApplication, 'USING_APPLICATION');
-    getHelp(setDataOffer, 'OFFER');
-    getHelp(setDataServiceSpecification, 'SERVICE_SPECIFICATION');
-    getHelp(setDataTermsOfUse, 'TERMS_OF_USE');
+    getHelp(setDataAll, 'ALL');
+    getHelp(setDataMaster, 'FOR_MASTER');
+    getHelp(setDataClient, 'FOR_CLIENT');
   }, []);
   return (
     <>

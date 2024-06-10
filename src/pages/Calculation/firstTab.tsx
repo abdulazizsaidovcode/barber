@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
 import {
   Select,
   Input,
@@ -9,38 +8,33 @@ import {
   DatePicker,
   DatePickerProps,
   Popover,
-} from 'antd';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { IoSearchOutline } from 'react-icons/io5';
-import MasterTable from '../../components/Tables/MasterTable';
-import { useNavigate } from 'react-router-dom';
-import { get_orders_list } from '../../helpers/api';
-import { config } from '../../helpers/token';
-import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+  Pagination,
+} from "antd";
+import MasterTable from "../../components/Tables/MasterTable";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import orderStore from "../../helpers/state_managment/order/orderStore";
 
 const { Option } = Select;
 
 const FilterComponent: React.FC = () => {
-  const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [tableData, setTableData] = useState<any[]>([]);
+  const { data, totalPage } = orderStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const tableHeaders = [
-    { id: 1, name: t('order_table_client') },
-    { id: 2, name: t('order_table_procedure') },
-    { id: 3, name: t('order_table_date') },
-    { id: 4, name: t('order_table_time') },
-    { id: 5, name: t('order_table_cost') },
-    { id: 6, name: t('order_table_prepayment') },
-    { id: 7, name: t('order_table_paid') },
-    { id: 8, name: t('order_table_paymentType') },
-    { id: 9, name: t('order_table_pay') },
-    { id: 10, name: t('order_table_status') },
-    { id: 11, name: t('order_table_master') },
-    { id: 12, name: '' },
+    { id: 1, name: t("order_table_client") },
+    { id: 2, name: t("order_table_procedure") },
+    { id: 3, name: t("order_table_date") },
+    { id: 4, name: t("order_table_time") },
+    { id: 5, name: t("order_table_cost") },
+    { id: 6, name: t("order_table_prepayment") },
+    { id: 7, name: t("order_table_paid") },
+    { id: 8, name: t("order_table_paymentType") },
+    { id: 9, name: t("order_table_pay") },
+    { id: 10, name: t("order_table_status") },
+    { id: 11, name: t("order_table_master") },
+    { id: 12, name: "" },
   ];
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
@@ -48,6 +42,7 @@ const FilterComponent: React.FC = () => {
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
   };
+
 
   useEffect(() => {
     axios
@@ -197,9 +192,7 @@ const FilterComponent: React.FC = () => {
                   <Popover
                     content={
                       <div>
-                        <Button
-                          onClick={() => navigate(`/orders/${data.orderId}`)}
-                        >
+                        <Button onClick={() => navigate(`/orders/${data.orderId}`)}>
                           Открыть
                         </Button>
                       </div>
