@@ -7,7 +7,6 @@ import { dashboard_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-
 const initialOptions: ApexOptions = {
   legend: {
     show: false,
@@ -111,6 +110,7 @@ interface ChartOneState {
 }
 
 const ChartNine: React.FC = () => {
+  const { t } = useTranslation();
   const [chart, setChart] = useState<{ incomeTotal: number; name: string }[]>([]);
   const [state, setState] = useState<ChartOneState>({
     series: [
@@ -128,7 +128,7 @@ const ChartNine: React.FC = () => {
   const [options, setOptions] = useState(initialOptions);
 
   const fetchData = () => {
-    const { t } = useTranslation();
+
     setLoading(true);
     setError('');
 
