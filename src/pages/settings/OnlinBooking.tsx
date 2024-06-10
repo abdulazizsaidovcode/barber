@@ -35,10 +35,10 @@
         <DefaultLayout>
           <div>
             <p className="text-xl">Онлайн бронирование</p>
-            <div className="w-1/2 mt-5">
+            <div className="lg:w-2/3 mt-5">
               <Accordion title="Предоплата в процентах">
-                <div className="flex justify-between">
-                  <div className="w-[75%]">
+                <div className="flex sm:flex-row flex-col justify-between">
+                  <div className="sm:w-[75%] w-full">
                     {data.map(item => (
                       <div key={item.id}>
                         <ServiceCategoriesCard
