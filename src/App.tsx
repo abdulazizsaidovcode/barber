@@ -39,6 +39,7 @@ import RequestSpecializations from './components/request/pages/requestSpecializa
 import RequestProcedures from './components/request/pages/requestProcedures.tsx';
 import MainTabDetail from './pages/Masters/detail/mainTabDetail.tsx';
 import Reviews from './pages/reviews/reviews.tsx';
+import DetailClient from './pages/Client/detail/detail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -155,6 +156,15 @@ function App() {
             <>
               <PageTitle title="Gallery | Barber" />
               <Gallery />
+            </>
+          }
+        />
+        <Route
+          path="/client_id/:id"
+          element={
+            <>
+              <PageTitle title="Client | Barber" />
+              <DetailClient />
             </>
           }
         />
@@ -315,7 +325,7 @@ function App() {
           path="/client"
           element={
             <>
-              <PageTitle title="client | Barber" />
+              <PageTitle title="Client | Barber" />
               <Client />
             </>
           }

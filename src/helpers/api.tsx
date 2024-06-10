@@ -58,13 +58,16 @@ export const edit_service_category: string = `${base_url}category/web`;
 export const add_precent_list: string = `${base_url}percent`;
 export const precent_list: string = `${base_url}percent`;
 export const master_full_data: string = `${base_url}user/web/master-full-info`;
+export const client_full_data: string = `${base_url}client/web/`;
 export const master_service_id: string = `${base_url}service/web/`;
 export const master_gallery_id: string = `${base_url}gallery/web/`;
 export const chat_user_url: string = `${base_url}chat/support-service`;
 export const calendar_url: string = `${base_url}workday/time/web/calendar`;
 export const dashboard_url = `${base_url}dashboard/`;
+export const client_block_put = `${base_url}client/is-block-from-master`;
+export const client_send_message = `${base_url}message/for/client/by/admin`;
 
-//finance
+//finance client_send_message
 export const finance_list = (month: string | null, year: number | null) => {
   if (month !== null && year !== null)
     return `${base_url}finance/web?month=${month}&year=${year}`;
