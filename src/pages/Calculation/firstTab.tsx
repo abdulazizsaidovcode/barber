@@ -49,7 +49,6 @@ const FilterComponent: React.FC = () => {
     console.log(date, dateString);
   };
 
-
   useEffect(() => {
     axios
       .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
@@ -198,7 +197,9 @@ const FilterComponent: React.FC = () => {
                   <Popover
                     content={
                       <div>
-                        <Button onClick={() => navigate(`/orders/${data.orderId}`)}>
+                        <Button
+                          onClick={() => navigate(`/orders/${data.orderId}`)}
+                        >
                           Открыть
                         </Button>
                       </div>

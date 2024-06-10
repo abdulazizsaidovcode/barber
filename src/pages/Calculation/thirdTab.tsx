@@ -47,9 +47,9 @@ const FilterComponent: React.FC = () => {
     console.log(date, dateString);
   };
 
-  const renderPopoverContent = (id: number) => (
+  const renderPopoverContent = (orderId: number) => (
     <div>
-      <Link to={`/orders/${id}`}>
+      <Link to={`/orders_rejected1/${orderId}`}>
         <p>Открыть</p>
       </Link>
     </div>
@@ -168,7 +168,7 @@ const FilterComponent: React.FC = () => {
             </tr>
           ) : (
             tableData.map((data) => (
-              <tr key={data.id} className="dark:text-white">
+              <tr key={data.orderId} className="dark:text-white">
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
                     <p>{data.clientFullName}</p>
@@ -202,7 +202,7 @@ const FilterComponent: React.FC = () => {
                 </td>
                 <td className="flex items-center justify-center">
                   <Popover
-                    content={renderPopoverContent(data.id)}
+                    content={renderPopoverContent(data.orderId)}
                     placement="bottomRight"
                     className="flex items-center justify-center"
                     title="Title"
