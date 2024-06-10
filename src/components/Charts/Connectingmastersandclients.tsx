@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
-import { DatePicker } from 'antd';
+import { DatePicker, Skeleton } from 'antd';
 import { config } from '../../helpers/token';
 
 const options: ApexOptions = {
@@ -76,6 +76,7 @@ interface ChartTwoState {
 
 const ChartTwo: React.FC = () => {
   const [clientData, setClientData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [dates, setDates] = useState<string | number>(new Date().getFullYear());
   const [series, setSeries] = useState<ChartTwoState['series']>([
     { name: 'MasterCount', data: [] },
@@ -91,6 +92,7 @@ const ChartTwo: React.FC = () => {
   };
 
   function getData(value: string | number) {
+    setLoading(true)
     axios
       .get(`${dashboard_url}web/masterVsClient?year=${value}`, config)
       .then((response) => {
@@ -110,23 +112,33 @@ const ChartTwo: React.FC = () => {
       })
       .catch(() => {
         console.error('There was an error fetching the data!');
-      });
+      }).finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
-    <div>
+    <div className='w-full'>
       <div className='flex justify-between items-center mb-5'>
         <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
         <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
       </div>
-      <div className="col-span-12 rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-        <div id="chartTwo" className="-ml-5 -mb-9">
-          <ReactApexChart
-            options={options}
-            series={series}
-            type="bar"
-            height={350}
-          />
+      <div className=" rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark ">
+        <div id="chartTwo" className="-ml-5 -mb-9 mx-auto">
+          {loading ? (
+            <Skeleton active paragraph={{ rows: 10 }} />
+          ) : (
+            <div>
+              <div id="chartOne" className="-ml-5">
+                <ReactApexChart
+                  options={options}
+                  series={series}
+                  type="bar"
+                  height={350}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,12 +1,13 @@
-import { Select } from 'antd';
+import { DatePicker, Skeleton } from 'antd';
 import { ApexOptions } from 'apexcharts';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
+import moment from 'moment';
 
-const options: ApexOptions = {
+const initialOptions: ApexOptions = {
   legend: {
     show: false,
     position: 'top',
@@ -16,7 +17,7 @@ const options: ApexOptions = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
     height: 335,
-    type: 'bar', // Changed from 'area' to 'bar' to match your desired chart type
+    type: 'bar',
     dropShadow: {
       enabled: false,
       color: '#623CEA14',
@@ -82,7 +83,7 @@ const options: ApexOptions = {
   },
   xaxis: {
     type: 'category',
-    categories: [], // Categories will be set dynamically
+    categories: [],
     axisBorder: {
       show: false,
     },
@@ -109,12 +110,7 @@ interface ChartOneState {
 }
 
 const ChartNine: React.FC = () => {
-  const [chart, setChart] = useState<
-    {
-      incomeTotal: number;
-      name: string;
-    }[]
-  >([]);
+  const [chart, setChart] = useState<{ incomeTotal: number; name: string }[]>([]);
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
@@ -124,38 +120,27 @@ const ChartNine: React.FC = () => {
     ],
   });
 
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState('');
+  const [year, setYear] = useState<number | undefined>(undefined);
+  const [month, setMonth] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const monthMap: { [key: string]: string } = {
-    Yanvar: '01',
-    Fevral: '02',
-    Mart: '03',
-    Aprel: '04',
-    May: '05',
-    June: '06',
-    July: '07',
-    August: '08',
-    September: '09',
-    October: '10',
-    November: '11',
-    December: '12',
-  };
+  const [options, setOptions] = useState(initialOptions);
 
   const fetchData = () => {
-    if (!year || isNaN(year) || !month) {
-      setError('Both year and month are required');
-      return;
-    }
-
-    const formattedMonth = monthMap[month];
-
     setLoading(true);
     setError('');
+
+    let url = `${dashboard_url}web/regions`;
+    if (year && month) {
+      url += `?year=${year}&month=${month}`;
+    } else if (year) {
+      url += `?year=${year}`;
+    } else if (month) {
+      url += `?month=${month}`;
+    }
+
     axios
-      .get(`${dashboard_url}web/regions?month=${formattedMonth}&year=${year}`, config)
+      .get(url, config)
       .then((response) => {
         if (response.data.body && response.data.body.length > 0) {
           setChart(response.data.body);
@@ -172,7 +157,13 @@ const ChartNine: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(); // Fetch data initially without any parameters
+  }, []);
+
+  useEffect(() => {
+    if (year !== undefined || month !== undefined) {
+      fetchData(); // Fetch data with selected year and/or month
+    }
   }, [year, month]);
 
   useEffect(() => {
@@ -184,68 +175,34 @@ const ChartNine: React.FC = () => {
         },
       ],
     });
-    options.xaxis.categories = chart.map((item) => item.name);
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      xaxis: {
+        ...prevOptions.xaxis,
+        categories: chart.map((item) => item.name),
+      },
+    }));
   }, [chart]);
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setYear(parseInt(e.target.value, 10));
+  const handleYearChange = (date: any, dateString: any) => {
+    setYear(parseInt(dateString, 10));
   };
 
-  const handleMonthChange = (value: string) => {
-    setMonth(value);
+  const handleMonthChange = (date: any, dateString: any) => {
+    setMonth(moment(date).format('MM'));
   };
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
-        fetchData();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [year, month]);
 
   return (
     <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
       <div className='flex justify-between flex-wrap'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>Total income for {year}</h1>
+        <h1 className='font-semibold text-black text-xl dark:text-white'>Total income {year ? year : ""}</h1>
         <div className='flex gap-3'>
-          <input
-            type="number"
-            value={year}
-            onChange={handleYearChange}
-            className="mb-4 px-4  py-1  border border-gray-300 rounded"
-            placeholder=""
-            min="2000"
-            max="2100"
-          />
-          <Select
-            className='mb-3'
-            value={month}
-            style={{ width: 120 }}
-            onChange={handleMonthChange}
-            options={[
-              { value: 'Yanvar', label: 'Yanvar' },
-              { value: 'Fevral', label: 'Fevral' },
-              { value: 'Mart', label: 'Mart' },
-              { value: 'Aprel', label: 'Aprel' },
-              { value: 'May', label: 'May' },
-              { value: 'June', label: 'June' },
-              { value: 'July', label: 'July' },
-              { value: 'August', label: 'August' },
-              { value: 'September', label: 'September' },
-              { value: 'October', label: 'October' },
-              { value: 'November', label: 'November' },
-              { value: 'December', label: 'December' },
-            ]}
-          />
+          <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+          <DatePicker onChange={handleMonthChange} picker="month" style={{ height: 35 }} />
         </div>
       </div>
       {loading ? (
-        <div>Loading...</div>
+        <Skeleton active paragraph={{ rows: 10 }} />
       ) : error ? (
         <div>{error}</div>
       ) : (
@@ -260,7 +217,7 @@ const ChartNine: React.FC = () => {
           </div>
         </div>
       )}
-    </div> 
+    </div>
   );
 };
 

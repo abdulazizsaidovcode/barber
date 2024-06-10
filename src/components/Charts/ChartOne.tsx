@@ -125,7 +125,7 @@ const ChartOne = () => {
         <h1 className='font-semibold text-black text-xl dark:text-white'>Income dynamics</h1>
         <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
       </div>
-      <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
+      <div className=" rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark ">
         <ReactApexChart options={options} series={series} type="line" height={350} />
       </div>
     </div>
