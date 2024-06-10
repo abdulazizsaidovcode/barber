@@ -5,7 +5,7 @@ import opacha from '../../../images/Group 940396.png'
 
 const RequestProcedures: React.FC = () => {
   return (
-    <RequestLayout>
+    <RequestLayout >
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5'>
         <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center  px-5'>
           <div className='flex gap-3'>

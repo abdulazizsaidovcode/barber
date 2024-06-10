@@ -4,7 +4,7 @@ import RequestSidebar from '../../components/request/sidebar/RequestSidebar';
 import { CgMenuLeft } from 'react-icons/cg';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, newMastersCount: number }) => {
+const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, newMastersCount?: number }) => {
     const [sidebarWidth, setSidebarWidth] = useState('w-max');
     const [siteBar, setSiteBar] = useState<boolean>(false);
     const [siteBarClass, setSiteBarClass] = useState<string>('');

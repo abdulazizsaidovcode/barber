@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 interface MenuProp {
   name: string;
-  count: number;
+  count: number | undefined;
   link: string;
 }
 
-const RequestSidebar: React.FC<{ newMastersCount: number }> = ({newMastersCount}) => {
+const RequestSidebar: React.FC<{ newMastersCount?: number | undefined }> = ({newMastersCount}) => {
   const location = useLocation();
 
   const menu: MenuProp[] = [

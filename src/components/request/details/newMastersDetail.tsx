@@ -5,6 +5,16 @@ import FirstTab from './newMastersTabs/FirstTab';
 import SecondTab from './newMastersTabs/SecondTab';
 import ThirdTab from './newMastersTabs/ThirdTab';
 
+interface ServiceData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
+}
+
 interface NewMastersDetailProps {
   isOpen: boolean;
   onClose: () => void;
@@ -38,6 +48,7 @@ interface NewMastersDetailProps {
   masterChatStatus?: string;
   scheduleType?: string;
   facebookLink?: string;
+  serviceData: ServiceData[]; // Add service data prop
 }
 
 const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
@@ -72,7 +83,8 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   newOrUpdateCategory,
   masterChatStatus,
   scheduleType,
-  facebookLink
+  facebookLink,
+  serviceData // Destructure service data
 }) => {
   const items = [
     {
@@ -109,7 +121,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
           Процедуры
         </span>
       ),
-      children: <SecondTab />,
+      children: <SecondTab serviceData={serviceData} />, // Pass service data to the second tab
     },
     {
       key: '3',

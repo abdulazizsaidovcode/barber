@@ -1,29 +1,36 @@
-import React, { useState } from 'react'
-import FirstTabCard from './cards/FirstTabCard'
-import Modal from '../../../modals/modal'
-import img from '../../../../images/Image.png';
+import React from 'react';
+import SecondTabCard from './cards/SecondTabCard';
+import { getFileId } from '../../../../helpers/api';
 
-const SecondTab: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = () => setIsOpen(true)
-  const closeModal = () => setIsOpen(false)
-
-  return (
-    <div>
-      <FirstTabCard
-        category='Стрижка, укладка, милирование:'
-        description='В услугу входит мытьё головы, массаж головы и Разнообразный и богатый опыт основанный .......'
-        price='350 000 сум' duration='1 час 30 минут'
-        openModal={openModal}
-      />
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="flex justify-center items-center h-[350px] w-[600px]">
-          <img className=" h-[350px] w-[600px] rounded-md" src={img} alt="Modal Image" />
-        </div>
-      </Modal>
-    </div>
-  )
+interface ServiceData {
+  category: {
+    name: string;
+  };
+  price: string;
+  serviceTime: string;
+  attachmentId: string;
+  description: string;
 }
 
-export default SecondTab
+interface SecondTabProps {
+  serviceData: ServiceData[];
+}
+
+const SecondTab: React.FC<SecondTabProps> = ({ serviceData }) => {
+  return (
+    <div className='flex flex-col gap-5'>
+      {serviceData.map((service, index) => (
+        <SecondTabCard
+          key={index}
+          category={service.category.name}
+          description={service.description}
+          price={service.price}
+          duration={service.serviceTime}
+          image={getFileId + service.attachmentId} 
+        />
+      ))}
+    </div>
+  );
+}
+
+export default SecondTab;
