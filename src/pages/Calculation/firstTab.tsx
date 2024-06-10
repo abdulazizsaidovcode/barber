@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Select,
   Input,
@@ -9,11 +10,15 @@ import {
   DatePickerProps,
   Popover,
   Pagination,
-} from "antd";
-import MasterTable from "../../components/Tables/MasterTable";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import orderStore from "../../helpers/state_managment/order/orderStore";
+} from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { IoSearchOutline } from 'react-icons/io5';
+import MasterTable from '../../components/Tables/MasterTable';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { get_orders_list } from '../../helpers/api';
+import { config } from '../../helpers/token';
+import orderStore from '../../helpers/state_managment/order/orderStore';
 
 const { Option } = Select;
 
@@ -21,20 +26,24 @@ const FilterComponent: React.FC = () => {
   const { data, totalPage } = orderStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [showExtraFilters, setShowExtraFilters] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [tableData, setTableData] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const tableHeaders = [
-    { id: 1, name: t("order_table_client") },
-    { id: 2, name: t("order_table_procedure") },
-    { id: 3, name: t("order_table_date") },
-    { id: 4, name: t("order_table_time") },
-    { id: 5, name: t("order_table_cost") },
-    { id: 6, name: t("order_table_prepayment") },
-    { id: 7, name: t("order_table_paid") },
-    { id: 8, name: t("order_table_paymentType") },
-    { id: 9, name: t("order_table_pay") },
-    { id: 10, name: t("order_table_status") },
-    { id: 11, name: t("order_table_master") },
-    { id: 12, name: "" },
+    { id: 1, name: t('order_table_client') },
+    { id: 2, name: t('order_table_procedure') },
+    { id: 3, name: t('order_table_date') },
+    { id: 4, name: t('order_table_time') },
+    { id: 5, name: t('order_table_cost') },
+    { id: 6, name: t('order_table_prepayment') },
+    { id: 7, name: t('order_table_paid') },
+    { id: 8, name: t('order_table_paymentType') },
+    { id: 9, name: t('order_table_pay') },
+    { id: 10, name: t('order_table_status') },
+    { id: 11, name: t('order_table_master') },
+    { id: 12, name: '' },
   ];
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
@@ -43,20 +52,26 @@ const FilterComponent: React.FC = () => {
     console.log(date, dateString);
   };
 
-
   useEffect(() => {
+    fetchOrders(currentPage);
+  }, [currentPage]);
+
+  const fetchOrders = (page: number) => {
     axios
-      .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
+      .get(`${get_orders_list}?status=COMPLETED&page=${page - 1}&size=10`, config)
       .then((response) => {
         setTableData(response.data.body.object);
-        console.log(response);
         setLoading(false);
       })
       .catch((error) => {
-        toast.error('Serverda Xatolik yuz berdi ! Qaytadan urinib kuring');
+        console.error('There was an error fetching the data!', error);
         setLoading(false);
       });
-  }, []);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
@@ -101,6 +116,7 @@ const FilterComponent: React.FC = () => {
         </Col>
       </Row>
 
+      {/* Extra filters row */}
       {showExtraFilters && (
         <Row gutter={[29, 16]} className="mb-2">
           <Col xs={14} sm={7} md={4} className="mb-4">
@@ -139,13 +155,14 @@ const FilterComponent: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
-            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full  dark:text-white">
+            <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full dark:text-white">
               Reset
             </Button>
           </Col>
         </Row>
       )}
 
+      {/* Table */}
       <div>
         <MasterTable thead={tableHeaders}>
           {loading ? (
@@ -156,7 +173,7 @@ const FilterComponent: React.FC = () => {
             </tr>
           ) : (
             tableData.map((data) => (
-              <tr key={data.id} className="dark:text-white">
+              <tr key={data.orderId} className="dark:text-white">
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
                     <p>{data.clientFullName}</p>
@@ -209,6 +226,12 @@ const FilterComponent: React.FC = () => {
             ))
           )}
         </MasterTable>
+        <Pagination
+          current={currentPage}
+          total={totalPage * 10} // Assuming 10 items per page
+          onChange={handlePageChange}
+          className="mt-4 flex justify-center"
+        />
       </div>
     </div>
   );
