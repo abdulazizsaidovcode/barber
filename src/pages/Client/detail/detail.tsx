@@ -39,6 +39,7 @@ const DetailMaster: React.FC = () => {
         ) : orderDetails ? (
           <div>
             <DetailClient
+              ClientId=""
               StatusNow={orderDetails.chatStatus}
               ClientImg={orderDetails.image ?? ''}
               StartData={orderDetails.registrationDate ?? 'Mavjud emas'}
