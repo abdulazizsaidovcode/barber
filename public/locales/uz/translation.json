@@ -106,5 +106,12 @@
   "Service_Specification": "Xizmat spetsifikatsiyasi",
   "Offer": "Taklif",
   "Terms_of_use": "Foydalanish shartlari",
-  "Attach_file": "Fayl biriktirish"
+  "Attach_file": "Fayl biriktirish",
+  "About_the_service": "Xizmat haqida",
+  "Privacy_Policy": "Maxfiylik siyosati",
+  "License_agreement": "Litsenziya shartnomasi",
+  "Licenses": "Litsenziyalar",
+  "Certificates_and_other_documents": "Sertifikat va hujjatlar",
+  "Using_the_application": "Ilovadan foydalanish",
+  "update_message": "Xabarni yangilash..."
 }

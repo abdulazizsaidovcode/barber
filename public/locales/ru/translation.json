@@ -103,5 +103,12 @@
   "Service_Specification": "Спецификация услуг",
   "Offer": "Оферта",
   "Terms_of_use": "Пользовательское соглашение",
-  "Attach_file": "Вложить файл"
+  "Attach_file": "Вложить файл",
+  "About_the_service": "О сервисе",
+  "Privacy_Policy": "Политика конфиденциальности",
+  "License_agreement": "Лицензионное соглашение",
+  "Licenses": "Лицензии",
+  "Certificates_and_other_documents": "Сертификаты и прочие документы",
+  "Using_the_application": "Использование приложения",
+  "update_message": "Обновить сообщение..."
 }

@@ -102,5 +102,12 @@
   "Service_Specification": "Service Specification",
   "Offer": "Offer",
   "Terms_of_use": "Terms of use",
-  "Attach_file": "Attach file"
+  "Attach_file": "Attach file",
+  "About_the_service": "About the service",
+  "Privacy_Policy": "Privacy Policy",
+  "License_agreement": "License agreement",
+  "Licenses": "Licenses",
+  "Certificates_and_other_documents": "Certificates and other documents",
+  "Using_the_application": "Using the application",
+  "update_message": "Update message..."
 }
