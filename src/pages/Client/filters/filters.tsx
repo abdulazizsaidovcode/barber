@@ -7,10 +7,12 @@ import MasterModal from "../client-modal.tsx";
 import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
 import { getClients } from "../../../helpers/api-function/client/client.tsx";
 import { getDistrict } from "../../../helpers/api-function/master/master.tsx";
+import { useTranslation } from "react-i18next";
 
 const { Option } = Select;
 
 const Filters: React.FC = () => {
+  const { t } = useTranslation();
   const [showExtraFilters, setShowExtraFilters] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
@@ -121,7 +123,7 @@ const Filters: React.FC = () => {
             }}
           >
             <Option value={0} disabled>
-              Select region
+              {t("Select_region")}
             </Option>
             {regionData.length > 0 ? (
               regionData.map((item) => (
@@ -130,7 +132,7 @@ const Filters: React.FC = () => {
                 </Option>
               ))
             ) : (
-              <Option disabled>No regions available</Option>
+              <Option disabled>{t("No_regions_available")}</Option>
             )}
           </Select>
         </Col>
@@ -142,7 +144,7 @@ const Filters: React.FC = () => {
             onChange={(value) => handleInputChange("districtId", value)}
           >
             <Option value={0} disabled>
-              Select district
+              {t("Select_district")}
             </Option>
             {districtData.length > 0 ? (
               districtData.map((item) => (
@@ -151,7 +153,7 @@ const Filters: React.FC = () => {
                 </Option>
               ))
             ) : (
-              <Option disabled>No districts available</Option>
+              <Option disabled>{t("No_districts_available")}</Option>
             )}
           </Select>
         </Col>
@@ -171,7 +173,7 @@ const Filters: React.FC = () => {
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
           <Button style={styles.extraButton} onClick={openModal}>
-            Download
+            {t("Download")}
           </Button>
           <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
         </Col>
@@ -182,33 +184,33 @@ const Filters: React.FC = () => {
           <Row gutter={[16, 16]} style={{ marginTop: "10px" }}>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <DatePicker
-                placeholder="Start date"
+                placeholder={t("Select_start_date")}
                 style={styles.filterInput}
                 onChange={(date) => handleInputChange("startDate", date)}
               />
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <DatePicker
-                placeholder="End date"
+                placeholder={t("Select_end_date")}
                 style={styles.filterInput}
                 onChange={(date) => handleInputChange("endDate", date)}
               />
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Select
-                placeholder="Status"
+                placeholder={t("Status")}
                 style={styles.filterInput}
                 value={filters.status || null}
                 onChange={(value) => handleInputChange("status", value)}
               >
-                <Option value="ACTIVE">ACTIVE</Option>
-                <Option value="BLOCK">BLOCK</Option>
-                <Option value="DELETED">DELETED</Option>
+                <Option value="ACTIVE">{t("Active")}</Option>
+                <Option value="BLOCK">{t("Locked")}</Option>
+                <Option value="DELETED">{t("Deleted")}</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Button style={styles.extraButton} onClick={resetFilters}>
-                Reset
+                {t("Reset")}
               </Button>
             </Col>
           </Row>

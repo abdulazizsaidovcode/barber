@@ -21,7 +21,7 @@ export interface UpdateStatus {
 
 const ClientTables: React.FC = () => {
   const { t } = useTranslation();
-  const { totalPage, clientFilterData, setClientFilterData, setIsModal,setIsLoading, isLoading, isModal, setClientTotalPage } = clientFilterStore();
+  const { totalPage, clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: "",
     clientId: "",
@@ -41,11 +41,11 @@ const ClientTables: React.FC = () => {
     },
     {
       key: 'ACTIVE',
-      label: 'Активный'
+      label: `${t('Active')}`
     },
     {
       key: 'BLOCKED',
-      label: 'Заблокированный'
+      label: `${t('Locked')}`
     }
   ];
   const handleMenuClick = (e: any, clientId: string) => {
@@ -61,11 +61,10 @@ const ClientTables: React.FC = () => {
           clientFilterData.map((item: any, key: any) => (
             <tr
               key={key}
-              className={`${
-                key === clientFilterData.length - 1
-                  ? ""
-                  : "border-b border-[#eee] dark:border-strokedark"
-              }`}
+              className={`${key === clientFilterData.length - 1
+                ? ""
+                : "border-b border-[#eee] dark:border-strokedark"
+                }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
@@ -76,17 +75,17 @@ const ClientTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.fullName ?? "No data"}
+                  {item?.fullName ?? t("No_data")}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.registrationDate ?? "No data"}
+                  {item?.registrationDate ?? t("No_data")}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.phoneNumber ?? "No data"}
+                  {item?.phoneNumber ?? t("No_data")}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
@@ -96,12 +95,12 @@ const ClientTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.turnover ?? "No data"}
+                  {item?.turnover ?? t("No_data")}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.age ? `${item.age} ${t("years")}` : "No data"}
+                  {item?.age ? `${item.age} ${t("years")}` : t("No_data")}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
@@ -115,7 +114,7 @@ const ClientTables: React.FC = () => {
                 </p>
               </td>
               <td className="min-w-[150px] p-5 flex items-center justify-between">
-              <p
+                <p
                   className={`${item.status === 'ACTIVE' ? 'bg-green-400' : item.status === 'BLOCKED' ? 'bg-red-500' : 'bg-red-700'} text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
                   {item.status}
@@ -145,7 +144,7 @@ const ClientTables: React.FC = () => {
               className="min-w-full text-center py-10 text-xl font-bold"
               colSpan={5}
             >
-              {t("No data available!")}
+              {t("No_data_available")}
             </td>
           </tr>
         )}
@@ -165,8 +164,7 @@ const ClientTables: React.FC = () => {
             <p
               className={`font-bold text-xl text-black opacity-80 text-center`}
             >
-              {updateStatus.status === "ACTIVE" ? "Активный" : "Заблокировать"}{" "}
-              мастра?
+              {updateStatus.status === "ACTIVE" ? t("Activer") : t("Blocker")}
             </p>
           </div>
           <div className={`flex justify-center items-center gap-10 mt-8`}>
@@ -183,10 +181,10 @@ const ClientTables: React.FC = () => {
                 )
               }
             >
-              {isLoading ? "loading..." : "да"}
+              {isLoading ? "loading..." : t("Yeah")}
             </Buttons>
             <Buttons bWidth={`w-[200px]`} onClick={openIsModal}>
-              нет
+              {t("Not")}
             </Buttons>
           </div>
         </div>

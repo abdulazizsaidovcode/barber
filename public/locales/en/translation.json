@@ -44,6 +44,7 @@
   "Modal_answer": "Block the master?",
   "Open": "Open",
   "Block": "Block",
+  "Client": "Client",
   "Unblock": "Unblock",
   "Open_help": "Open help",
   "discount": "To make a discount",
@@ -77,5 +78,14 @@
   "Salon": "Salon",
   "Yes_to_home": "Yes to home",
   "On_site": "On site",
-  "Reset": "Reset"
+  "Reset": "Reset",
+  "No_data": "No data",
+  "No_districts_available": "No districts available",
+  "No_regions_available": "No regions available",
+  "Select_region": "Select region",
+  "Select_district": "Select district",
+  "Deleted": "Deleted",
+  "No_data_available": "No data available!",
+  "Blocker": "Block the client",
+  "Activer": "Client activation"
 }

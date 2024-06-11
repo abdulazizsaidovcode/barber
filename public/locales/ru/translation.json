@@ -11,6 +11,7 @@
   "sidebar_menu_text": "МЕНЮ",
   "siderbar_dashboard": "Главная",
   "master": "Мастера",
+  "Client": "Клиент ",
   "siderbar_client": "Клиенты",
   "siderbar_calendar": "Календарь",
   "siderbar_calculation": "Записи",
@@ -78,5 +79,14 @@
   "Salon": "Салон",
   "Yes_to_home": "Да, дома",
   "On_site": "С выездом",
-  "Reset": "Перезагрузить"
+  "Reset": "Перезагрузить",
+  "No_data": "Нет данных",
+  "No_districts_available": "Нет доступных районов",
+  "No_regions_available": "Нет доступных регионов",
+  "Select_district": "Выберите район",
+  "Select_region": "Выберите регион",
+  "Deleted": "Удалено",
+  "No_data_available": "Данные недоступны!",
+  "Blocker": "Мийозный блоклаш",
+  "Activer": "Активация клиента"
 }
