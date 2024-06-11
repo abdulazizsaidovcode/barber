@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { master_full_data } from '../../../helpers/api';
 import axios from 'axios';
 import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
+import { master_full_data } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
+import userImg from '../../../images/user.png';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
   const [orderDetails, setOrderDetails] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   const id = location.pathname.substring(8);
   console.log(id);
 
-  const MasterImgFake = '/path/to/fake-image.png'; // Replace with your actual path
   useEffect(() => {
-    if (!id) {
-      console.error('ID is required!');
-      return;
-    }
-
-    setIsLoading(true); // Set loading to true when fetching starts
+    setIsLoading(true);
 
     axios
       .get(`${master_full_data}/${id}`, config)
       .then((response) => {
         const master = response.data.body;
-        console.log(master);
+        console.log(`detail page with id${master}`);
         setOrderDetails(master);
         setIsLoading(false); // Set loading to false when data is fetched
       })
@@ -113,7 +108,7 @@ const DetailMaster: React.FC = () => {
             MasterName={orderDetails.firstName}
             MasterImg={
               orderDetails.masterImgPath === null
-                ? MasterImgFake
+                ? userImg
                 : orderDetails.masterImgPath
             }
             definitionType={

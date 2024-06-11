@@ -106,6 +106,7 @@ function AddMails() {
         axios
             .post(`${newsletters_url}/save`, obj, config)
             .then((res) => {
+                res
                 toast.success("Рассылка успешно создана");
                 clearFields();
                 GetChatLetters({

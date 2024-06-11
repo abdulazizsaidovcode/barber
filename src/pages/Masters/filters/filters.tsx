@@ -23,10 +23,23 @@ const Filters: React.FC = () => {
     filterObj,
     category,
     isLoading,
-    setIsLoading
+    setIsLoading,
+    page
   } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const { t } = useTranslation();
+  const queryParams: string = [
+    filters.searchValue ? `fullName=${filters.searchValue}` : '',
+    filters.regionValue ? `regionId=${filters.regionValue}` : '',
+    filters.cityValue ? `districtId=${filters.cityValue}` : '',
+    datePicker(0) ? `startDate=${datePicker(0)}` : '',
+    datePicker(1) ? `endDate=${datePicker(1)}` : '',
+    filters.serviceCategoryValue ? `categoryId=${filters.serviceCategoryValue}` : '',
+    filters.statusValue ? `statusName=${filters.statusValue}` : '',
+    filters.selfEmployedStatusValue === true ? `selfEmployed=true` : filters.selfEmployedStatusValue === false ? `selfEmployed=false` : '',
+    filters.placeOfWorkValue ? `workPlace=${filters.placeOfWorkValue}` : ''
+  ].filter(Boolean).join('&');
+  const url: string = `${master_download}?${queryParams}&page=${page}&size=10`;
 
   useEffect(() => {
     getMasters({
@@ -64,49 +77,23 @@ const Filters: React.FC = () => {
     }
   }
 
-  const styles = {
-    mainContainer: {
-      padding: '0 30px',
-      marginBottom: '20px'
-    },
-    filterGroup: {
-      marginBottom: '16px'
-    },
-    filterTitle: {
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    },
-    filterInput: {
-      width: '100%',
-      backgroundColor: '#fff',
-      borderRadius: '8px'
-    },
-    toggleButton: {
-      width: '13%',
-      backgroundColor: '#f0f0f0'
-    },
-    extraButton: {
-      backgroundColor: '#f0f0f0'
-    }
-  };
-
   return (
-    <div style={styles.mainContainer}>
+    <div className={`px-[30px] mb-[20px]`}>
       <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+        <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Input
             placeholder={t('Search_by_name')}
             value={filters.searchValue}
             prefix={<IoSearchOutline />}
-            style={styles.filterInput}
+            className={`w-full bg-white rounded-[8px]`}
             onChange={(e) => handleInputChange('searchValue', e.target.value)}
           />
         </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+        <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Select
             placeholder={`Регион`}
             value={filters.regionValue}
-            style={styles.filterInput}
+            className={`w-full bg-white rounded-[8px]`}
             onChange={(value) => handleInputChange('regionValue', value)}
           >
             {regionData.length > 0 && regionData.map(item => (
@@ -114,11 +101,11 @@ const Filters: React.FC = () => {
             ))}
           </Select>
         </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+        <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Select
             placeholder={`Город`}
             value={filters.cityValue}
-            style={styles.filterInput}
+            className={`w-full bg-white rounded-[8px]`}
             onChange={(value) => handleInputChange('cityValue', value)}
           >
             {districtData.length > 0 && districtData.map(item => (
@@ -126,18 +113,16 @@ const Filters: React.FC = () => {
             ))}
           </Select>
         </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup} className="flex gap-4">
+        <Col xs={24} sm={12} md={6} className="flex gap-4 mb-[16px]">
           <Button
-            className="flex items-center justify-center"
-            type="primary"
+            className="flex items-center justify-center bg-[#f0f0f0] w-[13%]"
             onClick={toggleExtraFilters}
-            style={styles.toggleButton}
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
           <Button
-            style={styles.extraButton}
-            onClick={() => downloadExcelFile(master_download, setIsLoading)}
+            className={`bg-[#f0f0f0]`}
+            onClick={() => downloadExcelFile(url, setIsLoading, page)}
           >
             {isLoading ? 'loading...' : t('Download')}
           </Button>
@@ -147,21 +132,21 @@ const Filters: React.FC = () => {
       {showExtraFilters && (
         <>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Space direction="vertical" size={12}>
                 <RangePicker
                   placeholder={['Дата начала', 'Дата окончания']}
                   value={filters.registrationPeriodValue}
-                  style={styles.filterInput}
+                  // className={`w-full bg-white rounded-[8px]} s.filterInput}
                   onChange={(date) => handleInputChange('registrationPeriodValue', date)}
                 />
               </Space>
             </Col>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
                 placeholder={`Категория услуг`}
                 value={filters.serviceCategoryValue}
-                style={styles.filterInput}
+                className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
               >
                 {category.length > 0 && category.map(item => (
@@ -171,7 +156,7 @@ const Filters: React.FC = () => {
             </Col>
 
             {/*reels two*/}
-            {/*<Col xs={24} sm={12} md={6} style={styles.filterGroup}>*/}
+            {/*<Col xs={24} sm={12} md={6} className={`mb-[16px]`}>*/}
             {/*  <Select*/}
             {/*    defaultValue="Тип расписания"*/}
             {/*    style={styles.filterInput}*/}
@@ -181,11 +166,11 @@ const Filters: React.FC = () => {
             {/*    <Option value="2023">2023</Option>*/}
             {/*  </Select>*/}
             {/*</Col>*/}
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
                 placeholder={`Статус самозанятых`}
                 value={filters.statusValue}
-                style={styles.filterInput}
+                className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
                 <Option value={true}>Да</Option>
@@ -194,22 +179,22 @@ const Filters: React.FC = () => {
             </Col>
           </Row>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
                 placeholder={`Статус`}
                 value={filters.statusValue}
-                style={styles.filterInput}
+                className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('statusValue', value)}
               >
                 <Option value="ACTIVE">Активный</Option>
                 <Option value="BLOCKED">Заблокированный</Option>
               </Select>
             </Col>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
                 placeholder={`Место работы`}
                 value={filters.placeOfWorkValue}
-                style={styles.filterInput}
+                className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('placeOfWorkValue', value)}
               >
                 <Option value="SALON">Салон</Option>
@@ -217,8 +202,11 @@ const Filters: React.FC = () => {
                 <Option value="ON_SITE">С выездом</Option>
               </Select>
             </Col>
-            <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <Button onClick={resetFilters} style={styles.extraButton}>Reset</Button>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
+              <Button
+                onClick={resetFilters}
+                className={`bg-[#f0f0f0]`}
+              >Reset</Button>
             </Col>
           </Row>
         </>

@@ -5,6 +5,10 @@ import Modal from '../modals/modal';
 import { useTranslation } from 'react-i18next';
 import TextArea from 'antd/es/input/TextArea';
 import toast, { Toaster } from 'react-hot-toast';
+import { master_send_message_master } from '../../helpers/api';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { config } from '../../helpers/token';
 
 type MasterCardInfoProps = {
   MasterName: string;
@@ -67,6 +71,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -77,14 +82,98 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const toggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };
+  const location = useLocation();
+  const id = location.pathname.substring(8);
+  console.log(id);
 
-  const toas = () => {
-    toast.success('Send your message');
-    closeSendModal();
+  const sendMessage = async () => {
+    axios
+      .post(
+        `${master_send_message_master}`,
+        {
+          body: {
+            clientId: null,
+            masterId: id,
+            adminId: null,
+            message: message,
+            messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_WRITE',
+            read: true,
+          },
+        },
+        config,
+      )
+
+      .catch((error) => {
+        toast.error('error');
+        console.error('There was an error fetching the data!', error);
+      });
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-4">
+      <div className="w-[100%] flex flex-col items-center justify-center gap-4">
+        <Skeleton loading={isLoading} active>
+          <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+            <div className="flex items-center justify-between">
+              <p className="text-xl font-bold">Profile:</p>
+              <div
+                onClick={openSendModal}
+                className="bg-green-500 p-2 rounded-xl text-white px-3 cursor-pointer"
+              >
+                Send Message
+              </div>
+            </div>
+            <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
+            <p className="mb-5">
+              <strong>Name:</strong> {MasterName}
+            </p>
+            <p className="mb-5">
+              <strong>SurName:</strong> {SurName}
+            </p>
+            <p className="mb-5">
+              <strong>User Name:</strong> {UserName}
+            </p>
+            <p className="mb-5">
+              <strong>Gender:</strong> {Gender}
+            </p>
+            <p className="mb-5">
+              <strong>Age:</strong> {Age}
+            </p>
+            <p className="mb-5">
+              <strong>Region:</strong> {Region}
+            </p>
+            <p className="mb-5">
+              <strong>City:</strong> {City}
+            </p>
+            <p className="mb-5">
+              <strong>Location:</strong> {Location}
+            </p>
+          </div>
+        </Skeleton>
+        <Skeleton loading={isLoading} active>
+          <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+            <div className="flex items-center">
+              <p className="text-xl font-bold">Profession information:</p>
+            </div>
+            <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
+            <p className="mb-5">
+              <strong>Place of work:</strong> {PlaceOfWork}
+            </p>
+            <p className="mb-5">
+              <strong>Direction by gender:</strong> {GenderType}
+            </p>
+            <p className="mb-5">
+              <strong>Service category:</strong> {ServiceCategory}
+            </p>
+            <p className="mb-5">
+              <strong>Specialization:</strong> {Specialization}
+            </p>
+            <p className="mb-5">
+              <strong>Schedule Type:</strong> {scheduleType}
+            </p>
+          </div>
+        </Skeleton>
+      </div>
       <div className="flex flex-col h-full justify-between gap-4">
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
@@ -127,15 +216,15 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <p className="text-black font-bold mb-2 mt-2">Контакты:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
-            <div className="flex items-center justify-between mt-4 ">
+            <div className="flex items-center justify-between mt-4">
               <strong>Telefon :</strong>
               <p>{Number}</p>
             </div>
-            <div className="flex items-center justify-between mt-4 ">
+            <div className="flex items-center justify-between mt-4">
               <strong>Telegram :</strong>
               <p>{Telegram}</p>
             </div>
-            <div className="flex items-center justify-between mt-4 ">
+            <div className="flex items-center justify-between mt-4">
               <strong>Instagram :</strong>
               <p>{Instagram}</p>
             </div>
@@ -147,90 +236,26 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <p className="text-black font-bold mb-2 mt-2">Indicators:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
-            <div className="flex items-center justify-between mt-4 ">
-              <strong>Completed Orders :</strong>
+            <div className="flex items-center justify-between mt-4">
+              <strong>Completed Orders:</strong>
               <p>{CompOrders}</p>
             </div>
-            <div className="flex items-center justify-between mt-4 ">
-              <strong>Cancelled orders :</strong>
+            <div className="flex items-center justify-between mt-4">
+              <strong>Cancelled orders:</strong>
               <p>{rejectedOrderCount}</p>
             </div>
-            <div className="flex items-center justify-between mt-4 ">
-              <strong>Clients :</strong>
+            <div className="flex items-center justify-between mt-4">
+              <strong>Clients:</strong>
               <p>{Clients}</p>
             </div>
-            <div className="flex items-center justify-between mt-4 ">
-              <strong>Level :</strong>
+            <div className="flex items-center justify-between mt-4">
+              <strong>Level:</strong>
               <p>{Level}⭐</p>
             </div>
-            <div className="flex items-center justify-between mt-4 ">
-              <strong>Start work :</strong>
+            <div className="flex items-center justify-between mt-4">
+              <strong>Start work:</strong>
               <p>{StartData}</p>
             </div>
-          </div>
-        </Skeleton>
-      </div>
-      <div className="w-[100%] flex flex-col items-center justify-center gap-4">
-        <Skeleton loading={isLoading} active>
-          <div className="bg-gray-100  dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
-            <div className="flex items-center justify-between">
-              <p className="  text-xl font-bold">Profile:</p>
-              <div
-                onClick={openSendModal}
-                className="bg-green-500 p-2 rounded-xl text-white px-3 cursor-pointer"
-              >
-                Send Message
-              </div>
-            </div>
-            <div className="w-[100%]  bg-black h-[1px] flex items-center mb-4 mt-3 "></div>
-            <p className="mb-5">
-              <strong>Name:</strong> {MasterName}
-            </p>
-            <p className="mb-5">
-              <strong>SurName:</strong> {SurName}
-            </p>
-            <p className="mb-5">
-              <strong>User Name:</strong> {UserName}
-            </p>
-            <p className="mb-5">
-              <strong>Gender:</strong> {Gender}
-            </p>
-            <p className="mb-5">
-              <strong>Age:</strong> {Age}
-            </p>
-            <p className="mb-5">
-              <strong>Region:</strong> {Region}
-            </p>
-            <p className="mb-5">
-              <strong>City:</strong> {City}
-            </p>
-            <p className="mb-5">
-              <strong>Location:</strong> {Location}
-            </p>
-          </div>
-        </Skeleton>
-        <Skeleton loading={isLoading} active>
-          <div className="bg-gray-100  dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
-            <div className="flex items-center ">
-              <p className=" text-xl font-bold">Profession information:</p>
-            </div>
-            <div className="w-[100%]  bg-black h-[1px] flex items-center mb-4 mt-3 "></div>
-            <p className="mb-5">
-              <strong>Place of work:</strong> {PlaceOfWork}
-            </p>
-            <p className="mb-5">
-              <strong>Direction by gender:</strong> {GenderType}
-            </p>
-            <p className="mb-5">
-              <strong>Service category:</strong> {ServiceCategory}
-            </p>
-            <p className="mb-5">
-              <strong>Specialization:</strong> {Specialization}
-            </p>
-
-            <p className="mb-5">
-              <strong>Schedule Type :</strong> {scheduleType}
-            </p>
           </div>
         </Skeleton>
       </div>
@@ -252,10 +277,12 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             className="mt-4"
             rows={4}
             placeholder="Enter your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <div className="flex items-center justify-center">
             <Button
-              onClick={toas}
+              onClick={sendMessage}
               className="text-black mt-4 px-50 dark:text-white"
               size="large"
             >
