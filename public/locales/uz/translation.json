@@ -1,6 +1,8 @@
 {
   "Block": "Bloklash",
   "City": "Shahar",
+  "All_categories": "Barcha toifalar",
+  "Month": "Oy",
   "Canceled_client_master": "Bekor qilingan mijoz/master",
   "Clients_per_1_specialist_on_average": "O'rtacha 1 mutaxassisga mijozlar",
   "Customer_churn": "Mijozlarning noroziligi",
@@ -11,7 +13,9 @@
   "Download_help": "Yuklab olish yordami",
   "Download": "Yuklab olish",
   "Download_pdf": "PDF ni yuklab olish",
+  "On_approval": "Tasdiqlash bo'yicha",
   "order_table_client": "Mijoz",
+  "Rejected": "Rad etilgan",
   "Orders": "Buyurtmalar",
   "order_table_procedure": "Protsedura",
   "detail_payment_type": "Boshlanmadi",
