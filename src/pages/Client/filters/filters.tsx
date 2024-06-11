@@ -184,7 +184,6 @@ const Filters: React.FC = () => {
               <DatePicker
                 placeholder="Start date"
                 style={styles.filterInput}
-                value={filters.startDate ? moment(filters.startDate) : null}
                 onChange={(date) => handleInputChange("startDate", date)}
               />
             </Col>
@@ -192,7 +191,6 @@ const Filters: React.FC = () => {
               <DatePicker
                 placeholder="End date"
                 style={styles.filterInput}
-                value={filters.endDate ? moment(filters.endDate) : null}
                 onChange={(date) => handleInputChange("endDate", date)}
               />
             </Col>

@@ -76,7 +76,6 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const openSendModal = () => setSendOpen(true);
   const closeSendModal = () => setSendOpen(false);
 
   const toggleSwitch = () => {
@@ -87,37 +86,47 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   console.log(id);
 
   const sendMessage = async () => {
-    axios
-      .post(
-        `${master_send_message_master}`,
+    try {
+      const response = await axios.post(
+        master_send_message_master,
         {
-          body: {
-            clientId: null,
-            masterId: id,
-            adminId: null,
-            message: message,
-            messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_WRITE',
-            read: true,
-          },
+          clientId: null,
+          masterId: id,
+          adminId: null,
+          message: message,
+          messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_WRITE',
+          read: true,
         },
         config,
-      )
-
-      .catch((error) => {
-        toast.error('error');
-        console.error('There was an error fetching the data!', error);
-      });
+      );
+      console.log('Message sent successfully:', response.data);
+      toast.success('Message sent successfully');
+      closeSendModal();
+    } catch (error) {
+      console.error('There was an error sending the message!', error);
+      toast.error('Failed to send message');
+    }
   };
-
+  const handleClickSendBtn = () => {
+    setMessage('');
+    setSendOpen(true);
+  };
+  const handlePostBtn = () => {
+    if (message.valueOf() === '' || message.trim() === '') {
+      toast.error('информация не введена');
+    } else {
+      sendMessage();
+    }
+  };
   return (
-    <div className="flex flex-col lg:flex-row gap-4 mt-4">
+    <div className="flex flex-col lg:flex-row-reverse gap-4 mt-4">
       <div className="w-[100%] flex flex-col items-center justify-center gap-4">
         <Skeleton loading={isLoading} active>
           <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Profile:</p>
               <div
-                onClick={openSendModal}
+                onClick={handleClickSendBtn}
                 className="bg-green-500 p-2 rounded-xl text-white px-3 cursor-pointer"
               >
                 Send Message
@@ -202,7 +211,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {Status}
               </div>
             </div>
-            <div className="flex items-center justify-start mt-4">
+            <div className="flex items-center justify-between mt-4">
               <p>Заблокировать</p>
               <div onClick={() => openModal()}>
                 <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
@@ -259,21 +268,25 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
       </div>
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <p className="text-2xl font-bold">{t('Modal_answer')}</p>
-        <div className="flex items-center justify-end mt-10 gap-4">
-          <Button danger onClick={closeModal}>
-            No
-          </Button>
-          <Button className="text-white" onClick={closeModal}>
-            Ok
-          </Button>
-        </div>
-      </Modal>
-      <Modal isOpen={SendOpen} onClose={closeSendModal}>
-        <div className="w-[45rem]">
+      <div>
+        <Modal isOpen={isOpen} onClose={closeModal}>
+          <p className="text-2xl font-bold">{t('Modal_answer')}</p>
+          <div className="flex items-center justify-end mt-10 gap-4">
+            <Button danger onClick={closeModal}>
+              No
+            </Button>
+            <Button className="text-white" onClick={closeModal}>
+              Ok
+            </Button>
+          </div>
+        </Modal>
+      </div>
+
+      <Modal isOpen={SendOpen} onClose={closeSendModal} mt={'w-[70%]'}>
+        <div className="w-[100%]">
           <p className="text-2xl text-black dark:text-white">Send message:</p>
           <TextArea
+            required
             className="mt-4"
             rows={4}
             placeholder="Enter your message"
@@ -282,8 +295,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           />
           <div className="flex items-center justify-center">
             <Button
-              onClick={sendMessage}
-              className="text-black mt-4 px-50 dark:text-white"
+              onClick={handlePostBtn}
+              className="text-black mt-4 w-[40%] dark:text-white"
               size="large"
             >
               Send
@@ -291,6 +304,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </div>
       </Modal>
+
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );

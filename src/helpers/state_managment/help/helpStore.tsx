@@ -8,10 +8,8 @@ const financeStore = create<HelpTypes>((set) => ({
   setDataMaster: (val: HelpList[]) => set({ dataMaster: val }),
   dataClient: [],
   setDataClient: (val: HelpList[]) => set({ dataClient: val }),
-  // oneHelp: null,
-  // setOneHelp: (val: HelpList) => set({ oneHelp: val }),
-  // switchStates: {},
-  // setSwitchStates: (val: { [key: string]: boolean }) => set({ switchStates: val })
+  updateTextArea: null,
+  setUpdateTextArea: (val: HelpList) => set({ updateTextArea: val }),
 }));
 
 export default financeStore;

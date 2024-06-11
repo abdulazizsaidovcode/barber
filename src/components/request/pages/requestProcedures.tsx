@@ -1,28 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import RequestLayout from '../../../pages/request/request';
-import SpecializationsCard from '../cards/specializationsCard';
 import opacha from '../../../images/Group 940396.png';
 import axios from 'axios';
-import { new_procedure_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
+import { new_procedure_url } from '../../../helpers/api';
+import SpecializationsCard from '../cards/specializationsCard';
+import { Skeleton } from 'antd';
 
 interface Data {
-
+  id: string;
+  attachmentId: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  createdAt: string;
+  categoryIsNew: boolean;
 }
 
 const RequestProcedures: React.FC = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Data[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(new_procedure_url, config);
-        console.log(res.data.body);
+        setData(res.data.body);
       } catch { }
+      finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
+
+  const newProcedures = data.filter(item => item.categoryIsNew);
+  const changedProcedures = data.filter(item => !item.categoryIsNew);
+
   return (
     <RequestLayout>
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
@@ -34,56 +49,67 @@ const RequestProcedures: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between gap-3 lg:flex-row flex-col mt-4">
-          <div className='lg:w-1/2'>
+        <div className="flex justify-between mt-4">
+          <div className='w-1/2 mr-1'>
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Новые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
-                  <p className="text-sm">2</p>
+                  <p className="text-sm">{newProcedures.length}</p>
                 </div>
               </div>
             </div>
             <div className='flex items-center flex-col gap-4 mt-4'>
-              <SpecializationsCard
-                ownerImage={opacha}
-                salonOwner="Малика Махмудова"
-                phoneNumber="+998931716380"
-                salonCreateDate="10.07.2022"
-                salonDescription="Мастер добавил новую специализацию"
-              />
-              <SpecializationsCard
-                ownerImage={opacha}
-                salonOwner="Малика Махмудова"
-                phoneNumber="+998931716380"
-                salonCreateDate="10.07.2022"
-                salonDescription="Мастер добавил новую специализацию"
-              />
+              {loading ? (
+                Array.from({ length: 2 }).map((_, index) => (
+                  <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
+                ))
+              ) : (
+                newProcedures.map(item => (
+                  <SpecializationsCard
+                    key={item.id}
+                    ownerImage={opacha}
+                    salonOwner={`${item.firstName} ${item.lastName}`}
+                    phoneNumber={item.phoneNumber}
+                    salonCreateDate={item.createdAt}
+                    salonDescription="Мастер добавил новую специализацию"
+                  />
+                ))
+              )}
             </div>
           </div>
-          <div className='lg:w-1/2 '>
+          <div className='w-1/2 ml-1'>
             <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
-                  <p className="text-sm">1</p>
+                  <p className="text-sm">{changedProcedures.length}</p>
                 </div>
               </div>
             </div>
             <div className='flex items-center flex-col mt-4 gap-4'>
-              <SpecializationsCard
-                ownerImage={opacha}
-                salonOwner="Малика Махмудова"
-                phoneNumber="+998931716380"
-                salonCreateDate="10.07.2022"
-                salonDescription="Мастер изменил название специализации"
-              />
+              {loading ? (
+                Array.from({ length: 2 }).map((_, index) => (
+                  <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
+                ))
+              ) : (
+                changedProcedures.map(item => (
+                  <SpecializationsCard
+                    key={item.id}
+                    ownerImage={opacha}
+                    salonOwner={`${item.firstName} ${item.lastName}`}
+                    phoneNumber={item.phoneNumber}
+                    salonCreateDate={item.createdAt}
+                    salonDescription="Мастер изменил название специализации"
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
       </div>
     </RequestLayout>
-  )
-}
+  );
+};
 
-export default RequestProcedures
+export default RequestProcedures;

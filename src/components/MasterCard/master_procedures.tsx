@@ -1,12 +1,13 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { Modal, Button, message } from 'antd';
+import { Button, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useLocation } from 'react-router-dom';
 import { master_delate_service } from '../../helpers/api';
+import CustomModal from './../modals/modal'; // Ensure you have this custom modal component
 
 interface ProceduresProps {
-   title: string;
+  title: string;
   imgUrl: string;
   price: number;
   duration: number;
@@ -15,7 +16,6 @@ interface ProceduresProps {
 }
 
 const MasterProcedures: React.FC<ProceduresProps> = ({
-
   title,
   imgUrl,
   price,
@@ -29,7 +29,6 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
   const id = location.pathname.substring(8);
 
-
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -41,7 +40,11 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   const handleDelete = async () => {
     try {
       const response = await fetch(`${master_delate_service}${id}`, {
-        method: 'DELETE',
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ comment: value }),
       });
       if (response.ok) {
         message.success('Procedure deleted successfully');
@@ -121,26 +124,25 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           </div>
         </div>
       </div>
-      <Modal
-        title="Delete Procedure"
-        visible={isModalVisible}
-        onCancel={hideModal}
-        footer={[
-          <Button key="cancel" danger onClick={hideModal}>
-            Cancel
-          </Button>,
-          <Button key="delete" type="primary" onClick={handleDelete}>
-            Delete
-          </Button>,
-        ]}
-      >
-        <TextArea
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Optional comment"
-          autoSize={{ minRows: 3, maxRows: 5 }}
-        />
-      </Modal>
+      <CustomModal isOpen={isModalVisible} onClose={hideModal}>
+        <div className="flex flex-col gap-4">
+          <p>Are you sure you want to delete this procedure?</p>
+          <TextArea
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Optional comment"
+            autoSize={{ minRows: 3, maxRows: 5 }}
+          />
+          <div className="flex justify-end gap-2">
+            <Button key="cancel" danger onClick={hideModal}>
+              Cancel
+            </Button>
+            <Button key="delete" type="primary" onClick={handleDelete}>
+              Delete
+            </Button>
+          </div>
+        </div>
+      </CustomModal>
     </div>
   );
 };

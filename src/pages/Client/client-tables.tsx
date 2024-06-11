@@ -1,43 +1,57 @@
 // src/components/client-tables.tsx
 
-import ClientTable from '../../components/Tables/MasterTable.tsx';
-import { thead } from './data.tsx';
-import { CiMenuKebab } from 'react-icons/ci';
-import type { MenuProps } from 'antd';
-import { Dropdown, Pagination, Space } from 'antd';
-import Filters from './filters/filters.tsx';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore.tsx';
+import ClientTable from "../../components/Tables/MasterTable.tsx";
+import { thead } from "./data.tsx";
+import { CiMenuKebab } from "react-icons/ci";
+import type { MenuProps } from "antd";
+import { Dropdown, Menu, Pagination, Space } from "antd";
+import Filters from "./filters/filters.tsx";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import clientFilterStore from "../../helpers/state_managment/client/clientFilterStore.tsx";
+import { Buttons } from "../../components/buttons/index.tsx";
+import Modal from "../../components/modals/modal.tsx";
+import { updateClientStatus } from "../../helpers/api-function/client/clientFilter.tsx";
+
+export interface UpdateStatus {
+  status: string;
+  clientId: string;
+}
 
 const ClientTables: React.FC = () => {
   const { t } = useTranslation();
-  const { totalPage, clientFilterData } = clientFilterStore();
+  const { totalPage, clientFilterData, setClientFilterData, setIsModal,setIsLoading, isLoading, isModal, setClientTotalPage } = clientFilterStore();
+  const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
+    status: "",
+    clientId: "",
+  });
 
   const onChange = (page: number, pageSize: number): void => {
-    console.log('clicked number:', page);
-    console.log('Total page:', pageSize);
+    console.log("clicked number:", page);
+    console.log("Total page:", pageSize);
   };
 
-  const items = (id: string): MenuProps['items'] => [
+  const openIsModal = () => setIsModal(!isModal)
+
+  const getItems = (id: string): MenuProps["items"] => [
     {
-      key: '1',
-      label: <Link to={`/client_id/${id}`}>{t('Open')}</Link>,
+      key: "1",
+      label: <Link to={`/client_id/${id}`}>{t("Open")}</Link>,
     },
     {
-      key: '2',
-      label: t('Block'),
+      key: 'ACTIVE',
+      label: 'Активный'
     },
     {
-      key: '3',
-      label: t('Unblock'),
-    },
-    {
-      key: '7',
-      label: t('Message'),
-    },
+      key: 'BLOCKED',
+      label: 'Заблокированный'
+    }
   ];
+  const handleMenuClick = (e: any, clientId: string) => {
+    setUpdateStatus({ status: e.key, clientId });
+    openIsModal();
+  };
 
   return (
     <>
@@ -49,30 +63,30 @@ const ClientTables: React.FC = () => {
               key={key}
               className={`${
                 key === clientFilterData.length - 1
-                  ? ''
-                  : 'border-b border-[#eee] dark:border-strokedark'
+                  ? ""
+                  : "border-b border-[#eee] dark:border-strokedark"
               }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
-                  src={item?.imgUrl ?? ''}
+                  src={item?.imgUrl ?? ""}
                   alt="img"
-                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+                  className={"w-10 h-10 scale-[1.4] rounded-full object-cover"}
                 />
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.fullName ?? 'No data'}
+                  {item?.fullName ?? "No data"}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.registrationDate ?? 'No data'}
+                  {item?.registrationDate ?? "No data"}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.phoneNumber ?? 'No data'}
+                  {item?.phoneNumber ?? "No data"}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
@@ -82,12 +96,12 @@ const ClientTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.turnover ?? 'No data'}
+                  {item?.turnover ?? "No data"}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.age ? `${item.age} ${t('years')}` : 'No data'}
+                  {item?.age ? `${item.age} ${t("years")}` : "No data"}
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
@@ -101,19 +115,20 @@ const ClientTables: React.FC = () => {
                 </p>
               </td>
               <td className="min-w-[150px] p-5 flex items-center justify-between">
-                <p
-                  className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                    item.status === 'ACTIVE'
-                      ? 'bg-success text-success'
-                      : 'bg-danger text-danger'
-                  }`}
+              <p
+                  className={`${item.status === 'ACTIVE' ? 'bg-green-400' : item.status === 'BLOCKED' ? 'bg-red-500' : 'bg-red-700'} text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
                   {item.status}
                 </p>
                 <Space direction="vertical">
                   <Space wrap>
                     <Dropdown
-                      menu={{ items: items(item.id) }}
+                      overlay={
+                        <Menu
+                          onClick={(e) => handleMenuClick(e, item.id)}
+                          items={getItems(item.id)}
+                        />
+                      }
                       placement="bottomLeft"
                       arrow
                     >
@@ -130,7 +145,7 @@ const ClientTables: React.FC = () => {
               className="min-w-full text-center py-10 text-xl font-bold"
               colSpan={5}
             >
-              {t('No data available!')}
+              {t("No data available!")}
             </td>
           </tr>
         )}
@@ -143,6 +158,39 @@ const ClientTables: React.FC = () => {
         onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
       />
+
+      <Modal isOpen={isModal} onClose={openIsModal}>
+        <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
+          <div className={`flex flex-col justify-center`}>
+            <p
+              className={`font-bold text-xl text-black opacity-80 text-center`}
+            >
+              {updateStatus.status === "ACTIVE" ? "Активный" : "Заблокировать"}{" "}
+              мастра?
+            </p>
+          </div>
+          <div className={`flex justify-center items-center gap-10 mt-8`}>
+            <Buttons
+              bWidth={`w-[200px]`}
+              onClick={() =>
+                updateClientStatus(
+                  updateStatus.clientId,
+                  updateStatus.status,
+                  setClientFilterData,
+                  setClientTotalPage,
+                  openIsModal,
+                  setIsLoading
+                )
+              }
+            >
+              {isLoading ? "loading..." : "да"}
+            </Buttons>
+            <Buttons bWidth={`w-[200px]`} onClick={openIsModal}>
+              нет
+            </Buttons>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };
