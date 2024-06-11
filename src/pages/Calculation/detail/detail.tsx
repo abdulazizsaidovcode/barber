@@ -19,7 +19,7 @@ const NotFound: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`${get_orders_list}?status=COMPLETED&page=0&size=10`, config)
+      .get(`${get_orders_list}?status=UPCOMING&page=0&size=10`, config)
       .then((response) => {
         const orders = response.data.body.object;
         // setTableData(orders);

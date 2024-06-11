@@ -1,11 +1,10 @@
-import React from 'react';
 import DefaultLayout from '../../../layout/DefaultLayout';
-import Slice from './slice';
+import Rejacted from './rejacted';
 
 const ThirdTab = () => {
   return (
     <DefaultLayout>
-      <Slice status="Отклонена" />
+      <Rejacted status="Отклонена" />
     </DefaultLayout>
   );
 };
