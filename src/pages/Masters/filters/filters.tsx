@@ -169,7 +169,7 @@ const Filters: React.FC = () => {
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
                 placeholder={t("Self_employed_status")}
-                value={filters.statusValue}
+                value={filters.selfEmployedStatusValue}
                 className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
