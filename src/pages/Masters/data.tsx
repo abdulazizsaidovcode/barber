@@ -1,7 +1,8 @@
 import { IMasterItems, IThead } from '../../types/master.ts';
 import MasterTables from './master-tables.tsx';
 import MasterLocation from './master-location.tsx';
-
+// import { useTranslation } from 'react-i18next';
+// const { t } = useTranslation();
 
 export const thead: IThead[] = [
   {
