@@ -12,9 +12,7 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
         setChatData(user)
     }, [user])
     useEffect(() => {
-        userIds(userId)
-        console.log(userId);
-        
+        userIds(userId)        
     }, [userId])
 
     const formatDateTime = (dateTimeString: string) => {
@@ -25,8 +23,6 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
             time: time
         };
     };
-
-
 
     return (
         <div className='h-full overflow-y-auto'>

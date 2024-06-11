@@ -109,6 +109,7 @@ export const finance_Destrictlist_Url = (
 
 // sock url
 export const sockjs_url = `${base_url}ws`;
+export const chat_url = `${base_url}chat`;
 export const newChat_url = `${base_url}chat/web/nachat-chat/send`; // sent message
 
 // help url
