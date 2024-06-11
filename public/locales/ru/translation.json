@@ -1,21 +1,17 @@
 {
   "Block": "Заблокировать",
-
   "City": "Город",
   "Canceled_client_master": "Отмененные клиент/мастер",
   "Customer_churn": "Отток клиентов",
   "Clients_per_1_specialist_on_average": "Клиентов на 1 мастера усредненно",
-
   "Download_help": "Скачать справку",
   "Download": "Скачать",
   "Download_pdf": "Скачать PDF",
   "dashboard_main_text": "Общие показатели",
-<<<<<<< HEAD
-=======
   "sidebar_menu_text": "МЕНЮ",
   "siderbar_dashboard": "Главная",
   "master": "Мастера",
-  "siderbar_client": "Клинеты",
+  "siderbar_client": "Клиенты",
   "siderbar_calendar": "Календарь",
   "siderbar_calculation": "Записи",
   "siderbar_finance": "Финансы",
@@ -26,15 +22,11 @@
   "orders_name": "Записи",
   "FirstTab_name": "Предстоящие",
   "SecondTab_name": "Завершенные",
->>>>>>> 52c43b15b92b00363fd93efe659188e645518d97
   "detail_payment_type": "Не начиналась",
   "detail_type": "Одобрена",
   "Dynamics_of_connecting_masters_and_clients": "Динамика подключения мастеров и клиентов",
-
-  "master": "Мастера",
-  "Modal_answer": "Заблокировать мастра?",
+  "Modal_answer": "Заблокировать мастера?",
   "Master_churn": "Отток Мастеров",
-
   "order_table_client": "Клиент",
   "order_table_procedure": "Процедура",
   "order_table_date": "Дата записи",
@@ -47,8 +39,6 @@
   "order_table_status": "Статус записи",
   "Open": "Открыть",
   "Orders": "Заказы",
-  "orders_name": "Записи",
-
   "Service_category": "Категория услуг",
   "Select_local_date": "Выбрать местную дату",
   "Select_year": "Выберите год",
@@ -59,19 +49,7 @@
   "siderbar_documents": "Нормативные документы",
   "siderbar_Mutual_settlements": "Взаиморасчёты",
   "Subscription_rates_for_client_masters": "Ставки подписки для клиентов мастеров",
-  "siderbar_calculation": "Записи",
-  "siderbar_finance": "Финансы",
-  "siderbar_gallery": "Галерея",
-  "siderbar_profile": "Профиль",
-  "siderbar_cards": "Карты",
-  "siderbar_chat": "Чат",
-  "siderbar_calendar": "Календарь",
-  "siderbar_dashboard": "Панель приборов",
-  "siderbar_client": "Клиент",
-  "SecondTab_name": "Завершенные",
   "Search_by_name": "Поиск по ФИО",
-  "sidebar_menu_text": "МЕНЮ",
-
   "Unblock": "Разблокировать",
   "Open_help": "Открыть справку",
   "discount": "Сделать скидку",
@@ -80,6 +58,11 @@
   "Photo": "Фото",
   "Total_turnover": "Оборот общий",
   "Income": "Доход",
-  "FirstTab_name": "Предстоящие",
-  "ThirdTab_name": "Отклонённые"
+  "ThirdTab_name": "Отклонённые",
+  "Income_dynamics": "Динамика доходов",
+  "Profit_dynamics": "Динамика прибыли",
+  "Master_rating": "Мастер рейтинг",
+  "Payment_type_for_completed_entries": "Тип оплаты за завершенные записи",
+  "Popular_services_by_category": "Тип оплаты за завершенные записи",
+  "Total_income": "Общая прибыль"
 }

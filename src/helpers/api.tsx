@@ -12,10 +12,10 @@ export const getMe = (token?: string) => {
       `${base_url}user/me`,
       token
         ? {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
         : config,
     )
     .then((res) => {
@@ -28,7 +28,7 @@ export const getMe = (token?: string) => {
 };
 
 // swagger url
-const base_url: string = 'http://45.67.35.86:8080/';
+export const base_url: string = 'http://45.67.35.86:8080/';
 
 // get region url
 export const region_url: string = `${base_url}region`;
@@ -78,6 +78,20 @@ export const finance_list = (month: string | null, year: number | null) => {
   else if (month === null && year !== null)
     return `${base_url}finance/web?month=${year}`;
   else return `${base_url}finance/web`;
+};
+
+export const finance_Destrictlist_Url = (destrict: string, month: string | null, year: number | null) => {
+  console.log(destrict,month,year);
+  
+  if (destrict && month !== null && year !== null)
+    return `${base_url}finance/web/${destrict}?month=${month}&year=${year}`;
+  if (destrict && month !== null)
+    return `${base_url}finance/web/${destrict}?month=${month}`;
+  else if (destrict !== null && year !== null)
+    return `${base_url}finance/web/${destrict}?year=${month}`;
+  else if (month === null && year !== null)
+    return `${base_url}finance/web/${destrict}?month=${year}`;
+  else return `${base_url}finance/web/${destrict}`;
 };
 
 // sock url

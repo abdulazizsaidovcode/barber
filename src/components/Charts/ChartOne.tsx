@@ -4,8 +4,10 @@ import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
+import { useTranslation } from 'react-i18next';
 
 const ChartOne = () => {
+  const { t } = useTranslation();
   const [data, setData] = useState([
     {
       "name": "JANUARY",
@@ -122,8 +124,8 @@ const ChartOne = () => {
   return (
     <div>
       <div className='flex justify-between gap-3 mb-5'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>Income dynamics</h1>
-        <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+        <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Income_dynamics")}</h1>
+        <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
       </div>
       <div className=" rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark ">
         <ReactApexChart options={options} series={series} type="line" height={350} />

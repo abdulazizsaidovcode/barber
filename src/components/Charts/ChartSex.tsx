@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
+import { useTranslation } from 'react-i18next';
 
 interface ChartThreeState {
     series: number[
-        
+
     ];
 }
 
@@ -55,6 +56,7 @@ const options: ApexOptions = {
 };
 
 const ChartSex: React.FC = () => {
+    const { t } = useTranslation();
 
     const [chart, setChart] = useState({
         one: 0,
@@ -63,21 +65,21 @@ const ChartSex: React.FC = () => {
         four: 0,
         five: 0,
     })
-     
+
     useEffect(() => {
         axios
-          .get(`${dashboard_url}web/diagram` , config)
-          .then((response) => {
-            setChart(response.data.body);
-        
-          })
-          .catch(() => {
-            console.error('There was an error fetching the data!');
-          });
-      }, []);
-      
-      
-    
+            .get(`${dashboard_url}web/diagram`, config)
+            .then((response) => {
+                setChart(response.data.body);
+
+            })
+            .catch(() => {
+                console.error('There was an error fetching the data!');
+            });
+    }, []);
+
+
+
 
     const [state, setState] = useState<ChartThreeState>({
         series: [
@@ -107,7 +109,7 @@ const ChartSex: React.FC = () => {
     return (
         <>
             <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-                <h1 className='font-semibold text-black text-xl dark:text-white'>Master rating</h1>
+                <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Master_rating")}</h1>
                 <div className="mb-2">
                     <div id="chartThree" className="mx-auto flex justify-center">
                         <ReactApexChart

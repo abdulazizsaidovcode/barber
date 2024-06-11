@@ -1,171 +1,163 @@
-// FilterComponent.tsx
-import React, { useState } from 'react';
-import { Select, Button, Row, Col } from 'antd';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Select, DatePicker } from 'antd';
 import MasterTable from '../../components/Tables/MasterTable';
+import { getFinanceDestrict } from '../../helpers/api-function/finance/financeDestrict';
+import financeDestrictStore from '../../helpers/state_managment/finance/financeDestrictStore';
+import axios from 'axios';
+import { district_url, region_url } from '../../helpers/api';
+import { config } from '../../helpers/token';
+import CurrentYear from '../../helpers/date';
+import { Region } from '../../types/region';
+import { Buttons } from '../../components/buttons';
+import toast, { Toaster } from 'react-hot-toast';
 
 const { Option } = Select;
 
 const FilterComponent: React.FC = () => {
-  const [showExtraFilters, setShowExtraFilters] = useState(false);
+  const [regions, setRegions] = useState<Region[]>([]);
+  const { data, setData, yearVal, setYearVal, monthVal, setMonthVal } = financeDestrictStore();
+  const [destrict, setDestrict] = useState<string | null>(null);
 
-  // Toggle visibility of extra filters
-  const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
+  useEffect(() => {
+    axios.get(region_url, config)
+      .then(response => {
+        setRegions(response.data.body);
+      })
+      .catch(error => {
+        console.error('Error fetching regions:', error);
+      });
+  }, []);
 
-  // Inline styles for the component
-  const styles = {
-    mainContainer: {
-      padding: '20px',
-      borderRadius: '8px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-      marginBottom: '20px',
-    },
-    filterGroup: {
-      marginBottom: '16px',
-    },
-    filterTitle: {
-      marginBottom: '5px',
-      fontWeight: 'bold',
-    },
-    filterInput: {
-      width: '100%',
-    },
-    toggleButton: {
-      width: '13%',
-      backgroundColor: '#f0f0f0',
-    },
-    extraButton: {
-      backgroundColor: '#f0f0f0',
-    },
+  useEffect(() => {
+    if (destrict) {
+      getFinanceDestrict(destrict, monthVal, yearVal, setData);
+    }
+  }, [destrict, yearVal, monthVal]);
+
+  const handleDestrictChange = (value: string) => {
+    setDestrict(value);
+    if (value && (yearVal || monthVal)) {
+      getFinanceDestrict(value, monthVal, yearVal, setData);
+    }
   };
 
-  const tableData = [
-    {
-      country: "O'zbekistan",
-      nonCashTurnover: '50 000 000',
-      allTurnover: '250 000 000',
-      totalIncome: '25 000 000',
-      incomeSimple: '0',
-      incomePremium: '5 000 000',
-      incomeVip: '12 000 000',
-      masterTotal: '25 000 000',
-      anotherSimple: '0',
-      familyIncome: '0',
-      totalClients: '0',
-    },
-  ];
+  const handleMonthChange = (value: any, dateString: any) => {
+    const month = value ? value.format('MM') : null;
+    setMonthVal(month);
+    if (destrict && month) {
+      getFinanceDestrict(destrict, month, yearVal, setData);
+    }
+  };
+
+  const handleYearChange = (value: any, dateString: any) => {
+    const year = value ? value.format('YYYY') : null;
+    setYearVal(year);
+    if (destrict && year) {
+      getFinanceDestrict(destrict, monthVal, year, setData);
+    }
+  };
+
+  const getDestrictFile = () => {
+    if (destrict) {
+      let url = `${district_url}/download/${destrict}`;
+      if (monthVal && yearVal) {
+        url += `?month=${monthVal}&year=${yearVal}`;
+      } else if (monthVal) {
+        url += `?month=${monthVal}`;
+      } else if (yearVal) {
+        url += `?year=${yearVal}`;
+      }
+
+      axios.get(url,
+        config,
+        // responseType: 'blob',
+      )
+        .then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `file_${destrict}_${monthVal || ''}_${yearVal || ''}.xlsx`);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(error => {
+          console.error('Error downloading file:', error);
+        });
+    } else {
+      toast.error('Выберите регион');
+    }
+  };
 
   const tableHeaders = [
-    { id: 1, name: 'Country' },
-    { id: 2, name: 'Non-cash turnover' },
-    { id: 3, name: 'All turnover' },
-    { id: 4, name: 'Total income' },
-    { id: 5, name: 'Income “Simple”' },
-    { id: 6, name: 'Income "Premium"' },
-    { id: 7, name: 'Income "Vip"' },
-    { id: 8, name: 'Master total' },
-    { id: 9, name: 'Income "Simple"' },
-    { id: 10, name: '“Family” income' },
-    { id: 11, name: 'Total clients' },
+    { id: 1, name: 'Регион' },
+    { id: 2, name: 'Оборот безналичный' },
+    { id: 3, name: 'Оборот Общий' },
+    { id: 4, name: 'Доходы всего' },
   ];
 
   return (
-    <div style={styles.mainContainer} className="dark:bg-boxdark">
+    <div className="dark:bg-boxdark">
       {/* Top filters row */}
-      <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-          <Select defaultValue="Country" style={styles.filterInput}>
-            <Option value="toshkent">Toshkent</Option>
-            <Option value="qarshi">Qarshi</Option>
-          </Select>
-        </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-          <Select defaultValue="Select Month" className="w-[200px]">
-            <Option value="Yanvar">Yanvar</Option>
-            <Option value="Fevral">Fevral</Option>
-            <Option value="Mart">Mart</Option>
-            <Option value="April">April</Option>
-            <Option value="May">May</Option>
-            <Option value="Iyun">Iyun</Option>
-            <Option value="Iyul">Iyul</Option>
-            <Option value="Avgust">Avgust</Option>
-            <Option value="Sentabr">Sentabr</Option>
-            <Option value="Oktaber">Oktaber</Option>
-            <Option value="Noyaber">Noyaber</Option>
-            <Option value="Dekaber">Dekaber</Option>
-          </Select>
-        </Col>
-        <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
+      <div className='flex gap-5 mb-5 mx-7.5'>
+        <div>
           <Select
-            defaultValue="2024"
-            style={styles.filterInput}
-            placeholder="Select Year"
+            placeholder="Select Region"
+            onChange={handleDestrictChange}
+            style={{ width: '100%' }}
           >
-            <Option value="2024">2024</Option>
-            <Option value="2023">2023</Option>
+            {regions.map(region => (
+              <Option key={region.id} value={region.id.toString()}>
+                {region.name}
+              </Option>
+            ))}
           </Select>
-        </Col>
-        <Col
-          xs={24}
-          sm={12}
-          md={6}
-          style={styles.filterGroup}
-          className="flex gap-4"
-        >
-          <Button
-            className="flex items-center justify-center dark:bg-black"
-            onClick={toggleExtraFilters}
-            style={styles.toggleButton}
-          >
-            {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
-          </Button>
-          <Button style={styles.extraButton}>Download</Button>
-        </Col>
-      </Row>
-
-      {/* Extra filters row */}
-      {showExtraFilters && (
-        <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select defaultValue="Service category" style={styles.filterInput}>
-              <Option value="toshkent">Toshkent</Option>
-              <Option value="qarshi">Qarshi</Option>
-            </Select>
-          </Col>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select
-              defaultValue="2024"
-              style={styles.filterInput}
-              placeholder="Tariff"
-            >
-              <Option value="2024">2024</Option>
-              <Option value="2023">2023</Option>
-            </Select>
-          </Col>
-          <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Button style={styles.extraButton}>Reset</Button>
-          </Col>
-        </Row>
-      )}
+        </div>
+        <div>
+          <DatePicker picker='month' onChange={handleMonthChange} />
+        </div>
+        <div>
+          <DatePicker picker='year' onChange={handleYearChange} />
+        </div>
+        <Buttons onClick={getDestrictFile}>
+          Скачать
+        </Buttons>
+      </div>
       {/* Table */}
       <div>
+        <div className='flex justify-around dark:text-white bg-white px-5 pb-2.5 dark:border-strokedark dark:bg-[#303d4a] mx-7.5 pt-3'>
+          <p>{yearVal ? yearVal : <CurrentYear />}</p>
+          <p>Тарифы</p>
+        </div>
         <MasterTable thead={tableHeaders}>
-          {tableData.map((data, index) => (
+          {data && data.object ? data.object.map((data: any, index: number) => (
             <tr key={index} className="dark:text-white">
-              <td className="p-5">{data.country}</td>
+              <td className="p-5">{data.addressName}</td>
               <td className="p-5">{data.nonCashTurnover}</td>
-              <td className="p-5">{data.allTurnover}</td>
+              <td className="p-5">{data.turnoverTotal}</td>
               <td className="p-5">{data.totalIncome}</td>
-              <td className="p-5">{data.incomeSimple}</td>
-              <td className="p-5">{data.incomePremium}</td>
-              <td className="p-5">{data.incomeVip}</td>
-              <td className="p-5">{data.masterTotal}</td>
-              <td className="p-5">{data.anotherSimple}</td>
-              <td className="p-5">{data.familyIncome}</td>
-              <td className="p-5">{data.totalClients}</td>
             </tr>
-          ))}
+          )) :
+            <tr className={`border-b border-[#eee] dark:border-strokedark`}>
+              <td
+                className="min-w-full text-center py-10 text-xl font-bold dark:text-white"
+                colSpan={5}
+              >
+                Регион не выбран или недоступен!
+              </td>
+            </tr>
+          }
+          {data && data.object &&
+            <tr className="dark:text-gray font-bold">
+              <td className="p-5">Итого</td>
+              <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.nonCashTurnover, 0)}</td>
+              <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.turnoverTotal, 0)}</td>
+              <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.totalIncome, 0)}</td>
+            </tr>}
         </MasterTable>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+        />
       </div>
     </div>
   );

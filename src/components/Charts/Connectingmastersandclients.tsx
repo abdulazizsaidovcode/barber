@@ -5,6 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { DatePicker, Skeleton } from 'antd';
 import { config } from '../../helpers/token';
+import { useTranslation } from 'react-i18next';
 
 const options: ApexOptions = {
   colors: ['#000000', '#D9D9D9'],
@@ -75,6 +76,7 @@ interface ChartTwoState {
 }
 
 const ChartTwo: React.FC = () => {
+  const { t } = useTranslation();
   const [clientData, setClientData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dates, setDates] = useState<string | number>(new Date().getFullYear());
@@ -120,8 +122,8 @@ const ChartTwo: React.FC = () => {
   return (
     <div className='w-full'>
       <div className='flex justify-between items-center mb-5'>
-        <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>Dynamics of connecting masters and clients</h1>
-        <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+        <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>{t("Dynamics_of_connecting_masters_and_clients")}</h1>
+        <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
       </div>
       <div className=" rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark ">
         <div id="chartTwo" className="-ml-5 -mb-9 mx-auto">

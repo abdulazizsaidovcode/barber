@@ -162,8 +162,8 @@ const Specializations: React.FC = () => {
               title={fatherItem.name}
               onClick={() => fetchChildData(fatherItem.id)}
             >
-              <div className="flex justify-between">
-                <div className="w-[75%]">
+              <div className="flex sm:flex-row flex-col justify-between">
+                <div className="sm:w-[75%]">
                   {childDataMap[fatherItem.id] && childDataMap[fatherItem.id].length > 0 ? (
                     childDataMap[fatherItem.id]?.map((childItem) => (
                       <div key={childItem.id}>

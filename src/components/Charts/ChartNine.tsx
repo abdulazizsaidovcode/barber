@@ -6,7 +6,7 @@ import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import moment from 'moment';
-
+import { useTranslation } from 'react-i18next';
 const initialOptions: ApexOptions = {
   legend: {
     show: false,
@@ -110,6 +110,7 @@ interface ChartOneState {
 }
 
 const ChartNine: React.FC = () => {
+  const { t } = useTranslation();
   const [chart, setChart] = useState<{ incomeTotal: number; name: string }[]>([]);
   const [state, setState] = useState<ChartOneState>({
     series: [
@@ -127,6 +128,7 @@ const ChartNine: React.FC = () => {
   const [options, setOptions] = useState(initialOptions);
 
   const fetchData = () => {
+
     setLoading(true);
     setError('');
 
@@ -195,10 +197,10 @@ const ChartNine: React.FC = () => {
   return (
     <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
       <div className='flex justify-between flex-wrap'>
-        <h1 className='font-semibold text-black text-xl dark:text-white'>Total income {year ? year : ""}</h1>
+        <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Total_income")} {year ? year : ""}</h1>
         <div className='flex gap-3'>
-          <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
-          <DatePicker onChange={handleMonthChange} picker="month" style={{ height: 35 }} />
+          <DatePicker onChange={handleYearChange} placeholder={t("Select_year")} picker="year" style={{ height: 35 }} />
+          <DatePicker onChange={handleMonthChange} placeholder={t("Select_month")} picker="month" style={{ height: 35 }} />
         </div>
       </div>
       {loading ? (

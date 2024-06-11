@@ -5,6 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 import { dashboard_url } from '../../helpers/api';
 import { DatePicker, Skeleton } from 'antd';
 import { config } from '../../helpers/token';
+import { useTranslation } from 'react-i18next';
 
 const initialOptions: ApexOptions = {
   legend: {
@@ -107,6 +108,7 @@ interface ChartOneState {
 }
 
 const ChartFour: React.FC = () => {
+  const { t } = useTranslation();
   const [chart, setChart] = useState<
     {
       incomeTotal: number;
@@ -178,8 +180,8 @@ const ChartFour: React.FC = () => {
   return (
     <>
       <div className='flex gap-3 mb-5'>
-        <h1 className='font-semibold text-black text-xl dark:text-white '>Profit dynamics</h1>
-        <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+        <h1 className='font-semibold text-black text-xl dark:text-white '>{t("Profit_dynamics")}</h1>
+        <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
       </div>
       <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-6">
         <div>

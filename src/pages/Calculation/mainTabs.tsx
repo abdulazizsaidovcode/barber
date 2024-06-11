@@ -14,7 +14,7 @@ const onChange = (key: string) => {
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
 
-  const {setData, setTotalPage} = orderStore()
+  const {setData, setTotalPage, setStatus} = orderStore()
 
   useEffect(() => {
     getOrder({
@@ -30,10 +30,11 @@ const MainTabs: React.FC = () => {
         <span
           onClick={() => {
             getOrder({
-              status: "Upcoming",
+              status: "UPCOMING",
               setData: setData,
               setTotalPage: setTotalPage
             });
+            setStatus("UPCOMING")
           }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl" // Responsive font sizes
         >
@@ -48,10 +49,11 @@ const MainTabs: React.FC = () => {
         <span
           onClick={() => {
             getOrder({
-              status: "Completed",
+              status: "COMPLETED",
               setData: setData,
               setTotalPage: setTotalPage
             });
+            setStatus("COMPLETED")
           }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
         >
@@ -66,10 +68,11 @@ const MainTabs: React.FC = () => {
         <span
           onClick={() => {
             getOrder({
-              status: "Rejected",
+              status: "REJECTED",
               setData: setData,
               setTotalPage: setTotalPage
             });
+            setStatus("REJECTED")
           }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
         >

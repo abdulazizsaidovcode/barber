@@ -8,6 +8,7 @@ import Modal from '../../modals/modal';
 import axios from 'axios';
 import { masters_confirm_url, masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
+import toast from 'react-hot-toast';
 
 interface Data {
   id: string;
@@ -64,13 +65,12 @@ interface ServiceData {
 }
 
 interface GalleryData {
-  category: {
-    name: string;
-  };
-  price: string;
-  serviceTime: string;
-  attachmentId: string;
-  description: string;
+  id: number;
+  albumName: string;
+  resGalleryAttachments: [
+    { attachmentId: string; main: boolean; newStatus: boolean }
+  ];
+  createdAt: string;
 }
 
 const RequestNewMasters: React.FC = () => {
@@ -97,25 +97,24 @@ const RequestNewMasters: React.FC = () => {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
       setSelectedMaster(res.data.body);
       setDetailIsOpen(true);
-      fetchService(id); // Fetch service data for the selected master
+      fetchService(id);
+      fetchGallery(id);
     } catch { }
   }
 
   const fetchGallery = async (id: string) => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
+      setGalleryData(res.data.body);
       console.log(res.data.body);
     } catch { }
   }
-  useEffect(() => {
-    fetchGallery('ae020024-2465-4fb8-87aa-d60eaa1a9422')
-  }, [])
-
 
   const confirmMasters = async (id: string, callback: () => void) => {
     try {
       await axios.put(`${masters_confirm_url}/${id}`, {}, config);
       callback();
+      toast.success('Master confirm successfuly');
     } catch (error) {
       console.log(error);
     }
@@ -135,7 +134,7 @@ const RequestNewMasters: React.FC = () => {
   return (
     <RequestLayout newMastersCount={data.length}>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5'>
-        <div className='w-full bg-[#cccccc] dark:bg:white h-12 flex justify-between items-center px-5'>
+        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white'>
@@ -178,6 +177,7 @@ const RequestNewMasters: React.FC = () => {
         openReasonModal={openReasonModal}
         {...selectedMaster}
         serviceData={serviceData || []} // Ensure serviceData is always an array
+        galleryData={galleryData || []} // Ensure galleryData is always an array
         confirmMasters={confirmMasters} // Pass confirmMasters function
         fetchData={fetchData} // Pass fetchData function
       />
