@@ -5,7 +5,6 @@ import { config } from '../token.tsx';
 import toast from 'react-hot-toast';
 
 export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, page?: number) => {
-  console.log(page ? true : false);
   setIsLoading(true);
   axios.get(url, { ...config, responseType: 'blob' })
     .then((res) => {
