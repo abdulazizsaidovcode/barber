@@ -7,12 +7,12 @@ interface MenuProp {
   link: string;
 }
 
-const RequestSidebar: React.FC<{ newMastersCount?: number | undefined }> = ({newMastersCount}) => {
+const RequestSidebar: React.FC<{ newMastersCount?: number | undefined; newFotoCount?: number | undefined }> = ({ newMastersCount = 0, newFotoCount = 0}) => {
   const location = useLocation();
 
   const menu: MenuProp[] = [
     { name: 'Новые мастера', count: newMastersCount, link: '/request/new-masters' },
-    { name: 'Фото', count: 23, link: '/request/foto' },
+    { name: 'Фото', count: newFotoCount, link: '/request/foto' },
     { name: 'Специализации', count: 23, link: '/request/specializations' },
     { name: 'Процедуры', count: 23, link: '/request/procedures' }
   ];
@@ -21,7 +21,7 @@ const RequestSidebar: React.FC<{ newMastersCount?: number | undefined }> = ({new
     <div className='bg-[#F5F6F7] md:mt-2 md:ms-1 dark:bg-[#21212e] shadow-2 shadow-[0.2px] p-3 w-[100%] h-[600px] fixed py-10'>
       <div className='w-full flex items-center px-4 justify-between h-14 rounded-3xl bg-white'>
         <p className='dark:text-[#000]'>Все запросы</p>
-        <p className='text-[#7D8FB3] font-bold'>43</p>
+        <p className='text-[#7D8FB3] font-bold'>{newMastersCount += newFotoCount}</p>
       </div>
       <div className='mt-5 flex flex-col gap-3'>
         {menu.map((item, index) => (

@@ -3,8 +3,9 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import RequestSidebar from '../../components/request/sidebar/RequestSidebar';
 import { CgMenuLeft } from 'react-icons/cg';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Toaster } from 'react-hot-toast';
 
-const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, newMastersCount?: number }) => {
+const RequestLayout = ({ children, newMastersCount, newFotoCount }: { children: ReactNode, newMastersCount?: number, newFotoCount?: number }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
 
@@ -36,12 +37,16 @@ const RequestLayout = ({ children, newMastersCount }: { children: ReactNode, new
                             <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
                         </button>
                     )}
-                    <RequestSidebar newMastersCount={newMastersCount} />
+                    <RequestSidebar newFotoCount={newFotoCount} newMastersCount={newMastersCount} />
                 </div>
                 <div className="w-full md:w-3/4 p-2">
                     {children}
                 </div>
             </div>
+            <Toaster
+                position='top-center'
+                reverseOrder={false}
+            />
         </DefaultLayout>
     );
 };

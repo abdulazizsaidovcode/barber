@@ -16,7 +16,7 @@ interface ReviewsCardProp {
 
 const ReviewsServiceCard: React.FC<ReviewsCardProp> = ({ starCount, firstName, lastName, image, description, createDate, whoIs, openDelModal }) => {
     return (
-        <div className="w-full bg-white p-4 flex items-start shadow-lg">
+        <div className="w-full bg-white p-4 flex items-start shadow-lg rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
             <div>
                 <img className='w-20 h-20' src={image ? image : userImg} alt="MASTER IMAGE" />
             </div>
@@ -33,8 +33,8 @@ const ReviewsServiceCard: React.FC<ReviewsCardProp> = ({ starCount, firstName, l
                     <div>
                         <span>{createDate}</span>
                     </div>
-                    <div onClick={openDelModal} className='w-10 h-10 border-[1px] border-red-500 flex items-center justify-center rounded-full'>
-                        <DeleteOutlined className="text-red-500 text-xl cursor-pointer" />
+                    <div onClick={openDelModal} className='w-10 h-10 border-[1px] border-red-900 flex items-center justify-center rounded-full'>
+                        <DeleteOutlined className="text-red-900 text-xl cursor-pointer" />
                     </div>
                 </div>
             </div>

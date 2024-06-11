@@ -38,7 +38,13 @@ const masterStore = create<MasterData>((set) => ({
     statusValue: null,
     placeOfWorkValue: null
   },
-  setFilters: (val: FilterTypes) => set({ filters: val })
+  setFilters: (val: FilterTypes) => set({ filters: val }),
+  isModal: false,
+  setIsModal: (val: boolean) => set({ isModal: val }),
+  isLoading: false,
+  setIsLoading: (val: boolean) => set({ isLoading: val }),
+  page: 0,
+  setPage: (val: number) => set({ page: val }),
 }));
 
 export default masterStore;

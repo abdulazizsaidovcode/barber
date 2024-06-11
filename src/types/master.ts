@@ -32,8 +32,14 @@ export interface MasterData {
   filterObj: FilterTypes;
   filters: FilterTypes;
   setFilters: (filters: FilterTypes) => void;
-  category: CategoryChild[],
-  setCategory: (val: CategoryChild[]) => void
+  category: CategoryChild[];
+  setCategory: (val: CategoryChild[]) => void;
+  isModal: boolean;
+  setIsModal: (isModal: boolean) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+  page: number;
+  setPage: (val: number) => void;
 }
 
 export interface Data {
@@ -70,11 +76,11 @@ export interface DistrictData {
 
 // category child global interface
 export interface CategoryChild {
-  id: string
-  name: string
-  categoryFatherId: string
-  categoryFatherName: null | string
-  isNew: boolean
+  id: string;
+  name: string;
+  categoryFatherId: string;
+  categoryFatherName: null | string;
+  isNew: boolean;
 }
 
 // master filters global interface

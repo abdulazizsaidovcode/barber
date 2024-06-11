@@ -9,7 +9,7 @@ interface ReviewsMasersCardProp {
 
 const ReviewsMasersCard: React.FC = () => {
     return (
-        <div className="w-full bg-white p-4 reviews-shadow">
+        <div className="w-full p-4 reviews-shadow mt-3 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
             <div className="flex justify-between items-start mb-4">
                 <div className='flex'>
                     <img src={userImg} className='w-20 h-20' alt="" />

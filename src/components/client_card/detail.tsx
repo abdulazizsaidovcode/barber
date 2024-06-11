@@ -147,7 +147,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
                 {Status}
               </div>
             </div>
-            <div className="flex items-center justify-start mt-4">
+            <div className="flex items-center justify-between mt-4">
               <p>{t('Block')}</p>
               <div onClick={handleSwitchClick}>
                 <Switch isOn={isSwitchOn} handleToggle={() => {}} />
@@ -258,9 +258,9 @@ const DetailClient: React.FC<DetailClientProps> = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <div className="flex justify-end mt-2">
-            <Button key="submit" type="primary" onClick={handleSendMessage}>
-              {t('Send')}
+          <div className="flex justify-center mt-2">
+            <Button key="submit" type="primary" onClick={handleSendMessage} className='bg-boxdark px-12 '>
+              {t('отправить')}
             </Button>
           </div>
         </div>

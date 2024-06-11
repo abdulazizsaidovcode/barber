@@ -157,16 +157,16 @@ const Calendar: React.FC = () => {
       <Breadcrumb pageName="Calendar" />
       <div className="grid md:grid-cols-2 gap-5 my-5">
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
-          <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+          <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
             Завершён
           </div>
-          <div className="bg-blue-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+          <div className="bg-blue-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
             Одобрен
           </div>
-          <div className="bg-orange-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+          <div className="bg-orange-500 flex justify-center text-center items-center rounded-lg text-white px-6">
             На одобрении
           </div>
-          <div className="bg-red-500 flex justify-center text-center items-center rounded-lg text-white p-1">
+          <div className="bg-red-500 flex justify-center text-center items-center rounded-lg text-white px-6">
             Отклонён
           </div>
         </div>

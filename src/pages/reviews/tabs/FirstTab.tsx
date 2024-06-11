@@ -53,7 +53,7 @@ const FirstTab: React.FC = () => {
                     </Buttons>
                 </div>
                 {showMore && (
-                    <div className='flex flex-wrap gap-5 mt-5'>
+                    <div className='flex flex-wrap gap-5 mt-5 '>
                         <Select
                             defaultValue="Рейтинг"
                             className='w-60'
@@ -80,7 +80,7 @@ const FirstTab: React.FC = () => {
                 )}
             </div>
             <div>
-                <div className='flex md:flex-row gap-3 flex-col reviews-shadow mt-5 items-center bg-white w-full h-max p-5'>
+                <div className='flex md:flex-row gap-3 flex-col reviews-shadow mt-5 items-center bg-white w-full h-max p-5 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4'>
                     <div className='md:w-1/3 w-full'>
                         <p className='md:text-xl'>4,8 из 5 (225 отзывов)</p>
                         <p className='md:text-xl'>Мастера - 4,5 (125)</p>
