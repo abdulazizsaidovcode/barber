@@ -6,6 +6,8 @@ import moment from "moment";
 import orderStore from "../../../helpers/state_managment/order/orderStore";
 import { getOrder } from "../../../helpers/api-function/order/orderFunction";
 import { getDistrict } from "../../../helpers/api-function/master/master";
+import { order_download } from "../../../helpers/api";
+import { downloadExcelFile } from "../../../helpers/attachment/file-download";
 
 const FilterOrder: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
@@ -16,6 +18,10 @@ const FilterOrder: React.FC = () => {
     statusO,
     setTotalPage,
     setDistrictData,
+    totalPage,
+    setIsLoading,
+    isLoading,
+    page
   } = orderStore();
 
   const [filters, setFilters] = useState({
@@ -37,7 +43,6 @@ const FilterOrder: React.FC = () => {
       setTotalPage: setTotalPage,
       ...filters,
     };
-
     // Remove empty filter values
     Object.keys(params).forEach((key) => {
       if (params[key] === "" || params[key] === null || params[key] === 0) {
@@ -50,6 +55,19 @@ const FilterOrder: React.FC = () => {
 
     console.log(params);
   }, [filters]);
+  
+
+  const queryParams: string = [
+    filters.fullName ? `fullName=${filters.fullName}` : '',
+    filters.regionId ? `regionId=${filters.regionId}` : 0,
+    filters.districtId ? `districtId=${filters.districtId}` : 0,
+    filters.orderDate ? `orderDate=${filters.orderDate}` : null,
+    filters.paymentType ? `paymentType=${filters.paymentType}` : "",
+    filters.orderStatus ? `orderStatus=${filters.orderStatus}` : '',
+    filters.categoryName ? `categoryName=${filters.categoryName}` : '',
+  ].filter(Boolean).join('&');
+  const url: string = `${order_download}?status=${statusO}${queryParams ? "&" : ""}${queryParams}&page=${page}&size=10`;
+
 
   const handleInputChange = (key: string, value: any) => {
     if (key === "orderDate") {
@@ -141,8 +159,11 @@ const FilterOrder: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg bg-white">
-            Download
+          <Button
+            className={`bg-[#f0f0f0]`}
+            onClick={() => downloadExcelFile(url, setIsLoading, page)}
+          >
+            {isLoading ? 'loading...' : 'Download'}
           </Button>
         </Col>
       </Row>

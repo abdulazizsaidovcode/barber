@@ -36,9 +36,9 @@ const RequestFoto: React.FC = () => {
   }, []);
 
   return (
-    <RequestLayout newFotoCount={data.length}>
-      <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max pb-5 w-full reviews-shadow'>
-        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center  px-5'>
+    <RequestLayout >
+      <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max pb-5 mt-1 w-full reviews-shadow'>
+        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>

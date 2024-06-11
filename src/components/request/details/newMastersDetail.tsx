@@ -84,7 +84,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   masterChatStatus,
   scheduleType,
   facebookLink,
-  serviceData, 
+  serviceData,
   galleryData,
   confirmMasters,
   fetchData

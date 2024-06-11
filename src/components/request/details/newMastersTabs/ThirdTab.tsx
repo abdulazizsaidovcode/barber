@@ -53,8 +53,8 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
         <button
           className="py-2 px-7 bg-[#c2c2c2] rounded-xl text-[#000] dark:bg-danger dark:text-white"
           onClick={() => {
-            confirmMasters()
-            onClose()
+            confirmMasters();
+            onClose();
           }} // Call confirmMasters function
         >
           Одобрить

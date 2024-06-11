@@ -4,12 +4,13 @@ import MasterTable from '../../components/Tables/MasterTable';
 import { getFinanceDestrict } from '../../helpers/api-function/finance/financeDestrict';
 import financeDestrictStore from '../../helpers/state_managment/finance/financeDestrictStore';
 import axios from 'axios';
-import { district_url, region_url } from '../../helpers/api';
+import { base_url, district_url, region_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import CurrentYear from '../../helpers/date';
 import { Region } from '../../types/region';
 import { Buttons } from '../../components/buttons';
 import toast, { Toaster } from 'react-hot-toast';
+import { downloadExcelFile } from '../../helpers/attachment/file-download';
 
 const { Option } = Select;
 
@@ -17,6 +18,7 @@ const FilterComponent: React.FC = () => {
   const [regions, setRegions] = useState<Region[]>([]);
   const { data, setData, yearVal, setYearVal, monthVal, setMonthVal } = financeDestrictStore();
   const [destrict, setDestrict] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     axios.get(region_url, config)
@@ -59,7 +61,7 @@ const FilterComponent: React.FC = () => {
 
   const getDestrictFile = () => {
     if (destrict) {
-      let url = `${district_url}/download/${destrict}`;
+      let url = `${base_url}finance/web/district/download/${destrict}`;
       if (monthVal && yearVal) {
         url += `?month=${monthVal}&year=${yearVal}`;
       } else if (monthVal) {
@@ -68,21 +70,7 @@ const FilterComponent: React.FC = () => {
         url += `?year=${yearVal}`;
       }
 
-      axios.get(url,
-        config,
-        // responseType: 'blob',
-      )
-        .then(response => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', `file_${destrict}_${monthVal || ''}_${yearVal || ''}.xlsx`);
-          document.body.appendChild(link);
-          link.click();
-        })
-        .catch(error => {
-          console.error('Error downloading file:', error);
-        });
+      downloadExcelFile(url, setIsLoading);
     } else {
       toast.error('Выберите регион');
     }
@@ -118,8 +106,8 @@ const FilterComponent: React.FC = () => {
         <div>
           <DatePicker picker='year' onChange={handleYearChange} />
         </div>
-        <Buttons onClick={getDestrictFile}>
-          Скачать
+        <Buttons onClick={getDestrictFile} disabled={isLoading}>
+          {isLoading ? 'Downloading...' : 'Скачать'}
         </Buttons>
       </div>
       {/* Table */}

@@ -8,6 +8,7 @@ import { add_service_category, del_service_category, edit_service_category, serv
 import { config } from "../../helpers/token";
 import DelModal from "../../components/settings/modals/delModal";
 import EditModal from "../../components/settings/modals/editModal";
+import { Skeleton } from 'antd';
 
 interface Data {
     id: string;
@@ -23,6 +24,7 @@ const ServiceCategories = () => {
     const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
     const [editingCategory, setEditingCategory] = useState<string | null>(null);
     const [editedCategoryName, setEditedCategoryName] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchData();
@@ -32,8 +34,10 @@ const ServiceCategories = () => {
         axios.get(service_category_list, config)
             .then(res => {
                 setData(res.data.body);
+                setLoading(false);
             })
             .catch(() => {
+                setLoading(false);
             });
     };
 
@@ -46,7 +50,7 @@ const ServiceCategories = () => {
         if (newCategoryName.length === 0) {
             toast('Please fill in the line', {
                 icon: '⚠️'
-            })
+            });
         } else {
             axios.post(add_service_category, newCategory, config)
                 .then(() => {
@@ -54,12 +58,9 @@ const ServiceCategories = () => {
                     fetchData();
                     addCloseModal();
                 })
-                .catch(err => {
-                    console.error('Error adding category:', err);
-                    toast.error('Error adding category');
-                });
-        }
+                .catch(() => {});
 
+        }
     };
 
     const deleteData = () => {
@@ -67,16 +68,11 @@ const ServiceCategories = () => {
             axios.delete(`${del_service_category}/${categoryToDelete}`, config)
                 .then(() => {
                     toast.success('Category deleted successfully');
-                    setData([])
-                    setTimeout(() => {
-                        fetchData();
-                    }, 200)
+                    setData(data.filter(item => item.id !== categoryToDelete));
                     delCloseModal();
                 })
-                .catch(err => {
-                    console.error('Error deleting category:', err);
-                    toast.error('Error deleting category');
-                });
+                .catch(() => {});
+
         }
     };
 
@@ -92,10 +88,7 @@ const ServiceCategories = () => {
                     console.log(res.data);
                     editCloseModal();
                 })
-                .catch(err => {
-                    console.error('Error updating category:', err);
-                    toast.error('Error updating category');
-                });
+                .catch(() => {});
         }
     };
 
@@ -134,15 +127,19 @@ const ServiceCategories = () => {
             </div>
             <div className="mt-4 md:w-[75%] w-full">
                 <div className="mt-4 md:w-[75%] w-full">
-                    {data.map(item => (
-                        <div key={item.id}>
-                            <ServiceCategoriesCard
-                                title={item.name}
-                                editOnClick={() => editOpenModal(item.id, item.name)}
-                                deleteOnClick={() => delOpenModal(item.id)}
-                            />
-                        </div>
-                    ))}
+                    {loading ? (
+                        <Skeleton active paragraph={{ rows: 4 }} />
+                    ) : (
+                        data.map(item => (
+                            <div key={item.id}>
+                                <ServiceCategoriesCard
+                                    title={item.name}
+                                    editOnClick={() => editOpenModal(item.id, item.name)}
+                                    deleteOnClick={() => delOpenModal(item.id)}
+                                />
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
             <Modal isOpen={addIsOpen} onClose={addCloseModal}>
@@ -166,7 +163,7 @@ const ServiceCategories = () => {
             <DelModal isOpen={delIsOpen} onClose={delCloseModal} onDelete={deleteData} />
             <EditModal
                 isOpen={editIsOpen}
-                onClose={editCloseModal}    
+                onClose={editCloseModal}
                 value={editedCategoryName}
                 onChange={(e) => setEditedCategoryName(e.target.value)}
                 onSave={updateData}

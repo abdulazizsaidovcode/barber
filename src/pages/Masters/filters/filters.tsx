@@ -91,7 +91,7 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Select
-            placeholder={`Регион`}
+            placeholder={t("Region")}
             value={filters.regionValue}
             className={`w-full bg-white rounded-[8px]`}
             onChange={(value) => handleInputChange('regionValue', value)}
@@ -103,7 +103,7 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Select
-            placeholder={`Город`}
+            placeholder={t("City")}
             value={filters.cityValue}
             className={`w-full bg-white rounded-[8px]`}
             onChange={(value) => handleInputChange('cityValue', value)}
@@ -135,7 +135,7 @@ const Filters: React.FC = () => {
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Space direction="vertical" size={12}>
                 <RangePicker
-                  placeholder={['Дата начала', 'Дата окончания']}
+                  placeholder={[t("Select_start_date"), t("Select_end_date")]}
                   value={filters.registrationPeriodValue}
                   // className={`w-full bg-white rounded-[8px]} s.filterInput}
                   onChange={(date) => handleInputChange('registrationPeriodValue', date)}
@@ -144,7 +144,7 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={`Категория услуг`}
+                placeholder={t("Service_category")}
                 value={filters.serviceCategoryValue}
                 className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
@@ -168,45 +168,45 @@ const Filters: React.FC = () => {
             {/*</Col>*/}
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={`Статус самозанятых`}
-                value={filters.statusValue}
+                placeholder={t("Self_employed_status")}
+                value={filters.selfEmployedStatusValue}
                 className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
-                <Option value={true}>Да</Option>
-                <Option value={false}>Нет</Option>
+                <Option value={true}>{t("Yeah")}</Option>
+                <Option value={false}>{t("Not")}</Option>
               </Select>
             </Col>
           </Row>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={`Статус`}
+                placeholder={t("Status")}
                 value={filters.statusValue}
                 className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('statusValue', value)}
               >
-                <Option value="ACTIVE">Активный</Option>
-                <Option value="BLOCKED">Заблокированный</Option>
+                <Option value="ACTIVE">{t("Active")}</Option>
+                <Option value="BLOCKED">{t("Locked")}</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={`Место работы`}
+                placeholder={t("Place_of_work")}
                 value={filters.placeOfWorkValue}
                 className={`w-full bg-white rounded-[8px]`}
                 onChange={(value) => handleInputChange('placeOfWorkValue', value)}
               >
-                <Option value="SALON">Салон</Option>
-                <Option value="TO_HOME">Да дому</Option>
-                <Option value="ON_SITE">С выездом</Option>
+                <Option value="SALON">{t("Salon")}</Option>
+                <Option value="TO_HOME">{t("Yes_to_home")}</Option>
+                <Option value="ON_SITE">{t("On_site")}</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Button
                 onClick={resetFilters}
                 className={`bg-[#f0f0f0]`}
-              >Reset</Button>
+              >{t("Reset")}</Button>
             </Col>
           </Row>
         </>

@@ -4,7 +4,7 @@ import ChatusersList from '../components/user';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
-import { messages_url, sockjs_url } from '../../../helpers/api';
+import { chat_url, messages_url, sockjs_url } from '../../../helpers/api';
 
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -16,6 +16,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { config } from '../../../helpers/token.tsx';
 import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
+import toast from 'react-hot-toast';
 
 const Chatdetail: React.FC = () => {
   const { role, chatData, setChatData } = chatStore()
@@ -158,6 +159,16 @@ const Chatdetail: React.FC = () => {
     }
   }, [recipientId])
 
+  const readAllMessages = () => {
+    axios.get(`${chat_url}/all-message-ready`, config)
+      .then(res => {
+        toast.success('پیام ها با موفقیت خوانده ش')
+      }).catch(err => {
+        console.log(err);
+        
+      })
+  }
+
   // const messageDelete = () => {
   //   if (stompClient && stompClient.connected) {
   //     stompClient.publish({
@@ -231,7 +242,7 @@ const Chatdetail: React.FC = () => {
 
         {/* yangi chat yaratuvchi button va component */}
         <NewChat />
-        <Buttons>Удалить все прочитанные</Buttons>
+        <Buttons onClick={readAllMessages}>Удалить все прочитанные</Buttons>
       </div>
 
       {/* chat list */}

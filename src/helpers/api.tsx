@@ -31,6 +31,8 @@ export const getMe = (token?: string) => {
 export const base_url: string = 'http://45.67.35.86:8080/';
 
 export const master_download: string = `${base_url}user/web/masters/download`;
+export const client_download: string = `${base_url}client/web/clients/download`;
+export const order_download: string = `${base_url}order/web/download`;
 
 // get region url
 export const region_url: string = `${base_url}region`;
@@ -75,7 +77,7 @@ export const master_service_id: string = `${base_url}service/web/`;
 export const chat_user_url: string = `${base_url}chat/support-service`;
 export const calendar_url: string = `${base_url}workday/time/web/calendar`;
 export const dashboard_url = `${base_url}dashboard/`;
-export const client_block_put = `${base_url}client/is-block-from-master`;
+export const client_block_put = `${base_url}user/web/cleint-edit-status`;
 export const client_send_message = `${base_url}message/for/client/by/admin`;
 
 //finance client_send_message
@@ -109,6 +111,7 @@ export const finance_Destrictlist_Url = (
 
 // sock url
 export const sockjs_url = `${base_url}ws`;
+export const chat_url = `${base_url}chat`;
 export const newChat_url = `${base_url}chat/web/nachat-chat/send`; // sent message
 
 // help url
@@ -134,6 +137,10 @@ export const masters_fulldata_url = `${base_url}user/web/master-full-info`;
 export const masters_gallery_url = `${base_url}gallery/web`;
 export const masters_service_url = `${base_url}service/web`;
 export const masters_confirm_url = `${base_url}user/web/master-confirm`;
+export const masters_cancel_url = `${base_url}user/web/master-edit-status`;
 export const new_foto_url = `${base_url}gallery/web/new`;
 export const new_specialization_url = `${base_url}category/web/not-confirmed`;
 export const new_procedure_url = `${base_url}category/web/not-confirmed`;
+export const new_service_url = `${base_url}service/web/not-confirmed`;
+export const requestes_count = `${base_url}dashboard/web/request/count`;
+export const send_message = `${base_url}message/for/master/by/admin`;

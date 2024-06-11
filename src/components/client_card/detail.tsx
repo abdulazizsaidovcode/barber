@@ -68,10 +68,12 @@ const DetailClient: React.FC<DetailClientProps> = ({
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-
-  const openSendModal = () => setSendOpen(true);
   const closeSendModal = () => setSendOpen(false);
-
+  
+  const openSendModal = () => {
+    setMessage("")
+    setSendOpen(true);
+  }
   const handleSwitchClick = () => {
     setPendingSwitchState(!isSwitchOn);
     openModal();
@@ -96,18 +98,23 @@ const DetailClient: React.FC<DetailClientProps> = ({
   };
 
   const handleSendMessage = async () => {
+    console.log()
+    
+    if (message.trim() === '' || message === '/' || message === '&' || message === `""` ) {
+      toast.error(t('Message cannot be empty'));
+      return;
+    }
+
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         client_send_message,
         {
-
-            clientId: id,
-            masterId: null,
-            adminId: null,
-            message: message,
-            messageStatus: 'MASTER_CLIENT_MESSAGE_FOR_WRITE',
-            read: true,
-        
+          clientId: id,
+          masterId: null,
+          adminId: null,
+          message: message,
+          messageStatus: 'MASTER_CLIENT_MESSAGE_FOR_WRITE',
+          read: true,
         },
         config,
       );
@@ -269,7 +276,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
               onClick={handleSendMessage}
               className="bg-boxdark px-12 "
             >
-              {t('отправить')}
+              {t('Send')}
             </Button>
           </div>
         </div>
