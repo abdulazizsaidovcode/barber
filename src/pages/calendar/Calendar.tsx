@@ -157,7 +157,7 @@ const Calendar: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Calendar" />
+      <Breadcrumb pageName={t("siderbar_calendar")} />
       <div className="grid md:grid-cols-2 gap-5 my-5">
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
           <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
