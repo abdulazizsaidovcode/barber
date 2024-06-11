@@ -29,6 +29,8 @@
   "detail_payment_type": "Не начиналась",
   "detail_type": "Одобрена",
   "On_approval": "На одобрении",
+  "Click": "Клик",
+  "Cash": "Наличные",
   "Dynamics_of_connecting_masters_and_clients": "Динамика подключения мастеров и клиентов",
   "Modal_answer": "Заблокировать мастера?",
   "Master_churn": "Отток Мастеров",
@@ -110,5 +112,9 @@
   "Licenses": "Лицензии",
   "Certificates_and_other_documents": "Сертификаты и прочие документы",
   "Using_the_application": "Использование приложения",
-  "update_message": "Обновить сообщение..."
+  "update_message": "Обновить сообщение...",
+  "Not_available": "Нет в наличии!",
+  "Search_by_fullname": "Поиск по ФИО",
+  "Select_category": "Выберите категорию",
+  "Order_status": "Статус заказа"
 }
