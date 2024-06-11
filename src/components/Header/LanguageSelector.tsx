@@ -30,8 +30,8 @@ const LanguageSelector = () => {
 
   return (
     <Dropdown overlay={menu} className="cursor-pointer">
-      <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-        <GlobalOutlined /> {language} <GlobalOutlined />
+      <a className="ant-dropdown-link flex gap-1" onClick={(e) => e.preventDefault()}>
+        <GlobalOutlined /> {language}
       </a>
     </Dropdown>
   );
