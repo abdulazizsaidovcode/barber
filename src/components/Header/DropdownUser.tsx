@@ -39,8 +39,7 @@ const DropdownUser = () => {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    // redirect to login or home page after logout
-    window.location.href = '/login';
+    window.location.href = '/auth/signin';
   };
 
   return (
