@@ -39,6 +39,7 @@ export const child_category_list: string = `${base_url}category/child`;
 
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
+export const update_master_status = `${base_url}user/web/master-edit-status`;
 
 // help url
 export const help_url: string = `${base_url}help`;
@@ -121,3 +122,4 @@ export const masters_fulldata_url = `${base_url}user/web/master-full-info`;
 export const masters_gallery_url = `${base_url}gallery/web`;
 export const masters_service_url = `${base_url}service/web`;
 export const masters_confirm_url = `${base_url}user/web/master-confirm`;
+export const new_foto_url = `${base_url}gallery/web/new`;

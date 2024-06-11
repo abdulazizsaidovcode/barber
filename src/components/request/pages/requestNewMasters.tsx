@@ -70,7 +70,7 @@ interface GalleryData {
   resGalleryAttachments: [
     { attachmentId: string; main: boolean; newStatus: boolean }
   ];
-  createdAt: string;
+  date: string;
 }
 
 const RequestNewMasters: React.FC = () => {
@@ -106,7 +106,6 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
       setGalleryData(res.data.body);
-      console.log(res.data.body);
     } catch { }
   }
 

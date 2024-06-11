@@ -49,8 +49,8 @@ const FirstTab: React.FC<FirstTabProp> = ({
     const displayArray = (array: string[] | undefined) => array && array.length > 0 ? array.join(', ') : 'не настроено';
 
     return (
-        <div className='flex justify-between'>
-            <div className='w-1/4 mx-1'>
+        <div className='flex lg:flex-row flex-col justify-between'>
+            <div className='lg:w-1/4 w-full mx-1'>
                 <div className='bg-[#cccccc] dark:bg-white w-full h-[27%]'>
                     <div className='flex justify-end p-3 items-center'>
                         <GoDotFill className={masterChatStatus === 'OFFLINE' ? 'text-red-700' : 'text-[#24FF00]'} />
@@ -81,13 +81,13 @@ const FirstTab: React.FC<FirstTabProp> = ({
                     </div>
                 </div>
             </div>
-            <div className='w-3/4 h-auto mx-1'>
-                <div className='bg-[#cccccc] dark:bg-white p-4 py-5 w-full'>
+            <div className='lg:w-3/4 w-full h-auto mx-1'>
+                <div className='bg-[#cccccc] dark:bg-white mt-3 p-4 py-5 w-full'>
                     <div>
                         <p className='text-2xl'>Профиль:</p>
                     </div>
                     <div className='my-3'><hr /></div>
-                    <div className='flex justify-between w-[60%]'>
+                    <div className='flex justify-between lg:w-[60%]'>
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl font-semibold'>Имя</p>
                             <p className='text-xl font-semibold'>Фамилия</p>
@@ -115,7 +115,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
                         <p className='text-2xl'>Информация о профессии:</p>
                     </div>
                     <div className='my-3'><hr /></div>
-                    <div className='flex justify-between w-[60%]'>
+                    <div className='flex lg:w-[60%] justify-between '>
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl font-semibold'>Место работы</p>
                             <p className='text-xl font-semibold'>Напраление по полу</p>

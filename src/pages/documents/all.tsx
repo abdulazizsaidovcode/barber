@@ -6,11 +6,12 @@ import { MdEdit } from 'react-icons/md';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 import { HelpList } from '../../types/help.ts';
 import { updateIsActive } from '../../helpers/api-function/help/help.tsx';
-import {Toaster} from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 const All: React.FC = () => {
   const { dataAll, setDataAll } = helpStore();
   const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>({});
+  const [isTextArea, setIsTextArea] = useState<boolean | number>(false);
 
   const handleToggle = (id: number | string) => {
     setSwitchStates(prevState => ({
@@ -24,6 +25,14 @@ const All: React.FC = () => {
   function accordionList(params: boolean, id: number | string, name: string | null, item: HelpList) {
     return (
       <>
+        {isTextArea === id && (
+          <textarea
+            onChange={(e) => console.log(e.target.value)}
+            placeholder={`salom`}
+            className={`w-full`}
+            cols={5}
+          ></textarea>
+        )}
         {name && params && (
           <div
             className="border-[1px] p-5 rounded-2xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300">
@@ -37,12 +46,15 @@ const All: React.FC = () => {
               isOn={item.active}
               handleToggle={() => {
                 handleToggle(id);
-                updateIsActive(item, setDataAll, 'ALL')
+                updateIsActive(item, setDataAll, 'ALL');
               }}
             />
           </div>
           {params && (
-            <button className="p-[6px] dark:border-[#fff] border-[#000] border-[1px] rounded-lg">
+            <button
+              onClick={() => setIsTextArea(item.id)}
+              className="p-[6px] dark:border-[#fff] border-[#000] border-[1px] rounded-lg"
+            >
               <MdEdit size={20} className="dark:text-white" />
             </button>
           )}

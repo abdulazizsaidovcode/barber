@@ -21,7 +21,7 @@ interface GalleryData {
   resGalleryAttachments: [
     { attachmentId: string; main: boolean; newStatus: boolean }
   ];
-  createdAt: string;
+  date: string;
 }
 
 interface NewMastersDetailProps {
@@ -93,7 +93,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
     {
       key: '1',
       label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+        <span className="dark:text-white text-black text-[10px] md:text-xl lg:text-2xl">
           Основная информация
         </span>
       ),
@@ -120,7 +120,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
     {
       key: '2',
       label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+        <span className="dark:text-white text-black text-[10px] md:text-xl lg:text-2xl">
           Процедуры
         </span>
       ),
@@ -129,7 +129,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
     {
       key: '3',
       label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+        <span className="dark:text-white text-black text-[10px] md:text-xl lg:text-2xl">
           Галерея
         </span>
       ),
@@ -141,8 +141,8 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
     },
   ];
   return (
-    <Modal isOpen={isOpen} onClose={onClose} mt='mt-[550px]'>
-      <div className='w-[1300px] h-[1100px]'>
+    <Modal isOpen={isOpen} onClose={onClose} mt='lg:mt-[550px] mt-[1200px]'>
+      <div className='lg:w-[1300px] lg:h-[1100px] h-[1700px]'>
         <Tabs
           className="dark:bg-boxdark bg-white p-2 w-full"
           defaultActiveKey="1"
