@@ -20,8 +20,8 @@ const Accordion: React.FC<AccordionProp> = ({ title, children, onToggle, onClick
 
     return (
         <div className="accordion">
-            <div 
-                className={`bg-white flex dark:text-black justify-between p-3 shadow-1 rounded-lg shadow-black ${isActive ? 'active' : ''}`} 
+            <div
+                className={`bg-white flex dark:text-black justify-between p-3 shadow-1 rounded-lg shadow-black ${isActive ? 'active' : ''}`}
                 onClick={() => {
                     toggleAccordion();
                     if (onClick) {

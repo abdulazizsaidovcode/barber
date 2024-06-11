@@ -17,7 +17,7 @@ const ClientDocument: React.FC = () => {
   return (
     <div className="p-2">
       <div className="flex flex-col gap-3 mb-3 ">
-        <Accordion title='Пользовательское соглашение'>
+        <Accordion title={t("Terms_of_use")}>
           <div>
             <FileUploader id='fileinput3' />
           </div>
@@ -34,7 +34,7 @@ const ClientDocument: React.FC = () => {
       >
         {t("Save_changes")}
       </button>
-    </div>
+    </div >
   );
 };
 

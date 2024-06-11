@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { MdFileDownload } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 interface UploadedFile {
   name: string;
@@ -16,6 +17,7 @@ interface FileUploaderProps {
 const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложения' }) => {
   const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
   const [removedFiles, setRemovedFiles] = useState<UploadedFile[]>([]);
+  const { t } = useTranslation()
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -87,7 +89,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
         </div>
       )}
       <input type="file" id={id} style={{ display: 'none' }} onChange={handleFileChange} />
-      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>Вложить файл<MdFileDownload
+      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t("Attach_file")}<MdFileDownload
         className="ms-1 text-[#000] dark:text-white" /></button>
     </div>
   );
