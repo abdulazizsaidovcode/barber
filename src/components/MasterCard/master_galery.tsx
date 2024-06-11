@@ -1,28 +1,43 @@
+import { DeleteOutlined } from '@ant-design/icons';
 import React from 'react';
-import { Skeleton } from 'antd';
+import { getFileId } from '../../helpers/api';
 
 interface ProcedureItemProps {
   imgUrl: string;
   buttonText: string;
   buttonColor: string;
+  title: string;
   icon: React.ReactNode;
+  id: string;
+  date: string;
+  status: string;
 }
 
-const ProcedureItem: React.FC<ProcedureItemProps> = ({ imgUrl, buttonText, buttonColor, icon }) => {
+const ProcedureItem: React.FC<ProcedureItemProps> = ({
+  imgUrl,
+  buttonText,
+  buttonColor,
+  icon,
+  title,
+  id,
+  date,
+  status,
+}) => {
   const [loading, setLoading] = React.useState(true);
 
   return (
-    <div className="flex flex-col items-center border shadow-md p-2">
-      {loading && <Skeleton.Image active />}
-      <img
-        src={imgUrl}
-        alt="Procedure"
-        className={`mb-2 ${loading ? 'hidden' : 'block'}`}
-        onLoad={() => setLoading(false)}
-      />
-      <button className={`flex items-center justify-center ${buttonColor} text-white py-1 px-2 rounded`}>
-        {icon} {buttonText}
-      </button>
+    <div className="flex flex-col justify-center items-center">
+      {/* images */}
+        <div className='shadow-xl flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover'>
+          <img className='w-full h-full' src={getFileId + imgUrl} alt="" />
+          <p>{status}</p>
+          {/* Icons that appear depending on the status */}
+      </div>
+          <div>
+            <div className='p-1 bg-gray flex items-center justify-center rounded-md'>
+              <DeleteOutlined />
+            </div>
+          </div>
     </div>
   );
 };

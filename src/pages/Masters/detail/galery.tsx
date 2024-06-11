@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {  master_gallery_id } from '../../../helpers/api';
+import { master_gallery_id } from '../../../helpers/api';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
 import ProcedureItem from '../../../components/MasterCard/master_galery';
@@ -29,18 +29,24 @@ const Gallery: React.FC = () => {
   };
 
   return (
-    <div>
-      <div>
-        {orderDetails.map((orderDetail, index) => (
-          <ProcedureItem
-            key={index}
-            imgUrl={``}
-            buttonText=""
-            buttonColor=""
-            icon={''}
-          />
-        ))}
-      </div>
+    <div className='p-5 flex flex-col gap-10'>
+      {orderDetails.map((orderDetail, index) => (
+        <div key={index} className={`w-full border grid grid-cols-5 gap-3 p-3`}>
+          {orderDetail.resGalleryAttachments && orderDetail.resGalleryAttachments.map((attachment: any, subIndex: number) => (
+            <ProcedureItem
+              status={attachment.newStatus}
+              date={orderDetail.date}
+              id={orderDetail.id}
+              title={orderDetail.albumName}
+              key={subIndex}
+              imgUrl={attachment.attachmentId}
+              buttonText=""
+              buttonColor=""
+              icon={''}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 };
