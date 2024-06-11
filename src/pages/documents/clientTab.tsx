@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import FileUploader from '../../components/FileDowlander';
+import { useTranslation } from 'react-i18next';
 
 
 const ClientDocument: React.FC = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const { t } = useTranslation()
 
   const toggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const handleButtonClick = () => {
@@ -17,10 +19,10 @@ const ClientDocument: React.FC = () => {
       <div className="flex flex-col gap-3 mb-3 ">
         <Accordion title='Пользовательское соглашение'>
           <div>
-            <FileUploader id='fileinput3'/>
+            <FileUploader id='fileinput3' />
           </div>
           <div className='flex gap-3'>
-            <p>Отображать в приложениях</p>
+            <p>{t("Show_in_apps")}</p>
             <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
           </div>
         </Accordion>
