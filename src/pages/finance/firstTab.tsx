@@ -7,29 +7,21 @@ import CurrentYear from '../../helpers/date.tsx';
 import axios from 'axios';
 import { base_url } from '../../helpers/api.tsx';
 import { config } from '../../helpers/token.tsx';
+import { Buttons } from '../../components/buttons/index.tsx';
+import { downloadExcelFile } from '../../helpers/attachment/file-download.tsx';
 
 // const { Option } = Select;
 
-interface FinanceData {
-  addressName: string;
-  nonCashTurnover: number;
-  turnoverTotal: number;
-  totalIncome: number;
-  // qo'shimcha qiymatlar kerak bo'lsa, shu yerga qo'shing
-}
 interface Year {
   benefit: number;
   expense: string;
   income: number;
 }
 
-interface DataResponse {
-  object: FinanceData[];
-}
-
 const FirstTab: React.FC = () => {
   const { data, setData, yearVal, setYearVal, monthVal, setMonthVal } = financeStore();
   const [year, setYear] = useState<Year | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (monthVal && yearVal) {
@@ -60,7 +52,18 @@ const FirstTab: React.FC = () => {
           setYear(res.data.body);
         }).catch(() => console.log('error'));
     }
-  }, [yearVal])
+  }, [yearVal]);
+
+  const handleDownload = () => {
+    let url = `${base_url}finance/web/region/download?page=0&size=10`;
+    if (yearVal) {
+      url += `&year=${yearVal}`;
+    }
+    if (monthVal) {
+      url += `&month=${monthVal}`;
+    }
+    downloadExcelFile(url, setIsLoading);
+  };
 
   // Create an array for summary data
   const summaryData = data.object ? [
@@ -79,7 +82,7 @@ const FirstTab: React.FC = () => {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="flex sm:justify-between w-[700px] flex-wrap justify-center">
+        <div className="flex sm:justify-between w-[700px] flex-wrap justify-center items-start py-5">
           {/* Left Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
@@ -130,6 +133,9 @@ const FirstTab: React.FC = () => {
               </div>
             </div>
           </div>
+          <Buttons onClick={handleDownload} disabled={isLoading}>
+            {isLoading ? 'Downloading...' : 'Download'}
+          </Buttons>
         </div>
       </div>
       {/* Top Section */}

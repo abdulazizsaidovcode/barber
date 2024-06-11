@@ -17,6 +17,7 @@ import {
   getDistrict,
   getRegion,
 } from "../../helpers/api-function/master/master";
+import { useTranslation } from "react-i18next";
 
 export interface Event {
   title: string;
@@ -25,6 +26,7 @@ export interface Event {
 }
 
 const Calendar: React.FC = () => {
+  const { t } = useTranslation();
   const {
     setCategory,
     category,
@@ -108,6 +110,7 @@ const Calendar: React.FC = () => {
 
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
+
   const resetFilters = () => {
     setRegionId(null);
     setDistrictId(null);
@@ -154,26 +157,26 @@ const Calendar: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Calendar" />
+      <Breadcrumb pageName={t("siderbar_calendar")} />
       <div className="grid md:grid-cols-2 gap-5 my-5">
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
           <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
-            Завершён
+            {t("SecondTab_name")}
           </div>
           <div className="bg-blue-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
-            Одобрен
+            {t("detail_type")}
           </div>
           <div className="bg-orange-500 flex justify-center text-center items-center rounded-lg text-white px-6">
-            На одобрении
+            {t("On_approval")}
           </div>
           <div className="bg-red-500 flex justify-center text-center items-center rounded-lg text-white px-6">
-            Отклонён
+            {t("Rejected")}
           </div>
         </div>
         <div className="grid grid-cols-2 items-center gap-5">
           <Select
             showSearch
-            placeholder="Регион"
+            placeholder={t("Region")}
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option?.label ?? "").includes(input)
@@ -194,7 +197,7 @@ const Calendar: React.FC = () => {
             <Select
               className="w-full"
               showSearch
-              placeholder="Город"
+              placeholder={t("City")}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "").includes(input)
@@ -221,7 +224,7 @@ const Calendar: React.FC = () => {
             "inline-block rounded bg-[#2C3E50] text-center px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-lg focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
           }
         >
-          Все категории
+          {t("All_categories")}
         </button>
         {category.length !== 0 &&
           category.map((item, i) => {
@@ -232,11 +235,10 @@ const Calendar: React.FC = () => {
                 onClick={() => {
                   handleButtonClick(item.name, item.id);
                 }}
-                className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${
-                  activeButton === item.name
-                    ? "bg-[#2C3E50] text-white"
-                    : "border-[#2C3E50] text-[#2C3E50] hover:shadow-xl hover:bg-[#DDDDDD] dark:border-[#DDDDDD] dark:hover:border-[#2C3E50] dark:hover:text-[#2C3E50] dark:text-[#DDDDDD]"
-                }`}
+                className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${activeButton === item.name
+                  ? "bg-[#2C3E50] text-white"
+                  : "border-[#2C3E50] text-[#2C3E50] hover:shadow-xl hover:bg-[#DDDDDD] dark:border-[#DDDDDD] dark:hover:border-[#2C3E50] dark:hover:text-[#2C3E50] dark:text-[#DDDDDD]"
+                  }`}
               >
                 {item.name}
               </button>
@@ -255,7 +257,7 @@ const Calendar: React.FC = () => {
         headerToolbar={{
           start: "prev,next",
           center: "title",
-          end: "dayGridMonth,timeGridWeek",
+          end: "dayGridMont,timeGridWeek",
         }}
         // Haftalik darajasining soatlarini belgilash
         slotMinTime="00:00:00"
@@ -267,7 +269,7 @@ const Calendar: React.FC = () => {
           hour12: false, // 24 soatlik formatda
         }}
         datesSet={handleDatesSet}
-        eventAdd={() => {}}
+        eventAdd={() => { }}
         eventBackgroundColor="#fff"
         events={events}
       />

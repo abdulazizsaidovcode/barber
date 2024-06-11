@@ -14,6 +14,8 @@ interface ClientFilterData {
   setIsModal: (isModal: boolean) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  page: number;
+  setPage: (val: number) => void;
 }
 
 export interface FilterData {
@@ -51,6 +53,8 @@ const clientFilterStore = create<ClientFilterData>((set) => ({
   setIsModal: (val: boolean) => set({ isModal: val }),
   isLoading: false,
   setIsLoading: (val: boolean) => set({ isLoading: val }),
+  page: 0,
+  setPage: (val: number) => set({ page: val }), 
 }));
 
 export default clientFilterStore;

@@ -19,6 +19,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
+    console.log(file);
     if (file) {
       const fileData: UploadedFile = {
         name: file.name,
@@ -72,8 +73,12 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
                 </div>
                 <div>
                   <div>
-                    <button className="flex justify-end py-[7px] ms-5" onClick={() => handleRemoveFile(index)}><TiDeleteOutline
-                      className="text-3xl" /></button>
+                    <button
+                      className="flex justify-end py-[7px] ms-5"
+                      onClick={() => handleRemoveFile(index)}
+                    >
+                      <TiDeleteOutline className="text-3xl" />
+                    </button>
                   </div>
                 </div>
               </div>

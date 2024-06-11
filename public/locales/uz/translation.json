@@ -1,6 +1,8 @@
 {
   "Block": "Bloklash",
   "City": "Shahar",
+  "All_categories": "Barcha toifalar",
+  "Month": "Oy",
   "Canceled_client_master": "Bekor qilingan mijoz/master",
   "Clients_per_1_specialist_on_average": "O'rtacha 1 mutaxassisga mijozlar",
   "Customer_churn": "Mijozlarning noroziligi",
@@ -11,7 +13,9 @@
   "Download_help": "Yuklab olish yordami",
   "Download": "Yuklab olish",
   "Download_pdf": "PDF ni yuklab olish",
+  "On_approval": "Tasdiqlash bo'yicha",
   "order_table_client": "Mijoz",
+  "Rejected": "Rad etilgan",
   "Orders": "Buyurtmalar",
   "order_table_procedure": "Protsedura",
   "detail_payment_type": "Boshlanmadi",
@@ -62,6 +66,7 @@
   "Status": "Holati",
   "Yeah": "Ha",
   "Not": "Yo'q",
+  "Client": "Mijoz",
   "Total_turnover": "Umumiy aylanma",
   "Income": "Daromad",
   "FirstTab_name": "Kelgusi",
@@ -81,5 +86,14 @@
   "Salon": "Salon",
   "Yes_to_home": "Ha uyga",
   "On_site": "Ish olib borilayotgan joyda",
-  "Reset": "Qayta yuklash"
+  "Reset": "Qayta yuklash",
+  "No_data": "Hozircha ma'lumotlar yo'q",
+  "No_districts_available": "Tumanlar mavjud emas",
+  "No_regions_available": "Hech qanday mintaqa mavjud emas",
+  "Select_district": "Tuman tanlash",
+  "Select_region": "Mintaqani tanlash",
+  "Deleted": "O'chirilgan",
+  "No_data_available": "Hozircha ma'lumotlar yo'q",
+  "Blocker": "Mijozni bloklash",
+  "Activer": "Mijozni aktivlashtirish"
 }

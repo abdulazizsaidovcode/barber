@@ -31,6 +31,8 @@ export const getMe = (token?: string) => {
 export const base_url: string = 'http://45.67.35.86:8080/';
 
 export const master_download: string = `${base_url}user/web/masters/download`;
+export const client_download: string = `${base_url}client/web/clients/download`;
+export const order_download: string = `${base_url}order/web/download`;
 
 // get region url
 export const region_url: string = `${base_url}region`;
@@ -107,6 +109,7 @@ export const finance_Destrictlist_Url = (
 
 // sock url
 export const sockjs_url = `${base_url}ws`;
+export const chat_url = `${base_url}chat`;
 export const newChat_url = `${base_url}chat/web/nachat-chat/send`; // sent message
 
 // help url
