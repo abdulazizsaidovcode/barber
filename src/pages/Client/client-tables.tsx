@@ -17,7 +17,7 @@ import { getFileId } from "../../helpers/api.tsx";
 
 export interface UpdateStatus {
   status: string;
-  clientId: string;
+  id: string;
 }
 
 const ClientTables: React.FC = () => {
@@ -25,7 +25,7 @@ const ClientTables: React.FC = () => {
   const { totalPage, clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: "",
-    clientId: "",
+    id: "",
   });
 
   const onChange = (page: number, pageSize: number): void => {
@@ -49,8 +49,8 @@ const ClientTables: React.FC = () => {
       label: `${t('Locked')}`
     }
   ];
-  const handleMenuClick = (e: any, clientId: string) => {
-    setUpdateStatus({ status: e.key, clientId });
+  const handleMenuClick = (e: any, id: string) => {
+    setUpdateStatus({ status: e.key, id });
     openIsModal();
   };
   
@@ -174,7 +174,7 @@ const ClientTables: React.FC = () => {
               bWidth={`w-[200px]`}
               onClick={() =>
                 updateClientStatus(
-                  updateStatus.clientId,
+                  updateStatus.id,
                   updateStatus.status,
                   setClientFilterData,
                   setClientTotalPage,

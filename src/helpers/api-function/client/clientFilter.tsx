@@ -5,9 +5,9 @@ import { client_update_status } from "../../api";
 import { config } from "../../token";
 import { FilterData } from "../../state_managment/client/clientFilterStore";
 
-export const updateClientStatus = (clientId: string, status: string, setData: (val: FilterData[]) => void, setTotalPage: (val: number) => void, openIsModal: () => void, setIsLoading: (val: boolean) => void) => {
-    let data = { clientId, status };
-    if (data.clientId && data.status) {
+export const updateClientStatus = (id: string, status: string, setData: (val: FilterData[]) => void, setTotalPage: (val: number) => void, openIsModal: () => void, setIsLoading: (val: boolean) => void) => {
+    let data = { id, status };
+    if (data.id && data.status) {
       setIsLoading(true)
       axios.put(client_update_status, data, config)
         .then(res => {
@@ -18,16 +18,16 @@ export const updateClientStatus = (clientId: string, status: string, setData: (v
             openIsModal()
           } else {
             toast.error('Serverda xatolik yuz berdi')
-            openIsModal()
+            // openIsModal()
           }
         })
         .catch(() => {
           setIsLoading(false)
           toast.error('Error updating status!')
-          openIsModal()
+        //   openIsModal()
         });
     } else {
       toast.error('Error updating status');
-      openIsModal()
+    //   openIsModal()
     }
   };
