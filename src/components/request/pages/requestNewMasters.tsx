@@ -9,6 +9,7 @@ import axios from 'axios';
 import { masters_confirm_url, masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast from 'react-hot-toast';
+import { Skeleton } from 'antd';
 
 interface Data {
   id: string;
@@ -80,6 +81,7 @@ const RequestNewMasters: React.FC = () => {
   const [serviceData, setServiceData] = useState<ServiceData[]>([]);
   const [galleryData, setGalleryData] = useState<GalleryData[]>([]);
   const [selectedMaster, setSelectedMaster] = useState<MasterDetailData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -89,7 +91,11 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.get(new_masters_url, config);
       setData(res.data.body);
-    } catch { }
+    } catch (error) {
+      toast.error('Failed to fetch new masters');
+    } finally {
+      setLoading(false);
+    }
   }
 
   const fetchFullData = async (id: string) => {
@@ -99,6 +105,15 @@ const RequestNewMasters: React.FC = () => {
       setDetailIsOpen(true);
       fetchService(id);
       fetchGallery(id);
+    } catch (error) {
+      toast.error('Failed to fetch master details');
+    }
+  }
+
+  const fetchService = async (id: string) => {
+    try {
+      const res = await axios.get(`${masters_service_url}/${id}`, config);
+      setServiceData(res.data.body);
     } catch { }
   }
 
@@ -113,16 +128,7 @@ const RequestNewMasters: React.FC = () => {
     try {
       await axios.put(`${masters_confirm_url}/${id}`, {}, config);
       callback();
-      toast.success('Master confirm successfuly');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const fetchService = async (id: string) => {
-    try {
-      const res = await axios.get(`${masters_service_url}/${id}`, config);
-      setServiceData(res.data.body);
+      toast.success('Master confirmed successfully');
     } catch { }
   }
 
@@ -133,7 +139,7 @@ const RequestNewMasters: React.FC = () => {
   return (
     <RequestLayout newMastersCount={data.length}>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5'>
-        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
+        <div className='w-full bg-[#cccccc] dark:bg:white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white'>
@@ -150,10 +156,15 @@ const RequestNewMasters: React.FC = () => {
           </div>
         </div>
         <div className='flex mt-5 gap-x-2 gap-y-8 flex-wrap px-5'>
-          {data.length === 0 ?
+          {loading ? (
+            Array.from({ length: 6 }).map((_, index) => (
+              <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
+            ))
+          ) : data.length === 0 ? (
             <div className='h-[510px]'>
-              <p>New Masters Not found</p>
-            </div> :
+              <p className='text-xl dark:text:white'>New Masters Not found</p>
+            </div>
+          ) : (
             data.map((item, index) => (
               <div key={index}>
                 <NewMastersCard
@@ -167,7 +178,8 @@ const RequestNewMasters: React.FC = () => {
                   modal={() => fetchFullData(item.id)}
                 />
               </div>
-            ))}
+            ))
+          )}
         </div>
       </div>
       <NewMastersDetail

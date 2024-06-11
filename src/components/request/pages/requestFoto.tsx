@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import RequestLayout from '../../../pages/request/request'
-import { GoPlus } from 'react-icons/go'
-import { CiMenuKebab } from 'react-icons/ci'
-import FotoCard from '../cards/fotoCard'
-import axios from 'axios'
-import { getFileId, new_foto_url } from '../../../helpers/api'
-import { config } from '../../../helpers/token'
+import React, { useEffect, useState } from 'react';
+import RequestLayout from '../../../pages/request/request';
+import { GoPlus } from 'react-icons/go';
+import { CiMenuKebab } from 'react-icons/ci';
+import FotoCard from '../cards/fotoCard';
+import axios from 'axios';
+import { getFileId, new_foto_url } from '../../../helpers/api';
+import { config } from '../../../helpers/token';
+import { Skeleton } from 'antd';
 
 interface Data {
   id: string;
@@ -17,8 +18,8 @@ interface Data {
 }
 
 const RequestFoto: React.FC = () => {
-  const [data, setData] = useState<Data[]>([])
-
+  const [data, setData] = useState<Data[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +27,9 @@ const RequestFoto: React.FC = () => {
         const res = await axios.get(new_foto_url, config);
         setData(res.data.body);
       } catch { }
+      finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -51,12 +55,18 @@ const RequestFoto: React.FC = () => {
           </div>
         </div>
         <div className='flex mt-5 gap-x-3 gap-y-8 flex-wrap px-5'>
-          {data.length === 0 ?
-            <div className='w-full h-[600px]'>
+          {loading ? (
+            Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
+            ))
+          ) : data.length === 0 ? (
+            <div className='w-full h-[600px] flex items-center justify-center'>
               <p className='text-xl dark:text-white'>
                 New fotos not found
               </p>
-            </div> : data.map((item, index) => (
+            </div>
+          ) : (
+            data.map((item, index) => (
               <FotoCard
                 key={index}
                 link={item.id}
@@ -66,11 +76,12 @@ const RequestFoto: React.FC = () => {
                 salonCreateDate={item.createdAt}
                 salonDescription='Мастер добавил/изменил фото в галерею'
               />
-            ))}
+            ))
+          )}
         </div>
       </div>
     </RequestLayout>
-  )
-}
+  );
+};
 
-export default RequestFoto
+export default RequestFoto;

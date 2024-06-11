@@ -133,4 +133,4 @@ export const masters_service_url = `${base_url}service/web`;
 export const masters_confirm_url = `${base_url}user/web/master-confirm`;
 export const new_foto_url = `${base_url}gallery/web/new`;
 export const new_specialization_url = `${base_url}category/web/not-confirmed`;
-export const new_procedure_url = `${base_url}service/web/not-confirmed`;
+export const new_procedure_url = `${base_url}category/web/not-confirmed`;
