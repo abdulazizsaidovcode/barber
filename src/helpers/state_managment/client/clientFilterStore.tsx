@@ -12,10 +12,16 @@ interface ClientFilterData {
   setDistrictData: (val: DistrictData[]) => void;
   isModal: boolean;
   setIsModal: (isModal: boolean) => void;
+  isMessageModal: boolean;
+  setIsMessageModal: (isModal: boolean) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   page: number;
   setPage: (val: number) => void;
+  message: string;
+  setMessage: (isModal: string) => void;
+  id: string;
+  setid: (isModal: string) => void;
 }
 
 export interface FilterData {
@@ -51,10 +57,16 @@ const clientFilterStore = create<ClientFilterData>((set) => ({
   setDistrictData: (val: DistrictData[]) => set({ districtData: val }),
   isModal: false,
   setIsModal: (val: boolean) => set({ isModal: val }),
+  isMessageModal: false,
+  setIsMessageModal: (val: boolean) => set({ isMessageModal: val }),
   isLoading: false,
   setIsLoading: (val: boolean) => set({ isLoading: val }),
   page: 0,
   setPage: (val: number) => set({ page: val }), 
+  message: "",
+  setMessage: (val: string) => set({ message: val }),
+  id: "",
+  setid: (val: string) => set({ id: val }),
 }));
 
 export default clientFilterStore;

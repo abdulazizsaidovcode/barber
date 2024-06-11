@@ -1,24 +1,46 @@
-import { Modal } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import Modal from '../../components/modals/modal';
+import { handleSendMessage } from '../../helpers/api-function/client/clientFilter';
+import { Buttons } from '../../components/buttons';
+import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore';
 
-interface IClientModalProps {
-  openModal: () => void;
-  isModalOpen: boolean;
-}
 
-const ClientModal: React.FC<IClientModalProps> = ({ openModal, isModalOpen }) => {
+
+const ClientModal: React.FC = () => {
+
+  const {isMessageModal, setMessage, message, setIsMessageModal, id} = clientFilterStore()
+  const closeModal = () => setIsMessageModal(!isMessageModal)
+
+
+  const {t} = useTranslation()
   return (
-    <Modal
-      title="Download PDF"
-      open={isModalOpen}
-      onCancel={openModal}
-      footer={null}
-      centered
-    >
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-    </Modal>
+    <Modal isOpen={isMessageModal} onClose={closeModal}>
+        <div className="w-[45rem]">
+          <p className="text-2xl text-black dark:text-white">
+            {t('Send message')}:
+          </p>
+          <TextArea
+            className="mt-4"
+            rows={4}
+            placeholder={t('Enter your message')}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <div className="flex justify-center mt-2">
+            <Buttons
+              key="submit"
+              onClick={() => {
+                handleSendMessage(id, message, closeModal)
+                setMessage("")
+              }}
+            >
+              {t('Send')}
+            </Buttons>
+          </div>
+        </div>
+      </Modal>
   );
 };
 

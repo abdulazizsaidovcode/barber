@@ -1,5 +1,3 @@
-// src/components/client-tables.tsx
-
 import ClientTable from "../../components/Tables/MasterTable.tsx";
 import { thead } from "./data.tsx";
 import { CiMenuKebab } from "react-icons/ci";
@@ -14,6 +12,7 @@ import { Buttons } from "../../components/buttons/index.tsx";
 import Modal from "../../components/modals/modal.tsx";
 import { updateClientStatus } from "../../helpers/api-function/client/clientFilter.tsx";
 import { getFileId } from "../../helpers/api.tsx";
+import ClientModal from "./client-modal.tsx";
 
 export interface UpdateStatus {
   status: string;
@@ -22,7 +21,7 @@ export interface UpdateStatus {
 
 const ClientTables: React.FC = () => {
   const { t } = useTranslation();
-  const { totalPage, clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage } = clientFilterStore();
+  const { totalPage, clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: "",
     id: "",
@@ -34,6 +33,7 @@ const ClientTables: React.FC = () => {
   };
 
   const openIsModal = () => setIsModal(!isModal)
+  const openIsMessageModal = () => setIsMessageModal(!isMessageModal)
 
   const getItems = (id: string): MenuProps["items"] => [
     {
@@ -42,16 +42,23 @@ const ClientTables: React.FC = () => {
     },
     {
       key: 'ACTIVE',
-      label: `${t('Active')}`
+      label: `${t('Active')}`,
+      onClick: () => openIsModal(),
     },
     {
       key: 'BLOCKED',
-      label: `${t('Locked')}`
+      label: `${t('Locked')}`,
+      onClick: () => openIsModal(),
+    },
+    {
+      key: '4',
+      label: `${'Send message'}`,
+      onClick: () => openIsMessageModal(),
     }
   ];
+
   const handleMenuClick = (e: any, id: string) => {
     setUpdateStatus({ status: e.key, id });
-    openIsModal();
   };
   
 
@@ -126,7 +133,10 @@ const ClientTables: React.FC = () => {
                     <Dropdown
                       overlay={
                         <Menu
-                          onClick={(e) => handleMenuClick(e, item.id)}
+                          onClick={(e) => {
+                            handleMenuClick(e, item.id)
+                            setid(item.id)
+                          }}
                           items={getItems(item.id)}
                         />
                       }
@@ -191,6 +201,7 @@ const ClientTables: React.FC = () => {
           </div>
         </div>
       </Modal>
+      <ClientModal/>
     </>
   );
 };

@@ -19,6 +19,10 @@ export interface OrderData {
   setIsLoading: (isLoading: boolean) => void;
   page: number;
   setPage: (val: number) => void;
+  isModal: boolean;
+  setIsModal: (isModal: boolean) => void;
+  message: string;
+  setMessage: (isModal: string) => void;
 }
 
 const orderStore = create<OrderData>((set) => ({
@@ -38,6 +42,10 @@ const orderStore = create<OrderData>((set) => ({
   setIsLoading: (val: boolean) => set({ isLoading: val }),
   page: 0,
   setPage: (val: number) => set({ page: val }), 
+  isModal: false,
+  setIsModal: (val: boolean) => set({ isModal: val }),
+  message: "",
+  setMessage: (val: string) => set({ message: val }),
 }));
 
 export default orderStore;
