@@ -21,7 +21,7 @@ const SecondTab: React.FC<SecondTabProps> = ({ serviceData }) => {
     <div className='flex flex-col gap-5'>
       {serviceData.length === 0 ?
         <div className='h-[1000px]'>
-          <p className='text-xl dark:text-white'>Master services not found</p>
+          <p className='text-xl dark:text-[#60606d]'>Master services not found</p>
         </div> : serviceData.map((service, index) => (
           <SecondTabCard
             key={index}

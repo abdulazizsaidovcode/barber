@@ -6,7 +6,7 @@ import opacha from '../../../images/Group 940396.png';
 const RequestSpecializations: React.FC = () => {
   return (
     <RequestLayout>
-      <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full shadow-3 shadow-[0.2px] pb-5">
+      <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
         <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center px-5">
           <div className="flex gap-3">
             <p className="dark:text-[#000]">Специализации</p>
@@ -17,7 +17,7 @@ const RequestSpecializations: React.FC = () => {
         </div>
         <div className="flex justify-between mt-4">
           <div className='w-1/2 mr-1'>
-            <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white rounded p-2">
+            <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white  p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Новые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -43,7 +43,7 @@ const RequestSpecializations: React.FC = () => {
             </div>
           </div>
           <div className='w-1/2 ml-1'>
-            <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white rounded p-2">
+            <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
