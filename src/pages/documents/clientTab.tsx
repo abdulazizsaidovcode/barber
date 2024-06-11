@@ -32,7 +32,7 @@ const ClientDocument: React.FC = () => {
         disabled={!isSwitchOn}
         onClick={handleButtonClick}
       >
-        Сохранить изменения
+        {t("Save_changes")}
       </button>
     </div>
   );

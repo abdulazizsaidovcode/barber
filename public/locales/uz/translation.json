@@ -97,5 +97,13 @@
   "Blocker": "Mijozni bloklash",
   "Activer": "Mijozni aktivlashtirish",
   "General": "Umumiy",
-  "Show_in_apps": "Ilovalarda ko'rsatish"
+  "Show_in_apps": "Ilovalarda ko'rsatish",
+  "Save_changes": "O'zgarishlarni saqlang",
+  "Help_message_update": "Yordam xabarini yangilash",
+  "Loading": "Yuklanmoqda...",
+  "Save": "Saqlash",
+  "Close": "Yopish",
+  "Service_Specification": "Xizmat spetsifikatsiyasi",
+  "Offer": "Taklif",
+  "Terms_of_use": "Foydalanish shartlari"
 }

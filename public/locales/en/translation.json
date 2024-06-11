@@ -94,5 +94,12 @@
   "Activer": "Client activation",
   "General": "General",
   "Show_in_apps": "Show in apps",
-  "Save_changes": "Save changes"
+  "Save_changes": "Save changes",
+  "Help_message_update": "Help message update",
+  "Loading": "Loading...",
+  "Save": "Save",
+  "Close": "Close",
+  "Service_Specification": "Service Specification",
+  "Offer": "Offer",
+  "Terms_of_use": "Terms of use"
 }
