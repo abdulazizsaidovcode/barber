@@ -1,43 +1,71 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import React from 'react';
+import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
+import { Modal, Skeleton } from 'antd';
+import React, { useState } from 'react';
 import { getFileId } from '../../helpers/api';
 
 interface ProcedureItemProps {
   imgUrl: string;
-  buttonText: string;
-  buttonColor: string;
-  title: string;
-  icon: React.ReactNode;
-  id: string;
-  date: string;
-  status: string;
+  status: boolean;
 }
 
-const ProcedureItem: React.FC<ProcedureItemProps> = ({
-  imgUrl,
-  buttonText,
-  buttonColor,
-  icon,
-  title,
-  id,
-  date,
-  status,
-}) => {
-  const [loading, setLoading] = React.useState(true);
+const ProcedureItem: React.FC<ProcedureItemProps> = ({ imgUrl, status }) => {
+  const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleImageLoad = () => {
+    setLoading(false);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center">
       {/* images */}
-        <div className='shadow-xl flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover'>
-          <img className='w-full h-full' src={getFileId + imgUrl} alt="" />
-          <p>{status}</p>
-          {/* Icons that appear depending on the status */}
+      <div
+        className="shadow-xl flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover"
+        onClick={showModal}
+      >
+        {loading && <Skeleton.Image />}
+        <img
+          className={`w-full h-full ${loading ? 'hidden' : ''}`}
+          src={getFileId + imgUrl}
+          alt=""
+          onLoad={handleImageLoad}
+        />
       </div>
-          <div>
-            <div className='p-1 bg-gray flex items-center justify-center rounded-md'>
-              <DeleteOutlined />
+      <div
+        className={`p-2 text-white ${status ? 'bg-green-500' : 'bg-red-500'} mt-2 w-[50%] flex items-center justify-center rounded-md`}
+      >
+        {status ? 'Одобрена' : 'Новая'}
+      </div>
+      {/* Icons that appear depending on the status */}
+      <div className="flex flex-col items-center mt-2">
+        {status ? (
+          <div className="p-1 bg-gray-200 flex items-center justify-center rounded-md">
+            <DeleteOutlined />
+          </div>
+        ) : (
+          <div className="flex space-x-2">
+            <div className="p-1 bg-green-200 flex items-center justify-center rounded-full">
+              <CheckOutlined className="text-green-600" />
+            </div>
+            <div className="p-1 bg-red-200 flex items-center justify-center rounded-full">
+              <DeleteOutlined className="text-red-600" />
             </div>
           </div>
+        )}
+      </div>
+
+      {/* Modal for full image view */}
+      <Modal visible={isModalVisible} footer={null} onCancel={handleCancel}>
+        <img className="w-full h-full" src={getFileId + imgUrl} alt="" />
+      </Modal>
     </div>
   );
 };
