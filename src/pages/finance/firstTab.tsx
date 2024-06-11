@@ -9,6 +9,7 @@ import { base_url } from '../../helpers/api.tsx';
 import { config } from '../../helpers/token.tsx';
 import { Buttons } from '../../components/buttons/index.tsx';
 import { downloadExcelFile } from '../../helpers/attachment/file-download.tsx';
+import { useTranslation } from 'react-i18next';
 
 // const { Option } = Select;
 
@@ -64,16 +65,18 @@ const FirstTab: React.FC = () => {
     }
     downloadExcelFile(url, setIsLoading);
   };
-
+  const { t } = useTranslation()
   // Create an array for summary data
   const summaryData = data.object ? [
-    { label: 'Оборот', value: data.object.reduce((acc: number, item: FinanceData) => acc + item.nonCashTurnover, 0) },
-    { label: 'Доход ', value: data.object.reduce((acc: number, item: FinanceData) => acc + item.turnoverTotal, 0) },
-    { label: 'Расход ', value: data.object.reduce((acc: number, item: FinanceData) => acc + item.totalIncome, 0) },
+    { label: t("Turnover"), value: data.object.reduce((acc: number, item: FinanceData) => acc + item.nonCashTurnover, 0) },
+    {
+      label: t("Income"), value: data.object.reduce((acc: number, item: FinanceData) => acc + item.turnoverTotal, 0)
+    },
+    { label: t("Consumption"), value: data.object.reduce((acc: number, item: FinanceData) => acc + item.totalIncome, 0) },
   ] : [];
 
   const tableHeaders = [
-    { id: 1, name: 'Регион' },
+    { id: 1, name: t("Region") },
     { id: 2, name: 'Оборот безналичный' },
     { id: 3, name: 'Оборот Общий' },
     { id: 4, name: 'Доходы всего' },
