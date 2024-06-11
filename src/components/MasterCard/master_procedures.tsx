@@ -1,10 +1,16 @@
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { Button, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useLocation } from 'react-router-dom';
-import { master_delate_service } from '../../helpers/api';
-import CustomModal from './../modals/modal'; // Ensure you have this custom modal component
+import {
+  master_delate_service,
+  master_confirm_new_service,
+  master_delate_new_service,
+} from '../../helpers/api';
+import CustomModal from './../modals/modal';
+import { config } from '../../helpers/token';
+import axios from 'axios';
 
 interface ProceduresProps {
   title: string;
@@ -13,6 +19,7 @@ interface ProceduresProps {
   duration: number;
   description: string;
   serviceStatus: string;
+  ServesId: string;
 }
 
 const MasterProcedures: React.FC<ProceduresProps> = ({
@@ -22,8 +29,10 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   duration,
   description,
   serviceStatus,
+  ServesId,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
   const [value, setValue] = useState('');
   const location = useLocation();
 
@@ -37,16 +46,22 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     setIsModalVisible(false);
   };
 
+  const showSecondModal = () => {
+    setIsSecondModalVisible(true);
+  };
+
+  const hideSecondModal = () => {
+    setIsSecondModalVisible(false);
+  };
+
   const handleDelete = async () => {
+    const apiEndpoint =
+      serviceStatus === 'APPROVED'
+        ? master_delate_service
+        : master_delate_new_service;
     try {
-      const response = await fetch(`${master_delate_service}${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ comment: value }),
-      });
-      if (response.ok) {
+      const response = await axios.put(`${apiEndpoint}${ServesId}`, config);
+      if (response) {
         message.success('Procedure deleted successfully');
         // Perform any additional state updates or refresh the list
       } else {
@@ -55,7 +70,39 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     } catch (error) {
       message.error('An error occurred while deleting the procedure');
     }
+    try {
+      const response = await axios.delete(`${apiEndpoint}${ServesId}`, config);
+      if (response) {
+        message.success('Procedure deleted successfully');
+        // Perform any additional state updates or refresh the list
+      } else {
+        throw new Error('Failed to delete procedure');
+      }
+    } catch (error) {
+      message.error('An error occurred while deleting the procedure');
+    }
+    hideSecondModal();
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const response = await fetch(`${master_confirm_new_service}${ServesId}`, {
+        method: 'PUT',
+      });
+      if (response.ok) {
+        message.success('Procedure confirmed successfully');
+        // Perform any additional state updates or refresh the list
+      } else {
+        throw new Error('Failed to confirm procedure');
+      }
+    } catch (error) {
+      message.error('An error occurred while confirming the procedure');
+    }
+  };
+
+  const handleFirstModalDeleteClick = () => {
     hideModal();
+    showSecondModal();
   };
 
   return (
@@ -70,11 +117,21 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
       <div className="w-2/3 pl-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold mb-2 text-black">{title}</h2>
-          <div
-            className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
-            onClick={showModal}
-          >
-            <DeleteOutlined />
+          <div className="flex items-center">
+            {serviceStatus !== 'APPROVED' && (
+              <div
+                className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center mr-2"
+                onClick={handleConfirm}
+              >
+                <CheckOutlined />
+              </div>
+            )}
+            <div
+              className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
+              onClick={showModal}
+            >
+              <DeleteOutlined />
+            </div>
           </div>
         </div>
         <div className="flex items-center w-full h-[1px] bg-black"></div>
@@ -135,6 +192,23 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           />
           <div className="flex justify-end gap-2">
             <Button key="cancel" danger onClick={hideModal}>
+              Cancel
+            </Button>
+            <Button
+              key="delete"
+              type="primary"
+              onClick={handleFirstModalDeleteClick}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      </CustomModal>
+      <CustomModal isOpen={isSecondModalVisible} onClose={hideSecondModal}>
+        <div className="flex flex-col gap-4">
+          <p>Are you sure you want to delete this procedure?</p>
+          <div className="flex justify-end gap-2">
+            <Button key="cancel" danger onClick={hideSecondModal}>
               Cancel
             </Button>
             <Button key="delete" type="primary" onClick={handleDelete}>
