@@ -69,7 +69,7 @@ const CardDataCharts: React.FC<CardDataChartsProps> = ({ title, firstTotal, seco
   handleReset;
   return (
     <div className="rounded-3xl border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark flex-wrap dark:bg-boxdark w-full lg:w-[430px]">
-      <div className="mt-4 flex items-center justify-between">
+      <div className=" flex items-center justify-between">
         <div>
           <span className="text-sm font-medium">{title}</span>
           <h4 className="text-title-md font-bold text-black dark:text-white"><CountUp end={firstTotal} duration={3}/> / <CountUp end={secondTotal} duration={3}/></h4>

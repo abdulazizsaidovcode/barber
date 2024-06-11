@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import RequestLayout from '../../../pages/request/request';
-import opacha from '../../../images/Group 940396.png';
+import userImg from '../../../images/user.png';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
-import { new_procedure_url } from '../../../helpers/api';
+import { getFileId,  new_service_url } from '../../../helpers/api';
 import SpecializationsCard from '../cards/specializationsCard';
 import { Skeleton } from 'antd';
 
@@ -24,7 +24,7 @@ const RequestProcedures: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(new_procedure_url, config);
+        const res = await axios.get(new_service_url, config);
         setData(res.data.body);
       } catch { }
       finally {
@@ -68,7 +68,8 @@ const RequestProcedures: React.FC = () => {
                 newProcedures.map(item => (
                   <SpecializationsCard
                     key={item.id}
-                    ownerImage={opacha}
+                    link={item.id}
+                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
                     salonOwner={`${item.firstName} ${item.lastName}`}
                     phoneNumber={item.phoneNumber}
                     salonCreateDate={item.createdAt}
@@ -96,7 +97,8 @@ const RequestProcedures: React.FC = () => {
                 changedProcedures.map(item => (
                   <SpecializationsCard
                     key={item.id}
-                    ownerImage={opacha}
+                    link={item.id}
+                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
                     salonOwner={`${item.firstName} ${item.lastName}`}
                     phoneNumber={item.phoneNumber}
                     salonCreateDate={item.createdAt}

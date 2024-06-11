@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import RequestLayout from '../../../pages/request/request';
-import opacha from '../../../images/Group 940396.png';
+import userImg from '../../../images/user.png';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
-import { new_procedure_url } from '../../../helpers/api';
+import { getFileId, new_procedure_url } from '../../../helpers/api';
 import SpecializationsCard from '../cards/specializationsCard';
 import { Skeleton } from 'antd';
 
@@ -68,7 +68,8 @@ const RequestSpecializations: React.FC = () => {
                 newSpecializations.map(item => (
                   <SpecializationsCard
                     key={item.id}
-                    ownerImage={opacha}
+                    link={item.id}
+                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
                     salonOwner={`${item.firstName} ${item.lastName}`}
                     phoneNumber={item.phoneNumber}
                     salonCreateDate={item.createdAt}
@@ -96,7 +97,8 @@ const RequestSpecializations: React.FC = () => {
                 changedSpecializations.map(item => (
                   <SpecializationsCard
                     key={item.id}
-                    ownerImage={opacha}
+                    link={item.id}
+                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
                     salonOwner={`${item.firstName} ${item.lastName}`}
                     phoneNumber={item.phoneNumber}
                     salonCreateDate={item.createdAt}

@@ -7,23 +7,21 @@ import { config } from '../../helpers/token';
 import { useTranslation } from 'react-i18next';
 
 interface ChartThreeState {
-    series: number[
-
-    ];
+    series: number[];
+    labels: string[];
 }
 
-const options: ApexOptions = {
+const defaultOptions: ApexOptions = {
     chart: {
         fontFamily: 'Satoshi, sans-serif',
         type: 'donut',
     },
-    colors: ['#ffba08', '#faa307', '#f48c06', '#e85d04', '#dc2f02',],
-    labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star',],
+    colors: ['#ffba08', '#faa307', '#f48c06', '#e85d04', '#dc2f02'],
+    labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star'],
     legend: {
         show: true,
         position: 'bottom',
     },
-
     plotOptions: {
         pie: {
             donut: {
@@ -55,56 +53,56 @@ const options: ApexOptions = {
     ],
 };
 
-const ChartSex: React.FC = () => {
+const ChartMasterRate: React.FC = () => {
     const { t } = useTranslation();
-
-    const [chart, setChart] = useState({
-        one: 0,
-        two: 0,
-        three: 0,
-        four: 0,
-        five: 0,
-    })
+    const [options, setOptions] = useState<ApexOptions>(defaultOptions);
+    const [state, setState] = useState<ChartThreeState>({
+        series: [0, 0, 0, 0, 0],
+        labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star'],
+    });
 
     useEffect(() => {
         axios
             .get(`${dashboard_url}web/diagram`, config)
             .then((response) => {
-                setChart(response.data.body);
+                const data = response.data.body;
+                console.log(data);
 
+                const series = [
+                    data.five,
+                    data.four,
+                    data.three,
+                    data.two,
+                    data.one,
+                ];
+
+                // Check if all values are 0
+                const allZero = series.every(value => value === 0);
+                if (allZero) {
+                    setState({
+                        series: [1],
+                        labels: ['No Data'],
+                    });
+                    setOptions({
+                        ...defaultOptions,
+                        labels: ['No Data'],
+                        colors: ['#E4E8EF'],
+                    });
+                } else {
+                    setState({
+                        series,
+                        labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star'],
+                    });
+                    setOptions({
+                        ...defaultOptions,
+                        labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star'],
+                    });
+                }
             })
             .catch(() => {
                 console.error('There was an error fetching the data!');
             });
     }, []);
-
-
-
-
-    const [state, setState] = useState<ChartThreeState>({
-        series: [
-            chart.five,
-            chart.four,
-            chart.three,
-            chart.two,
-            chart.one
-        ],
-    });
-
-    const handleReset = () => {
-        setState((prevState) => ({
-            ...prevState,
-            series: [
-                chart.five,
-                chart.four,
-                chart.three,
-                chart.two,
-                chart.one],
-        }));
-    };
-    handleReset;
-
-
 
     return (
         <>
@@ -121,8 +119,7 @@ const ChartSex: React.FC = () => {
                 </div>
             </div>
         </>
-
     );
 };
 
-export default ChartSex;
+export default ChartMasterRate;

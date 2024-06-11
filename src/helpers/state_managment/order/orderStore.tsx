@@ -13,6 +13,10 @@ export interface OrderData {
   setRegionData: (val: RegionData[]) => void;
   districtData: DistrictData[];
   setDistrictData: (val: DistrictData[]) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+  page: number;
+  setPage: (val: number) => void;
 }
 
 const orderStore = create<OrderData>((set) => ({
@@ -26,6 +30,10 @@ const orderStore = create<OrderData>((set) => ({
   setRegionData: (val: RegionData[]) => set({ regionData: val }),
   districtData: [],
   setDistrictData: (val: DistrictData []) => set({ districtData: val }),
+  isLoading: false,
+  setIsLoading: (val: boolean) => set({ isLoading: val }),
+  page: 0,
+  setPage: (val: number) => set({ page: val }), 
 }));
 
 export default orderStore;
