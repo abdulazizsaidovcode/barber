@@ -190,15 +190,12 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton} onClick={openModal}>
-            {t("Download")}
-            <Button
-              className={`bg-[#f0f0f0]`}
-              onClick={() => downloadExcelFile(url, setIsLoading, page)}
-            >
-              {isLoading ? 'loading...' : 'Download'}
-            </Button>
-            <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
+          <Button
+            className={"bg - [#f0f0f0]"}
+            onClick={() => downloadExcelFile(url, setIsLoading, page)}
+          >
+            {isLoading ? 'loading...' : 'Download'}
+          </Button>
         </Col>
       </Row>
 
