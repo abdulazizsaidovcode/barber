@@ -1,16 +1,26 @@
 import MasterTable from '../../components/Tables/MasterTable.tsx';
 import { thead } from './data.tsx';
 import { CiMenuKebab } from 'react-icons/ci';
-import { MenuProps, Pagination, Dropdown, Space } from 'antd';
+import { MenuProps, Pagination, Dropdown, Space, Menu } from 'antd';
 import Filters from './filters/filters.tsx';
-import React from 'react';
+import React, { useState } from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import images from '../../images/user/user-01.png';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Modal from '../../components/modals/modal.tsx';
+import { Buttons } from '../../components/buttons';
+import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
+import { Toaster } from 'react-hot-toast';
+
+export interface UpdateStatus {
+  status: string;
+  masterId: string;
+}
 
 const MasterTables: React.FC = () => {
-  const { data, totalPage } = masterStore();
+  const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading} = masterStore();
+  const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ status: '', masterId: '' });
   const { t } = useTranslation();
 
   const onChange = (page: number, pageSize: number): void => {
@@ -21,36 +31,28 @@ const MasterTables: React.FC = () => {
   const getItems = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`} >{t("Open")}</Link>,
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
-      key: '2',
-      label: t('Block'),
+      key: 'ACTIVE',
+      label: 'Активный'
     },
     {
-      key: '3',
-      label: t('Unblock'),
-    },
-    {
-      key: '4',
-      label: t("Open_help"),
-    },
-    {
-      key: '5',
-      label: t("discount"),
-    },
-    {
-      key: '6',
-      label: t("Download_help"),
-    },
-    {
-      key: '7',
-      label: t("Write"),
-    },
+      key: 'BLOCKED',
+      label: 'Заблокированный'
+    }
   ];
+
+  const openIsModal = () => setIsModal(!isModal);
+
+  const handleMenuClick = (e: any, masterId: string) => {
+    setUpdateStatus({ status: e.key, masterId });
+    openIsModal();
+  };
 
   return (
     <>
+      <Toaster position={`top-center`} />
       <Filters />
       <MasterTable thead={thead}>
         {data.length > 0 ? (
@@ -60,7 +62,7 @@ const MasterTables: React.FC = () => {
               className={`${key === data.length - 1
                 ? ''
                 : 'border-b border-[#eee] dark:border-strokedark'
-                }`}
+              }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
@@ -90,16 +92,21 @@ const MasterTables: React.FC = () => {
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">{item.rating}</p>
               </td>
-              <td className="min-w-[150px] p-5 flex items-center justify-between">
+              <td className="min-w-[150px] p-5 pt-7 flex items-center justify-between">
                 <p
-                  className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium`}
+                  className={`${item.status === 'ACTIVE' ? 'bg-green-400' : item.status === 'BLOCKED' ? 'bg-red-500' : 'bg-red-700'} text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
                   {item.status}
                 </p>
                 <Space direction="vertical">
                   <Space wrap>
-                    <Dropdown menu={{ items: getItems(item.id) }} placement="bottomLeft" arrow>
-                      <CiMenuKebab className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
+                    <Dropdown
+                      overlay={<Menu onClick={(e) => handleMenuClick(e, item.id)} items={getItems(item.id)} />}
+                      placement="bottomLeft"
+                      arrow
+                    >
+                      <CiMenuKebab
+                        className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
                     </Dropdown>
                   </Space>
                 </Space>
@@ -147,6 +154,27 @@ const MasterTables: React.FC = () => {
         onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
       />
+
+      {/*modal*/}
+      <Modal isOpen={isModal} onClose={openIsModal}>
+        <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
+          <div className={`flex flex-col justify-center`}>
+            <p className={`font-bold text-xl text-black opacity-80 text-center`}>
+              {updateStatus.status === 'ACTIVE' ? 'Активный' : 'Заблокировать'} мастра?
+            </p>
+          </div>
+          <div className={`flex justify-center items-center gap-10 mt-8`}>
+            <Buttons
+              bWidth={`w-[200px]`}
+              onClick={() => updateStatusFunc(updateStatus.masterId, updateStatus.status, setData, setTotalPage, openIsModal, setIsLoading)}
+            >{isLoading ? 'loading...' : 'да'}</Buttons>
+            <Buttons
+              bWidth={`w-[200px]`}
+              onClick={openIsModal}
+            >нет</Buttons>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

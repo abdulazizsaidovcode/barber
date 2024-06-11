@@ -39,6 +39,7 @@ export const child_category_list: string = `${base_url}category/child`;
 
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
+export const update_master_status = `${base_url}user/web/master-edit-status`;
 
 // help url
 export const help_url: string = `${base_url}help`;
