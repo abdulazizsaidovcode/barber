@@ -65,5 +65,7 @@
   "Payment_type_for_completed_entries": "Тип оплаты за завершенные записи",
   "Popular_services_by_category": "Тип оплаты за завершенные записи",
   "Total_income": "Общая прибыль",
-  "January": "январь"
+  "January": "январь",
+  "Information_not_available": "Информация недоступна!",
+  "List_of_masters": "Список мастеров"
 }
