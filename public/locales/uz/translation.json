@@ -54,10 +54,14 @@
   "siderbar_documents": "Normativ hujjatlar",
   "siderbar_Mutual_settlements": "Hisoblar",
   "Subscription_rates_for_client_masters": "Mijoz ustalari uchun obuna tariflari",
+  "Self_employed_status": "O'z-o'zini ish bilan ta'minlash maqomi",
   "Unblock": "Blokdan chiqarish",
   "Write": "Yozish",
   "Region": "Mintaqa",
   "Photo": "Rasm",
+  "Status": "Holati",
+  "Yeah": "Ha",
+  "Not": "Yo'q",
   "Total_turnover": "Umumiy aylanma",
   "Income": "Daromad",
   "FirstTab_name": "Kelgusi",
@@ -70,5 +74,12 @@
   "Total_income": "Umumiy daromad",
   "January": "Yanvar",
   "Information_not_available": " Malumot mavjud emas!",
-  "List_of_masters": "Masterlar ro'yxati"
+  "List_of_masters": "Masterlar ro'yxati",
+  "Active": "Aktiv",
+  "Locked": "Bloklangan",
+  "Place_of_work": "Ish joyi",
+  "Salon": "Salon",
+  "Yes_to_home": "Ha uyga",
+  "On_site": "Ish olib borilayotgan joyda",
+  "Reset": "Qayta yuklash"
 }

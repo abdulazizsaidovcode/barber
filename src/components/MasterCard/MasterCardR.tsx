@@ -268,19 +268,22 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
       </div>
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <p className="text-2xl font-bold">{t('Modal_answer')}</p>
-        <div className="flex items-center justify-end mt-10 gap-4">
-          <Button danger onClick={closeModal}>
-            No
-          </Button>
-          <Button className="text-white" onClick={closeModal}>
-            Ok
-          </Button>
-        </div>
-      </Modal>
-      <Modal isOpen={SendOpen} onClose={closeSendModal}>
-        <div className="w-[45rem]">
+      <div>
+        <Modal isOpen={isOpen} onClose={closeModal}>
+          <p className="text-2xl font-bold">{t('Modal_answer')}</p>
+          <div className="flex items-center justify-end mt-10 gap-4">
+            <Button danger onClick={closeModal}>
+              No
+            </Button>
+            <Button className="text-white" onClick={closeModal}>
+              Ok
+            </Button>
+          </div>
+        </Modal>
+      </div>
+
+      <Modal isOpen={SendOpen} onClose={closeSendModal} mt={'w-[70%]'}>
+        <div className="w-[100%]">
           <p className="text-2xl text-black dark:text-white">Send message:</p>
           <TextArea
             required
@@ -293,7 +296,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex items-center justify-center">
             <Button
               onClick={handlePostBtn}
-              className="text-black mt-4 px-50 dark:text-white"
+              className="text-black mt-4 w-[40%] dark:text-white"
               size="large"
             >
               Send
@@ -301,6 +304,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </div>
       </Modal>
+
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );

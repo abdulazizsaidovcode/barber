@@ -74,15 +74,28 @@ const ChartEight: React.FC = () => {
                 const categories = data.map((item: any) => item.categoryName);
                 const series = data.map((item: any) => item.percent);
 
-                setState({
-                    series: series,
-                    labels: categories,
-                });
-
-                setOptions((prevOptions) => ({
-                    ...prevOptions,
-                    labels: categories,
-                }));
+                // Check if all values are 0
+                const allZero = series.every((value: number) => value === 0);
+                if (allZero) {
+                    setState({
+                        series: [1],
+                        labels: ['No Data'],
+                    });
+                    setOptions({
+                        ...initialOptions,
+                        labels: ['No Data'],
+                        colors: ['#E4E8EF'],
+                    });
+                } else {
+                    setState({
+                        series,
+                        labels: categories,
+                    });
+                    setOptions({
+                        ...initialOptions,
+                        labels: categories,
+                    });
+                }
             })
             .catch(() => {
                 console.error('There was an error fetching the data!');

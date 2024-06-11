@@ -42,20 +42,31 @@ export const updateIsActive = (data: HelpList, setDataAll: (val: HelpList[]) => 
 };
 
 // update help
-export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void, statusHelp: string) => {
+export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void, statusHelp: string, modalVal: {text: string, active: boolean}, setIsLoading: (val: boolean) => void, openIsModal: () => void) => {
   let updateData = {
     helpStatus: 'string',
-    text: data.text,
+    text: modalVal.text,
     attachmentList: data.attachmentList ? data.attachmentList : [],
-    active: data.active
+    active: modalVal.active
   };
 
   if (data.id) {
+    setIsLoading(true)
     axios.put(`${help_url}?id=${data.id}`, updateData, config)
       .then(() => {
         toast.success('Help updated is successfully!');
         getHelp(setDataAll, statusHelp)
+        openIsModal()
+        setIsLoading(false)
       })
-      .catch(() => toast.error('Error updating help!'));
-  } else console.log('error updating help');
+      .catch(() => {
+        toast.error('Error updating help!')
+        setIsLoading(false)
+        openIsModal()
+      });
+  } else {
+    console.log('error updating help');
+    toast.error('Xatolik yuz berdi...')
+    openIsModal()
+  }
 }

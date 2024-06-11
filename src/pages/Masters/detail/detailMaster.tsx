@@ -107,9 +107,9 @@ const DetailMaster: React.FC = () => {
             scheduleType={orderDetails.scheduleType}
             MasterName={orderDetails.firstName}
             MasterImg={
-              orderDetails.masterImgPath === null
+              orderDetails.masterImgId === null
                 ? userImg
-                : orderDetails.masterImgPath
+                : orderDetails.masterImgId
             }
             definitionType={
               orderDetails.masterPhone === undefined
