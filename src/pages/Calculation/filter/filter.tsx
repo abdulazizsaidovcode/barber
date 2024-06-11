@@ -8,9 +8,11 @@ import { getOrder } from "../../../helpers/api-function/order/orderFunction";
 import { getDistrict } from "../../../helpers/api-function/master/master";
 import { order_download } from "../../../helpers/api";
 import { downloadExcelFile } from "../../../helpers/attachment/file-download";
+import { useTranslation } from "react-i18next";
 
 const FilterOrder: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
+  const { t } = useTranslation()
   const {
     regionData,
     setData,
@@ -70,9 +72,8 @@ const FilterOrder: React.FC = () => {
   ]
     .filter(Boolean)
     .join("&");
-  const url: string = `${order_download}?status=${statusO}${
-    queryParams ? "&" : ""
-  }${queryParams}&page=${page}&size=10`;
+  const url: string = `${order_download}?status=${statusO}${queryParams ? "&" : ""
+    }${queryParams}&page=${page}&size=10`;
 
   const handleInputChange = (key: string, value: any) => {
     if (key === "orderDate") {
@@ -103,7 +104,7 @@ const FilterOrder: React.FC = () => {
         {/* fullName */}
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Input
-            placeholder="Search by fullname"
+            placeholder={t("Search_by_fullname")}
             prefix={<IoSearchOutline />}
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             value={filters.fullName}
@@ -122,7 +123,7 @@ const FilterOrder: React.FC = () => {
             }}
           >
             <Select.Option value={0} disabled>
-              Select region
+              {t("Select_region")}
             </Select.Option>
             {regionData.length !== 0 ? (
               regionData.map((region) => (
@@ -131,7 +132,7 @@ const FilterOrder: React.FC = () => {
                 </Select.Option>
               ))
             ) : (
-              <Select.Option disabled>No data</Select.Option>
+              <Select.Option disabled>{t("No_data")}</Select.Option>
             )}
           </Select>
         </Col>
@@ -144,7 +145,7 @@ const FilterOrder: React.FC = () => {
             onChange={(value) => handleInputChange("districtId", value)}
           >
             <Select.Option value={0} disabled>
-              Select city
+              {t("City")}
             </Select.Option>
             {districtData.length !== 0 ? (
               districtData.map((district) => (
@@ -153,7 +154,7 @@ const FilterOrder: React.FC = () => {
                 </Select.Option>
               ))
             ) : (
-              <Select.Option disabled>No data</Select.Option>
+              <Select.Option disabled>{t("No_data")}</Select.Option>
             )}
           </Select>
         </Col>
@@ -168,7 +169,7 @@ const FilterOrder: React.FC = () => {
             className={`bg-[#f0f0f0]`}
             onClick={() => downloadExcelFile(url, setIsLoading, page)}
           >
-            {isLoading ? "loading..." : "Download"}
+            {isLoading ? t("Loading") : t("Download")}
           </Button>
         </Col>
       </Row>
@@ -190,7 +191,7 @@ const FilterOrder: React.FC = () => {
               onChange={(value) => handleInputChange("categoryName", value)}
             >
               <Select.Option value={0} disabled>
-                Select category
+                {t("Select_category")}
               </Select.Option>
               {childCategory.length !== 0 ? (
                 childCategory.map((item) => (
@@ -199,7 +200,7 @@ const FilterOrder: React.FC = () => {
                   </Select.Option>
                 ))
               ) : (
-                <Select.Option disabled>No data</Select.Option>
+                <Select.Option disabled>{t("No_data")}</Select.Option>
               )}
             </Select>
           </Col>
@@ -211,10 +212,10 @@ const FilterOrder: React.FC = () => {
               onChange={(value) => handleInputChange("orderStatus", value)}
             >
               <Select.Option value={0} disabled>
-                Order status
+                {t("Order_status")}
               </Select.Option>
-              <Select.Option value="CONFIRMED">Одобрена √</Select.Option>
-              <Select.Option value="WAIT">На одобрении</Select.Option>
+              <Select.Option value="CONFIRMED">{t("detail_type")}</Select.Option>
+              <Select.Option value="WAIT">{t("On_approval")}</Select.Option>
             </Select>
           </Col>
           {/* paymentType */}
@@ -225,10 +226,10 @@ const FilterOrder: React.FC = () => {
               onChange={(value) => handleInputChange("paymentType", value)}
             >
               <Select.Option value={0} disabled>
-                Payment type
+                {t("order_table_paymentType")}
               </Select.Option>
-              <Select.Option value="CLICK">Click</Select.Option>
-              <Select.Option value="CASH">Cash</Select.Option>
+              <Select.Option value="CLICK">{t("Click")}</Select.Option>
+              <Select.Option value="CASH">{t("Cash")}</Select.Option>
             </Select>
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
@@ -236,7 +237,7 @@ const FilterOrder: React.FC = () => {
               className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full dark:text-white"
               onClick={resetFilters}
             >
-              Reset
+              {t("Reset")}
             </Button>
           </Col>
         </Row>

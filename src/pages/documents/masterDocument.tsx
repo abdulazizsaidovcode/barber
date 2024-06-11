@@ -9,6 +9,7 @@ import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { Toaster } from 'react-hot-toast';
 import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
+import { useTranslation } from 'react-i18next';
 
 const MasterDocument: React.FC = () => {
   const { dataMaster, setDataMaster, setUpdateTextArea, updateTextArea } = helpStore();
@@ -17,13 +18,14 @@ const MasterDocument: React.FC = () => {
 
   const trueFalse = (status: string) => status !== 'SERVICE_SPECIFICATION';
   const openModal = () => setIsModal(!isModal);
+  const { t } = useTranslation()
 
   return (
     <div className="p-2">
       <Toaster position={`top-center`} />
       <div className="flex flex-col gap-3 mb-3">
         {dataMaster.map(item => (
-          <Accordion title={item.helpStatus === 'SERVICE_SPECIFICATION' ? 'Спецификация услуг' : 'Оферта'}>
+          <Accordion title={item.helpStatus === 'SERVICE_SPECIFICATION' ? t("Service_Specification") : t("Offer")}>
             <>
               {trueFalse(item.helpStatus) && item.text && (
                 <div
@@ -33,7 +35,7 @@ const MasterDocument: React.FC = () => {
               )}
               <div className="mt-3 flex justify-between items-center text-slate-700 dark:text-slate-300">
                 <div className="flex gap-3 items-center">
-                  <p>Отображать в приложениях</p>
+                  <p>{t("Show_in_apps")}</p>
                   <Switch
                     isOn={item.active}
                     handleToggle={() => updateIsActive(item, setDataMaster, 'FOR_MASTER')}
@@ -58,14 +60,14 @@ const MasterDocument: React.FC = () => {
         ))}
       </div>
       <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`}>
-        Сохранить изменения
+        {t("Save_changes")}
       </button>
 
       <Modal isOpen={isModal} onClose={openModal}>
         <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
           <div className={`flex flex-col justify-center`}>
             <p className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}>
-              Help message update
+              {t("Help_message_update")}
             </p>
           </div>
           <div className={`mt-5`}>
@@ -84,13 +86,13 @@ const MasterDocument: React.FC = () => {
                 checked={modalVal.active}
                 onChange={e => setModalVal({ ...modalVal, active: e.target.checked })}
               />
-              <label htmlFor={`helpActiveInputMaster`} className={`text-lg text-black dark:text-white font-semibold`}>Active</label>
+              <label htmlFor={`helpActiveInputMaster`} className={`text-lg text-black dark:text-white font-semibold`}>{t("Active")}</label>
             </div>
             <div className={`flex justify-center items-center gap-6 mt-5`}>
               <Buttons bWidth={`w-[150px]`} onClick={() => updateHelp(updateTextArea, setDataMaster, 'FOR_MASTER', modalVal, setIsLoading, openModal)}>
-                {isLoading ? 'loading...' : 'save'}
+                {isLoading ? t("Loading") : t("Save")}
               </Buttons>
-              <Buttons bWidth={`w-[150px]`} onClick={openModal}>close</Buttons>
+              <Buttons bWidth={`w-[150px]`} onClick={openModal}>{t("Close")}</Buttons>
             </div>
           </div>
         </div>

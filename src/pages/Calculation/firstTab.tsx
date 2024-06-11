@@ -8,7 +8,7 @@ import FilterOrder from "./filter/filter";
 
 const FilterComponent: React.FC = () => {
   const { data, totalPage } = orderStore();
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const tableHeaders = [
     { id: 1, name: t("order_table_client") },
@@ -29,7 +29,7 @@ const FilterComponent: React.FC = () => {
     <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
 
-      <FilterOrder/>
+      <FilterOrder />
 
       <div>
         <MasterTable thead={tableHeaders}>
@@ -38,35 +38,35 @@ const FilterComponent: React.FC = () => {
               <tr key={i} className="dark:text-white">
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
-                    <p>{data ? data.clientFullName ? data.clientFullName : "No data" : "No data"}</p>
-                    <p>{data ? data.clientPhone ? data.clientPhone : "No data" : "No data"}</p>
+                    <p>{data ? data.clientFullName ? data.clientFullName : t("No_data") : t("No_data")}</p>
+                    <p>{data ? data.clientPhone ? data.clientPhone : t("No_data") : t("No_data")}</p>
                   </div>
                 </td>
-                <td className="p-5">{data ? data.serviceName ? data.serviceName : "No data" : "No data"}</td>
-                <td className="p-5">{data ? data.orderDate ? data.orderDate : "No data" : "No data"}</td>
+                <td className="p-5">{data ? data.serviceName ? data.serviceName : t("No_data") : t("No_data")}</td>
+                <td className="p-5">{data ? data.orderDate ? data.orderDate : t("No_data") : t("No_data")}</td>
                 <td className="p-5">
                   <div className="bg-blue-500 rounded-md flex items-center gap-2 justify-center p-1">
-                    <p>{data ? data.orderFrom ? data.orderFrom : "No data" : "No data"}</p>
+                    <p>{data ? data.orderFrom ? data.orderFrom : t("No_data") : t("No_data")}</p>
                     <p>-</p>
-                    <p>{data ? data.orderTo ? data.orderTo : "No data" : "No data"}</p>
+                    <p>{data ? data.orderTo ? data.orderTo : t("No_data") : t("No_data")}</p>
                   </div>
                 </td>
-                <td className="p-5">{data ? data.price ? data.price : "No data" :"No data"}</td>
-                <td className="p-5">{data ? data.prePayment ? data.prePayment : "No data" : "No data"}</td>
-                <td className="p-5">{data ? data.paid ? data.paid : "No data" : "No data"}</td>
+                <td className="p-5">{data ? data.price ? data.price : t("No_data") : t("No_data")}</td>
+                <td className="p-5">{data ? data.prePayment ? data.prePayment : t("No_data") : t("No_data")}</td>
+                <td className="p-5">{data ? data.paid ? data.paid : t("No_data") : t("No_data")}</td>
                 <td className="p-5">
                   {data.paymentTypes === null
-                    ? "Mavjud emas"
-                    : data ? data.paymentTypes ? data.paymentTypes : "No data" : "No data"}
+                    ? t("Not_available")
+                    : data ? data.paymentTypes ? data.paymentTypes : t("No_data") : t("No_data")}
                 </td>
-                <td className="p-5">{data ? data.toPay ? data.toPay : "No data" : "No data"}</td>
+                <td className="p-5">{data ? data.toPay ? data.toPay : t("No_data") : t("No_data")}</td>
                 <td className="p-5">
                   {data && data.orderStatus === "COMPLETED" ? "true" : "false"}
                 </td>
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
-                    <p>{data ? data.masterFullName ? data.masterFullName : "No data" : "No data"}</p>
-                    <p>{data ? data.masterPhone ? data.masterPhone : "No data" : "No data"}</p>
+                    <p>{data ? data.masterFullName ? data.masterFullName : t("No_data") : t("No_data")}</p>
+                    <p>{data ? data.masterPhone ? data.masterPhone : t("No_data") : t("No_data")}</p>
                   </div>
                 </td>
 
