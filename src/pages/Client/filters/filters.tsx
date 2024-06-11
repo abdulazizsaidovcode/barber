@@ -7,12 +7,9 @@ import MasterModal from "../client-modal.tsx";
 import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
 import { getClients } from "../../../helpers/api-function/client/client.tsx";
 import { getDistrict } from "../../../helpers/api-function/master/master.tsx";
-<<<<<<< HEAD
 import { useTranslation } from "react-i18next";
-=======
 import { client_download } from "../../../helpers/api.tsx";
 import { downloadExcelFile } from "../../../helpers/attachment/file-download.tsx";
->>>>>>> 97f510bf0fe3eb00e5ace55d9fd4694c90158ee0
 
 const { Option } = Select;
 
@@ -83,7 +80,7 @@ const Filters: React.FC = () => {
   const url: string = `${client_download}?${queryParams}&page=${page}&size=10`;
 
 
-  
+
   const resetFilters = () => {
     setFilters({
       fullName: "",
@@ -193,18 +190,15 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-<<<<<<< HEAD
           <Button style={styles.extraButton} onClick={openModal}>
             {t("Download")}
-=======
-          <Button
-            className={`bg-[#f0f0f0]`}
-            onClick={() => downloadExcelFile(url, setIsLoading, page)}
-          >
-            {isLoading ? 'loading...' : 'Download'}
->>>>>>> 97f510bf0fe3eb00e5ace55d9fd4694c90158ee0
-          </Button>
-          <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
+            <Button
+              className={`bg-[#f0f0f0]`}
+              onClick={() => downloadExcelFile(url, setIsLoading, page)}
+            >
+              {isLoading ? 'loading...' : 'Download'}
+            </Button>
+            <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
         </Col>
       </Row>
 
