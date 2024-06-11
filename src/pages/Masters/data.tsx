@@ -5,10 +5,10 @@ import MasterLocation from './master-location.tsx';
 // const { t } = useTranslation();
 
 export const thead: IThead[] = [
-  // {
-  //   id: 1,
-  //   name: t("Photo"),
-  // },
+  {
+    id: 1,
+    name: 'Фото',
+  },
   {
     id: 2,
     name: 'Мастер',
