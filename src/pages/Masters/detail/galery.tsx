@@ -43,7 +43,7 @@ const Gallery: React.FC = () => {
           </div>
           <div
             key={index}
-            className={`w-full border grid grid-cols-5 gap-3 p-3`}
+            className={`w-full  shadow-8 rounded-xl grid grid-cols-5 gap-3 p-3`}
           >
             {orderDetail.resGalleryAttachments &&
               orderDetail.resGalleryAttachments.map(
