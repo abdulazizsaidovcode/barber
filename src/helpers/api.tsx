@@ -138,3 +138,4 @@ export const new_specialization_url = `${base_url}category/web/not-confirmed`;
 export const new_procedure_url = `${base_url}category/web/not-confirmed`;
 export const new_service_url = `${base_url}service/web/not-confirmed`;
 export const requestes_count = `${base_url}dashboard/web/request/count`;
+export const send_message = `${base_url}message/for/master/by/admin`;

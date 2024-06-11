@@ -6,6 +6,7 @@ import axios from 'axios';
 import { tarif_add_url, tarif_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
+import { Skeleton } from 'antd';
 
 interface Data {
     id: number;
@@ -18,6 +19,7 @@ const TariffsFunctionality: React.FC = () => {
     const [data, setData] = useState<Data[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [newTariffName, setNewTariffName] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchData();
@@ -27,22 +29,25 @@ const TariffsFunctionality: React.FC = () => {
         try {
             const res = await axios.get(tarif_url, config);
             setData(res.data.body);
-        } catch { }
-    }
+            setLoading(false);
+        } catch {
+            setLoading(false);
+        }
+    };
 
     const addData = async (name: string) => {
         try {
             await axios.post(tarif_add_url, { name }, config);
             fetchData();
-            toast.success('Tariff added successfuly')
+            toast.success('Tariff added successfully');
             closeModal();
         } catch { }
-    }
+    };
 
     const closeModal = () => {
         setIsOpen(false);
         setNewTariffName('');
-    }
+    };
 
     const openModal = () => setIsOpen(true);
 
@@ -63,10 +68,9 @@ const TariffsFunctionality: React.FC = () => {
                 </div>
             </Link>
         );
-    }
+    };
 
     return (
-
         <>
             <DefaultLayout>
                 <div>
@@ -75,14 +79,20 @@ const TariffsFunctionality: React.FC = () => {
                         <button onClick={openModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>Добавить Тариф</button>
                     </div>
                     <div className='flex flex-wrap gap-5 mt-5'>
-                        {data.map((item, index) => (
-                            <div key={index}> {/* Added key prop */}
-                                <TariffsFunctionalityCard
-                                    title={item.name} functions={item.functionCount == 0 ? 'не настроено' : `${item.functionCount} Функций`}
-                                    sum={item.monthPrice === 0 || item.monthPrice === null ? 'не настроено' : `${item.monthPrice} сум`} link={`/settings/tariff/${item.id}`}
-                                />
-                            </div>
-                        ))}
+                        {loading ? (
+                            <Skeleton active paragraph={{ rows: 4 }} />
+                        ) : (
+                            data.map((item, index) => (
+                                <div key={index}>
+                                    <TariffsFunctionalityCard
+                                        title={item.name}
+                                        functions={item.functionCount === 0 ? 'не настроено' : `${item.functionCount} Функций`}
+                                        sum={item.monthPrice === 0 || item.monthPrice === null ? 'не настроено' : `${item.monthPrice} сум`}
+                                        link={`/settings/tariff/${item.id}`}
+                                    />
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
             </DefaultLayout>
@@ -106,10 +116,7 @@ const TariffsFunctionality: React.FC = () => {
                     </div>
                 </div>
             </Modal>
-            <Toaster
-                position='top-center'
-                reverseOrder={false}
-            />
+            <Toaster position='top-center' reverseOrder={false} />
         </>
     );
 }
