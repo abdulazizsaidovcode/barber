@@ -77,9 +77,9 @@ const FirstTab: React.FC = () => {
 
   const tableHeaders = [
     { id: 1, name: t("Region") },
-    { id: 2, name: 'Оборот безналичный' },
-    { id: 3, name: 'Оборот Общий' },
-    { id: 4, name: 'Доходы всего' },
+    { id: 2, name: t("Non_cash_turnover") },
+    { id: 3, name: t("Turnover_Total") },
+    { id: 4, name: t("Total_income") },
   ];
 
   return (
@@ -89,7 +89,7 @@ const FirstTab: React.FC = () => {
           {/* Left Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <DatePicker onChange={handleMonthChange} picker="month" style={{ height: 35 }} />
+              <DatePicker onChange={handleMonthChange} picker="month" placeholder={t("Select_month")} style={{ height: 35 }} />
             </div>
             <div className="">
               {summaryData && summaryData.map((item) => (
@@ -107,12 +107,12 @@ const FirstTab: React.FC = () => {
           {/* Right Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <DatePicker onChange={handleYearChange} picker="year" style={{ height: 35 }} />
+              <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
             </div>
             <div>
               <div className="flex items-center mb-[10px]">
                 <p className="mr-[10px] w-[100px] dark:text-white">
-                  Оборот
+                  {t("Turnover")}
                 </p>
                 <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
                   <p className="dark:text-white">{year ? year.income : 0}</p>
@@ -120,7 +120,7 @@ const FirstTab: React.FC = () => {
               </div>
               <div className="flex items-center mb-[10px]">
                 <p className="mr-[10px] w-[100px] dark:text-white">
-                  Доход
+                  {t("Income")}
                 </p>
                 <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
                   <p className="dark:text-white">{year ? year.benefit : 0}</p>
@@ -128,7 +128,7 @@ const FirstTab: React.FC = () => {
               </div>
               <div className="flex items-center mb-[10px]">
                 <p className="mr-[10px] w-[100px] dark:text-white">
-                  Расход
+                  {t("Consumption")}
                 </p>
                 <div className="border-2 border-black px-[50px] dark:border-white py-[10px]">
                   <p className="dark:text-white">{year ? year.expense : 0}</p>
@@ -137,7 +137,7 @@ const FirstTab: React.FC = () => {
             </div>
           </div>
           <Buttons onClick={handleDownload} disabled={isLoading}>
-            {isLoading ? 'Downloading...' : 'Download'}
+            {isLoading ? t("Downloading") : t("Download")}
           </Buttons>
         </div>
       </div>

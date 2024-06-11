@@ -22,6 +22,8 @@
   "siderbar_profile": "Профиль",
   "siderbar_cards": "Карты",
   "Consumption": "Расход",
+  "Downloading": "Загрузка",
+
   "siderbar_chat": "Чат",
   "orders_name": "Записи",
   "Rejected": "Отклонён",
@@ -68,6 +70,8 @@
   "discount": "Сделать скидку",
   "Write": "Написать",
   "Region": "Регион",
+  "Non_cash_turnover": "Оборот безналичный ",
+  "Turnover_Total": "Общий оборот",
   "Photo": "Фото",
   "Total_turnover": "Оборот общий",
   "Income": "Доход",
