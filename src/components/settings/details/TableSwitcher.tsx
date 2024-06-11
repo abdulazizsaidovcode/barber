@@ -14,7 +14,7 @@ const Switch: React.FC<SwitchProps> = ({ isOn, handleToggle }) => {
       }`}
     >
       <div
-        className={`bg-black w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
+        className={`bg-black dark:bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
           isOn ? 'translate-x-10' : 'translate-x-0'
         }`}
       />

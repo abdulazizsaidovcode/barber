@@ -21,7 +21,7 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
     <div>
       <div className='flex flex-col gap-3'>
         {galleryData.length === 0 ?
-          <div>
+          <div className='h-[1000px]'>
             <p className='text-xl dark:text-white'>Master gallery not found</p>
           </div>
           : galleryData.map((album) => (
@@ -30,7 +30,7 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
                 <p className="text-xl font-bold">{album.albumName}</p>
                 <p className="text-xl">{album.date}</p>
               </div>
-              <div className="bg-[#cccccc] dark:bg-white mt-3 h-max py-8 flex gap-4 items-center px-5">
+              <div className="bg-[#cccccc] dark:bg-white mt-3 h-max py-8 flex flex-wrap gap-4 items-center px-5">
                 {album.resGalleryAttachments.map((attachment, index) => (
                   <div key={index} className="bg-white p-1 rounded-md cursor-pointer">
                     <Image width={185} height={150} src={getFileId + attachment} />
