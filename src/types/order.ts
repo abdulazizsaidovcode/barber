@@ -25,6 +25,14 @@ export interface Data {
   whoCanceled: string | null;
 }
 
+export interface CategoryChild {
+  id: string;
+  name: string;
+  categoryFatherId: string;
+  categoryFatherName: string;
+  isNew: boolean
+}
+
 export interface Filter {
   status: string;
   page?: number;

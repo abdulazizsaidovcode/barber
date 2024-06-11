@@ -13,6 +13,7 @@ import clientFilterStore from "../../helpers/state_managment/client/clientFilter
 import { Buttons } from "../../components/buttons/index.tsx";
 import Modal from "../../components/modals/modal.tsx";
 import { updateClientStatus } from "../../helpers/api-function/client/clientFilter.tsx";
+import { getFileId } from "../../helpers/api.tsx";
 
 export interface UpdateStatus {
   status: string;
@@ -52,6 +53,7 @@ const ClientTables: React.FC = () => {
     setUpdateStatus({ status: e.key, clientId });
     openIsModal();
   };
+  
 
   return (
     <>
@@ -68,7 +70,7 @@ const ClientTables: React.FC = () => {
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
-                  src={item?.imgUrl ?? ""}
+                  src={item ? item.imgId ?getFileId + item.imgId : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg"}
                   alt="img"
                   className={"w-10 h-10 scale-[1.4] rounded-full object-cover"}
                 />

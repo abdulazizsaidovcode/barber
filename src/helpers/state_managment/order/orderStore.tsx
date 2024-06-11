@@ -1,10 +1,12 @@
 import { create } from "zustand";
-import { Data } from "../../../types/order";
+import { CategoryChild, Data } from "../../../types/order";
 import { DistrictData, RegionData } from "../../../types/master";
 
 export interface OrderData {
   data: Data[];
   setData: (data: Data[]) => void;
+  childCategory: CategoryChild[];
+  setChildCategoy: (data: CategoryChild[]) => void;
   totalPage: number;
   setTotalPage: (val: number) => void;
   statusO: string;
@@ -22,6 +24,8 @@ export interface OrderData {
 const orderStore = create<OrderData>((set) => ({
   data: [],
   setData: (val: Data[]) => set({ data: val }),
+  childCategory: [],
+  setChildCategoy: (val: CategoryChild[]) => set({ childCategory: val }),
   totalPage: 0,
   setTotalPage: (val: number) => set({ totalPage: val }),
   statusO: "UPCOMING",

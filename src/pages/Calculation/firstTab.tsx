@@ -1,6 +1,6 @@
-import { Select, Button, Popover, Pagination, Space, Dropdown } from "antd";
+import { Pagination, Space, Dropdown } from "antd";
 import MasterTable from "../../components/Tables/MasterTable";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import orderStore from "../../helpers/state_managment/order/orderStore";
 import { CiMenuKebab } from "react-icons/ci";
@@ -38,35 +38,35 @@ const FilterComponent: React.FC = () => {
               <tr key={i} className="dark:text-white">
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
-                    <p>{data.clientFullName}</p>
-                    <p>{data.clientPhone}</p>
+                    <p>{data ? data.clientFullName ? data.clientFullName : "No data" : "No data"}</p>
+                    <p>{data ? data.clientPhone ? data.clientPhone : "No data" : "No data"}</p>
                   </div>
                 </td>
-                <td className="p-5">{data.serviceName}</td>
-                <td className="p-5">{data.orderDate}</td>
+                <td className="p-5">{data ? data.serviceName ? data.serviceName : "No data" : "No data"}</td>
+                <td className="p-5">{data ? data.orderDate ? data.orderDate : "No data" : "No data"}</td>
                 <td className="p-5">
                   <div className="bg-blue-500 rounded-md flex items-center gap-2 justify-center p-1">
-                    <p>{data.orderFrom}</p>
+                    <p>{data ? data.orderFrom ? data.orderFrom : "No data" : "No data"}</p>
                     <p>-</p>
-                    <p>{data.orderTo}</p>
+                    <p>{data ? data.orderTo ? data.orderTo : "No data" : "No data"}</p>
                   </div>
                 </td>
-                <td className="p-5">{data.price}</td>
-                <td className="p-5">{data.prePayment}</td>
-                <td className="p-5">{data.paid}</td>
+                <td className="p-5">{data ? data.price ? data.price : "No data" :"No data"}</td>
+                <td className="p-5">{data ? data.prePayment ? data.prePayment : "No data" : "No data"}</td>
+                <td className="p-5">{data ? data.paid ? data.paid : "No data" : "No data"}</td>
                 <td className="p-5">
                   {data.paymentTypes === null
                     ? "Mavjud emas"
-                    : data.paymentTypes}
+                    : data ? data.paymentTypes ? data.paymentTypes : "No data" : "No data"}
                 </td>
-                <td className="p-5">{data.toPay}</td>
+                <td className="p-5">{data ? data.toPay ? data.toPay : "No data" : "No data"}</td>
                 <td className="p-5">
-                  {data.orderStatus === "COMPLETED" ? "true" : "false"}
+                  {data && data.orderStatus === "COMPLETED" ? "true" : "false"}
                 </td>
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
-                    <p>{data.masterFullName}</p>
-                    <p>{data.masterPhone}</p>
+                    <p>{data ? data.masterFullName ? data.masterFullName : "No data" : "No data"}</p>
+                    <p>{data ? data.masterPhone ? data.masterPhone : "No data" : "No data"}</p>
                   </div>
                 </td>
 
