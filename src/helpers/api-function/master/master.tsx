@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { child_category_list, district_url, master_url, region_url } from '../../api.tsx';
+import { child_category_list, district_url, master_url, region_url, update_master_status } from '../../api.tsx';
 import { config } from '../../token.tsx';
 import { CategoryChild, Data, DistrictData, RegionData } from '../../../types/master.ts';
+import toast from 'react-hot-toast';
 
 interface IMaster {
   fullName?: string;
@@ -39,7 +40,7 @@ export const getMasters = ({
       if (res.data.success === true) {
         setData(res.data.body.object);
         setTotalPage(res.data.body.totalPage);
-      } else setData([])
+      } else setData([]);
     })
     .catch(() => setData([]));
 };
@@ -48,7 +49,7 @@ export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
   axios.get(region_url, config)
     .then(res => {
       if (res.data.success === true) setRegionData(res.data.body);
-      else setRegionData([])
+      else setRegionData([]);
     })
     .catch(() => setRegionData([]));
 };
@@ -57,8 +58,8 @@ export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, dis
   if (districtId) {
     axios.get(`${district_url}?regionId=${districtId}`, config)
       .then(res => {
-        if (res.data.success === true) setDistrictData(res.data.body)
-        else setDistrictData([])
+        if (res.data.success === true) setDistrictData(res.data.body);
+        else setDistrictData([]);
       })
       .catch(() => setDistrictData([]));
   }
@@ -68,7 +69,34 @@ export const getCategory = (setCategoryChild: (data: CategoryChild[]) => void) =
   axios.get(child_category_list, config)
     .then(res => {
       if (res.data.success === true) setCategoryChild(res.data.body);
-      else setCategoryChild([])
+      else setCategoryChild([]);
     })
     .catch(() => setCategoryChild([]));
+};
+
+export const updateStatusFunc = (masterId: string, status: string, setData: (val: Data[]) => void, setTotalPage: (val: number) => void, openIsModal: () => void, setIsLoading: (val: boolean) => void) => {
+  let data = { masterId, status };
+  if (data.masterId && data.status) {
+    setIsLoading(true)
+    axios.put(update_master_status, data, config)
+      .then(res => {
+        setIsLoading(false)
+        if (res.data.success === true) {
+          getMasters({ setData, setTotalPage });
+          toast.success('Successfully update status');
+          openIsModal()
+        } else {
+          toast.error('Serverda xatolik yuz berdi')
+          openIsModal()
+        }
+      })
+      .catch(() => {
+        setIsLoading(false)
+        toast.error('Error updating status!')
+        openIsModal()
+      });
+  } else {
+    toast.error('Error updating status');
+    openIsModal()
+  }
 };

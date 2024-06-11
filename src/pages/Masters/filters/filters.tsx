@@ -2,14 +2,14 @@ import { Button, Col, DatePicker, Input, Row, Select, Space } from 'antd';
 import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import MasterModal from '../master-modal.tsx';
 import { getDistrict, getMasters } from '../../../helpers/api-function/master/master.tsx';
 import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
 import { useTranslation } from 'react-i18next';
+import { downloadExcelFile } from '../../../helpers/attachment/file-download.tsx';
+import { master_download } from '../../../helpers/api.tsx';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
-
 
 const Filters: React.FC = () => {
   const {
@@ -21,10 +21,11 @@ const Filters: React.FC = () => {
     districtData,
     filters,
     filterObj,
-    category
+    category,
+    isLoading,
+    setIsLoading
   } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -47,7 +48,6 @@ const Filters: React.FC = () => {
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
   const handleInputChange = (key: string, value: any) => setFilters({ ...filters, [key]: value });
-  const openModal = (): void => setIsModalOpen(!isModalOpen);
 
   function datePicker(num: number) {
     let date, month, year;
@@ -135,8 +135,12 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton} onClick={openModal}>{t('Download')}</Button>
-          <MasterModal isModalOpen={isModalOpen} openModal={openModal} />
+          <Button
+            style={styles.extraButton}
+            onClick={() => downloadExcelFile(master_download, setIsLoading)}
+          >
+            {isLoading ? 'loading...' : t('Download')}
+          </Button>
         </Col>
       </Row>
 

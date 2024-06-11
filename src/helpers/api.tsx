@@ -30,6 +30,8 @@ export const getMe = (token?: string) => {
 // swagger url
 export const base_url: string = 'http://45.67.35.86:8080/';
 
+export const master_download: string = `${base_url}user/web/masters/download`;
+
 // get region url
 export const region_url: string = `${base_url}region`;
 export const district_url: string = `${base_url}district`;
@@ -39,6 +41,7 @@ export const child_category_list: string = `${base_url}category/child`;
 
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
+export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
 // help url
 export const help_url: string = `${base_url}help`;
