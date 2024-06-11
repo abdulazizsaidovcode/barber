@@ -98,20 +98,27 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           read: true,
         },
         config,
-        );
-        console.log('Message sent successfully:', response.data);
-        toast.success('Message sent successfully');
-        closeSendModal();
-      } catch (error) {
-        console.error('There was an error sending the message!', error);
-        toast.error('Failed to send message');
-      }
-    };
-    const handleClickSendBtn = ()=>{
-      setMessage("")
-      setSendOpen(true);
+      );
+      console.log('Message sent successfully:', response.data);
+      toast.success('Message sent successfully');
+      closeSendModal();
+    } catch (error) {
+      console.error('There was an error sending the message!', error);
+      toast.error('Failed to send message');
     }
-    return (
+  };
+  const handleClickSendBtn = () => {
+    setMessage('');
+    setSendOpen(true);
+  };
+  const handlePostBtn = () => {
+    if (message.valueOf() === '' || message.trim() === '') {
+      toast.error('информация не введена');
+    } else {
+      sendMessage();
+    }
+  };
+  return (
     <div className="flex flex-col lg:flex-row-reverse gap-4 mt-4">
       <div className="w-[100%] flex flex-col items-center justify-center gap-4">
         <Skeleton loading={isLoading} active>
@@ -276,7 +283,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <div className="w-[45rem]">
           <p className="text-2xl text-black dark:text-white">Send message:</p>
           <TextArea
-          required
+            required
             className="mt-4"
             rows={4}
             placeholder="Enter your message"
@@ -285,7 +292,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           />
           <div className="flex items-center justify-center">
             <Button
-              onClick={sendMessage}
+              onClick={handlePostBtn}
               className="text-black mt-4 px-50 dark:text-white"
               size="large"
             >
