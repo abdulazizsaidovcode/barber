@@ -12,7 +12,7 @@ interface SpecializationsCardProp {
 const SpecializationsCard: React.FC<SpecializationsCardProp> = ({ ownerImage, salonDescription, salonCreateDate, salonOwner, phoneNumber }) => {
   return (
     <Link to={'/'}>
-      <div className='lg:w-[420px] w-full cursor-pointer h-[130px] rounded-xl shadow-4 shadow-[1px] p-3 bg-white'>
+      <div className='lg:w-[420px] w-full cursor-pointer h-[130px] rounded-xl reviews-shadow p-3 bg-white'>
         <div className='flex justify-between'>
           <div className='flex gap-3 mt-3'>
             <div>

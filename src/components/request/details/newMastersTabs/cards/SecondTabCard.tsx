@@ -11,7 +11,7 @@ interface SecondTabCardProp {
 
 const SecondTabCard: React.FC<SecondTabCardProp> = ({ category, price, duration, description, image }) => {
     return (
-        <div className='bg-[#cccccc] dark:bg-white px-4 flex w-full h-60 py-3'>
+        <div className='bg-[#cccccc] dark:bg-[#60606d] px-4 flex w-full h-60 py-3'>
             <div className='w-[22%] mx-1 flex items-center'>
                 <Image width={280} height={200} src={image} />
             </div>
