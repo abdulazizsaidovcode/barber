@@ -38,6 +38,8 @@ export interface MasterData {
   setIsModal: (isModal: boolean) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  page: number;
+  setPage: (val: number) => void;
 }
 
 export interface Data {

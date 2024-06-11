@@ -43,6 +43,8 @@ const masterStore = create<MasterData>((set) => ({
   setIsModal: (val: boolean) => set({ isModal: val }),
   isLoading: false,
   setIsLoading: (val: boolean) => set({ isLoading: val }),
+  page: 0,
+  setPage: (val: number) => set({ page: val }),
 }));
 
 export default masterStore;
