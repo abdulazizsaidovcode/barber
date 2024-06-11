@@ -30,6 +30,8 @@ export const getMe = (token?: string) => {
 // swagger url
 export const base_url: string = 'http://45.67.35.86:8080/';
 
+export const master_download: string = `${base_url}user/web/masters/download`;
+
 // get region url
 export const region_url: string = `${base_url}region`;
 export const district_url: string = `${base_url}district`;
@@ -39,7 +41,7 @@ export const child_category_list: string = `${base_url}category/child`;
 
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
-export const update_master_status = `${base_url}user/web/master-edit-status`;
+export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
 // help url
 export const help_url: string = `${base_url}help`;
@@ -123,3 +125,5 @@ export const masters_gallery_url = `${base_url}gallery/web`;
 export const masters_service_url = `${base_url}service/web`;
 export const masters_confirm_url = `${base_url}user/web/master-confirm`;
 export const new_foto_url = `${base_url}gallery/web/new`;
+export const new_specialization_url = `${base_url}category/web/not-confirmed`;
+export const new_procedure_url = `${base_url}service/web/not-confirmed`;

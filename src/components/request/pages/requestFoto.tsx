@@ -25,9 +25,7 @@ const RequestFoto: React.FC = () => {
       try {
         const res = await axios.get(new_foto_url, config);
         setData(res.data.body);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch { }
     };
 
     fetchData();

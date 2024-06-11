@@ -142,7 +142,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   ];
   return (
     <Modal isOpen={isOpen} onClose={onClose} mt='lg:mt-[550px] mt-[1200px]'>
-      <div className='lg:w-[1300px] lg:h-[1100px] h-[1700px]'>
+      <div className='lg:w-[1300px] h-max'>
         <Tabs
           className="dark:bg-boxdark bg-white p-2 w-full"
           defaultActiveKey="1"

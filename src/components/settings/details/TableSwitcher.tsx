@@ -9,6 +9,7 @@ const Switch: React.FC<SwitchProps> = ({ isOn, handleToggle }) => {
   return (
     
       <div
+
         onClick={handleToggle}
         className={`w-15 h-2 flex items-center rounded-full cursor-pointer transition duration-300 ease-in-out ${isOn ? 'bg-slate-500' : 'bg-slate-500'
           }`}
@@ -19,7 +20,7 @@ const Switch: React.FC<SwitchProps> = ({ isOn, handleToggle }) => {
         />
       </div>
     
-
+      
   );
 };
 
