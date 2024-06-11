@@ -7,12 +7,12 @@ interface MenuProp {
   link: string;
 }
 
-const RequestSidebar: React.FC<{ newMastersCount?: number | undefined }> = ({newMastersCount}) => {
+const RequestSidebar: React.FC<{ newMastersCount?: number | undefined; newFotoCount?: number | undefined }> = ({newMastersCount, newFotoCount}) => {
   const location = useLocation();
 
   const menu: MenuProp[] = [
     { name: 'Новые мастера', count: newMastersCount, link: '/request/new-masters' },
-    { name: 'Фото', count: 23, link: '/request/foto' },
+    { name: 'Фото', count: newFotoCount, link: '/request/foto' },
     { name: 'Специализации', count: 23, link: '/request/specializations' },
     { name: 'Процедуры', count: 23, link: '/request/procedures' }
   ];

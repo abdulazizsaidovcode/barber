@@ -9,7 +9,7 @@ interface ThirdTabProps {
     resGalleryAttachments: [
       { attachmentId: string; main: boolean; newStatus: boolean }
     ];
-    createdAt: string
+    date: string
   }[];
   onClose: () => void;
   openReasonModal: () => void;
@@ -28,7 +28,7 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
             <div key={album.id}>
               <div className="bg-[#cccccc] dark:bg-white h-15 flex justify-between items-center px-5">
                 <p className="text-xl font-bold">{album.albumName}</p>
-                <p className="text-xl">{new Date().toLocaleDateString()}</p>
+                <p className="text-xl">{album.date}</p>
               </div>
               <div className="bg-[#cccccc] dark:bg-white mt-3 h-max py-8 flex gap-4 items-center px-5">
                 {album.resGalleryAttachments.map((attachment, index) => (

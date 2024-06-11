@@ -7,15 +7,16 @@ interface FotoCardProp {
   salonCreateDate: string;
   salonDescription: string;
   ownerImage: any;
+  link: string;
 }
 
-const FotoCard: React.FC<FotoCardProp> = ({ ownerImage, salonDescription, salonCreateDate, salonOwner, phoneNumber }) => {
+const FotoCard: React.FC<FotoCardProp> = ({ ownerImage, salonDescription, salonCreateDate, salonOwner, phoneNumber, link }) => {
   return (
-    <Link to={'/'}>
-      <div className='w-[280px] cursor-pointer h-[150px] rounded-xl shadow-4 shadow-[1px] p-3 bg-white'>
+    <Link to={`/master/${link}`}>
+      <div className='lg:w-[280px] sm:w-[336px] cursor-pointer h-[150px] rounded-xl shadow-4 shadow-[1px] p-3 bg-white'>
         <div className='flex gap-3 mt-3'>
           <div>
-            <img src={ownerImage} alt="" />
+            <img className='w-7 h-7 rounded-full' src={ownerImage} alt="" />
           </div>
           <div>
             <p className='text-[14px] dark:text-[#000]'>{salonOwner}</p>
