@@ -91,5 +91,8 @@
   "Deleted": "Deleted",
   "No_data_available": "No data available!",
   "Blocker": "Block the client",
-  "Activer": "Client activation"
+  "Activer": "Client activation",
+  "General": "General",
+  "Show_in_apps": "Show in apps",
+  "Save_changes": "Save changes"
 }

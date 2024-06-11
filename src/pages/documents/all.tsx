@@ -14,7 +14,7 @@ import { Buttons } from '../../components/buttons';
 const All: React.FC = () => {
   const { dataAll, setDataAll, updateTextArea, setUpdateTextArea } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
-  const [modalVal, setModalVal] = useState<{text: string; active: boolean}>({ text: '', active: false });
+  const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
 
   const trueFalse = (status: string) => status !== 'LICENSES' && status !== 'CERTIFICATES';
   const openIsModal = () => setIsModal(!isModal);
@@ -76,7 +76,7 @@ const All: React.FC = () => {
       {/*${!Object.values(switchStates).some(state => state) ? 'opacity-50 cursor-not-allowed' : ''}*/}
       <button
         className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`}
-        // disabled={!Object.values(switchStates).some(state => state)}
+      // disabled={!Object.values(switchStates).some(state => state)}
       >
         Сохранить изменения
       </button>

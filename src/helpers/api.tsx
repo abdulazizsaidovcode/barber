@@ -46,7 +46,9 @@ export const master_url: string = `${base_url}user/web/masters-by-filter`;
 export const master_full_data: string = `${base_url}user/web/master-full-info`;
 export const master_gallery_id: string = `${base_url}gallery/web/`;
 export const master_send_message_master: string = `${base_url}message/for/master/by/admin`;
-export const master_delate_service: string = `${base_url}message/for/master/by/admin`;
+export const master_delate_service: string = `${base_url}service/web/not-confirmed/`;
+export const master_confirm_new_service: string = `${base_url}service/web/check/`;
+export const master_delate_new_service: string = `${base_url}service/isActive/`;
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
