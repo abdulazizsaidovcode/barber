@@ -75,8 +75,8 @@ export const getCategory = (setCategoryChild: (data: CategoryChild[]) => void) =
 };
 
 export const updateStatusFunc = (masterId: string, status: string, setData: (val: Data[]) => void, setTotalPage: (val: number) => void, openIsModal: () => void, setIsLoading: (val: boolean) => void) => {
-  let data = { masterId, status };
-  if (data.masterId && data.status) {
+  let data = { id: masterId, status };
+  if (data.id && data.status) {
     setIsLoading(true)
     axios.put(update_master_status, data, config)
       .then(res => {
