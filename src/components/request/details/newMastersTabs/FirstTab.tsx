@@ -50,8 +50,8 @@ const FirstTab: React.FC<FirstTabProp> = ({
 
     return (
         <div className='flex lg:flex-row flex-col justify-between'>
-            <div className='lg:w-1/4 w-full mx-1'>
-                <div className='bg-[#cccccc] dark:bg-white w-full h-[27%]'>
+            <div className='lg:w-1/4 w-full mx-1 mt-3'>
+                <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[27%]'>
                     <div className='flex justify-end p-3 items-center'>
                         <GoDotFill className={masterChatStatus === 'OFFLINE' ? 'text-red-700' : 'text-[#24FF00]'} />
                         <p className='ml-2'>{masterChatStatus === 'OFFLINE' ? 'Не сети' : 'В сети'}</p>
@@ -60,7 +60,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
                         <img className='w-45 h-45' src={masterImgPath ? masterImgPath : userImg} alt="Profile" />
                     </div>
                 </div>
-                <div className='bg-[#cccccc] dark:bg-white w-full h-[71.8%] mt-3 p-4 py-5'>
+                <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[71.8%] mt-3 p-4 py-5'>
                     <div>
                         <p className='text-2xl'>Контакты:</p>
                     </div>
@@ -82,7 +82,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 </div>
             </div>
             <div className='lg:w-3/4 w-full h-auto mx-1'>
-                <div className='bg-[#cccccc] dark:bg-white mt-3 p-4 py-5 w-full'>
+                <div className='bg-[#cccccc] dark:bg-[#60606d] mt-3 p-4 py-5 w-full'>
                     <div>
                         <p className='text-2xl'>Профиль:</p>
                     </div>
@@ -110,7 +110,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
                         </div>
                     </div>
                 </div>
-                <div className='bg-[#cccccc] dark:bg-white p-4 py-5 w-full mt-3'>
+                <div className='bg-[#cccccc] dark:bg-[#60606d] p-4 py-5 w-full mt-3'>
                     <div>
                         <p className='text-2xl'>Информация о профессии:</p>
                     </div>

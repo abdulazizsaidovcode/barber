@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { client_full_data } from '../../../helpers/api';
+import { client_full_data, getFileId } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import DetailClient from '../../../components/client_card/detail';
 import DefaultLayout from '../../../layout/DefaultLayout';
+import userImg from "../../../images/user.png"
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
@@ -41,7 +42,9 @@ const DetailMaster: React.FC = () => {
             <DetailClient
               ClientId=""
               StatusNow={orderDetails.chatStatus}
-              ClientImg={orderDetails.image ?? ''}
+              ClientImg={  orderDetails.image
+                ? getFileId + orderDetails.image
+                : userImg }
               StartData={orderDetails.registrationDate ?? 'Mavjud emas'}
               Telegram={orderDetails.telegram ?? 'Mavjud emas'}
               Clients={orderDetails.masterCount ?? 'Mavjud emas'}

@@ -7,7 +7,7 @@ interface MenuProp {
   link: string;
 }
 
-const RequestSidebar: React.FC<{ newMastersCount?: number | undefined; newFotoCount?: number | undefined }> = ({newMastersCount, newFotoCount}) => {
+const RequestSidebar: React.FC<{ newMastersCount?: number | undefined; newFotoCount?: number | undefined }> = ({ newMastersCount = 0, newFotoCount = 0}) => {
   const location = useLocation();
 
   const menu: MenuProp[] = [
@@ -18,10 +18,10 @@ const RequestSidebar: React.FC<{ newMastersCount?: number | undefined; newFotoCo
   ];
 
   return (
-    <div className='bg-[#F5F6F7] md:mt-2 md:ms-1 dark:bg-[#21212e] shadow-2 shadow-[0.2px] p-3 w-[100%] h-[600px] fixed py-10'>
+    <div className='bg-[#F5F6F7] md:mt-2 md:ms-1 dark:bg-[#21212e] reviews-shadow  p-3 w-[100%] h-[600px] fixed py-10'>
       <div className='w-full flex items-center px-4 justify-between h-14 rounded-3xl bg-white'>
         <p className='dark:text-[#000]'>Все запросы</p>
-        <p className='text-[#7D8FB3] font-bold'>43</p>
+        <p className='text-[#7D8FB3] font-bold'>{newMastersCount += newFotoCount}</p>
       </div>
       <div className='mt-5 flex flex-col gap-3'>
         {menu.map((item, index) => (

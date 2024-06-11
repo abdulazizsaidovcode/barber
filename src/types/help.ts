@@ -6,10 +6,8 @@ export interface HelpTypes {
   setDataMaster: (val: HelpList[]) => void;
   dataClient: HelpList[];
   setDataClient: (val: HelpList[]) => void;
-  // oneHelp: HelpList | null
-  // setOneHelp: (val: HelpList) => void;
-  // switchStates: { [key: string]: boolean },
-  // setSwitchStates: (val: { [key: string]: boolean }) => void
+  updateTextArea: HelpList | null
+  setUpdateTextArea: (val: HelpList) => void;
 }
 
 // help list types

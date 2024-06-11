@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { get_orders_list } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import axios from 'axios';
-import DefaultLayout from '../../../layout/DefaultLayout';
 import { useTranslation } from 'react-i18next';
 import { getFileId } from '../../../helpers/api';
 import userImg from '../../../images/user.png';

@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import Switch from './../settings/details/TableSwitcher';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-import { client_block_put, client_send_message } from '../../helpers/api';
-import { config } from './../../helpers/token';
 import { useLocation } from 'react-router-dom';
 import Modal from '../modals/modal';
+import { config } from '../../helpers/token';
+import { client_block_put, client_send_message } from '../../helpers/api';
 
 const { TextArea } = Input;
 
@@ -82,38 +82,42 @@ const DetailClient: React.FC<DetailClientProps> = ({
     try {
       const response = await axios.put(
         `${client_block_put}?isBlock=${pendingSwitchState}&clientId=${id}`,
+        null,
         config,
       );
 
       console.log('Switch toggled successfully:', response.data);
+      toast.success(t('Switch toggled successfully'));
     } catch (error) {
       console.error('Error toggling switch:', error);
+      toast.error(t('Error toggling switch'));
     }
     closeModal();
   };
 
   const handleSendMessage = async () => {
-    console.log({
-      clientId: ClientId,
-      message: `${message}`,
-    });
-
     try {
       const response = await axios.put(
-        `${client_send_message}`,
+        client_send_message,
         {
-          clientId: ClientId,
-          message: `${message}`,
+
+            clientId: id,
+            masterId: null,
+            adminId: null,
+            message: message,
+            messageStatus: 'MASTER_CLIENT_MESSAGE_FOR_WRITE',
+            read: true,
+        
         },
         config,
       );
 
       console.log('Message sent successfully:', response.data);
-      toast.success('Message sent successfully');
+      toast.success(t('Message sent successfully'));
       closeSendModal();
     } catch (error) {
       console.error('Error sending message:', error);
-      toast.error('Failed to send message');
+      toast.error(t('Failed to send message'));
     }
   };
 
@@ -147,7 +151,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
                 {Status}
               </div>
             </div>
-            <div className="flex items-center justify-start mt-4">
+            <div className="flex items-center justify-between mt-4">
               <p>{t('Block')}</p>
               <div onClick={handleSwitchClick}>
                 <Switch isOn={isSwitchOn} handleToggle={() => {}} />
@@ -258,9 +262,14 @@ const DetailClient: React.FC<DetailClientProps> = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <div className="flex justify-end mt-2">
-            <Button key="submit" type="primary" onClick={handleSendMessage}>
-              {t('Send')}
+          <div className="flex justify-center mt-2">
+            <Button
+              key="submit"
+              type="primary"
+              onClick={handleSendMessage}
+              className="bg-boxdark px-12 "
+            >
+              {t('отправить')}
             </Button>
           </div>
         </div>

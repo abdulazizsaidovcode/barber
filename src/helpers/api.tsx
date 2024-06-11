@@ -12,10 +12,10 @@ export const getMe = (token?: string) => {
       `${base_url}user/me`,
       token
         ? {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         : config,
     )
     .then((res) => {
@@ -41,6 +41,11 @@ export const child_category_list: string = `${base_url}category/child`;
 
 // master url
 export const master_url: string = `${base_url}user/web/masters-by-filter`;
+export const master_full_data: string = `${base_url}user/web/master-full-info`;
+export const master_gallery_id: string = `${base_url}gallery/web/`;
+export const master_send_message_master: string = `${base_url}message/for/master/by/admin`;
+export const master_delate_service: string = `${base_url}message/for/master/by/admin`;
+
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
 // help url
@@ -49,10 +54,12 @@ export const help_url: string = `${base_url}help`;
 // client url
 export const client_url: string = `${base_url}client/web/clients-by-filter`;
 export const client_update_status: string = `${base_url}user/web/cleint-edit-status`;
+export const client_full_data: string = `${base_url}client/web/`;
 
 //login url
 export const login_url: string = `${base_url}auth/admin-login`;
 
+export const add_precent_list: string = `${base_url}percent`;
 // order url
 export const get_orders_list: string = `${base_url}order/web`;
 
@@ -61,12 +68,8 @@ export const service_category_list: string = `${base_url}category`;
 export const add_service_category: string = `${base_url}category/web`;
 export const del_service_category: string = `${base_url}category/web`;
 export const edit_service_category: string = `${base_url}category/web`;
-export const add_precent_list: string = `${base_url}percent`;
 export const precent_list: string = `${base_url}percent`;
-export const master_full_data: string = `${base_url}user/web/master-full-info`;
-export const client_full_data: string = `${base_url}client/web/`;
 export const master_service_id: string = `${base_url}service/web/`;
-export const master_gallery_id: string = `${base_url}gallery/web/`;
 export const chat_user_url: string = `${base_url}chat/support-service`;
 export const calendar_url: string = `${base_url}workday/time/web/calendar`;
 export const dashboard_url = `${base_url}dashboard/`;
@@ -84,9 +87,13 @@ export const finance_list = (month: string | null, year: number | null) => {
   else return `${base_url}finance/web`;
 };
 
-export const finance_Destrictlist_Url = (destrict: string, month: string | null, year: number | null) => {
-  console.log(destrict,month,year);
-  
+export const finance_Destrictlist_Url = (
+  destrict: string,
+  month: string | null,
+  year: number | null,
+) => {
+  console.log(destrict, month, year);
+
   if (destrict && month !== null && year !== null)
     return `${base_url}finance/web/${destrict}?month=${month}&year=${year}`;
   if (destrict && month !== null)
@@ -126,3 +133,5 @@ export const masters_gallery_url = `${base_url}gallery/web`;
 export const masters_service_url = `${base_url}service/web`;
 export const masters_confirm_url = `${base_url}user/web/master-confirm`;
 export const new_foto_url = `${base_url}gallery/web/new`;
+export const new_specialization_url = `${base_url}category/web/not-confirmed`;
+export const new_procedure_url = `${base_url}category/web/not-confirmed`;
