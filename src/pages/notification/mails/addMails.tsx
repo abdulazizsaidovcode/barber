@@ -9,6 +9,8 @@ import { newsletters_url } from '../../../helpers/api';
 import toast, { Toaster } from 'react-hot-toast';
 import { GetChatLetters } from '../../../helpers/api-function/chat/mail';
 import MailStore from '../../../helpers/state_managment/chat/mailStore';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 function AddMails() {
     const [fileName, setFileName] = useState<string>("Выберите изображение");
@@ -20,6 +22,7 @@ function AddMails() {
     const [content, setContent] = useState<string>('');
     const [toWhom, setToWhom] = useState<string | null>(null);
     const [errors, setErrors] = useState<any>({});
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { setLetterData } = MailStore();
 
@@ -83,6 +86,7 @@ function AddMails() {
         let photoUrl = null;
 
         if (file) {
+            setLoading(true)
             await uploadFile({
                 file,
                 setUploadResponse: (response) => (fileUrl = response.body),
@@ -90,6 +94,7 @@ function AddMails() {
         }
 
         if (photo) {
+            setLoading(true)
             await uploadFile({
                 file: photo,
                 setUploadResponse: (response) => (photoUrl = response.body),
@@ -103,6 +108,7 @@ function AddMails() {
             fileId: photoUrl,
             toWhom,
         };
+        setLoading(true)
         axios
             .post(`${newsletters_url}/save`, obj, config)
             .then((res) => {
@@ -116,9 +122,9 @@ function AddMails() {
             .catch((err) => {
                 console.log(err);
                 toast.error("Ошибка создания рассылки");
-            });
-
-        console.log(obj);
+            }).finally(() => {
+                setLoading(false)
+            })
     };
 
     return (
@@ -171,14 +177,14 @@ function AddMails() {
                 </div>
             </div>
 
-            <div className="flex gap-3 ">
+            <div className={`flex gap-3 w-max p-2 rounded-md ${errors.toWhom ? 'border-red-500 border' : ''}`}>
                 <div className="flex gap-2">
                     <input
                         type="checkbox"
                         value="ALL"
                         checked={toWhom === "ALL"}
                         onChange={handleCheckboxChange}
-                        className={errors.toWhom ? 'border-red-500' : ''}
+                        className={errors.toWhom ? 'bg-red-500' : ''}
                     />
                     <p>Всем</p>
                 </div>
@@ -188,7 +194,7 @@ function AddMails() {
                         value="MASTER"
                         checked={toWhom === "MASTER"}
                         onChange={handleCheckboxChange}
-                        className={errors.toWhom ? 'border-red-500' : ''}
+                        className={errors.toWhom ? 'bg-red-500' : ''}
                     />
                     <p>Мастерам</p>
                 </div>
@@ -198,19 +204,26 @@ function AddMails() {
                         value="CLIENT"
                         checked={toWhom === "CLIENT"}
                         onChange={handleCheckboxChange}
-                        className={errors.toWhom ? 'border-red-500' : ''}
+                        className={errors.toWhom ? 'bg-red-500' : ''}
                     />
                     <p>Клиентам</p>
                 </div>
             </div>
-            <div className="mt-5 flex gap-2">
+            <div className="mt-5 flex gap-2 ">
                 <Buttons>Назад</Buttons>
-                <div onClick={postMail}>
-                    <Buttons>Отправить</Buttons>
-                </div>
+                <Buttons onClick={postMail} disabled={loading}>
+                    {loading ? (
+                        <div className="flex items-center">
+                            <span className="mr-2">отправляется ...</span>
+                            <Spin indicator={<LoadingOutlined style={{ fontSize: 20, color: "#fff" }} spin />} />
+                        </div>
+                    ) : (
+                        "Отправить"
+                    )}
+                </Buttons>
             </div>
             <Toaster position="top-center" reverseOrder={false} />
-        </div>
+        </div >
     );
 }
 
