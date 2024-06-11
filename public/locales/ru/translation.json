@@ -37,6 +37,7 @@
   "order_table_paymentType": "Тип оплаты",
   "order_table_pay": "К оплате",
   "order_table_status": "Статус записи",
+  "Status": "Статус",
   "Open": "Открыть",
   "Orders": "Заказы",
   "Service_category": "Категория услуг",
@@ -50,6 +51,7 @@
   "siderbar_Mutual_settlements": "Взаиморасчёты",
   "Subscription_rates_for_client_masters": "Ставки подписки для клиентов мастеров",
   "Search_by_name": "Поиск по ФИО",
+  "Self_employed_status": "Статус самозанятых",
   "Unblock": "Разблокировать",
   "Open_help": "Открыть справку",
   "discount": "Сделать скидку",
@@ -67,5 +69,14 @@
   "Total_income": "Общая прибыль",
   "January": "январь",
   "Information_not_available": "Информация недоступна!",
-  "List_of_masters": "Список мастеров"
+  "List_of_masters": "Список мастеров",
+  "Yeah": "Да",
+  "Not": "Нет",
+  "Active": "Активный",
+  "Locked": "Заблокированный",
+  "Place_of_work": "Место работы",
+  "Salon": "Салон",
+  "Yes_to_home": "Да, дома",
+  "On_site": "С выездом",
+  "Reset": "Перезагрузить"
 }

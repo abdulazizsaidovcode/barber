@@ -35,11 +35,11 @@ const MasterTables: React.FC = () => {
     },
     {
       key: 'ACTIVE',
-      label: 'Активный'
+      label: `${t('Active')}`
     },
     {
       key: 'BLOCKED',
-      label: 'Заблокированный'
+      label: `${t('Locked')}`
     }
   ];
 
@@ -167,11 +167,11 @@ const MasterTables: React.FC = () => {
             <Buttons
               bWidth={`w-[200px]`}
               onClick={() => updateStatusFunc(updateStatus.masterId, updateStatus.status, setData, setTotalPage, openIsModal, setIsLoading)}
-            >{isLoading ? 'loading...' : 'да'}</Buttons>
+            >{isLoading ? 'loading...' : t("Yeah")}</Buttons>
             <Buttons
               bWidth={`w-[200px]`}
               onClick={openIsModal}
-            >нет</Buttons>
+            >{t("Not")}</Buttons>
           </div>
         </div>
       </Modal>

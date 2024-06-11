@@ -7,13 +7,13 @@ import { DatePicker, Skeleton } from 'antd';
 import CardDataCharts from '../../components/CardDataCharts';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartFour from '../../components/Charts/ChartFour';
-import ChartSex from '../../components/Charts/ChartSex';
 import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
 import { DGeneralIndecators } from '../../helpers/api-function/dashboard/Generalindicators';
 import dashboardStore from '../../helpers/state_managment/dashboard/dashboardStore';
+import ChartMasterRate from '../../components/Charts/ChartSex';
 
 const ECommerce: React.FC = () => {
   const { t } = useTranslation();
@@ -101,7 +101,7 @@ const ECommerce: React.FC = () => {
       {/* Income dynamics */}
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartSex />
+        <ChartMasterRate />
         <ChartSeven />
         <ChartEight />
       </div>
