@@ -19,7 +19,6 @@ export const DGeneralIndecators = ({ year, localDate, starDate, endDate, setDash
     axios.get(`${dashboard_url}web/statistic${year ? `?year=${year}` : "?year=0"}${localDate ? `&localDate=${localDate}` : ""}${starDate ? `&starDate=${starDate}` : ""}${endDate ? `&endDate=${endDate}` : ""}`, config)
         .then((response) => {
             setDashdata(response.data.body);
-            console.log(response.data.body);
         })
         .catch(() => {
             console.error('There was an error fetching the data!');
