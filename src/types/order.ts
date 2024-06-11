@@ -30,8 +30,8 @@ export interface Filter {
   page?: number;
   size?: number;
   fullName?: string;
-  regionName?: string;
-  cityName?: string;
+  regionId?: number;
+  districtId?: number;
   orderDate?: string;
   categoryName?: string;
   orderStatus?: string;

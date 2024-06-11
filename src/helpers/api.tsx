@@ -48,6 +48,7 @@ export const help_url: string = `${base_url}help`;
 
 // client url
 export const client_url: string = `${base_url}client/web/clients-by-filter`;
+export const client_update_status: string = `${base_url}user/web/cleint-edit-status`;
 
 //login url
 export const login_url: string = `${base_url}auth/admin-login`;

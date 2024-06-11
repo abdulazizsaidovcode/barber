@@ -54,7 +54,7 @@ export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
     .catch(() => setRegionData([]));
 };
 
-export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, districtId: number) => {
+export const getDistrict = (setDistrictData: (data: DistrictData[]) => void, districtId: number | string) => {
   if (districtId) {
     axios.get(`${district_url}?regionId=${districtId}`, config)
       .then(res => {
