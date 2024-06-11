@@ -19,7 +19,7 @@ export interface UpdateStatus {
 }
 
 const MasterTables: React.FC = () => {
-  const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading} = masterStore();
+  const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading } = masterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ status: '', masterId: '' });
   const { t } = useTranslation();
 
@@ -62,7 +62,7 @@ const MasterTables: React.FC = () => {
               className={`${key === data.length - 1
                 ? ''
                 : 'border-b border-[#eee] dark:border-strokedark'
-              }`}
+                }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
@@ -141,7 +141,7 @@ const MasterTables: React.FC = () => {
               className="min-w-full text-center py-10 text-xl font-bold"
               colSpan={5}
             >
-              Malumot mavjud emas!
+              {t("Information_not_available")}
             </td>
           </tr>
         )}
