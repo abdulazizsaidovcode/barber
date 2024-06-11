@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Tabs } from "antd";
 import FirstTab from "./firstTab";
 import { useTranslation } from "react-i18next";
-import { getOrder } from "../../helpers/api-function/order/orderFunction";
+import { getChildCategory, getOrder } from "../../helpers/api-function/order/orderFunction";
 import orderStore from "../../helpers/state_managment/order/orderStore";
 import { getRegion } from "../../helpers/api-function/master/master";
 
@@ -15,7 +15,7 @@ const onChange = (key: string) => {
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
 
-  const {setData, setTotalPage, setStatus, setRegionData} = orderStore()
+  const {setData, setTotalPage, setStatus, setRegionData, setChildCategoy} = orderStore()
 
   useEffect(() => {
     getOrder({
@@ -24,6 +24,7 @@ const MainTabs: React.FC = () => {
       setTotalPage: setTotalPage
     });
     getRegion(setRegionData)
+    getChildCategory(setChildCategoy)
   }, [])
   const items = [
     {

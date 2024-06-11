@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Filter } from "../../../types/order";
-import { get_orders_list } from "../../api";
+import { CategoryChild, Filter } from "../../../types/order";
+import { Category_Child, get_orders_list } from "../../api";
 import { config } from "../../token";
 
 export async function getOrder({
@@ -26,3 +26,14 @@ export async function getOrder({
         })
         .catch(() => setData([]));
 }
+
+export function getChildCategory(setData: (val: CategoryChild[]) => void) {
+    axios.get(`${Category_Child}`, config)
+        .then(res => {
+            if (res.data.success === true) {
+                setData(res.data.body)
+            } else setData([])
+        })
+        .catch(() => setData([]));
+}
+

@@ -138,5 +138,6 @@ export const masters_cancel_url = `${base_url}user/web/master-edit-status`;
 export const new_foto_url = `${base_url}gallery/web/new`;
 export const new_specialization_url = `${base_url}category/web/not-confirmed`;
 export const new_procedure_url = `${base_url}category/web/not-confirmed`;
+export const Category_Child = `${base_url}category/child`;
 export const new_service_url = `${base_url}service/web/not-confirmed`;
 export const requestes_count = `${base_url}dashboard/web/request/count`;
