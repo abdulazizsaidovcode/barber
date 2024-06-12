@@ -1,19 +1,18 @@
 import { create } from 'zustand';
+interface Data {
+  id: number;
+  percent: string;
+}
 
 interface OnlineBooking {
   data: Data[],
   isInputOpen: boolean;
   isEditModal: boolean;
   items: Data | null;
-  setItems: (data: Data | undefined) => void;
+  setItems: (data: Data | null) => void;
   setEditModal: (isEdit: boolean) => void;
   setIsInputOpen: (isOpen: boolean) => void;
-  setData: (data: Data[]) => void,
-}
-
-interface Data {
-  id: number;
-  percent: string;
+  setData: (data: Data[]) => void;
 }
 
 const onlineBookingStore = create<OnlineBooking>((set) => ({
@@ -21,10 +20,11 @@ const onlineBookingStore = create<OnlineBooking>((set) => ({
   isInputOpen: false,
   isEditModal: false,
   items: null,
-  setItems: (val: Data | undefined) => set({items: val}),
-  setEditModal: (val: boolean) => set({isEditModal: val}),
-  setIsInputOpen: (val: boolean) => set({isInputOpen: val}),
-  setData: (val: Data[]) => set({data: val}),
+  setItems: (val: Data | null) => set({ items: val }),
+  setEditModal: (val: boolean) => set({ isEditModal: val }),
+  setIsInputOpen: (val: boolean) => set({ isInputOpen: val }),
+  setData: (val: Data[]) => set({ data: val }),
 }));
+
 
 export default onlineBookingStore

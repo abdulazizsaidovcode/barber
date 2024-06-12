@@ -3,7 +3,7 @@ import RequestLayout from '../../../pages/request/request';
 import userImg from '../../../images/user.png';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
-import { getFileId,  new_service_url } from '../../../helpers/api';
+import { getFileId, new_service_url } from '../../../helpers/api';
 import SpecializationsCard from '../cards/specializationsCard';
 import { Skeleton } from 'antd';
 
@@ -64,7 +64,10 @@ const RequestProcedures: React.FC = () => {
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
                 ))
-              ) : (
+              ) : (newProcedures.length === 0 ?
+                <div className='w-full h-[510px] flex justify-center items-center'>
+                  <p>New Procedures Not Found</p>
+                </div> :
                 newProcedures.map(item => (
                   <SpecializationsCard
                     key={item.id}
@@ -93,7 +96,10 @@ const RequestProcedures: React.FC = () => {
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
                 ))
-              ) : (
+              ) : (changedProcedures.length === 0 ?
+                <div className='w-full h-[510px] flex justify-center items-center'>
+                  <p>Changed Procedures Not Found</p>
+                </div> :
                 changedProcedures.map(item => (
                   <SpecializationsCard
                     key={item.id}

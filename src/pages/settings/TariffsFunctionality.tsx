@@ -36,13 +36,17 @@ const TariffsFunctionality: React.FC = () => {
     };
 
     const addData = async (name: string) => {
-        try {
-            await axios.post(tarif_add_url, { name }, config);
-            fetchData();
-            toast.success('Tariff added successfully');
-            closeModal();
-        } catch { }
-    };
+        if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
+            toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+        } else {
+            try {
+                await axios.post(tarif_add_url, { name }, config);
+                fetchData();
+                toast.success('Tariff added successfully');
+                closeModal();
+            } catch { }
+        }
+    }
 
     const closeModal = () => {
         setIsOpen(false);

@@ -193,7 +193,7 @@ const RequestNewMasters: React.FC = () => {
               <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
             ))
           ) : data.length === 0 ? (
-            <div className='h-[510px]'>
+            <div className='w-full h-[510px] flex justify-center items-center'>
               <p className='text-xl dark:text:white'>New Masters Not found</p>
             </div>
           ) : (

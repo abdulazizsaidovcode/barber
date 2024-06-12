@@ -64,7 +64,10 @@ const RequestSpecializations: React.FC = () => {
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
                 ))
-              ) : (
+              ) : (newSpecializations.length === 0 ?
+                <div className='w-full h-[510px] flex justify-center items-center'>
+                  <p>New Specializations Not Found</p>
+                </div> :
                 newSpecializations.map(item => (
                   <SpecializationsCard
                     key={item.id}
@@ -80,7 +83,7 @@ const RequestSpecializations: React.FC = () => {
             </div>
           </div>
           <div className='w-1/2 ml-1'>
-            <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
+            <div className="w-full bg-[#cccccc] h-12   justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -93,7 +96,10 @@ const RequestSpecializations: React.FC = () => {
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
                 ))
-              ) : (
+              ) : (changedSpecializations.length === 0 ?
+                <div className='w-full h-[510px] flex justify-center items-center'>
+                  <p>New Specializations Not Found</p>
+                </div> :
                 changedSpecializations.map(item => (
                   <SpecializationsCard
                     key={item.id}
