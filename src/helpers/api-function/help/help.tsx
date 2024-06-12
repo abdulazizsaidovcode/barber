@@ -74,19 +74,23 @@ export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void
   }
 };
 
-export const deleteHelpFile = (id: string, setLoading: (val: boolean) => void, setData: (val: HelpList[]) => void, status: string, openModal: () => void) => {
-  if (id) {
-    setLoading(true);
-    axios.delete(`${deleteFile}${id}`, config)
+// delete file help
+export const deleteHelpFile = (id: (string | number)[], setIsLoading: (val: boolean) => void, setData: (val: HelpList[]) => void, status: string, openModal: () => void) => {
+  if (id.length > 0) {
+    setIsLoading(true);
+    axios.delete(`${deleteFile}${id[1]}/${id[0]}`, config)
       .then(res => {
-        console.log(res);
-        setLoading(false);
-        openModal();
-        getHelp(setData, status);
+        if (res.data.success) {
+          setIsLoading(false);
+          openModal();
+          getHelp(setData, status);
+          toast.success('File deleted successfully!');
+        } else toast.error('Error deleting help status!');
       })
       .catch(() => {
         openModal();
-        setLoading(false);
+        setIsLoading(false);
+        toast.error('Error deleting the help file!')
       });
   } else toast.error('Error deleting the help file!');
 };
