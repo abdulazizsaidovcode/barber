@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 import Modal from '../modals/modal';
 import { config } from '../../helpers/token';
 import { client_block_put, client_send_message } from '../../helpers/api';
-import { Buttons } from '../buttons';
 
 
 const { TextArea } = Input;
@@ -38,7 +37,6 @@ type DetailClientProps = {
 };
 
 const DetailClient: React.FC<DetailClientProps> = ({
-  ClientId,
   ClientName,
   ClientImg,
   turnover,
