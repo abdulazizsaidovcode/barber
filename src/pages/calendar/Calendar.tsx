@@ -160,16 +160,16 @@ const Calendar: React.FC = () => {
       <Breadcrumb pageName={t("siderbar_calendar")} />
       <div className="grid md:grid-cols-2 gap-5 my-5">
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
-          <div className="bg-green-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
+          <div className="bg-green-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 ">
             {t("SecondTab_name")}
           </div>
-          <div className="bg-blue-500 flex justify-center text-center items-center rounded-lg text-white px-6 ">
+          <div className="bg-blue-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 ">
             {t("detail_type")}
           </div>
-          <div className="bg-orange-500 flex justify-center text-center items-center rounded-lg text-white px-6">
+          <div className="bg-orange-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1">
             {t("On_approval")}
           </div>
-          <div className="bg-red-500 flex justify-center text-center items-center rounded-lg text-white px-6">
+          <div className="bg-red-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1">
             {t("Rejected")}
           </div>
         </div>
@@ -257,7 +257,7 @@ const Calendar: React.FC = () => {
         headerToolbar={{
           start: "prev,next",
           center: "title",
-          end: "dayGridMont,timeGridWeek",
+          end: "dayGridMonth,timeGridWeek",
         }}
         // Haftalik darajasining soatlarini belgilash
         slotMinTime="00:00:00"
