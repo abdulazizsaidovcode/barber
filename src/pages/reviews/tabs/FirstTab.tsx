@@ -69,7 +69,8 @@ const FirstTab: React.FC = () => {
                             ]}
                         />
                         <Select
-                            defaultValue="От кого"
+                            // defaultValue="От кого"
+                            placeholder={t("From_whom")}
                             className='w-60'
                             options={[
                                 { value: 'jack', label: 'Jack' },
@@ -78,8 +79,8 @@ const FirstTab: React.FC = () => {
                                 { value: 'Город', label: 'Город' },
                             ]}
                         />
-                        <DatePicker className='w-60' placeholder='Дата' />
-                        <DatePicker className='w-60' placeholder='Период' />
+                        <DatePicker className='w-60' placeholder={t("Date")} />
+                        <DatePicker className='w-60' placeholder={t("Period")} />
                     </div>
                 )}
             </div>
