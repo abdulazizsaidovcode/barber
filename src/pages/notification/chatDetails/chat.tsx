@@ -142,6 +142,15 @@ const Chatdetail: React.FC = () => {
     }
   }, [chatId])
 
+  // read all messages
+  
+  function readMeessage( ){
+    if (stompClient && stompClient.connected) {
+      stompClient.send('/app/isRead', {}, JSON.stringify(chatId));
+      fetchMessages(adminId, recipientId);
+    }
+  }
+
   // edit messagi
   useEffect(() => {
     const editMessage = {
