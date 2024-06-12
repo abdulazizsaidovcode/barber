@@ -92,7 +92,7 @@ const FileUploader = ({ id, item }: { id: string, item: any }) => {
         onChange={(e) => handleFileChange(e, getFileType, setSelectedFiles, setFileIds, setIsLoading)}
       />
       {isLoading ? <p className={`my-3 text-black dark:text-white`}>loading...</p> : (
-        <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t('Attach_file')}
+        <button className="flex items-center my-3 text-black dark:text-white opacity-75" onClick={handleUploadButtonClick}>{t('Attach_file')}
           <MdFileDownload
             className="ms-1 text-[#000] dark:text-white"
           />
