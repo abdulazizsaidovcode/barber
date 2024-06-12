@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import TextArea from 'antd/es/input/TextArea';
 import toast, { Toaster } from 'react-hot-toast';
 import {
-  client_block_put,
   master_block_put,
   master_send_message_master,
 } from '../../helpers/api';
@@ -92,12 +91,18 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const confirmToggleSwitch = async () => {
     setIsSwitchOn(pendingSwitchState);
     try {
-      const status = pendingSwitchState ? 'BLOCK' : 'ACTIVE';
+      const type = () => {
+        if (pendingSwitchState === true) {
+          console.log('ACTIVE');
+        } else {
+          console.log('BLOCK');
+        }
+      };
       const response = await axios.put(
         `${master_block_put}`,
         {
           id: idMaster,
-          status: status,
+          status: type,
         },
         config,
       );
