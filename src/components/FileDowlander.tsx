@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { handleFileChange } from '../helpers/attachment/file-download.tsx';
 import helpStore from '../helpers/state_managment/help/helpStore.tsx';
 import { Attachments } from '../types/help.ts';
+import masterStore from '../helpers/state_managment/master/masterStore.tsx';
 
 export interface UploadedFile {
   name: string;
@@ -14,6 +15,7 @@ export interface UploadedFile {
 
 const FileUploader = ({ id, item }: { id: string, item: any }) => {
   const { setFilesLest, setUploadFileID, setSelectedFilesDef, selectedFilesDef } = helpStore();
+  const { isLoading, setIsLoading } = masterStore();
   const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
   const { t } = useTranslation();
   const [fileIds, setFileIds] = useState<string[]>([]);
@@ -28,7 +30,7 @@ const FileUploader = ({ id, item }: { id: string, item: any }) => {
   }, [fileIds]);
 
   useEffect(() => {
-    setSelectedFilesDef(selectedFiles)
+    setSelectedFilesDef(selectedFiles);
   }, [selectedFiles]);
 
   function listsAttach(params: Attachments[]): string[] {
@@ -87,13 +89,15 @@ const FileUploader = ({ id, item }: { id: string, item: any }) => {
       )}
       <input
         type="file" id={id} style={{ display: 'none' }}
-        onChange={(e) => handleFileChange(e, getFileType, setSelectedFiles, setFileIds)}
+        onChange={(e) => handleFileChange(e, getFileType, setSelectedFiles, setFileIds, setIsLoading)}
       />
-      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t('Attach_file')}
-        <MdFileDownload
-          className="ms-1 text-[#000] dark:text-white"
-        />
-      </button>
+      {isLoading ? <p className={`my-3 text-black dark:text-white`}>loading...</p> : (
+        <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t('Attach_file')}
+          <MdFileDownload
+            className="ms-1 text-[#000] dark:text-white"
+          />
+        </button>
+      )}
     </div>
   );
 };

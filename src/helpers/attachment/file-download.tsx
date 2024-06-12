@@ -33,7 +33,8 @@ export const handleFileChange = async (
   event: React.ChangeEvent<HTMLInputElement>,
   getFileType: (val: string) => string,
   setSelectedFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>,
-  setFileIds: React.Dispatch<React.SetStateAction<string[]>>
+  setFileIds: React.Dispatch<React.SetStateAction<string[]>>,
+  setIsLoading: (val: boolean) => void
 ) => {
   const file = event.target.files && event.target.files[0];
   if (file) {
@@ -46,16 +47,20 @@ export const handleFileChange = async (
     try {
       const formData = new FormData();
       formData.append('file', file);
+      setIsLoading(true)
 
       const response = await axios.post('http://45.67.35.86:8080/attachment/upload', formData, config);
       if (response.data && response.data.body) {
         setSelectedFiles((prevState: UploadedFile[]) => [...prevState, fileData]);
         setFileIds((prevState: string[]) => [...prevState, response.data.body]);
+        setIsLoading(false)
       } else {
         console.error('Invalid response from the server');
+        setIsLoading(false)
       }
     } catch (error) {
       console.error('Error uploading file:', error);
+      setIsLoading(false)
     }
   }
 };
