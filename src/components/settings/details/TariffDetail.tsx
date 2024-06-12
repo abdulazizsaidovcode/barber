@@ -99,7 +99,7 @@ const TariffDetail: React.FC = () => {
     {
       key: '2',
       label: (
-        <span className="dark:text-white text-black md:text-xl lg:text-2xl">
+        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
           Ограничения
         </span>
       ),

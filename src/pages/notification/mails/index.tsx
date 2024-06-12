@@ -125,7 +125,7 @@ const ChatTable: React.FC = () => {
                 <div className='pt-5'>
                     <div className='mb-5 flex gap-2'>
                         <Input
-                            className='w-full md:w-40 lg:w-40 xl:w-40 dark:bg-gray-800 dark:text-white'
+                            className='w-full md:w-40 lg:w-40 xl:w-40 dark:bg-gray-800 dark:text-black'
                             defaultValue='Тема'
                             style={{ width: 120 }}
                             onChange={handleChangeTema}

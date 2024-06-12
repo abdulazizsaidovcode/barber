@@ -95,7 +95,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         if (pendingSwitchState) {
           return 'ACTIVE';
         } else {
-         return 'BLOCK';
+          return 'BLOCKED';
         }
       };
       const response = await axios.put(
