@@ -124,7 +124,7 @@ const Filters: React.FC = () => {
             className={`bg-[#f0f0f0]`}
             onClick={() => downloadExcelFile(url, setIsLoading, page)}
           >
-            {isLoading ? 'loading...' : t('Download')}
+            {isLoading ? t("Loading") : t('Download')}
           </Button>
         </Col>
       </Row>

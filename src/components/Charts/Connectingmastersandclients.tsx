@@ -107,8 +107,8 @@ const ChartTwo: React.FC = () => {
           setClientData(newData);
 
           setSeries([
-            { name: 'MasterCount', data: newData.map((item: any) => item.masterCount) },
-            { name: 'Client Count', data: newData.map((item: any) => item.clientCount) },
+            { name: t("MasterCount"), data: newData.map((item: any) => item.masterCount) },
+            { name: t("Client_Count"), data: newData.map((item: any) => item.clientCount) },
           ]);
         }
       })
