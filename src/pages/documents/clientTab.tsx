@@ -1,4 +1,3 @@
-import React from 'react';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import FileUploader from '../../components/FileDowlander';
@@ -9,12 +8,26 @@ import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
+import { useEffect } from 'react';
 
 
-const ClientDocument: React.FC = () => {
-  const { dataClient, setDataClient, deleteFileId, filesList, uploadFileID, setSelectedFilesDef } = helpStore();
+const ClientDocument = () => {
+  const {
+    dataClient,
+    setDataClient,
+    deleteFileId,
+    filesList,
+    uploadFileID,
+    selectedFilesDef,
+    setSelectedFilesDef,
+    helpRole
+  } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSelectedFilesDef([]);
+  }, [helpRole]);
 
   const openModal = () => setIsModal(!isModal);
 
@@ -36,7 +49,11 @@ const ClientDocument: React.FC = () => {
         ))}
       </div>
       {/*update save button*/}
-      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`} onClick={() => updateSaveButtons(filesList ,uploadFileID, setDataClient, 'FOR_CLIENT', setSelectedFilesDef)}>
+      <button
+        className={`bg-[#9C0A35] ${selectedFilesDef.length === 0 ? 'opacity-70 cursor-not-allowed' : ''} text-white px-3 py-2 rounded-lg`}
+        onClick={() => updateSaveButtons(filesList, uploadFileID, setDataClient, 'FOR_CLIENT', setSelectedFilesDef)}
+        disabled={selectedFilesDef.length === 0}
+      >
         {t('Save_changes')}
       </button>
 
@@ -50,7 +67,8 @@ const ClientDocument: React.FC = () => {
           <div className={`mt-5`}>
           </div>
           <div className={`flex justify-center items-center gap-6 mt-5`}>
-            <Buttons bWidth={`w-[150px]`} onClick={() => deleteHelpFile(deleteFileId, setIsLoading, setDataClient, 'FOR_CLIENT', openModal)}>
+            <Buttons bWidth={`w-[150px]`}
+                     onClick={() => deleteHelpFile(deleteFileId, setIsLoading, setDataClient, 'FOR_CLIENT', openModal)}>
               {isLoading ? 'loading...' : 'O\'chirish'}
             </Buttons>
             <Buttons bWidth={`w-[150px]`} onClick={openModal}>{t('Close')}</Buttons>

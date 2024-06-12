@@ -7,7 +7,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import FilterOrder from "./filter/filter";
 
 const FilterComponent: React.FC = () => {
-  const { data, totalPage } = orderStore();
+  const { data, totalPage, setOrderDetail } = orderStore();
   const { t } = useTranslation();
 
   const tableHeaders = [
@@ -81,6 +81,7 @@ const FilterComponent: React.FC = () => {
                               label: (
                                 <Link to={`/orders/${data.orderId}`}>{t("Open")}</Link>
                               ),
+                              onClick: () => setOrderDetail(data)
                             },
                           ],
                         }}

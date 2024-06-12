@@ -13,7 +13,7 @@ const FileGetUploader = ({ getList, openModal, idIn }: { getList: Attachments[],
 
   return (
     <div className="flex w-[100%] flex-col flex-wrap">
-      <h2 className="my-3">Вложения</h2>
+      <h2 className="my-3 text-black dark:text-white">Вложения</h2>
       <div className="flex gap-3 flex-wrap">
         {getList.length > 0 && (
           getList.map((item, idx) => (
@@ -24,7 +24,7 @@ const FileGetUploader = ({ getList, openModal, idIn }: { getList: Attachments[],
                 </div>
                 <div className="flex flex-col justify-center p-2">
                   <p className="text-md font-bold tracking-normal text-[#000] dark:text-white ">{item.name}</p>
-                  <p className="text-sm">{(item.size / 1024).toFixed(3)} MB</p>
+                  <p className="text-sm text-black dark:text-white opacity-60">{(item.size / 1024).toFixed(3)} MB</p>
                 </div>
               </Link>
               <div>
@@ -33,7 +33,7 @@ const FileGetUploader = ({ getList, openModal, idIn }: { getList: Attachments[],
                     openModal()
                     setDeleteFileId([item.id, idIn])
                   }}>
-                    <TiDeleteOutline className="text-3xl" />
+                    <TiDeleteOutline className="text-3xl text-black dark:text-white opacity-75" />
                   </button>
                 </div>
               </div>

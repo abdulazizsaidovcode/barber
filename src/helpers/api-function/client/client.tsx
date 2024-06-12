@@ -30,7 +30,7 @@ export const getClients = ({
   selfEmployed,
   workPlace,
   page = 0,
-  size = 10,
+  size = 2,
   setData,
   setTotalPage,
 }: IClient) => {

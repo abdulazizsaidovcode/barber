@@ -1,38 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { master_full_data } from '../../../helpers/api';
 import axios from 'axios';
+import { master_default_values } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
-import toast from 'react-hot-toast';
+import Review from '../../../components/MasterCard/rewiev';
 
-const Reviews: React.FC = () => {
+const DetailMaster: React.FC = () => {
   const location = useLocation();
   const [orderDetails, setOrderDetails] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   const id = location.pathname.substring(8);
   console.log(id);
 
-  const MasterImgFake = '/path/to/fake-image.png'; // Replace with your actual path
   useEffect(() => {
-    if (!id) {
-      toast.error('Id topilamdi !');
-      return;
-    }
-
-    setIsLoading(true); // Set loading to true when fetching starts
+    setIsLoading(true);
 
     axios
-      .get(`${master_full_data}${id}`, config)
+      .get(`${master_default_values}${id}`, config)
       .then((response) => {
         const master = response.data.body;
-        console.log(master);
+        console.log(`Detail page with id: ${master}`);
         setOrderDetails(master);
-        setIsLoading(false); // Set loading to false when data is fetched
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
-        setIsLoading(false); // Set loading to false in case of error
+        setIsLoading(false);
       });
   }, [id]);
 
@@ -41,9 +35,15 @@ const Reviews: React.FC = () => {
       {isLoading ? (
         <p className="dark:text-white">Loading order details...</p>
       ) : orderDetails ? (
-        <div className="flex flex-col gap-3 ">
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[100%] shadow-3 p-3 rounded-xl"></div>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[100%] shadow-3 p-3 rounded-xl"></div>
+        <div>
+          <Review
+            isLoading={false}
+            goodLev={orderDetails.overallRating}
+            simpleLev={orderDetails.reviewCount}
+            badLev={orderDetails.reviewCount}
+            verBadLev={orderDetails.reviewCount}
+            normLev={orderDetails.reviewCount}
+          />
         </div>
       ) : (
         <p className="dark:text-white">No order details found.</p>
@@ -52,4 +52,4 @@ const Reviews: React.FC = () => {
   );
 };
 
-export default Reviews;
+export default DetailMaster;

@@ -5,16 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { getAttachment } from './../../helpers/attachment/getAttachment';
 
 interface Props {
-  OrderData: string;
+  OrderData: any;
   OrderEnterTime: string;
   OrderEndTime: string;
-  price: string;
-  Prepayment: string;
-  Paid: string;
-  PaymentType: string;
+  price: any;
+  Prepayment: any;
+  Paid: any;
+  PaymentType: any;
   Duration: string;
   RecNotification: string;
-  ToPay: string;
+  ToPay: any;
   MasterName: string;
   MasterImg: string;
   MasterType: string;
@@ -22,10 +22,10 @@ interface Props {
   ClientPhoto: string;
   ClientNumber: string;
   Status: string;
-  MasterNumber: string;
+  MasterNumber: any;
   isLoading: boolean;
-  masterFeedback: string;
-  MasterStatus: string;
+  masterFeedback: any;
+  MasterStatus: any;
 }
 
 const MasterCardInfo: React.FC<Props> = ({

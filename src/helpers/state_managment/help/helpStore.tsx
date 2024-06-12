@@ -18,6 +18,8 @@ const financeStore = create<HelpTypes>((set) => ({
   setFilesLest: (val: string[]) => set({ filesList: val }),
   selectedFilesDef: [],
   setSelectedFilesDef: (val: any[]) => set({ selectedFilesDef: val }),
+  helpRole: '',
+  setHelpRole: (val: string) => set({ helpRole: val })
 }));
 
 export default financeStore;
