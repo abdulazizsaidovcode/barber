@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { MdFileDownload } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { config } from '../helpers/token.tsx';
 
 interface UploadedFile {
   name: string;
@@ -16,10 +18,10 @@ interface FileUploaderProps {
 
 const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложения' }) => {
   const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
-  const [removedFiles, setRemovedFiles] = useState<UploadedFile[]>([]);
   const { t } = useTranslation()
+  const [fileIds, setFileIds] = useState<string[]>([]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     console.log(file);
     if (file) {
@@ -28,9 +30,27 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
         size: file.size,
         type: getFileType(file.name)
       };
-      setSelectedFiles(prevState => [...prevState, fileData]);
+
+      // Upload the file to the server
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await axios.post('http://45.67.35.86:8080/attachment/upload', formData, config);
+        console.log(response);
+        if (response.data && response.data.body) {
+          setSelectedFiles(prevState => [...prevState, fileData]);
+          setFileIds(prevState => [...prevState, response.data.body]);
+        } else {
+          console.error('Invalid response from the server');
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
     }
   };
+
+  console.log(fileIds);
 
   const getFileType = (fileName: string): string => {
     const extension = fileName.split('.').pop()?.toLowerCase();
@@ -45,9 +65,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
   };
 
   const handleRemoveFile = (index: number) => {
-    const fileToRemove = selectedFiles[index];
-    setRemovedFiles(prevState => [...prevState, fileToRemove]);
     setSelectedFiles(prevState => prevState.filter((file, i) => i !== index));
+    setFileIds(prevState => prevState.filter((_, i) => i !== index));
   };
 
   const convertBytesToMegabytes = (bytes: number): number => {
