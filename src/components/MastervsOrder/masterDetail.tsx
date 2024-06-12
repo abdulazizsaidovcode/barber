@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Skeleton, Button } from 'antd';
 import Modal from '../modals/modal';
 import { useTranslation } from 'react-i18next';
-import { getAttachment } from './../../helpers/attachment/getAttachment';
 
 interface Props {
   OrderData: any;
@@ -53,7 +52,6 @@ const MasterCardInfo: React.FC<Props> = ({
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const openMdal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   const toggleSwitch = () => {
