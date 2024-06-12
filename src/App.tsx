@@ -31,7 +31,6 @@ import MasterDatail from './pages/Mutual_settlements/masterDatail.tsx';
 import TariffDetail from './components/settings/details/TariffDetail.tsx';
 import TariffsFunctionality from './pages/settings/TariffsFunctionality.tsx';
 import Documents from './pages/documents/Documents.tsx';
-import OrderDetails from './pages/Calculation/detail/detail.tsx';
 import { setConfig } from './helpers/token.tsx';
 import RequestNewMasters from './components/request/pages/requestNewMasters.tsx';
 import RequestFoto from './components/request/pages/requestFoto.tsx';
@@ -43,7 +42,6 @@ import DetailClient from './pages/Client/detail/detail.tsx';
 import TabsComponentForSecondDetail from './pages/Calculation/detail/secondTab.tsx';
 import ThirdTab from './pages/Calculation/detail/third.tab.tsx';
 import { FirstTab } from './pages/Calculation/detail/firstTab.tsx';
-import AddMails from './pages/notification/mails/addMails.tsx';
 import MailDetail from './pages/notification/mails/mailDetail.tsx';
 
 function App() {

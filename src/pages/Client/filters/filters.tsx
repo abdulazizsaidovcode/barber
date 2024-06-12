@@ -3,7 +3,6 @@ import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import { IoSearchOutline } from "react-icons/io5";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import moment from "moment";
-import MasterModal from "../client-modal.tsx";
 import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
 import { getClients } from "../../../helpers/api-function/client/client.tsx";
 import { getDistrict } from "../../../helpers/api-function/master/master.tsx";
@@ -16,14 +15,12 @@ const { Option } = Select;
 const Filters: React.FC = () => {
   const { t } = useTranslation();
   const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     setClientFilterData,
     setClientTotalPage,
     setDistrictData,
     regionData,
     districtData,
-    totalPage,
     setIsLoading,
     isLoading,
     page
@@ -38,7 +35,6 @@ const Filters: React.FC = () => {
   });
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
-  const openModal = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     const params: any = {
