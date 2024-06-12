@@ -38,7 +38,8 @@ const FirstTab: React.FC = () => {
                         ]}
                     />
                     <Select
-                        defaultValue="Город"
+                        // defaultValue="Город"
+                        placeholder={t("City")}
                         className='w-60'
                         options={[
                             { value: 'jack', label: 'Jack' },
