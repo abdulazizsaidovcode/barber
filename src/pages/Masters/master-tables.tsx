@@ -30,15 +30,17 @@ const MasterTables: React.FC = () => {
   const getItems = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>,
     },
     {
       key: 'ACTIVE',
-      label: `${t('Active')}`
+      label: `${t('Active')}`,
+      onClick: () => openIsModal(),
     },
     {
       key: 'BLOCKED',
-      label: `${t('Locked')}`
+      label: `${t('Locked')}`,
+      onClick: () => openIsModal(),
     }
   ];
 
@@ -46,7 +48,6 @@ const MasterTables: React.FC = () => {
 
   const handleMenuClick = (e: any, masterId: string) => {
     setUpdateStatus({ status: e.key, masterId });
-    openIsModal();
   };
 
   return (
