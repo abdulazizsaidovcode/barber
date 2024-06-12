@@ -77,7 +77,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const [message, setMessage] = useState('');
   const [pendingSwitchState, setPendingSwitchState] = useState(true);
   const MasterLocation = useLocation();
-  const idMaster = MasterLocation.pathname.substring(11);
+  const idMaster = MasterLocation.pathname.substring(8);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -92,17 +92,17 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
     setIsSwitchOn(pendingSwitchState);
     try {
       const type = () => {
-        if (pendingSwitchState === true) {
-          console.log('ACTIVE');
+        if (pendingSwitchState) {
+          return 'ACTIVE';
         } else {
-          console.log('BLOCK');
+          return 'BLOCKED';
         }
       };
       const response = await axios.put(
         `${master_block_put}`,
         {
           id: idMaster,
-          status: type,
+          status: type(),
         },
         config,
       );

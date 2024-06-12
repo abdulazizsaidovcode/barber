@@ -49,7 +49,7 @@ const All = () => {
         <div className={`mt-3 ${params && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
           {!params && <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />}
           <div className="flex gap-3 items-center my-3">
-            <p>Отображать в приложениях</p>
+            <p>{t("Show_in_apps")}</p>
             <Switch
               isOn={item.active}
               handleToggle={() => updateIsActive(item, setDataAll, 'ALL')}
@@ -124,11 +124,11 @@ const All = () => {
                 onChange={e => setModalVal({ ...modalVal, active: e.target.checked })}
               />
               <label htmlFor={`helpActiveInput`}
-                     className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
+                className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
             </div>
             <div className={`flex justify-center items-center gap-6 mt-5`}>
               <Buttons bWidth={`w-[150px]`}
-                       onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}>
+                onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}>
                 {isLoading ? t('Loading') : t('Save')}
               </Buttons>
               <Buttons bWidth={`w-[150px]`} onClick={openIsModal}>{t('Close')}</Buttons>

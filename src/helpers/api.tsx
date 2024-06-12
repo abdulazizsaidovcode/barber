@@ -52,9 +52,10 @@ export const master_delate_new_service: string = `${base_url}service/isActive/`;
 export const master_gallery_delate: string = `${base_url}gallery/`;
 export const master_new_gallery_delate: string = `${base_url}gallery/web/check/`; //master_gallery_message
 export const master_gallery_message: string = `${base_url}message/for/master/by/admin`; //master_gallery_message
-export const master_block_put: string = `${base_url}user/web/cleint-edit-status`; //master_review_data
+export const master_block_put: string = `${base_url}user/web/master-edit-status`; //master_review_data
 export const master_review_data: string = `${base_url}user/web/cleint-edit-status`; //master_review_data//master_default_values
 export const master_default_values: string = `${base_url}feedback/for/master/`; //master_review_data//master_default_values
+export const master_default_feedback: string = `${base_url}feedback/filter/`; //master_review_data//master_default_values
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
