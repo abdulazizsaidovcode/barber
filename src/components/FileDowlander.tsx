@@ -1,54 +1,19 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { MdFileDownload } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-import { config } from '../helpers/token.tsx';
+import { handleFileChange } from '../helpers/attachment/file-download.tsx';
 
-interface UploadedFile {
+export interface UploadedFile {
   name: string;
   size: number;
   type: string;
 }
 
-interface FileUploaderProps {
-  id: string;
-  title?: string;
-}
-
-const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложения' }) => {
+const FileUploader = ({ id }: { id: string }) => {
   const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [fileIds, setFileIds] = useState<string[]>([]);
-
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    console.log(file);
-    if (file) {
-      const fileData: UploadedFile = {
-        name: file.name,
-        size: file.size,
-        type: getFileType(file.name)
-      };
-
-      // Upload the file to the server
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const response = await axios.post('http://45.67.35.86:8080/attachment/upload', formData, config);
-        console.log(response);
-        if (response.data && response.data.body) {
-          setSelectedFiles(prevState => [...prevState, fileData]);
-          setFileIds(prevState => [...prevState, response.data.body]);
-        } else {
-          console.error('Invalid response from the server');
-        }
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
-    }
-  };
 
   console.log(fileIds);
 
@@ -69,17 +34,12 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
     setFileIds(prevState => prevState.filter((_, i) => i !== index));
   };
 
-  const convertBytesToMegabytes = (bytes: number): number => {
-    return bytes / (1024 * 1024); // 1 megabayt = 1024 kilobayt * 1024
-  };
+  const convertBytesToMegabytes = (bytes: number): number => bytes / (1024 * 1024);
 
   return (
     <div>
       {selectedFiles.length > 0 && (
         <div className="flex w-[100%] flex-col flex-wrap">
-          <div>
-            <h2 className="my-3">{title}</h2>
-          </div>
           <div className="flex gap-3 flex-wrap">
             {selectedFiles.map((file, index) => (
               <div className="border-[1px] border-[#000] dark:border-white p-3 w-max h-17 rounded-md flex" key={index}>
@@ -107,9 +67,15 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
           </div>
         </div>
       )}
-      <input type="file" id={id} style={{ display: 'none' }} onChange={handleFileChange} />
-      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t("Attach_file")}<MdFileDownload
-        className="ms-1 text-[#000] dark:text-white" /></button>
+      <input
+        type="file" id={id} style={{ display: 'none' }}
+        onChange={(e) => handleFileChange(e, getFileType, setSelectedFiles, setFileIds)}
+      />
+      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t('Attach_file')}
+        <MdFileDownload
+          className="ms-1 text-[#000] dark:text-white"
+        />
+      </button>
     </div>
   );
 };

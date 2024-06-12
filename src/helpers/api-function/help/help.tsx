@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { config } from '../../token.tsx';
 import { HelpList } from '../../../types/help.ts';
-import { help_url } from '../../api.tsx';
+import { deleteFile, help_url } from '../../api.tsx';
 import toast from 'react-hot-toast';
 
 // get help lists all
@@ -35,14 +35,17 @@ export const updateIsActive = (data: HelpList, setDataAll: (val: HelpList[]) => 
     axios.put(`${help_url}?id=${data.id}`, updateData, config)
       .then(() => {
         toast.success('Status updated is successfully!');
-        getHelp(setDataAll, statusHelp)
+        getHelp(setDataAll, statusHelp);
       })
       .catch(() => toast.error('Error updating help status!'));
   } else console.log('error updating help status');
 };
 
 // update help
-export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void, statusHelp: string, modalVal: {text: string, active: boolean}, setIsLoading: (val: boolean) => void, openIsModal: () => void) => {
+export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void, statusHelp: string, modalVal: {
+  text: string,
+  active: boolean
+}, setIsLoading: (val: boolean) => void, openIsModal: () => void) => {
   let updateData = {
     helpStatus: 'string',
     text: modalVal.text,
@@ -51,22 +54,39 @@ export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void
   };
 
   if (data.id) {
-    setIsLoading(true)
+    setIsLoading(true);
     axios.put(`${help_url}?id=${data.id}`, updateData, config)
       .then(() => {
         toast.success('Help updated is successfully!');
-        getHelp(setDataAll, statusHelp)
-        openIsModal()
-        setIsLoading(false)
+        getHelp(setDataAll, statusHelp);
+        openIsModal();
+        setIsLoading(false);
       })
       .catch(() => {
-        toast.error('Error updating help!')
-        setIsLoading(false)
-        openIsModal()
+        toast.error('Error updating help!');
+        setIsLoading(false);
+        openIsModal();
       });
   } else {
     console.log('error updating help');
-    toast.error('Xatolik yuz berdi...')
-    openIsModal()
+    toast.error('Xatolik yuz berdi...');
+    openIsModal();
   }
-}
+};
+
+export const deleteHelpFile = (id: string, setLoading: (val: boolean) => void, setData: (val: HelpList[]) => void, status: string, openModal: () => void) => {
+  if (id) {
+    setLoading(true);
+    axios.delete(`${deleteFile}${id}`, config)
+      .then(res => {
+        console.log(res);
+        setLoading(false);
+        openModal();
+        getHelp(setData, status);
+      })
+      .catch(() => {
+        openModal();
+        setLoading(false);
+      });
+  } else toast.error('Error deleting the help file!');
+};
