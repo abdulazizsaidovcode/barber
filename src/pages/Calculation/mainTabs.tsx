@@ -15,7 +15,7 @@ const onChange = (key: string) => {
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
 
-  const {setData, setTotalPage, setStatus, setRegionData, setChildCategoy} = orderStore()
+  const {setData, setTotalPage, setStatus, setRegionData, setChildCategoy, setIsComplated} = orderStore()
 
   useEffect(() => {
     getOrder({
@@ -38,6 +38,7 @@ const MainTabs: React.FC = () => {
               setTotalPage: setTotalPage
             });
             setStatus("UPCOMING")
+            setIsComplated(false)
           }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl" // Responsive font sizes
         >
@@ -57,6 +58,7 @@ const MainTabs: React.FC = () => {
               setTotalPage: setTotalPage
             });
             setStatus("COMPLETED")
+            setIsComplated(true)
           }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
         >
@@ -76,6 +78,7 @@ const MainTabs: React.FC = () => {
               setTotalPage: setTotalPage
             });
             setStatus("REJECTED")
+            setIsComplated(false)
           }}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
         >
