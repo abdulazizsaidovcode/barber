@@ -21,7 +21,7 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
     <div>
       <div className='flex flex-col gap-3'>
         {galleryData.length === 0 ?
-          <div className='h-[1000px]'>
+          <div className='h-[200px]'>
             <p className='text-xl dark:text-white'>Master gallery not found</p>
           </div>
           : galleryData.map((album) => (
