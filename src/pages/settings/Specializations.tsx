@@ -87,12 +87,12 @@ const Specializations: React.FC = () => {
       return;
     }
 
+    setAddLoading((prev) => ({ ...prev, [fatherId]: true }));
+
     const payload = {
       name: newCategoryName,
       categoryFatherId: fatherId,
     };
-
-    setAddLoading((prev) => ({ ...prev, [fatherId]: true }));
 
     try {
       const res = await axios.post(add_service_category, payload, config);
@@ -250,7 +250,7 @@ const Specializations: React.FC = () => {
                     <button
                       className="bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5"
                       onClick={() => addChildData(fatherItem.id)}
-                      disabled={addLoading[fatherItem.id]}
+                      disabled={!newCategoryNameMap[fatherItem.id]?.trim() || addLoading[fatherItem.id]}
                     >
                       {addLoading[fatherItem.id] ? 'Loading...' : 'Добавить'}
                     </button>
