@@ -7,24 +7,28 @@ import FirstDetail from "./secondTab";
 import SecondDetail from "./third.tab";
 
 const NotFound: React.FC = () => {
-  const { isDetail } = orderStore();
+  const { isDetail, statusO } = orderStore();
   const { t } = useTranslation();
   return (
     <div>
       <>
         <div className="shadow-3 dark:bg-[#ffffffdf] dark:text-black border-black rounded-xl border-solid border-1 p-3 flex items-center justify-between w-[100%] dark:bg-gray-800 dark:border-gray-700">
           <MainTabs />
-          <div className="rounded-xl text-white bg-[#ffa723] p-1 px-4 flex items-center justify-center">
-            {t("detail_payment_type")}
-          </div>
-        </div>
-        {
-          isDetail ? (
-            <FirstDetail/>
+          {statusO === "UPCOMING" ? (
+            <div className="rounded-xl text-white bg-[#ffa723] p-1 px-4 flex items-center justify-center">
+              {t("detail_payment_type")}
+            </div>
+          ) : statusO === "COMPLETED" ? (
+            <div className="rounded-xl text-white bg-[#288f23] p-1 px-4 flex items-center justify-center">
+              {t("detail_payment_type")}
+            </div>
           ) : (
-            <SecondDetail/>
-          )
-        }
+            <div className="rounded-xl text-white bg-[#f13d3d] p-1 px-4 flex items-center justify-center">
+              {t("detail_payment_type")}
+            </div>
+          )}
+        </div>
+        {isDetail ? <FirstDetail /> : <SecondDetail />}
       </>
     </div>
   );
