@@ -16,6 +16,9 @@ export interface ChatusersListType {
 }
 
 export interface ChatSentSmsType {
+  editId: any;
+  replyId: any
+  chatId: any;
   senderId: string | null,
   sendMessage: () => void,
   chat: ChatSentSmstList[],
@@ -27,11 +30,14 @@ export interface ChatSentSmstList {
   content: string,
   senderName: string
   createdAt: string,
-  id: string,
+  id: any,
   read: boolean,
   recipientId: string,
-  replayDto: string | null,
   senderId: string,
   userImgId: string | null,
   receiverName: string,
+  receiverImg: string | null
+  senderImg: string | null
+  replayDto: any
+
 }

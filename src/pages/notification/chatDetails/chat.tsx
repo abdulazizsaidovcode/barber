@@ -19,48 +19,35 @@ import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
 import toast from 'react-hot-toast';
 
 const Chatdetail: React.FC = () => {
-  const { role, chatData, setChatData } = chatStore()
+  const { role, chatData, setChatData } = chatStore();
 
   const [sidebarWidth, setSidebarWidth] = useState('w-max');
   const [siteBar, setSiteBar] = useState<boolean>(false);
   const [siteBarClass, setSiteBarClass] = useState<string>('');
 
   const [recipientId, setRecipientId] = useState<string | null>(null);
-  const [adminId, setAdminId] = useState<string | null>('');
+  const [adminId, setAdminId] = useState<string | null>(sessionStorage.getItem('userId'));
 
-  // const [chatData, setChatData] = useState<Data[]>([]);
-
-  // const [client, setClient] = useState<object | null>(null);
-  // const [masters, setMasters] = useState<null | object>(null);
-
-  const [messages, setMessages] = useState<any>([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [content, setContent] = useState<string>('');
-  const [stompClient, setStompClient] = useState<any>([]);
+  const [stompClient, setStompClient] = useState<any>(null);
 
-  // filter
   const [fullName, setFullName] = useState<string>('');
   const [messageStatus, setMessageStatus] = useState('ALL_MESSAGES');
-
-
-  // ---------- get admin and user ----------- //
+  const [chatId, setChatId] = useState<string | null>(null);
+  const [replyId, setreplyId] = useState<string | null>(null);
+  const [editId, setEditId] = useState<string | null>(null);
 
   useEffect(() => {
-    setAdminId(sessionStorage.getItem('userId'));
     connect();
-  }, []);
+  }, [adminId]);
 
-  // console.log(chatData, role);
+  useEffect(() => {
+    if (recipientId) {
+      fetchMessages(adminId, recipientId);
+    }
+  }, [recipientId]);
 
-  // useEffect(() => {
-  //   console.log(recipientId);
-  // }, [recipientId])
-
-  // function checkRole(text: string) {
-  //   if (text === 'master') setChatData(data);
-  //   else setChatData(clientData);
-  // }
-
-  // chat sitebar sizing
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -88,14 +75,6 @@ const Chatdetail: React.FC = () => {
     });
   };
 
-  // chat/web?status=MASTER&fullName=m
-  // chat/web?status=MASTER 
-
-  // chat/web
-  // chat/web?status=MASTER&messageStatus=READ
-  // chat/web&messageStatus=READ
-
-  //  connect socket with sock js 
   const connect = () => {
     if (adminId) {
       const socket = new SockJS(sockjs_url);
@@ -105,100 +84,116 @@ const Chatdetail: React.FC = () => {
         console.log('Connected: ' + frame);
         setStompClient(stomp);
         stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
-          const receivedMessages = JSON.parse(response.body);
-          setMessages((prevState: any) => [...prevState, receivedMessages]);
+
+          const receivedMessage = JSON.parse(response.body);
+          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
 
         });
       }, (error: any) => {
         console.error('Error connecting: ', error);
       });
-      // onStompError: (frame) => {
-      //       console.error('Error: ' + frame.headers['message']);
-      //     },
-      //     onDisconnect(frame) {
-      //       console.error('Error: ' + frame.headers['message']);
-      //     },
-      //     onWebSocketError(res){
-      //       console.log(res)
-      //     }
-      //   });
-      //   client.activate();
-      //   setStompClient(client);
-    };
-  }
-
+    }
+  };
 
   const sendMessage = () => {
-    const chatMessage = {
-      senderId: adminId,
-      recipientId: '5470d9d2-39d5-40c7-9cdc-592953862023',
-      content: content,
-      isRead: false,
-      createdAt: new Date(),
-      attachmentIds: []
-    };
-    if (content) {
+    if (stompClient && recipientId) {
+      const chatMessage = {
+        senderId: adminId,
+        recipientId: recipientId,
+        content: content,
+        isRead: false,
+        attachmentIds: []
+      };
+
       stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+      fetchMessages(adminId, recipientId);
       setContent('');
-      console.log('Message sent:', content);
-
-    } else {
-      alert('toldiiiiiir ❗️')
     }
-
-
   };
-  useEffect(() => {
-    if (recipientId) {
+
+  const fetchMessages = (adminId: string | null, recipientId: string | null) => {
+    if (adminId && recipientId) {
       axios.get(`${messages_url}/${adminId}/${recipientId}`, config)
         .then(res => {
           setMessages(res.data.body);
         }).catch(err => {
           console.error(err);
-        })
+        });
     }
-  }, [recipientId])
+  };
 
   const readAllMessages = () => {
     axios.get(`${chat_url}/all-message-ready`, config)
       .then(res => {
-        toast.success('پیام ها با موفقیت خوانده ش')
+        toast.success('All messages marked as read successfully');
       }).catch(err => {
         console.log(err);
-        
-      })
-  }
+      });
+  };
+  // delete message
+  useEffect(() => {
+    console.log(chatId);
+    if (chatId) {
+      if (stompClient && stompClient.connected) {
+        stompClient.send('/app/deleteMessage', {}, JSON.stringify(chatId));
+        fetchMessages(adminId, recipientId);
+        console.log("ochdi");
+      }
+    }
+  }, [chatId])
 
-  // const messageDelete = () => {
-  //   if (stompClient && stompClient.connected) {
-  //     stompClient.publish({
-  //       destination: '/app/deleteMessage',
-  //       body: JSON.stringify(chatId)
-  //     });
-  //   }
-  // };
+  // edit messagi
+  useEffect(() => {
+    const editMessage = {
+      messageId: editId,
+      chatDto: {
+        senderId: adminId,
+        recipientId: recipientId,
+        content: content,
+        isRead: false,
+        attachmentIds: []
+      }
+    }
+    console.log(editId);
 
-  // const editMessage = () => {
-  //   const editMessage = {
-  //     messageId: chatId,
-  //     chatDto: {
-  //       id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  //       senderId: 'c6bd41df-574d-4d3e-afc1-3b65a2daad99',
-  //       recipientId: '3e129de3-cb68-4c72-b626-66d56f6cb2b2',
-  //       content: message,
-  //       isRead: false,
-  //       createdAt: new Date(),
-  //       attachmentIds: []
-  //     }
-  //   };
-  //   if (stompClient && stompClient.connected) {
-  //     stompClient.publish({
-  //       destination: '/app/editMessage',
-  //       body: JSON.stringify(editMessage)
-  //     });
-  //   }
-  // };
+    if (editId && content) {
+      if (stompClient && stompClient.connected) {
+        stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
+        fetchMessages(adminId, recipientId);
+        console.log("edit boldi");
+      }
+    } else {
+      toast.error("Введите сообщение");
+    }
+  }, [editId])
 
+  //reply message
+
+  useEffect(() => {
+    const replyObj = {
+      messageId: replyId,
+      chatDto: {
+        senderId: adminId,
+        recipientId: recipientId,
+        content: content,
+        isRead: false,
+        attachmentIds: []
+      }
+    }
+    console.log(replyId);
+    console.log(replyObj);
+    
+
+    if (replyId && content) {
+      if (stompClient && stompClient.connected) {
+        stompClient.send('/app/replay', {}, JSON.stringify(replyObj));
+        fetchMessages(adminId, recipientId);
+        console.log("reply boldi");
+      }
+    } else {
+      toast.error("Введите сообщение");
+    }
+  }, [replyId])
 
   return (
     <div className="h-[92%]">
@@ -240,12 +235,10 @@ const Chatdetail: React.FC = () => {
           ]}
         />
 
-        {/* yangi chat yaratuvchi button va component */}
         <NewChat />
         <Buttons onClick={readAllMessages}>Удалить все прочитанные</Buttons>
       </div>
 
-      {/* chat list */}
       <div className="flex w-[100%] h-full relative">
         <div
           className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5  border md:py-5 h-full duration-300 flex flex-col`}>
@@ -257,10 +250,9 @@ const Chatdetail: React.FC = () => {
           <ChatusersList user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative ">
-          {recipientId ? <Sms senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} /> : <Notselected />}
+          {recipientId ? <Sms editId={setEditId} replyId={setreplyId} chatId={setChatId} senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} /> : <Notselected />}
         </div>
       </div>
-
     </div>
   );
 };
