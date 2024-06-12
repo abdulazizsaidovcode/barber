@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import { MdEdit } from 'react-icons/md';
@@ -11,20 +11,26 @@ import Modal from '../../components/modals/modal.tsx';
 import { useTranslation } from 'react-i18next';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
-const MasterDocument: React.FC = () => {
+const MasterDocument = () => {
   const {
     dataMaster,
     setDataMaster,
     setUpdateTextArea,
     updateTextArea,
+    selectedFilesDef,
     setSelectedFilesDef,
     uploadFileID,
     filesList,
-    deleteFileId
+    deleteFileId,
+    helpRole
   } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
   const [deleteFile, setDeleteFile] = useState(false);
+
+  useEffect(() => {
+    setSelectedFilesDef([])
+  }, [helpRole]);
 
   const trueFalse = (status: string) => status !== 'SERVICE_SPECIFICATION';
   const openModal = () => setIsModal(!isModal);
@@ -73,8 +79,9 @@ const MasterDocument: React.FC = () => {
         ))}
       </div>
       <button
-        className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`}
+        className={`bg-[#9C0A35] ${selectedFilesDef.length === 0 ? 'opacity-70 cursor-not-allowed' : ''} text-white px-3 py-2 rounded-lg`}
         onClick={() => updateSaveButtons(filesList, uploadFileID, setDataMaster, 'FOR_MASTER', setSelectedFilesDef)}
+        disabled={selectedFilesDef.length === 0}
       >
         {t('Save_changes')}
       </button>

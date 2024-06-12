@@ -7,16 +7,18 @@ export interface HelpTypes {
   setDataMaster: (val: HelpList[]) => void;
   dataClient: HelpList[];
   setDataClient: (val: HelpList[]) => void;
-  updateTextArea: HelpList | null
+  updateTextArea: HelpList | null;
   setUpdateTextArea: (val: HelpList) => void;
   deleteFileId: (string | number)[];
   setDeleteFileId: (val: (string | number)[]) => void;
   uploadFileID: string | number;
   setUploadFileID: (val: string | number) => void;
-  filesList: string[]
+  filesList: string[];
   setFilesLest: (val: string[]) => void;
   selectedFilesDef: any[];
   setSelectedFilesDef: (selectedFiles: any[]) => void;
+  helpRole: string;
+  setHelpRole: (val: string) => void;
 }
 
 // help list types
@@ -30,7 +32,7 @@ export interface HelpList {
 }
 
 export interface Attachments {
-  id: string
-  name: string
-  size: number
+  id: string;
+  name: string;
+  size: number;
 }

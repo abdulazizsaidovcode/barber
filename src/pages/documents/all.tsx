@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import FileUploader from '../../components/FileDowlander';
@@ -12,12 +12,26 @@ import { Buttons } from '../../components/buttons';
 import { useTranslation } from 'react-i18next';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
-const All: React.FC = () => {
-  const { dataAll, setDataAll, updateTextArea, setUpdateTextArea, filesList, uploadFileID, setSelectedFilesDef, deleteFileId } = helpStore();
+const All = () => {
+  const {
+    dataAll,
+    setDataAll,
+    updateTextArea,
+    setUpdateTextArea, filesList,
+    uploadFileID,
+    setSelectedFilesDef,
+    selectedFilesDef,
+    deleteFileId,
+    helpRole
+  } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
-  const [deleteFile, setDeleteFile] = useState(false)
+  const [deleteFile, setDeleteFile] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSelectedFilesDef([]);
+  }, [helpRole]);
 
   const trueFalse = (status: string) => status !== 'LICENSES' && status !== 'CERTIFICATES';
   const openIsModal = () => setIsModal(!isModal);
@@ -77,8 +91,11 @@ const All: React.FC = () => {
           </Accordion>
         ))}
       </div>
-      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`}
-              onClick={() => updateSaveButtons(filesList, uploadFileID, setDataAll, 'ALL', setSelectedFilesDef)}>
+      <button
+        className={`bg-[#9C0A35] ${selectedFilesDef.length === 0 ? 'opacity-70 cursor-not-allowed' : ''} text-white px-3 py-2 rounded-lg mt-4`}
+        onClick={() => updateSaveButtons(filesList, uploadFileID, setDataAll, 'ALL', setSelectedFilesDef)}
+        disabled={selectedFilesDef.length === 0}
+      >
         {t('Save_changes')}
       </button>
 
