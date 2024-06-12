@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from '../../token.tsx';
-import { HelpList } from '../../../types/help.ts';
+import { Attachments, HelpList } from '../../../types/help.ts';
 import { deleteFile, help_url } from '../../api.tsx';
 import toast from 'react-hot-toast';
 
@@ -24,10 +24,14 @@ const isActive = (data: boolean) => {
 
 // update help isActive
 export const updateIsActive = (data: HelpList, setDataAll: (val: HelpList[]) => void, statusHelp: string) => {
+  function listsAttach (params: Attachments[]): string[] {
+    return params.map(i => i.id)
+  }
+
   let updateData = {
     helpStatus: 'string',
     text: data.text,
-    attachmentList: data.attachmentList ? data.attachmentList : [],
+    attachmentList: data.attachments ? listsAttach(data.attachments) : [],
     active: isActive(data.active)
   };
 
@@ -68,10 +72,30 @@ export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void
         openIsModal();
       });
   } else {
-    console.log('error updating help');
     toast.error('Xatolik yuz berdi...');
     openIsModal();
   }
+};
+
+// update save button
+export const updateSaveButtons = (filesList: string[], uploadFileID: number | string, setData: (val: HelpList[]) => void, status: string, setSelectedFilesDef: (val: any[]) => void) => {
+  const data = {
+    helpStatus: 'string',
+    text: '',
+    attachmentList: filesList,
+    active: true
+  };
+  if (filesList && uploadFileID) {
+    axios.put(`${help_url}?id=${uploadFileID}`, data, config)
+      .then(res => {
+        if (res.data.success) {
+          getHelp(setData, status);
+          setSelectedFilesDef([])
+          toast.success('Saved saved help files!');
+        } else toast.error('Error updating help files!');
+      })
+      .catch(() => toast.error('Error updating help files!'));
+  } else toast.error('Error updating help files!');
 };
 
 // delete file help
@@ -90,7 +114,7 @@ export const deleteHelpFile = (id: (string | number)[], setIsLoading: (val: bool
       .catch(() => {
         openModal();
         setIsLoading(false);
-        toast.error('Error deleting the help file!')
+        toast.error('Error deleting the help file!');
       });
   } else toast.error('Error deleting the help file!');
 };

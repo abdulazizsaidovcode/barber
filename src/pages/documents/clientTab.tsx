@@ -3,7 +3,7 @@ import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import FileUploader from '../../components/FileDowlander';
 import { useTranslation } from 'react-i18next';
-import { deleteHelpFile, updateIsActive } from '../../helpers/api-function/help/help.tsx';
+import { deleteHelpFile, updateIsActive, updateSaveButtons } from '../../helpers/api-function/help/help.tsx';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 import { Buttons } from '../../components/buttons';
@@ -12,12 +12,11 @@ import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 
 
 const ClientDocument: React.FC = () => {
-  const { dataClient, setDataClient, deleteFileId } = helpStore();
+  const { dataClient, setDataClient, deleteFileId, filesList, uploadFileID, setSelectedFilesDef } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const { t } = useTranslation();
 
   const openModal = () => setIsModal(!isModal);
-  console.log(deleteFileId);
 
   return (
     <div className="p-2">
@@ -32,11 +31,12 @@ const ClientDocument: React.FC = () => {
                 handleToggle={() => updateIsActive(item, setDataClient, 'FOR_CLIENT')}
               />
             </div>
-            <FileUploader id={`fileInput${item.id}`} />
+            <FileUploader id={`${item.id}`} item={item.attachments} />
           </Accordion>
         ))}
       </div>
-      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`}>
+      {/*update save button*/}
+      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`} onClick={() => updateSaveButtons(filesList ,uploadFileID, setDataClient, 'FOR_CLIENT', setSelectedFilesDef)}>
         {t('Save_changes')}
       </button>
 

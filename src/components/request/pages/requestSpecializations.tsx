@@ -3,11 +3,11 @@ import RequestLayout from '../../../pages/request/request';
 import userImg from '../../../images/user.png';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
-import { getFileId, new_procedure_url } from '../../../helpers/api';
+import { changed_spezalliton_url, getFileId, new_spezalliton_url } from '../../../helpers/api';
 import SpecializationsCard from '../cards/specializationsCard';
-import { Skeleton } from 'antd';
+import { Skeleton, Pagination } from 'antd';
 
-interface Data {
+interface SpecializationsData {
   id: string;
   attachmentId: string;
   firstName: string;
@@ -18,25 +18,45 @@ interface Data {
 }
 
 const RequestSpecializations: React.FC = () => {
-  const [data, setData] = useState<Data[]>([]);
+  const [newSpecializations, setNewSpecializations] = useState<SpecializationsData[]>([]);
+  const [changedSpecializations, setChangedSpecializations] = useState<SpecializationsData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalNewSpecializations, setTotalNewSpecializations] = useState<number>(0);
+  const [totalChangedSpecializations, setTotalChangedSpecializations] = useState<number>(0);
+  const [currentNewPage, setCurrentNewPage] = useState<number>(0);
+  const [currentChangedPage, setCurrentChangedPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(new_procedure_url, config);
-        setData(res.data.body);
-      } catch { }
-      finally {
-        setLoading(false);
-      }
-    };
+    fetchData(currentNewPage, currentChangedPage, pageSize);
+  }, [currentNewPage, currentChangedPage, pageSize]);
 
-    fetchData();
-  }, []);
+  const fetchData = async (newPage: number, changedPage: number, size: number) => {
+    setLoading(true);
+    try {
+      const [newRes, changedRes] = await Promise.all([
+        axios.get(`${new_spezalliton_url}?page=${newPage}&size=${size}`, config),
+        axios.get(`${changed_spezalliton_url}?page=${changedPage}&size=${size}`, config)
+      ]);
+      setNewSpecializations(newRes.data.body.object);
+      setTotalNewSpecializations(newRes.data.body.totalElements);
+      setChangedSpecializations(changedRes.data.body.object);
+      setTotalChangedSpecializations(changedRes.data.body.totalElements);
+    } catch { }
+    finally {
+      setLoading(false);
+    }
+  };
 
-  const newSpecializations = data.filter(item => item.categoryIsNew);
-  const changedSpecializations = data.filter(item => !item.categoryIsNew);
+  const onNewPageChange = (page: number, pageSize: number) => {
+    setCurrentNewPage(page - 1);
+    setPageSize(pageSize);
+  };
+
+  const onChangedPageChange = (page: number, pageSize: number) => {
+    setCurrentChangedPage(page - 1);
+    setPageSize(pageSize);
+  };
 
   return (
     <RequestLayout>
@@ -45,7 +65,7 @@ const RequestSpecializations: React.FC = () => {
           <div className="flex gap-3">
             <p className="dark:text-[#000]">Специализации</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
-              <p className="text-sm">{data.length}</p>
+              <p className="text-sm">{newSpecializations.length + changedSpecializations.length}</p>
             </div>
           </div>
         </div>
@@ -81,9 +101,18 @@ const RequestSpecializations: React.FC = () => {
                 ))
               )}
             </div>
+            <div className='p-3 mt-5'>
+              <Pagination
+                showSizeChanger
+                current={currentNewPage + 1}
+                pageSize={pageSize}
+                total={totalNewSpecializations}
+                onChange={onNewPageChange}
+              />
+            </div>
           </div>
           <div className='w-1/2 ml-1'>
-            <div className="w-full bg-[#cccccc] h-12   justify-center items-center flex dark:bg-white p-2">
+            <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -98,7 +127,7 @@ const RequestSpecializations: React.FC = () => {
                 ))
               ) : (changedSpecializations.length === 0 ?
                 <div className='w-full h-[510px] flex justify-center items-center'>
-                  <p>New Specializations Not Found</p>
+                  <p>Changed Specializations Not Found</p>
                 </div> :
                 changedSpecializations.map(item => (
                   <SpecializationsCard
@@ -112,6 +141,15 @@ const RequestSpecializations: React.FC = () => {
                   />
                 ))
               )}
+            </div>
+            <div className='p-3 mt-5'>
+              <Pagination
+                showSizeChanger
+                current={currentChangedPage + 1}
+                pageSize={pageSize}
+                total={totalChangedSpecializations}
+                onChange={onChangedPageChange}
+              />
             </div>
           </div>
         </div>

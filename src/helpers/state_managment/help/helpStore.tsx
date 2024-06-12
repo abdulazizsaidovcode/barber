@@ -12,6 +12,12 @@ const financeStore = create<HelpTypes>((set) => ({
   setUpdateTextArea: (val: HelpList) => set({ updateTextArea: val }),
   deleteFileId: [],
   setDeleteFileId: (val: (string | number)[]) => set({ deleteFileId: val }),
+  uploadFileID: '',
+  setUploadFileID: (val: string | number) => set({ uploadFileID: val }),
+  filesList: [],
+  setFilesLest: (val: string[]) => set({ filesList: val }),
+  selectedFilesDef: [],
+  setSelectedFilesDef: (val: any[]) => set({ selectedFilesDef: val }),
 }));
 
 export default financeStore;

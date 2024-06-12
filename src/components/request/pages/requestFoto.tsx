@@ -6,7 +6,7 @@ import FotoCard from '../cards/fotoCard';
 import axios from 'axios';
 import { getFileId, new_foto_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
-import { Skeleton } from 'antd';
+import { Skeleton, Pagination } from 'antd';
 
 interface Data {
   id: string;
@@ -20,29 +20,39 @@ interface Data {
 const RequestFoto: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(new_foto_url, config);
-        setData(res.data.body);
-      } catch { }
-      finally {
-        setLoading(false);
-      }
-    };
+    fetchData(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
-    fetchData();
-  }, []);
+  const fetchData = async (page: number, size: number) => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${new_foto_url}?page=${page}&size=${size}`, config);
+      setData(res.data.body.object);
+      setTotalItems(res.data.body.totalElements);
+    } catch { }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  const onPageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page - 1);
+    setPageSize(pageSize);
+  };
 
   return (
-    <RequestLayout >
+    <RequestLayout>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max pb-5 mt-1 w-full reviews-shadow'>
         <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
-              <p className='text-sm'>{data.length}</p>
+              <p className='text-sm'>{totalItems}</p>
             </div>
           </div>
           <div className='flex gap-2'>
@@ -78,6 +88,15 @@ const RequestFoto: React.FC = () => {
               />
             ))
           )}
+        </div>
+        <div className='p-3 mt-5'>
+          <Pagination
+            showSizeChanger
+            current={currentPage + 1}
+            pageSize={pageSize}
+            total={totalItems}
+            onChange={onPageChange}
+          />
         </div>
       </div>
     </RequestLayout>

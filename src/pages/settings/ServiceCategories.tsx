@@ -202,8 +202,8 @@ const ServiceCategories = () => {
                 </div>
             </div>
             <Modal isOpen={addIsOpen} onClose={addCloseModal}>
-                <div className="w-[500px] h-[160px]">
-                    <p className="text-xl text-black dark:text-white">{t("Category_Name")}</p>
+                <div className="md:w-[500px] h-[160px] sm:w-[400px] w-[250px]">
+                    <p className="sm:text-xl text-black dark:text-white">{t("Category_Name")}</p>
                     <input
                         className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
                         type="text"
@@ -213,7 +213,7 @@ const ServiceCategories = () => {
                     <div className="flex mt-10 justify-center">
                         <button
                             onClick={addData}
-                            className="py-2 rounded-lg dark:bg-danger px-10 bg-slate-800 text-white"
+                            className="sm:py-2 py-1 px-8 sm:px-10 rounded-lg dark:bg-danger bg-slate-800 text-white "
                             disabled={addLoading}
                         >
                             {addLoading ? 'Loading...' : t("Add")}

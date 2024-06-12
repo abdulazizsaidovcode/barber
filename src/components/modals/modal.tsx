@@ -34,9 +34,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) => {
             className="fixed inset-0 z-999 flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50"
             onClick={onClose}
         >
-
             <div
-                className={`bg-white dark:text-gray-400 dark:bg-[#30303d] z-999 relative rounded-lg shadow-lg  ${mt}`}
+                className={`bg-white dark:text-gray-400 dark:bg-[#30303d] z-999 relative rounded-lg shadow-lg ${mt}`}
+                style={{ maxHeight: '90vh', overflowY: 'auto' }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <button onClick={onClose} className='float-right pt-3 pr-3'>
@@ -45,7 +45,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) => {
                 <div className='p-6'>
                     {children}
                 </div>
-
             </div>
         </div>
     );

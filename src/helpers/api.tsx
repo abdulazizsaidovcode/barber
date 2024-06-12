@@ -50,6 +50,11 @@ export const master_delate_service: string = `${base_url}service/web/not-confirm
 export const master_confirm_new_service: string = `${base_url}service/web/check/`;
 export const master_delate_new_service: string = `${base_url}service/isActive/`;
 export const master_gallery_delate: string = `${base_url}gallery/`;
+export const master_new_gallery_delate: string = `${base_url}gallery/web/check/`; //master_gallery_message
+export const master_gallery_message: string = `${base_url}message/for/master/by/admin`; //master_gallery_message
+export const master_block_put: string = `${base_url}user/web/cleint-edit-status`; //master_review_data
+export const master_review_data: string = `${base_url}user/web/cleint-edit-status`; //master_review_data//master_default_values
+export const master_default_values: string = `${base_url}feedback/for/master/`; //master_review_data//master_default_values
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
@@ -142,8 +147,10 @@ export const masters_confirm_url = `${base_url}user/web/master-confirm`;
 export const masters_cancel_url = `${base_url}user/web/master-edit-status`;
 export const new_foto_url = `${base_url}gallery/web/new`;
 export const new_specialization_url = `${base_url}category/web/not-confirmed`;
-export const new_procedure_url = `${base_url}category/web/not-confirmed`;
+export const new_procedure_url = `${base_url}service/web/not-confirmed/new`;
+export const changed_procedure_url = `${base_url}service/web/not-confirmed/update`;
 export const Category_Child = `${base_url}category/child`;
-export const new_service_url = `${base_url}service/web/not-confirmed`;
+export const new_spezalliton_url = `${base_url}category/web/not-confirmed/new`;
+export const changed_spezalliton_url = `${base_url}category/web/not-confirmed/update`;
 export const requestes_count = `${base_url}dashboard/web/request/count`;
 export const send_message = `${base_url}message/for/master/by/admin`;
