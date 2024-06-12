@@ -1,16 +1,16 @@
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { Button, message } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
+import { Button, message, Modal, Input } from 'antd';
 import { useLocation } from 'react-router-dom';
 import {
   master_delate_service,
   master_confirm_new_service,
   master_delate_new_service,
 } from '../../helpers/api';
-import CustomModal from './../modals/modal';
 import { config } from '../../helpers/token';
 import axios from 'axios';
+
+const { TextArea } = Input;
 
 interface ProceduresProps {
   title: string;
@@ -60,17 +60,6 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         ? master_delate_service
         : master_delate_new_service;
     try {
-      const response = await axios.put(`${apiEndpoint}${ServesId}`, config);
-      if (response) {
-        message.success('Procedure deleted successfully');
-        // Perform any additional state updates or refresh the list
-      } else {
-        throw new Error('Failed to delete procedure');
-      }
-    } catch (error) {
-      message.error('An error occurred while deleting the procedure');
-    }
-    try {
       const response = await axios.delete(`${apiEndpoint}${ServesId}`, config);
       if (response) {
         message.success('Procedure deleted successfully');
@@ -86,10 +75,8 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
   const handleConfirm = async () => {
     try {
-      const response = await fetch(`${master_confirm_new_service}${ServesId}`, {
-        method: 'PUT',
-      });
-      if (response.ok) {
+      const response = await axios.put(`${master_confirm_new_service}${ServesId}`, config);
+      if (response) {
         message.success('Procedure confirmed successfully');
         // Perform any additional state updates or refresh the list
       } else {
@@ -171,17 +158,21 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           >
             {serviceStatus === 'APPROVED' ? 'Одобрена' : 'Новая или измененная'}
           </span>
-          <div className="ml-4 flex items-center space-x-2">
-            <button className="bg-green-500 text-white py-1 px-2 rounded flex items-center">
-              <i className="fas fa-check"></i>
-            </button>
-            <button className="bg-red-500 text-white py-1 px-2 rounded flex items-center">
-              <i className="fas fa-times"></i>
-            </button>
-          </div>
         </div>
       </div>
-      <CustomModal isOpen={isModalVisible} onClose={hideModal}>
+      <Modal
+        visible={isModalVisible}
+        title="Delete Procedure"
+        onCancel={hideModal}
+        footer={[
+          <Button key="cancel" onClick={hideModal}>
+            Cancel
+          </Button>,
+          <Button key="delete" type="primary" onClick={handleFirstModalDeleteClick}>
+            Delete
+          </Button>,
+        ]}
+      >
         <div className="flex flex-col gap-4">
           <p>Are you sure you want to delete this procedure?</p>
           <TextArea
@@ -190,33 +181,25 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
             placeholder="Optional comment"
             autoSize={{ minRows: 3, maxRows: 5 }}
           />
-          <div className="flex justify-end gap-2">
-            <Button key="cancel" danger onClick={hideModal}>
-              Cancel
-            </Button>
-            <Button
-              key="delete"
-              type="primary"
-              onClick={handleFirstModalDeleteClick}
-            >
-              Delete
-            </Button>
-          </div>
         </div>
-      </CustomModal>
-      <CustomModal isOpen={isSecondModalVisible} onClose={hideSecondModal}>
+      </Modal>
+      <Modal
+        visible={isSecondModalVisible}
+        title="Confirm Deletion"
+        onCancel={hideSecondModal}
+        footer={[
+          <Button key="cancel" onClick={hideSecondModal}>
+            Cancel
+          </Button>,
+          <Button key="delete" type="primary" onClick={handleDelete}>
+            Confirm
+          </Button>,
+        ]}
+      >
         <div className="flex flex-col gap-4">
           <p>Are you sure you want to delete this procedure?</p>
-          <div className="flex justify-end gap-2">
-            <Button key="cancel" danger onClick={hideSecondModal}>
-              Cancel
-            </Button>
-            <Button key="delete" type="primary" onClick={handleDelete}>
-              Delete
-            </Button>
-          </div>
         </div>
-      </CustomModal>
+      </Modal>
     </div>
   );
 };

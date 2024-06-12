@@ -5,7 +5,11 @@ import Modal from '../modals/modal';
 import { useTranslation } from 'react-i18next';
 import TextArea from 'antd/es/input/TextArea';
 import toast, { Toaster } from 'react-hot-toast';
-import { master_send_message_master } from '../../helpers/api';
+import {
+  client_block_put,
+  master_block_put,
+  master_send_message_master,
+} from '../../helpers/api';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { config } from '../../helpers/token';
@@ -72,14 +76,39 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [pendingSwitchState, setPendingSwitchState] = useState(true);
+  const MasterLocation = useLocation();
+  const idMaster = MasterLocation.pathname.substring(11);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   const closeSendModal = () => setSendOpen(false);
 
-  const toggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOn);
+  const handleSwitchClick = () => {
+    setPendingSwitchState(!isSwitchOn);
+    openModal();
+  };
+  const confirmToggleSwitch = async () => {
+    setIsSwitchOn(pendingSwitchState);
+    try {
+      const status = pendingSwitchState ? 'BLOCK' : 'ACTIVE';
+      const response = await axios.put(
+        `${master_block_put}`,
+        {
+          id: idMaster,
+          status: status,
+        },
+        config,
+      );
+
+      console.log('Switch toggled successfully:', response.data);
+      toast.success(t('Switch toggled successfully'));
+    } catch (error) {
+      console.error('Error toggling switch:', error);
+      toast.error(t('Error toggling switch'));
+    }
+    closeModal();
   };
   const location = useLocation();
   const id = location.pathname.substring(8);
@@ -112,7 +141,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
     setSendOpen(true);
   };
   const handlePostBtn = () => {
-    if (message.valueOf() === '' || message.trim() === '') {
+    if (message.valueOf() === '') {
       toast.error('информация не введена');
     } else {
       sendMessage();
@@ -186,7 +215,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       <div className="flex flex-col h-full justify-between gap-4">
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <div className="bg-green-500 rounded-[50%] w-3 h-3"></div>
               <p>{StatusNow}</p>
             </div>
@@ -213,8 +242,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             </div>
             <div className="flex items-center justify-between mt-4">
               <p>Заблокировать</p>
-              <div onClick={() => openModal()}>
-                <Switch isOn={isSwitchOn} handleToggle={toggleSwitch} />
+              <div onClick={handleSwitchClick}>
+                <Switch isOn={isSwitchOn} handleToggle={() => {}} />
               </div>
             </div>
           </div>
@@ -271,13 +300,11 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       <div>
         <Modal isOpen={isOpen} onClose={closeModal}>
           <p className="text-2xl font-bold">{t('Modal_answer')}</p>
-          <div className="flex items-center justify-end mt-10 gap-4">
-            <Button danger onClick={closeModal}>
-              No
+          <div className="flex items-center gap-2 justify-end mt-3">
+            <Button key="back" onClick={closeModal}>
+              {t('No')}
             </Button>
-            <Button className="text-white" onClick={closeModal}>
-              Ok
-            </Button>
+            <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
           </div>
         </Modal>
       </div>

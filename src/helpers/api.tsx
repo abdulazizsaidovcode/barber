@@ -50,6 +50,9 @@ export const master_delate_service: string = `${base_url}service/web/not-confirm
 export const master_confirm_new_service: string = `${base_url}service/web/check/`;
 export const master_delate_new_service: string = `${base_url}service/isActive/`;
 export const master_gallery_delate: string = `${base_url}gallery/`;
+export const master_new_gallery_delate: string = `${base_url}gallery/web/check/`; //master_gallery_message
+export const master_gallery_message: string = `${base_url}message/for/master/by/admin`; //master_gallery_message
+export const master_block_put: string = `${base_url}user/web/cleint-edit-status`; //master_gallery_message
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
