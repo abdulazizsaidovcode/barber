@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Accordion from '../../components/accordion/accordion';
 import Switch from '../../components/settings/details/TableSwitcher';
 import FileUploader from '../../components/FileDowlander';
@@ -12,12 +12,26 @@ import { Buttons } from '../../components/buttons';
 import { useTranslation } from 'react-i18next';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
-const All: React.FC = () => {
-  const { dataAll, setDataAll, updateTextArea, setUpdateTextArea, filesList, uploadFileID, setSelectedFilesDef, deleteFileId } = helpStore();
+const All = () => {
+  const {
+    dataAll,
+    setDataAll,
+    updateTextArea,
+    setUpdateTextArea, filesList,
+    uploadFileID,
+    setSelectedFilesDef,
+    selectedFilesDef,
+    deleteFileId,
+    helpRole
+  } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
-  const [deleteFile, setDeleteFile] = useState(false)
+  const [deleteFile, setDeleteFile] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSelectedFilesDef([]);
+  }, [helpRole]);
 
   const trueFalse = (status: string) => status !== 'LICENSES' && status !== 'CERTIFICATES';
   const openIsModal = () => setIsModal(!isModal);
@@ -35,7 +49,7 @@ const All: React.FC = () => {
         <div className={`mt-3 ${params && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
           {!params && <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />}
           <div className="flex gap-3 items-center my-3">
-            <p>Отображать в приложениях</p>
+            <p>{t("Show_in_apps")}</p>
             <Switch
               isOn={item.active}
               handleToggle={() => updateIsActive(item, setDataAll, 'ALL')}
@@ -77,8 +91,11 @@ const All: React.FC = () => {
           </Accordion>
         ))}
       </div>
-      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`}
-              onClick={() => updateSaveButtons(filesList, uploadFileID, setDataAll, 'ALL', setSelectedFilesDef)}>
+      <button
+        className={`bg-[#9C0A35] ${selectedFilesDef.length === 0 ? 'opacity-70 cursor-not-allowed' : ''} text-white px-3 py-2 rounded-lg mt-4`}
+        onClick={() => updateSaveButtons(filesList, uploadFileID, setDataAll, 'ALL', setSelectedFilesDef)}
+        disabled={selectedFilesDef.length === 0}
+      >
         {t('Save_changes')}
       </button>
 
@@ -107,11 +124,11 @@ const All: React.FC = () => {
                 onChange={e => setModalVal({ ...modalVal, active: e.target.checked })}
               />
               <label htmlFor={`helpActiveInput`}
-                     className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
+                className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
             </div>
             <div className={`flex justify-center items-center gap-6 mt-5`}>
               <Buttons bWidth={`w-[150px]`}
-                       onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}>
+                onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}>
                 {isLoading ? t('Loading') : t('Save')}
               </Buttons>
               <Buttons bWidth={`w-[150px]`} onClick={openIsModal}>{t('Close')}</Buttons>

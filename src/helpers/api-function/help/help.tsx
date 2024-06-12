@@ -24,8 +24,8 @@ const isActive = (data: boolean) => {
 
 // update help isActive
 export const updateIsActive = (data: HelpList, setDataAll: (val: HelpList[]) => void, statusHelp: string) => {
-  function listsAttach (params: Attachments[]): string[] {
-    return params.map(i => i.id)
+  function listsAttach(params: Attachments[]): string[] {
+    return params.map(i => i.id);
   }
 
   let updateData = {
@@ -90,12 +90,12 @@ export const updateSaveButtons = (filesList: string[], uploadFileID: number | st
       .then(res => {
         if (res.data.success) {
           getHelp(setData, status);
-          setSelectedFilesDef([])
+          setSelectedFilesDef([]);
           toast.success('Saved saved help files!');
         } else toast.error('Error updating help files!');
       })
       .catch(() => toast.error('Error updating help files!'));
-  } else toast.error('Error updating help files!');
+  } else toast.error('Biron bir uzgarish qilinmagan!');
 };
 
 // delete file help
