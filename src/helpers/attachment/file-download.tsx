@@ -5,8 +5,10 @@ import { config } from '../token.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
 import { UploadedFile } from '../../components/FileDowlander.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, page?: number) => {
+  const { t } = useTranslation();
   setIsLoading(true);
   axios.get(url, { ...config, responseType: 'blob' })
     .then((res) => {
@@ -18,10 +20,10 @@ export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => v
       document.body.appendChild(a);
       a.click();
       setIsLoading(false);
-      toast.success('File downloaded successfully✔');
+      toast.success(t("File_downloaded_successfully"));
     })
     .catch((err) => {
-      toast.error('There was an error fetching the data!');
+      toast.error(t("There_was_an_error_fetching_the_data"));
       console.log(err);
       setIsLoading(false);
     });
@@ -33,7 +35,8 @@ export const handleFileChange = async (
   event: React.ChangeEvent<HTMLInputElement>,
   getFileType: (val: string) => string,
   setSelectedFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>,
-  setFileIds: React.Dispatch<React.SetStateAction<string[]>>
+  setFileIds: React.Dispatch<React.SetStateAction<string[]>>,
+  setIsLoading: (val: boolean) => void
 ) => {
   const file = event.target.files && event.target.files[0];
   if (file) {
@@ -46,16 +49,20 @@ export const handleFileChange = async (
     try {
       const formData = new FormData();
       formData.append('file', file);
+      setIsLoading(true)
 
       const response = await axios.post('http://45.67.35.86:8080/attachment/upload', formData, config);
       if (response.data && response.data.body) {
         setSelectedFiles((prevState: UploadedFile[]) => [...prevState, fileData]);
         setFileIds((prevState: string[]) => [...prevState, response.data.body]);
+        setIsLoading(false)
       } else {
         console.error('Invalid response from the server');
+        setIsLoading(false)
       }
     } catch (error) {
       console.error('Error uploading file:', error);
+      setIsLoading(false)
     }
   }
 };
