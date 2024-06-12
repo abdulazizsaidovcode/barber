@@ -1,4 +1,5 @@
 // main help types
+
 export interface HelpTypes {
   dataAll: HelpList[];
   setDataAll: (val: HelpList[]) => void;
@@ -10,6 +11,12 @@ export interface HelpTypes {
   setUpdateTextArea: (val: HelpList) => void;
   deleteFileId: (string | number)[];
   setDeleteFileId: (val: (string | number)[]) => void;
+  uploadFileID: string | number;
+  setUploadFileID: (val: string | number) => void;
+  filesList: string[]
+  setFilesLest: (val: string[]) => void;
+  selectedFilesDef: any[];
+  setSelectedFilesDef: (selectedFiles: any[]) => void;
 }
 
 // help list types
