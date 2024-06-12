@@ -85,7 +85,7 @@ const ServiceCategories = () => {
             };
             axios.put(`${edit_service_category}/${editingCategory}`, updatedCategory, config)
                 .then((res) => {
-                    toast.success('Category updated successfully');
+                    toast.success(t("Category_updated_successfully"));
                     fetchData();
                     console.log(res.data);
                     editCloseModal();
@@ -122,9 +122,9 @@ const ServiceCategories = () => {
     return (
         <DefaultLayout>
             <div className="flex justify-between">
-                <p className="font-bold text-xl text-black">Service Categories</p>
+                <p className="font-bold text-xl text-black">{t("Service_Categories")}</p>
                 <button onClick={addOpenModal} className="dark:bg-danger bg-[#c2c2c2] text-black dark:text-white py-2 px-4 rounded-lg">
-                    Add Category
+                    {t("Add_Category")}
                 </button>
             </div>
             <div className="mt-4 md:w-[75%] w-full">
@@ -146,15 +146,15 @@ const ServiceCategories = () => {
             </div>
             <Modal isOpen={addIsOpen} onClose={addCloseModal}>
                 <div className="w-[500px] h-[160px]">
-                    <p className="text-xl text-black dark:text-white">Category Name:</p>
+                    <p className="text-xl text-black dark:text-white">{t("Category_Name")}</p>
                     <input
                         className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
                         type="text"
-                        placeholder="Health Procedures"
+                        placeholder={t("Health_Procedures")}
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
                     <div className="flex mt-10 justify-center">
-                        <button onClick={addData} className="py-2 rounded-lg dark:bg-danger px-10 bg-slate-800 text-white">Add</button>
+                        <button onClick={addData} className="py-2 rounded-lg dark:bg-danger px-10 bg-slate-800 text-white">{t("Add")}</button>
                     </div>
                     <Toaster
                         position="top-center"
