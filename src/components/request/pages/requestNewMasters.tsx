@@ -9,7 +9,7 @@ import axios from 'axios';
 import { masters_cancel_url, masters_confirm_url, masters_fulldata_url, masters_gallery_url, masters_service_url, new_masters_url, send_message } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast from 'react-hot-toast';
-import { Skeleton } from 'antd';
+import { Skeleton, Pagination } from 'antd';
 
 interface Data {
   id: string;
@@ -83,21 +83,25 @@ const RequestNewMasters: React.FC = () => {
   const [selectedMaster, setSelectedMaster] = useState<MasterDetailData | null>(null);
   const [loading, setLoading] = useState(true);
   const [rejectionMessage, setRejectionMessage] = useState('');
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10); // Default page size
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
-  const fetchData = async () => {
+  const fetchData = async (page: number, size: number) => {
     setLoading(true);
     try {
-      const res = await axios.get(new_masters_url, config);
-      setData(res.data.body);
+      const res = await axios.get(`${new_masters_url}?page=${page}&size=${size}`, config);
+      setData(res.data.body.object); // Assuming 'object' contains the list of data items
+      setTotalItems(res.data.body.totalElements); // Assuming 'totalElements' contains the total number of items
     } catch { }
     finally {
       setLoading(false);
     }
-  }
+  };
 
   const fetchFullData = async (id: string) => {
     try {
@@ -107,21 +111,21 @@ const RequestNewMasters: React.FC = () => {
       fetchService(id);
       fetchGallery(id);
     } catch { }
-  }
+  };
 
   const fetchService = async (id: string) => {
     try {
       const res = await axios.get(`${masters_service_url}/${id}`, config);
       setServiceData(res.data.body);
     } catch { }
-  }
+  };
 
   const fetchGallery = async (id: string) => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
       setGalleryData(res.data.body);
     } catch { }
-  }
+  };
 
   const confirmMasters = async (id: string, callback: () => void) => {
     try {
@@ -129,7 +133,7 @@ const RequestNewMasters: React.FC = () => {
       callback();
       toast.success('Master confirmed successfully');
     } catch { }
-  }
+  };
 
   const sendMessageForReject = async (id: string, message: string) => {
     const payload = {
@@ -151,8 +155,7 @@ const RequestNewMasters: React.FC = () => {
     try {
       const res = await axios.put(masters_cancel_url, payload, config);
       console.log(res.data.body);
-      fetchData();
-
+      fetchData(currentPage, pageSize);
     } catch { }
   }
 
@@ -168,14 +171,19 @@ const RequestNewMasters: React.FC = () => {
     }
   }
 
+  const onPageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page - 1); // Subtract 1 to convert to 0-based index for the API
+    setPageSize(pageSize);
+  };
+
   return (
     <RequestLayout>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5'>
-        <div className='w-full bg-[#cccccc] dark:bg:white h-12 flex justify-between items-center px-5'>
+        <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
             <p className='dark:text-[#000]'>Новые мастера</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white'>
-              <p className='text-sm'>{data.length}</p>
+              <p className='text-sm'>{totalItems}</p>
             </div>
           </div>
           <div className='flex gap-2'>
@@ -213,16 +221,25 @@ const RequestNewMasters: React.FC = () => {
             ))
           )}
         </div>
+        <div className='p-3 mt-5'>
+          <Pagination
+            showSizeChanger
+            current={currentPage + 1}
+            pageSize={pageSize}
+            total={totalItems}
+            onChange={onPageChange}
+          />
+        </div>
       </div>
       <NewMastersDetail
         isOpen={detailIsOpen}
         onClose={closeDetailModal}
         openReasonModal={openReasonModal}
         {...selectedMaster}
-        serviceData={serviceData || []} // Ensure serviceData is always an array
-        galleryData={galleryData || []} // Ensure galleryData is always an array
-        confirmMasters={confirmMasters} // Pass confirmMasters function
-        fetchData={fetchData} // Pass fetchData function
+        serviceData={serviceData || []}
+        galleryData={galleryData || []}
+        confirmMasters={confirmMasters}
+        fetchData={() => fetchData(currentPage, pageSize)}
       />
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className='w-[700px] h-[320px]'>

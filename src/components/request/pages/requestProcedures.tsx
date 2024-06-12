@@ -3,11 +3,11 @@ import RequestLayout from '../../../pages/request/request';
 import userImg from '../../../images/user.png';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
-import { getFileId, new_service_url } from '../../../helpers/api';
+import { changed_procedure_url, getFileId, new_procedure_url } from '../../../helpers/api';
+import { Skeleton, Pagination } from 'antd';
 import SpecializationsCard from '../cards/specializationsCard';
-import { Skeleton } from 'antd';
 
-interface Data {
+interface ProceduresData {
   id: string;
   attachmentId: string;
   firstName: string;
@@ -18,25 +18,45 @@ interface Data {
 }
 
 const RequestProcedures: React.FC = () => {
-  const [data, setData] = useState<Data[]>([]);
+  const [newProcedures, setNewProcedures] = useState<ProceduresData[]>([]);
+  const [changedProcedures, setChangedProcedures] = useState<ProceduresData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalNewProcedures, setTotalNewProcedures] = useState<number>(0);
+  const [totalChangedProcedures, setTotalChangedProcedures] = useState<number>(0);
+  const [currentNewPage, setCurrentNewPage] = useState<number>(0);
+  const [currentChangedPage, setCurrentChangedPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(new_service_url, config);
-        setData(res.data.body);
-      } catch { }
-      finally {
-        setLoading(false);
-      }
-    };
+    fetchData(currentNewPage, currentChangedPage, pageSize);
+  }, [currentNewPage, currentChangedPage, pageSize]);
 
-    fetchData();
-  }, []);
+  const fetchData = async (newPage: number, changedPage: number, size: number) => {
+    setLoading(true);
+    try {
+      const [newRes, changedRes] = await Promise.all([
+        axios.get(`${new_procedure_url}?page=${newPage}&size=${size}`, config),
+        axios.get(`${changed_procedure_url}?page=${changedPage}&size=${size}`, config)
+      ]);
+      setNewProcedures(newRes.data.body.object);
+      setTotalNewProcedures(newRes.data.body.totalElements);
+      setChangedProcedures(changedRes.data.body.object);
+      setTotalChangedProcedures(changedRes.data.body.totalElements);
+    } catch { }
+    finally {
+      setLoading(false);
+    }
+  };
 
-  const newProcedures = data.filter(item => item.categoryIsNew);
-  const changedProcedures = data.filter(item => !item.categoryIsNew);
+  const onNewPageChange = (page: number, pageSize: number) => {
+    setCurrentNewPage(page - 1);
+    setPageSize(pageSize);
+  };
+
+  const onChangedPageChange = (page: number, pageSize: number) => {
+    setCurrentChangedPage(page - 1); 
+    setPageSize(pageSize);
+  };
 
   return (
     <RequestLayout>
@@ -45,7 +65,7 @@ const RequestProcedures: React.FC = () => {
           <div className="flex gap-3">
             <p className="dark:text-[#000]">Специализации</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
-              <p className="text-sm">{data.length}</p>
+              <p className="text-sm">{newProcedures.length + changedProcedures.length}</p>
             </div>
           </div>
         </div>
@@ -81,9 +101,18 @@ const RequestProcedures: React.FC = () => {
                 ))
               )}
             </div>
+            <div className='p-3 mt-5'>
+              <Pagination
+                showSizeChanger
+                current={currentNewPage + 1} 
+                pageSize={pageSize}
+                total={totalNewProcedures}
+                onChange={onNewPageChange}
+              />
+            </div>
           </div>
           <div className='w-1/2 ml-1'>
-            <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
+            <div className="w-full bg-[#cccccc] h-12   justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -98,7 +127,7 @@ const RequestProcedures: React.FC = () => {
                 ))
               ) : (changedProcedures.length === 0 ?
                 <div className='w-full h-[510px] flex justify-center items-center'>
-                  <p>Changed Procedures Not Found</p>
+                  <p>New Procedures Not Found</p>
                 </div> :
                 changedProcedures.map(item => (
                   <SpecializationsCard
@@ -112,6 +141,15 @@ const RequestProcedures: React.FC = () => {
                   />
                 ))
               )}
+            </div>
+            <div className='p-3 mt-5'>
+              <Pagination
+                showSizeChanger
+                current={currentChangedPage + 1} 
+                pageSize={pageSize}
+                total={totalChangedProcedures}
+                onChange={onChangedPageChange}
+              />
             </div>
           </div>
         </div>

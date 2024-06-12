@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { MdFileDownload } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { handleFileChange } from '../helpers/attachment/file-download.tsx';
+import helpStore from '../helpers/state_managment/help/helpStore.tsx';
+import { Attachments } from '../types/help.ts';
 
 export interface UploadedFile {
   name: string;
@@ -10,12 +12,28 @@ export interface UploadedFile {
   type: string;
 }
 
-const FileUploader = ({ id }: { id: string }) => {
+const FileUploader = ({ id, item }: { id: string, item: any }) => {
+  const { setFilesLest, setUploadFileID, setSelectedFilesDef, selectedFilesDef } = helpStore();
   const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
   const { t } = useTranslation();
   const [fileIds, setFileIds] = useState<string[]>([]);
 
-  console.log(fileIds);
+  useEffect(() => {
+    const attachedIds = listsAttach(item);
+
+    if (listsAttach(item).length > 0) {
+      setFilesLest([...attachedIds, ...fileIds]);
+    } else setFilesLest(fileIds);
+    if (id) setUploadFileID(id);
+  }, [fileIds]);
+
+  useEffect(() => {
+    setSelectedFilesDef(selectedFiles)
+  }, [selectedFiles]);
+
+  function listsAttach(params: Attachments[]): string[] {
+    return params.map(i => i.id);
+  }
 
   const getFileType = (fileName: string): string => {
     const extension = fileName.split('.').pop()?.toLowerCase();
@@ -38,10 +56,10 @@ const FileUploader = ({ id }: { id: string }) => {
 
   return (
     <div>
-      {selectedFiles.length > 0 && (
+      {selectedFilesDef.length > 0 && (
         <div className="flex w-[100%] flex-col flex-wrap">
           <div className="flex gap-3 flex-wrap">
-            {selectedFiles.map((file, index) => (
+            {selectedFilesDef.map((file, index) => (
               <div className="border-[1px] border-[#000] dark:border-white p-3 w-max h-17 rounded-md flex" key={index}>
                 <div className="flex">
                   <div className="bg-black dark:bg-danger px-3 flex rounded-md justify-center items-center">
