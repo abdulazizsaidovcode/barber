@@ -6,6 +6,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { FaStar } from "react-icons/fa";
 import ReviewsServiceCard from '../cards/ReviewsServiceCard';
 import DelModal from '../../../components/settings/modals/delModal';
+import { useTranslation } from 'react-i18next';
 
 const FirstTab: React.FC = () => {
     const [showMore, setShowMore] = useState(false);
@@ -14,6 +15,7 @@ const FirstTab: React.FC = () => {
     const openShowMore = () => setShowMore(!showMore)
     const openDelModal = () => setIsDelOpen(true)
     const closeDelModal = () => setIsDelOpen(false)
+    const { t } = useTranslation();
 
 
     return (
@@ -21,7 +23,7 @@ const FirstTab: React.FC = () => {
             <div>
                 <div className='flex flex-wrap gap-5'>
                     <Input
-                        placeholder={"Поиск по ФИО"}
+                        placeholder={t("Search_by_name")}
                         prefix={<IoSearchOutline />}
                         className='w-60'
                     />
