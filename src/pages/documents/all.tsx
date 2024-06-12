@@ -5,7 +5,7 @@ import FileUploader from '../../components/FileDowlander';
 import { MdEdit } from 'react-icons/md';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 import { HelpList } from '../../types/help.ts';
-import { updateHelp, updateIsActive } from '../../helpers/api-function/help/help.tsx';
+import { updateHelp, updateIsActive, updateSaveButtons } from '../../helpers/api-function/help/help.tsx';
 import Modal from '../../components/modals/modal.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { Buttons } from '../../components/buttons';
@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
 const All: React.FC = () => {
-  const { dataAll, setDataAll, updateTextArea, setUpdateTextArea } = helpStore();
+  const { dataAll, setDataAll, updateTextArea, setUpdateTextArea, filesList, uploadFileID, setSelectedFilesDef } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ const All: React.FC = () => {
           </div>
         )}
         <div className={`mt-3 ${params && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
-          {!params && <FileGetUploader getList={item.attachments} openModal={openIsModal} idIn={item.id} />}
+          {!params && <FileGetUploader getList={item.attachments} openModal={() => console.log('')} idIn={item.id} />}
           <div className="flex gap-3 items-center my-3">
             <p>Отображать в приложениях</p>
             <Switch
@@ -75,7 +75,7 @@ const All: React.FC = () => {
           </Accordion>
         ))}
       </div>
-      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`}>
+      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`} onClick={() => updateSaveButtons(filesList, uploadFileID, setDataAll, 'ALL', setSelectedFilesDef)}>
         {t("Save_changes")}
       </button>
 

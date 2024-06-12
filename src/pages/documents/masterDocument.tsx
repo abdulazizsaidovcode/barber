@@ -4,7 +4,7 @@ import Switch from '../../components/settings/details/TableSwitcher';
 import { MdEdit } from 'react-icons/md';
 import FileUploader from '../../components/FileDowlander';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
-import { updateHelp, updateIsActive } from '../../helpers/api-function/help/help.tsx';
+import { updateHelp, updateIsActive, updateSaveButtons } from '../../helpers/api-function/help/help.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
@@ -12,7 +12,15 @@ import { useTranslation } from 'react-i18next';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
 const MasterDocument: React.FC = () => {
-  const { dataMaster, setDataMaster, setUpdateTextArea, updateTextArea } = helpStore();
+  const {
+    dataMaster,
+    setDataMaster,
+    setUpdateTextArea,
+    updateTextArea,
+    setSelectedFilesDef,
+    uploadFileID,
+    filesList
+  } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
 
@@ -32,9 +40,11 @@ const MasterDocument: React.FC = () => {
                   {item.text}
                 </div>
               )}
-              <div className={`mt-3 ${trueFalse(item.helpStatus) && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
-                {!trueFalse(item.helpStatus) && <FileGetUploader getList={item.attachments} openModal={openModal} idIn={item.id} />}
-                <div className="flex gap-3 items-center">
+              <div
+                className={`mt-3 ${trueFalse(item.helpStatus) && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
+                {!trueFalse(item.helpStatus) &&
+                  <FileGetUploader getList={item.attachments} openModal={openModal} idIn={item.id} />}
+                <div className="flex gap-3 items-center my-4">
                   <p>{t('Show_in_apps')}</p>
                   <Switch
                     isOn={item.active}
@@ -59,7 +69,10 @@ const MasterDocument: React.FC = () => {
           </Accordion>
         ))}
       </div>
-      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`}>
+      <button
+        className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg`}
+        onClick={() => updateSaveButtons(filesList, uploadFileID, setDataMaster, 'FOR_MASTER', setSelectedFilesDef)}
+      >
         {t('Save_changes')}
       </button>
 
@@ -90,8 +103,10 @@ const MasterDocument: React.FC = () => {
                      className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
             </div>
             <div className={`flex justify-center items-center gap-6 mt-5`}>
-              <Buttons bWidth={`w-[150px]`}
-                       onClick={() => updateHelp(updateTextArea, setDataMaster, 'FOR_MASTER', modalVal, setIsLoading, openModal)}>
+              <Buttons
+                bWidth={`w-[150px]`}
+                onClick={() => updateHelp(updateTextArea, setDataMaster, 'FOR_MASTER', modalVal, setIsLoading, openModal)}
+              >
                 {isLoading ? t('Loading') : t('Save')}
               </Buttons>
               <Buttons bWidth={`w-[150px]`} onClick={openModal}>{t('Close')}</Buttons>
