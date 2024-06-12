@@ -2,22 +2,24 @@ import DefaultLayout from "../../layout/DefaultLayout"
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb.tsx";
 
 import MainTabs from "./mainTabs.tsx";
+import { useTranslation } from "react-i18next";
 
 
 
 
-const Mortal:React.FC = () => {
+const Mortal: React.FC = () => {
+  const { t } = useTranslation()
 
   return (
     <div>
-        <DefaultLayout>
-           <div className=' w-full p-3 max-h-screen'>
-               <Breadcrumb pageName="Мастера"  />
-                <MainTabs/>
-           </div>
+      <DefaultLayout>
+        <div className=' w-full p-3 max-h-screen'>
+          <Breadcrumb pageName={t("Mutual_settlements")} />
+          <MainTabs />
+        </div>
 
 
-        </DefaultLayout>
+      </DefaultLayout>
     </div>
   )
 }

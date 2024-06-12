@@ -5,6 +5,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -12,7 +13,7 @@ const FilterComponent: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
   const [activeMenu, setActiveMenu] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const hide = () => {
     setOpen(false);
   };
@@ -56,7 +57,7 @@ const FilterComponent: React.FC = () => {
 
   const tableData = [
     {
-      img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYxuazQ7_RGUp4WrKx41JwXBlZ0Xr818VVPQuqcHgzWQ&s',
+      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYxuazQ7_RGUp4WrKx41JwXBlZ0Xr818VVPQuqcHgzWQ&s',
       master: "Имя, Фамилия 99893 258 36 52",
       Спеиализация: 'Парихмахер, барбер',
       Тариф: 'Premiup',
@@ -68,40 +69,40 @@ const FilterComponent: React.FC = () => {
       Датаначала: 'Дата начала',
       Статус: 'Статус',
       Датаокончания: 'Дата окончания',
-      icon:':'
-     
+      icon: ':'
+
     },
   ];
-
+  const { t } = useTranslation()
   const tableHeaders = [
-    { id: 1, name: 'Фото' },
-    { id: 2, name: 'Мастер' },
-    { id: 3, name: 'Спеиализация' },
-    { id: 4, name: 'Тариф' },
-    { id: 5, name: 'Цена' },
-    { id: 6, name: 'Оплачено' },
-    { id: 7, name: 'Способ оплаты' },
-    { id: 8, name: 'Дата оплаты' },
-    { id: 9, name: 'Срок подписки' },
-    { id: 10, name: 'Дата начала' },
-    { id: 11, name: 'Статус' },
-    { id: 13, name: 'Дата окончания' },
+    { id: 1, name: t("Photo") },
+    { id: 2, name: t("master") },
+    { id: 3, name: t("Specialization") },
+    { id: 4, name: t("Tarif") },
+    { id: 5, name: t("order_table_cost") },
+    { id: 6, name: t("order_table_paid") },
+    { id: 7, name: t("Reasonably_priced") },
+    { id: 8, name: t("date_of_payment") },
+    { id: 9, name: t("Subscription_period") },
+    { id: 10, name: t("Select_start_date") },
+    { id: 11, name: t("Status") },
+    { id: 13, name: t("Select_end_date") },
     { id: 13, name: '' },
   ];
   const statusData = [
     {
       id: 1,
-      name: 'Открыть',
+      name: t("Open"),
       category: 'open'
     },
     {
       id: 2,
-      name: 'Продлить',
+      name: t("Extend"),
       category: 'close'
     },
     {
       id: 3,
-      name: 'Остановиить подписку',
+      name: t("Stop_subscription"),
       category: 'close'
     },
   ]
@@ -112,7 +113,7 @@ const FilterComponent: React.FC = () => {
       <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Input
-            placeholder="Search by name"
+            placeholder={t("Search_by_name")}
             prefix={<IoSearchOutline />}
             style={styles.filterInput}
           />
@@ -127,7 +128,7 @@ const FilterComponent: React.FC = () => {
           <Select
             defaultValue="2024"
             style={styles.filterInput}
-            placeholder="Select Year"
+            placeholder={t("Select_year")}
           >
             <Option value="2024">2024</Option>
             <Option value="2023">2023</Option>
@@ -147,7 +148,7 @@ const FilterComponent: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button style={styles.extraButton}>Download</Button>
+          <Button style={styles.extraButton}>{t("Download")}</Button>
         </Col>
       </Row>
 
@@ -155,10 +156,10 @@ const FilterComponent: React.FC = () => {
       {showExtraFilters && (
         <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
           <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Input placeholder="Status" style={styles.filterInput} />
+            <Input placeholder={t("Status")} style={styles.filterInput} />
           </Col>
           <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Select defaultValue="Service category" style={styles.filterInput}>
+            <Select defaultValue={t("Service_category")} style={styles.filterInput}>
               <Option value="toshkent">Toshkent</Option>
               <Option value="qarshi">Qarshi</Option>
             </Select>
@@ -167,14 +168,14 @@ const FilterComponent: React.FC = () => {
             <Select
               defaultValue="2024"
               style={styles.filterInput}
-              placeholder="Tariff"
+              placeholder={t("Tarif")}
             >
               <Option value="2024">2024</Option>
               <Option value="2023">2023</Option>
             </Select>
           </Col>
           <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-            <Button style={styles.extraButton}>Reset</Button>
+            <Button style={styles.extraButton}>{t("Reset")}</Button>
           </Col>
         </Row>
       )}
@@ -197,16 +198,16 @@ const FilterComponent: React.FC = () => {
               <td className="p-2">{data.Статус}</td>
               <td className="p-2">{data.Датаокончания}</td>
               <td className="p-2">
-              <Popover
+                <Popover
                   content={
                     <>
                       {statusData && statusData.map(item => (
                         <Link to={`${item.category === 'open' ? '/MasterDatail' : pathname}`} key={item.id} className='block '>{item.name}</Link>
                       ))}
-                      
+
                     </>
                   }
-                  
+
                   onOpenChange={handleOpenChange}
                 >
                   <Button>:</Button>
