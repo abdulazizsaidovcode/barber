@@ -58,7 +58,8 @@ const FirstTab: React.FC = () => {
                 {showMore && (
                     <div className='flex flex-wrap gap-5 mt-5 '>
                         <Select
-                            defaultValue="Рейтинг"
+                            // defaultValue="Рейтинг"
+                            placeholder={t("Rating")}
                             className='w-60'
                             options={[
                                 { value: 'jack', label: 'Jack' },
