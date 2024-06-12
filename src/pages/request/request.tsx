@@ -51,7 +51,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
                 </button>
                 <div
                     className={`${isSidebarOpen ? '-mt-8 left-0 top-0 z-10 w-full' : 'hidden'
-                        } md:flex md:w-1/4 md:static bg-white dark:bg-gray-800 h-full transition-all duration-300 ease-in-out transform`}>
+                        } md:flex md:w-1/5 md:fixed dark:bg-gray-800 h-full transition-all duration-300 ease-in-out transform`}>
                     {isMobileView && (
                         <button onClick={toggleSidebar} className="text-black dark:text-blue-950 bg-transparent">
                             <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
@@ -65,7 +65,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
                         allCount={counts.allCount}
                     />
                 </div>
-                <div className="w-full md:w-3/4 p-2">
+                <div className="w-full p-2 md:ms-[310px]">
                     {children}
                 </div>
             </div>
