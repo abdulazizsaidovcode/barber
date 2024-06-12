@@ -6,7 +6,7 @@ import orderStore from "../../../helpers/state_managment/order/orderStore";
 import FirstDetail from "./secondTab";
 import SecondDetail from "./third.tab";
 
-const NotFound: React.FC = () => {
+const OrderDetail: React.FC = () => {
   const { isDetail, statusO } = orderStore();
   const { t } = useTranslation();
   return (
@@ -34,4 +34,4 @@ const NotFound: React.FC = () => {
   );
 };
 
-export default NotFound;
+export default OrderDetail;

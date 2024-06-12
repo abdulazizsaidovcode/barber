@@ -15,7 +15,7 @@ const onChange = (key: string) => {
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
 
-  const {setData, setTotalPage, setStatus, setRegionData, setChildCategoy, setIsComplated} = orderStore()
+  const {setData, setTotalPage, setStatus, setRegionData, setChildCategoy, setIsComplated, statusO} = orderStore()
 
   useEffect(() => {
     getOrder({
@@ -26,6 +26,15 @@ const MainTabs: React.FC = () => {
     getRegion(setRegionData)
     getChildCategory(setChildCategoy)
   }, [])
+  useEffect(() => {
+    getOrder({
+      status: "Upcoming",
+      setData: setData,
+      setTotalPage: setTotalPage
+    });
+    getRegion(setRegionData)
+    getChildCategory(setChildCategoy)
+  }, [statusO])
   const items = [
     {
       key: "1",

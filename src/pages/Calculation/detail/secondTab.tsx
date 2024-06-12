@@ -7,8 +7,6 @@ import MasterCardInfo from "../../../components/MastervsOrder/masterDetail";
 const FirstDetail: React.FC = () => {
   const { t } = useTranslation();
   const { orderDetail } = orderStore();
-
-  console.log(orderDetail);
   
 
   return (
