@@ -21,7 +21,7 @@ const FilterComponent: React.FC = () => {
     { id: 8, name: t("order_table_paymentType") },
     { id: 9, name: t("order_table_pay") },
     { id: 10, name: t("order_table_status") },
-    { id: 11, name: t("order_table_master") },
+    { id: 11, name: t("master") },
     { id: 12, name: "" },
   ];
 
