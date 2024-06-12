@@ -22,7 +22,7 @@ const Reviews: React.FC = () => {
       key: '2',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          О мастерах
+          {t("About_the_masters")}
         </span>
       ),
       children: <SecondTab />,
