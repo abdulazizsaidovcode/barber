@@ -4,7 +4,7 @@ import { getFileId } from '../helpers/api.tsx';
 import { Link } from 'react-router-dom';
 import helpStore from '../helpers/state_managment/help/helpStore.tsx';
 
-const FileGetUploader = ({ getList, openModal }: { getList: Attachments[], openModal: () => void }) => {
+const FileGetUploader = ({ getList, openModal, idIn }: { getList: Attachments[], openModal: () => void, idIn: number }) => {
   const {setDeleteFileId} = helpStore()
   const getFileType = (fileName: string) => {
     const parts = fileName.split('.');
@@ -31,7 +31,7 @@ const FileGetUploader = ({ getList, openModal }: { getList: Attachments[], openM
                 <div>
                   <button className="flex justify-end py-[7px] ms-5" onClick={() => {
                     openModal()
-                    setDeleteFileId(item.id)
+                    setDeleteFileId([item.id, idIn])
                   }}>
                     <TiDeleteOutline className="text-3xl" />
                   </button>

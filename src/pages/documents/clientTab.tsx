@@ -17,13 +17,14 @@ const ClientDocument: React.FC = () => {
   const { t } = useTranslation();
 
   const openModal = () => setIsModal(!isModal);
+  console.log(deleteFileId);
 
   return (
     <div className="p-2">
       <div className="flex flex-col gap-3 mb-3 ">
         {dataClient.map(item => (
           <Accordion title={t('Terms_of_use')}>
-            <FileGetUploader getList={item.attachments} openModal={openModal} />
+            <FileGetUploader getList={item.attachments} openModal={openModal} idIn={item.id} />
             <div className="flex gap-3 items-center my-7 text-slate-700 dark:text-slate-300">
               <p>{t('Show_in_apps')}</p>
               <Switch

@@ -183,15 +183,13 @@ const Filters: React.FC = () => {
           className="flex gap-4"
         >
           <Button
-            className="flex items-center justify-center"
-            type="primary"
+            className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
             onClick={toggleExtraFilters}
-            style={styles.toggleButton}
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
           <Button
-            className={"bg - [#f0f0f0]"}
+            className={"bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white"}
             onClick={() => downloadExcelFile(url, setIsLoading, page)}
           >
             {isLoading ? 'loading...' : 'Download'}
@@ -229,7 +227,7 @@ const Filters: React.FC = () => {
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <Button style={styles.extraButton} onClick={resetFilters}>
+              <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white" onClick={resetFilters}>
                 {t("Reset")}
               </Button>
             </Col>

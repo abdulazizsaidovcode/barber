@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, DatePickerProps, Dropdown, Input, Menu, Select } from 'antd';
+import { DatePicker, Input, Dropdown, Menu, DatePickerProps, Image } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import AddMails from './addMails';
 import { TbArrowBigLeftFilled } from 'react-icons/tb';
@@ -7,19 +7,20 @@ import { Moment } from 'moment';
 import MailStore from '../../../helpers/state_managment/chat/mailStore';
 import MasterTable from '../../../components/Tables/MasterTable';
 import { truncateText } from '../../../helpers/splitText';
-import { PiDotsThreeOutlineVertical } from "react-icons/pi";
+import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import Modal from '../../../components/modals/modal';
 import axios from 'axios';
-import { newsletters_url } from '../../../helpers/api';
+import { getFileId, newsletters_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast from 'react-hot-toast';
 import { GetChatLetters } from '../../../helpers/api-function/chat/mail';
 import { MdOutlineSpeakerNotesOff } from 'react-icons/md';
 import { SearchOutlined } from '@ant-design/icons';
-
+import { useNavigate } from 'react-router-dom';
 
 const ChatTable: React.FC = () => {
     const { chatData, setLetterData } = MailStore();
+    const navigate = useNavigate();
 
     const [dates, setDate] = useState<Moment | any | null>(null);
     const [showAddMails, setShowAddMails] = useState(false);
@@ -38,12 +39,12 @@ const ChatTable: React.FC = () => {
     };
 
     const handleChangeTema: any = (date: any) => {
-        if (date.target.value.trim()!== '') {
+        if (date.target.value.trim() !== '') {
             GetChatLetters({
                 subject: date.target.value,
                 setLetterData: setLetterData
             });
-        }else{
+        } else {
             GetChatLetters({
                 setLetterData: setLetterData
             });
@@ -77,6 +78,10 @@ const ChatTable: React.FC = () => {
         openModal();
     };
 
+    const handleOpenDetail = (id: number) => {
+        navigate(`/mail/${id}`);
+    };
+
     function deleteMail(id: any) {
         if (selectedMailId) {
             axios.delete(`${newsletters_url}?id=${id}`, config)
@@ -95,7 +100,7 @@ const ChatTable: React.FC = () => {
     const items = (id: number) => [
         {
             key: '1',
-            onClick: () => { },
+            onClick: () => handleOpenDetail(id),
             label: "Открыть",
         },
         {
@@ -144,9 +149,10 @@ const ChatTable: React.FC = () => {
                                     className='border-b border-[#eee] dark:border-strokedark'
                                 >
                                     <td className='min-w-[150px] p-5'>
-                                        <img
-                                            src={item.attachmentId ? item.attachmentId : ""}
-                                            alt="img"
+                                        <Image
+                                            style={{width: 80, height: 60,borderRadius: '10px' }}
+                                            src={item.attachmentId ? getFileId + item.attachmentId : "https://picsum.photos/200/300"}
+                                            alt="Mail img"
                                             className='w-16 h-10 scale-[1.4] rounded-md bg-gray p-2 object-cover'
                                         />
                                     </td>
