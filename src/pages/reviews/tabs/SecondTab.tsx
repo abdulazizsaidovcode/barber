@@ -59,7 +59,7 @@ const SecondTab: React.FC = () => {
             ]}
           />
           <Select
-            defaultValue={t("From_whom")}
+            placeholder={t("From_whom")}
             className='w-60'
             options={[
               { value: 'jack', label: 'Jack' },
