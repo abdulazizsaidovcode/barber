@@ -1,13 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import FirstTab from './tabs/FirstTab';
 import SecondTab from './tabs/SecondTab';
 import { Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
-
+import useReviewsStore from '../../helpers/state_managment/reviews/reviews';
+import { fetchMainData, fetchReviewsData } from '../../helpers/api-function/reviews/reviews';
 
 const Reviews: React.FC = () => {
+  const { mainData, setMainData, setReviewsData } = useReviewsStore();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const mainData = await fetchMainData();
+        setMainData(mainData);
+        const reviewsData = await fetchReviewsData();
+        console.log(reviewsData);
+        
+        setReviewsData(reviewsData);
+      } catch (error) {
+        console.error("Failed to load data", error);
+      }
+    };
+
+    loadData();
+  }, [setMainData, setReviewsData]);
+
   const items = [
     {
       key: '1',
@@ -16,7 +36,7 @@ const Reviews: React.FC = () => {
           {t("About_the_service")}
         </span>
       ),
-      children: <FirstTab />,
+      children: <FirstTab mainData={mainData} />,
     },
     {
       key: '2',
@@ -26,7 +46,7 @@ const Reviews: React.FC = () => {
         </span>
       ),
       children: <SecondTab />,
-    }
+    },
   ];
 
   return (
@@ -36,6 +56,8 @@ const Reviews: React.FC = () => {
         defaultActiveKey="1"
         items={items}
       />
-    </DefaultLayout>)
-}
+    </DefaultLayout>
+  );
+};
+
 export default Reviews;

@@ -152,3 +152,7 @@ export const new_spezalliton_url = `${base_url}category/web/not-confirmed/new`;
 export const changed_spezalliton_url = `${base_url}category/web/not-confirmed/update`;
 export const requestes_count = `${base_url}dashboard/web/request/count`;
 export const send_message = `${base_url}message/for/master/by/admin`;
+
+// reviews url
+export const reviews_main_data = `${base_url}feedback/web/reviews/for/service`;
+export const reviews_list_data = `${base_url}feedback/web/list/for/service`;
