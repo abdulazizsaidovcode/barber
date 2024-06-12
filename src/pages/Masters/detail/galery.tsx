@@ -28,10 +28,21 @@ const Gallery: React.FC = () => {
       });
   };
 
+  const handleDelete = (attachmentId: string) => {
+    setOrderDetails((prevDetails) =>
+      prevDetails.map((orderDetail) => ({
+        ...orderDetail,
+        resGalleryAttachments: orderDetail.resGalleryAttachments.filter(
+          (attachment: any) => attachment.attachmentId !== attachmentId,
+        ),
+      })),
+    );
+  };
+
   return (
     <div className="p-5 flex flex-col gap-10">
       {orderDetails.map((orderDetail, index) => (
-        <>
+        <React.Fragment key={index}>
           <div className="flex items-center justify-between shadow-8 p-4 rounded-lg">
             <div className="flex items-center gap-4">
               <p>Album {orderDetail.id}</p>
@@ -49,13 +60,18 @@ const Gallery: React.FC = () => {
               orderDetail.resGalleryAttachments.map(
                 (attachment: any, subIndex: number) => (
                   <ProcedureItem
+                    attechmentId={attachment.attachmentId}
+                    galleryId={orderDetail.id}
+                    key={subIndex}
                     status={attachment.main}
                     imgUrl={attachment.attachmentId}
+                    attachmentId={attachment.attachmentId}
+                    onDelete={handleDelete}
                   />
                 ),
               )}
           </div>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

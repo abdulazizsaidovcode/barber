@@ -49,6 +49,7 @@ export const master_send_message_master: string = `${base_url}message/for/master
 export const master_delate_service: string = `${base_url}service/web/not-confirmed/`;
 export const master_confirm_new_service: string = `${base_url}service/web/check/`;
 export const master_delate_new_service: string = `${base_url}service/isActive/`;
+export const master_gallery_delate: string = `${base_url}gallery/`;
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
