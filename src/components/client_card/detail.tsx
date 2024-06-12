@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom';
 import Modal from '../modals/modal';
 import { config } from '../../helpers/token';
 import { client_block_put, client_send_message } from '../../helpers/api';
+import { Buttons } from '../buttons';
+
 
 const { TextArea } = Input;
 
@@ -100,7 +102,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
   const handleSendMessage = async () => {
     console.log()
     
-    if (message.trim() === '' || message === '/' || message === '&' || message === `""` ) {
+    if (message.trim() === '' || message === '/' || message === '&' || message === `""` || message === `"` ) {
       toast.error(t('Message cannot be empty'));
       return;
     }
