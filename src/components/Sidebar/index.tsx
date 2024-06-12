@@ -167,7 +167,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <PiHandshakeBold />
-                  {t('Взаиморасчёты')}
+                  {t('Mutual_settlements')}
                 </NavLink>
               </li>
               <li>
@@ -177,7 +177,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <MdReviews />
-                  {t('Отзывы')}
+                  {t('Reviews')}
                 </NavLink>
               </li>
               <li>

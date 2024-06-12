@@ -6,6 +6,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { FaStar } from "react-icons/fa";
 import ReviewsServiceCard from '../cards/ReviewsServiceCard';
 import DelModal from '../../../components/settings/modals/delModal';
+import { useTranslation } from 'react-i18next';
 
 const FirstTab: React.FC = () => {
     const [showMore, setShowMore] = useState(false);
@@ -14,6 +15,7 @@ const FirstTab: React.FC = () => {
     const openShowMore = () => setShowMore(!showMore)
     const openDelModal = () => setIsDelOpen(true)
     const closeDelModal = () => setIsDelOpen(false)
+    const { t } = useTranslation();
 
 
     return (
@@ -21,12 +23,12 @@ const FirstTab: React.FC = () => {
             <div>
                 <div className='flex flex-wrap gap-5'>
                     <Input
-                        placeholder={"Поиск по ФИО"}
+                        placeholder={t("Search_by_name")}
                         prefix={<IoSearchOutline />}
                         className='w-60'
                     />
                     <Select
-                        defaultValue="Регион"
+                        placeholder={t("Region")}
                         className='w-60'
                         options={[
                             { value: 'jack', label: 'Jack' },
@@ -36,7 +38,8 @@ const FirstTab: React.FC = () => {
                         ]}
                     />
                     <Select
-                        defaultValue="Город"
+                        // defaultValue="Город"
+                        placeholder={t("City")}
                         className='w-60'
                         options={[
                             { value: 'jack', label: 'Jack' },
@@ -49,13 +52,14 @@ const FirstTab: React.FC = () => {
                         {showMore ? <UpOutlined /> : <DownOutlined />}
                     </Buttons>
                     <Buttons>
-                        Сбросить
+                        {t("Reset")}
                     </Buttons>
                 </div>
                 {showMore && (
                     <div className='flex flex-wrap gap-5 mt-5 '>
                         <Select
-                            defaultValue="Рейтинг"
+                            // defaultValue="Рейтинг"
+                            placeholder={t("Rating")}
                             className='w-60'
                             options={[
                                 { value: 'jack', label: 'Jack' },
@@ -65,7 +69,8 @@ const FirstTab: React.FC = () => {
                             ]}
                         />
                         <Select
-                            defaultValue="От кого"
+                            // defaultValue="От кого"
+                            placeholder={t("From_whom")}
                             className='w-60'
                             options={[
                                 { value: 'jack', label: 'Jack' },
@@ -74,8 +79,8 @@ const FirstTab: React.FC = () => {
                                 { value: 'Город', label: 'Город' },
                             ]}
                         />
-                        <DatePicker className='w-60' placeholder='Дата' />
-                        <DatePicker className='w-60' placeholder='Период' />
+                        <DatePicker className='w-60' placeholder={t("Date")} />
+                        <DatePicker className='w-60' placeholder={t("Period")} />
                     </div>
                 )}
             </div>

@@ -11,6 +11,7 @@ import { Region } from '../../types/region';
 import { Buttons } from '../../components/buttons';
 import toast, { Toaster } from 'react-hot-toast';
 import { downloadExcelFile } from '../../helpers/attachment/file-download';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -19,6 +20,7 @@ const FilterComponent: React.FC = () => {
   const { data, setData, yearVal, setYearVal, monthVal, setMonthVal } = financeDestrictStore();
   const [destrict, setDestrict] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useTranslation()
 
   useEffect(() => {
     axios.get(region_url, config)
@@ -72,15 +74,15 @@ const FilterComponent: React.FC = () => {
 
       downloadExcelFile(url, setIsLoading);
     } else {
-      toast.error('Выберите регион');
+      toast.error(t("Select_region"));
     }
   };
 
   const tableHeaders = [
-    { id: 1, name: 'Регион' },
-    { id: 2, name: 'Оборот безналичный' },
-    { id: 3, name: 'Оборот Общий' },
-    { id: 4, name: 'Доходы всего' },
+    { id: 1, name: t("Region") },
+    { id: 2, name: t("Non_cash_turnover") },
+    { id: 3, name: t("Turnover_Total") },
+    { id: 4, name: t("Total_income") },
   ];
 
   return (
@@ -89,7 +91,7 @@ const FilterComponent: React.FC = () => {
       <div className='flex gap-5 mb-5 mx-7.5'>
         <div>
           <Select
-            placeholder="Select Region"
+            placeholder={t("Select_region")}
             onChange={handleDestrictChange}
             style={{ width: '100%' }}
           >
@@ -101,13 +103,13 @@ const FilterComponent: React.FC = () => {
           </Select>
         </div>
         <div>
-          <DatePicker picker='month' onChange={handleMonthChange} />
+          <DatePicker picker='month' placeholder={t("Select_month")} onChange={handleMonthChange} />
         </div>
         <div>
-          <DatePicker picker='year' onChange={handleYearChange} />
+          <DatePicker picker='year' placeholder={t("Select_year")} onChange={handleYearChange} />
         </div>
         <Buttons onClick={getDestrictFile} disabled={isLoading}>
-          {isLoading ? 'Downloading...' : 'Скачать'}
+          {isLoading ? t("Downloading") : t("Download")}
         </Buttons>
       </div>
       {/* Table */}

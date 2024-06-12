@@ -28,24 +28,50 @@ const Gallery: React.FC = () => {
       });
   };
 
+  const handleDelete = (attachmentId: string) => {
+    setOrderDetails((prevDetails) =>
+      prevDetails.map((orderDetail) => ({
+        ...orderDetail,
+        resGalleryAttachments: orderDetail.resGalleryAttachments.filter(
+          (attachment: any) => attachment.attachmentId !== attachmentId,
+        ),
+      })),
+    );
+  };
+
   return (
-    <div className='p-5 flex flex-col gap-10'>
+    <div className="p-5 flex flex-col gap-10">
       {orderDetails.map((orderDetail, index) => (
-        <div key={index} className={`w-full border grid grid-cols-5 gap-3 p-3`}>
-          {orderDetail.resGalleryAttachments && orderDetail.resGalleryAttachments.map((attachment: any, subIndex: number) => (
-            <ProcedureItem
-              status={attachment.newStatus}
-              date={orderDetail.date}
-              id={orderDetail.id}
-              title={orderDetail.albumName}
-              key={subIndex}
-              imgUrl={attachment.attachmentId}
-              buttonText=""
-              buttonColor=""
-              icon={''}
-            />
-          ))}
-        </div>
+        <React.Fragment key={index}>
+          <div className="flex items-center justify-between shadow-8 p-4 rounded-lg">
+            <div className="flex items-center gap-4">
+              <p>Album {orderDetail.id}</p>
+              <p className="text-xl font-bold">{orderDetail.albumName}</p>
+            </div>
+            <div>
+              <p className="font-bold text-xl">{orderDetail.date}</p>
+            </div>
+          </div>
+          <div
+            key={index}
+            className={`w-full  shadow-8 rounded-xl grid grid-cols-5 gap-3 p-3`}
+          >
+            {orderDetail.resGalleryAttachments &&
+              orderDetail.resGalleryAttachments.map(
+                (attachment: any, subIndex: number) => (
+                  <ProcedureItem
+                    attechmentId={attachment.attachmentId}
+                    galleryId={orderDetail.id}
+                    key={subIndex}
+                    status={attachment.main}
+                    imgUrl={attachment.attachmentId}
+                    attachmentId={attachment.attachmentId}
+                    onDelete={handleDelete}
+                  />
+                ),
+              )}
+          </div>
+        </React.Fragment>
       ))}
     </div>
   );
