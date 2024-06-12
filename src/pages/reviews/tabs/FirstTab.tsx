@@ -52,7 +52,7 @@ const FirstTab: React.FC = () => {
                         {showMore ? <UpOutlined /> : <DownOutlined />}
                     </Buttons>
                     <Buttons>
-                        Сбросить
+                        {t("Reset")}
                     </Buttons>
                 </div>
                 {showMore && (
