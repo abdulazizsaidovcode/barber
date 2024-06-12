@@ -10,6 +10,7 @@ import Modal from '../../components/modals/modal.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { Buttons } from '../../components/buttons';
 import { useTranslation } from 'react-i18next';
+import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
 const All: React.FC = () => {
   const { dataAll, setDataAll, updateTextArea, setUpdateTextArea } = helpStore();
@@ -29,8 +30,9 @@ const All: React.FC = () => {
             {name}
           </div>
         )}
-        <div className="mt-3 flex justify-between items-center text-slate-700 dark:text-slate-300">
-          <div className="flex gap-3 items-center">
+        <div className={`mt-3 ${params && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
+          {!params && <FileGetUploader getList={item.attachments} openModal={openIsModal} idIn={item.id} />}
+          <div className="flex gap-3 items-center my-3">
             <p>Отображать в приложениях</p>
             <Switch
               isOn={item.active}
@@ -49,7 +51,7 @@ const All: React.FC = () => {
               <MdEdit size={20} className="dark:text-white" />
             </button>
           )}
-          {!params && <FileUploader id={`fileInput${id}`} />}
+          {!params && <FileUploader id={`${item.id}`} item={item.attachments} />}
         </div>
       </>
     );
@@ -73,11 +75,7 @@ const All: React.FC = () => {
           </Accordion>
         ))}
       </div>
-      {/*${!Object.values(switchStates).some(state => state) ? 'opacity-50 cursor-not-allowed' : ''}*/}
-      <button
-        className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`}
-      // disabled={!Object.values(switchStates).some(state => state)}
-      >
+      <button className={`bg-[#9C0A35] text-white px-3 py-2 rounded-lg mt-4`}>
         {t("Save_changes")}
       </button>
 
