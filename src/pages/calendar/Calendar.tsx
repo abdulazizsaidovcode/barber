@@ -160,16 +160,16 @@ const Calendar: React.FC = () => {
       <Breadcrumb pageName={t("siderbar_calendar")} />
       <div className="grid md:grid-cols-2 gap-5 my-5">
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
-          <div className="bg-green-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 ">
+          <div className="bg-green-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 shadow-xl">
             {t("SecondTab_name")}
           </div>
-          <div className="bg-blue-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 ">
+          <div className="bg-blue-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 shadow-xl ">
             {t("detail_type")}
           </div>
-          <div className="bg-orange-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1">
+          <div className="bg-orange-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 shadow-xl">
             {t("On_approval")}
           </div>
-          <div className="bg-red-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1">
+          <div className="bg-red-500 text-xs flex justify-center text-center items-center rounded-lg text-white px-6 py-1 shadow-xl">
             {t("Rejected")}
           </div>
         </div>
