@@ -4,21 +4,23 @@ import { Buttons } from '../../../components/buttons'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { IoSearchOutline } from 'react-icons/io5'
 import ReviewsMasersCard from '../cards/ReviewsMasersCard'
+import { useTranslation } from 'react-i18next'
 
 const SecondTab: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
   const openShowMore = () => setShowMore(!showMore)
+  const { t } = useTranslation()
 
   return (
     <div>
       <div className='flex flex-wrap gap-5'>
         <Input
-          placeholder={"Поиск по ФИО"}
+          placeholder={t("Search_by_name")}
           prefix={<IoSearchOutline />}
           className='w-60'
         />
         <Select
-          defaultValue="Регион"
+          placeholder={t("Region")}
           className='w-60'
           options={[
             { value: 'jack', label: 'Jack' },
@@ -28,7 +30,7 @@ const SecondTab: React.FC = () => {
           ]}
         />
         <Select
-          defaultValue="Город"
+          placeholder={t("City")}
           className='w-60'
           options={[
             { value: 'jack', label: 'Jack' },
@@ -47,7 +49,7 @@ const SecondTab: React.FC = () => {
       {showMore && (
         <div className='flex flex-wrap gap-5 mt-5'>
           <Select
-            defaultValue="Рейтинг"
+            placeholder={t("Rating")}
             className='w-60'
             options={[
               { value: 'jack', label: 'Jack' },
@@ -57,7 +59,7 @@ const SecondTab: React.FC = () => {
             ]}
           />
           <Select
-            defaultValue="От кого"
+            placeholder={t("From_whom")}
             className='w-60'
             options={[
               { value: 'jack', label: 'Jack' },
@@ -66,12 +68,12 @@ const SecondTab: React.FC = () => {
               { value: 'Город', label: 'Город' },
             ]}
           />
-          <DatePicker className='w-60' placeholder='Дата' />
-          <DatePicker className='w-60' placeholder='Период' />
+          <DatePicker className='w-60' placeholder={t("Date")} />
+          <DatePicker className='w-60' placeholder={t("Period")} />
         </div>
       )}
       <div>
-        <ReviewsMasersCard/>
+        <ReviewsMasersCard />
       </div>
     </div>
   )

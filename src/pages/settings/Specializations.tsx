@@ -32,13 +32,15 @@ const Specializations: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [fatherData, setFatherData] = useState<FatherData[]>([]);
   const [childDataMap, setChildDataMap] = useState<ChildDataMap>({});
-  const [newCategoryName, setNewCategoryName] = useState<string>('');
+  const [newCategoryNameMap, setNewCategoryNameMap] = useState<{ [key: string]: string }>({});
   const [selectedFatherId, setSelectedFatherId] = useState<string | null>(null);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [editedCategoryName, setEditedCategoryName] = useState<string>('');
   const [categoryToEdit, setCategoryToEdit] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [childLoading, setChildLoading] = useState<{ [key: string]: boolean }>({});
+  const [addLoading, setAddLoading] = useState<{ [key: string]: boolean }>({});
+  const [editLoading, setEditLoading] = useState(false);
 
   useEffect(() => {
     fetchFatherData();
@@ -69,8 +71,6 @@ const Specializations: React.FC = () => {
           ...prev,
           [categoryId]: res.data.body,
         }));
-      } else {
-        toast.error('Error fetching child data');
       }
       setChildLoading((prev) => ({ ...prev, [categoryId]: false }));
     } catch {
@@ -79,24 +79,35 @@ const Specializations: React.FC = () => {
   };
 
   // ADD CHILD DATA
-  const addChildData = async () => {
-    if (!newCategoryName || !selectedFatherId) {
-      toast.error('Please enter a category name');
+  const addChildData = async (fatherId: string) => {
+    const newCategoryName = newCategoryNameMap[fatherId];
+
+    if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
+      toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
       return;
     }
 
     const payload = {
       name: newCategoryName,
-      categoryFatherId: selectedFatherId,
+      categoryFatherId: fatherId,
     };
 
+    setAddLoading((prev) => ({ ...prev, [fatherId]: true }));
+
     try {
-      await axios.post(add_service_category, payload, config);
-      toast.success('Category added successfully');
-      fetchChildData(selectedFatherId);
-      setNewCategoryName('');
-      toggleInput(selectedFatherId);
+      const res = await axios.post(add_service_category, payload, config);
+      if (res.data.success) {
+        toast.success('Category added successfully');
+        fetchChildData(fatherId);
+        setNewCategoryNameMap((prev) => ({ ...prev, [fatherId]: '' }));
+        toggleInput(fatherId);
+      } else {
+        toast('This category already exits', { icon: '⚠️' });
+      }
     } catch { }
+    finally {
+      setAddLoading((prev) => ({ ...prev, [fatherId]: false }));
+    }
   };
 
   // DELETE CHILD DATA
@@ -114,13 +125,26 @@ const Specializations: React.FC = () => {
   // UPDATE CHILD DATA
   const updateData = async (name: string, categoryFatherId: string, id: string) => {
     const payload = { name: name, categoryFatherId: categoryFatherId };
+    if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
+      toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+      return;
+    }
+
+    setEditLoading(true);
 
     try {
-      await axios.put(`${edit_service_category}/${id}`, payload, config);
-      toast.success('Category updated successfully');
-      fetchChildData(categoryFatherId);
-      setIsEditModalOpen(false);
+      const res = await axios.put(`${edit_service_category}/${id}`, payload, config);
+      if (res.data.success) {
+        toast.success('Category updated successfully');
+        fetchChildData(categoryFatherId);
+        setIsEditModalOpen(false);
+      } else {
+        toast('This category already exists', { icon: '⚠️' });
+      }
     } catch { }
+    finally {
+      setEditLoading(false);
+    }
   };
 
   const toggleInput = (id: string) => {
@@ -203,8 +227,9 @@ const Specializations: React.FC = () => {
                         setSelectedFatherId(fatherItem.id);
                       }}
                       aria-label="Add new child category"
+                      disabled={addLoading[fatherItem.id]}
                     >
-                      <FaPlus size={25} />
+                      {addLoading[fatherItem.id] ? 'Loading...' : <FaPlus size={25} />}
                     </button>
                   </div>
                 </div>
@@ -214,14 +239,20 @@ const Specializations: React.FC = () => {
                       type="text"
                       placeholder="Type something..."
                       className="dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3"
-                      value={newCategoryName}
-                      onChange={(e) => setNewCategoryName(e.target.value)}
+                      value={newCategoryNameMap[fatherItem.id] || ''}
+                      onChange={(e) =>
+                        setNewCategoryNameMap((prev) => ({
+                          ...prev,
+                          [fatherItem.id]: e.target.value,
+                        }))
+                      }
                     />
                     <button
                       className="bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5"
-                      onClick={addChildData}
+                      onClick={() => addChildData(fatherItem.id)}
+                      disabled={addLoading[fatherItem.id]}
                     >
-                      Добавить
+                      {addLoading[fatherItem.id] ? 'Loading...' : 'Добавить'}
                     </button>
                   </div>
                 )}
@@ -237,6 +268,7 @@ const Specializations: React.FC = () => {
         value={editedCategoryName}
         onChange={(e) => setEditedCategoryName(e.target.value)}
         onSave={() => categoryToEdit && selectedFatherId && updateData(editedCategoryName, selectedFatherId, categoryToEdit)}
+        disabled={editLoading}
       />
       <Toaster position="top-center" reverseOrder={false} />
     </DefaultLayout>

@@ -6,7 +6,6 @@ import { MdEdit } from 'react-icons/md';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 import { HelpList } from '../../types/help.ts';
 import { updateHelp, updateIsActive } from '../../helpers/api-function/help/help.tsx';
-import { Toaster } from 'react-hot-toast';
 import Modal from '../../components/modals/modal.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { Buttons } from '../../components/buttons';
@@ -58,7 +57,6 @@ const All: React.FC = () => {
 
   return (
     <div className="p-2">
-      <Toaster position={`top-center`} />
       <div className="flex flex-col gap-3 mb-3 text-slate-700 dark:text-slate-300">
         {dataAll.map(item => (
           <Accordion

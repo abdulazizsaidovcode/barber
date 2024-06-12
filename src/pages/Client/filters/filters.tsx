@@ -3,7 +3,6 @@ import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import { IoSearchOutline } from "react-icons/io5";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import moment from "moment";
-import MasterModal from "../client-modal.tsx";
 import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
 import { getClients } from "../../../helpers/api-function/client/client.tsx";
 import { getDistrict } from "../../../helpers/api-function/master/master.tsx";
@@ -16,14 +15,12 @@ const { Option } = Select;
 const Filters: React.FC = () => {
   const { t } = useTranslation();
   const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     setClientFilterData,
     setClientTotalPage,
     setDistrictData,
     regionData,
     districtData,
-    totalPage,
     setIsLoading,
     isLoading,
     page
@@ -38,7 +35,6 @@ const Filters: React.FC = () => {
   });
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
-  const openModal = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     const params: any = {
@@ -183,15 +179,13 @@ const Filters: React.FC = () => {
           className="flex gap-4"
         >
           <Button
-            className="flex items-center justify-center"
-            type="primary"
+            className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
             onClick={toggleExtraFilters}
-            style={styles.toggleButton}
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
           <Button
-            className={"bg - [#f0f0f0]"}
+            className={"bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white"}
             onClick={() => downloadExcelFile(url, setIsLoading, page)}
           >
             {isLoading ? 'loading...' : 'Download'}
@@ -229,7 +223,7 @@ const Filters: React.FC = () => {
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
-              <Button style={styles.extraButton} onClick={resetFilters}>
+              <Button className="bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white" onClick={resetFilters}>
                 {t("Reset")}
               </Button>
             </Col>

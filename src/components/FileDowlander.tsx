@@ -1,36 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { MdFileDownload } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { handleFileChange } from '../helpers/attachment/file-download.tsx';
 
-interface UploadedFile {
+export interface UploadedFile {
   name: string;
   size: number;
   type: string;
 }
 
-interface FileUploaderProps {
-  id: string;
-  title?: string;
-}
-
-const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложения' }) => {
+const FileUploader = ({ id }: { id: string }) => {
   const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
-  const [removedFiles, setRemovedFiles] = useState<UploadedFile[]>([]);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const [fileIds, setFileIds] = useState<string[]>([]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    console.log(file);
-    if (file) {
-      const fileData: UploadedFile = {
-        name: file.name,
-        size: file.size,
-        type: getFileType(file.name)
-      };
-      setSelectedFiles(prevState => [...prevState, fileData]);
-    }
-  };
+  console.log(fileIds);
 
   const getFileType = (fileName: string): string => {
     const extension = fileName.split('.').pop()?.toLowerCase();
@@ -45,22 +30,16 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
   };
 
   const handleRemoveFile = (index: number) => {
-    const fileToRemove = selectedFiles[index];
-    setRemovedFiles(prevState => [...prevState, fileToRemove]);
     setSelectedFiles(prevState => prevState.filter((file, i) => i !== index));
+    setFileIds(prevState => prevState.filter((_, i) => i !== index));
   };
 
-  const convertBytesToMegabytes = (bytes: number): number => {
-    return bytes / (1024 * 1024); // 1 megabayt = 1024 kilobayt * 1024
-  };
+  const convertBytesToMegabytes = (bytes: number): number => bytes / (1024 * 1024);
 
   return (
     <div>
       {selectedFiles.length > 0 && (
         <div className="flex w-[100%] flex-col flex-wrap">
-          <div>
-            <h2 className="my-3">{title}</h2>
-          </div>
           <div className="flex gap-3 flex-wrap">
             {selectedFiles.map((file, index) => (
               <div className="border-[1px] border-[#000] dark:border-white p-3 w-max h-17 rounded-md flex" key={index}>
@@ -88,9 +67,15 @@ const FileUploader: React.FC<FileUploaderProps> = ({ id, title = 'Вложени
           </div>
         </div>
       )}
-      <input type="file" id={id} style={{ display: 'none' }} onChange={handleFileChange} />
-      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t("Attach_file")}<MdFileDownload
-        className="ms-1 text-[#000] dark:text-white" /></button>
+      <input
+        type="file" id={id} style={{ display: 'none' }}
+        onChange={(e) => handleFileChange(e, getFileType, setSelectedFiles, setFileIds)}
+      />
+      <button className="flex items-center my-3" onClick={handleUploadButtonClick}>{t('Attach_file')}
+        <MdFileDownload
+          className="ms-1 text-[#000] dark:text-white"
+        />
+      </button>
     </div>
   );
 };

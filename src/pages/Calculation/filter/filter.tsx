@@ -31,7 +31,7 @@ const FilterOrder: React.FC = () => {
     regionId: 0,
     districtId: 0,
     orderDate: null,
-    categoryName: 0,
+    categoryId: 0,
     orderStatus: 0,
     paymentType: 0,
   });
@@ -59,6 +59,7 @@ const FilterOrder: React.FC = () => {
 
     // Fetch clients data
     getOrder(params);
+    
   }, [filters]);
 
   const queryParams: string = [
@@ -68,7 +69,7 @@ const FilterOrder: React.FC = () => {
     filters.orderDate ? `orderDate=${filters.orderDate}` : null,
     filters.paymentType ? `paymentType=${filters.paymentType}` : 0,
     filters.orderStatus ? `orderStatus=${filters.orderStatus}` : 0,
-    filters.categoryName ? `categoryName=${filters.categoryName}` : 0,
+    filters.categoryId ? `categoryId=${filters.categoryId}` : 0,
   ]
     .filter(Boolean)
     .join("&");
@@ -92,7 +93,7 @@ const FilterOrder: React.FC = () => {
       regionId: 0,
       districtId: 0,
       orderDate: null,
-      categoryName: 0,
+      categoryId: 0,
       orderStatus: 0,
       paymentType: 0,
     });
@@ -160,13 +161,13 @@ const FilterOrder: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} className="mb-4 flex gap-4">
           <Button
-            className="flex items-center justify-center bg-white w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+            className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
             onClick={toggleExtraFilters}
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
           <Button
-            className={`bg-[#f0f0f0]`}
+            className={`bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white`}
             onClick={() => downloadExcelFile(url, setIsLoading, page)}
           >
             {isLoading ? t("Loading") : t("Download")}
@@ -182,13 +183,13 @@ const FilterOrder: React.FC = () => {
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             />
           </Col>
-          {/* categoryName */}
+          {/* categoryId */}
           <Col xs={24} sm={12} md={6} className="mb-4">
             <Select
               placeholder="Service Category"
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
-              value={filters.categoryName || 0}
-              onChange={(value) => handleInputChange("categoryName", value)}
+              value={filters.categoryId || 0}
+              onChange={(value) => handleInputChange("categoryId", value)}
             >
               <Select.Option value={0} disabled>
                 {t("Select_category")}
@@ -234,7 +235,7 @@ const FilterOrder: React.FC = () => {
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
             <Button
-              className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full dark:text-white"
+              className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full text-xs dark:text-white"
               onClick={resetFilters}
             >
               {t("Reset")}

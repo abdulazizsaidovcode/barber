@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import Modal from '../../components/modals/modal.tsx';
 import { Buttons } from '../../components/buttons';
 import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
-import { Toaster } from 'react-hot-toast';
 
 export interface UpdateStatus {
   status: string;
@@ -31,15 +30,17 @@ const MasterTables: React.FC = () => {
   const getItems = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>,
     },
     {
       key: 'ACTIVE',
-      label: `${t('Active')}`
+      label: `${t('Active')}`,
+      onClick: () => openIsModal(),
     },
     {
       key: 'BLOCKED',
-      label: `${t('Locked')}`
+      label: `${t('Locked')}`,
+      onClick: () => openIsModal(),
     }
   ];
 
@@ -47,12 +48,10 @@ const MasterTables: React.FC = () => {
 
   const handleMenuClick = (e: any, masterId: string) => {
     setUpdateStatus({ status: e.key, masterId });
-    openIsModal();
   };
 
   return (
     <>
-      <Toaster position={`top-center`} />
       <Filters />
       <MasterTable thead={thead}>
         {data.length > 0 ? (

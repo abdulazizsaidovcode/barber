@@ -97,7 +97,7 @@ const FilterComponent: React.FC = () => {
           ) : (
             <tr className={`border-b border-[#eee] dark:border-strokedark`}>
               <td
-                className="min-w-full text-center py-10 text-xl font-bold"
+                className="min-w-full dark:text-white text-center py-10 text-xl font-bold"
                 colSpan={7}
               >
                 Malumot mavjud emas!

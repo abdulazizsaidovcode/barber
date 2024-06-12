@@ -6,7 +6,6 @@ import FileUploader from '../../components/FileDowlander';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 import { updateHelp, updateIsActive } from '../../helpers/api-function/help/help.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import { Toaster } from 'react-hot-toast';
 import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +21,6 @@ const MasterDocument: React.FC = () => {
 
   return (
     <div className="p-2">
-      <Toaster position={`top-center`} />
       <div className="flex flex-col gap-3 mb-3">
         {dataMaster.map(item => (
           <Accordion title={item.helpStatus === 'SERVICE_SPECIFICATION' ? t("Service_Specification") : t("Offer")}>

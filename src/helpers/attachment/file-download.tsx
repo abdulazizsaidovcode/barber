@@ -3,6 +3,8 @@
 import axios from 'axios';
 import { config } from '../token.tsx';
 import toast from 'react-hot-toast';
+import React from 'react';
+import { UploadedFile } from '../../components/FileDowlander.tsx';
 
 export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, page?: number) => {
   setIsLoading(true);
@@ -12,7 +14,7 @@ export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => v
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Bookers${page ? `-sahifa-${page}`: ''}.xlsx`;
+      a.download = `Bookers${page ? `-sahifa-${page}` : ''}.xlsx`;
       document.body.appendChild(a);
       a.click();
       setIsLoading(false);
@@ -23,4 +25,37 @@ export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => v
       console.log(err);
       setIsLoading(false);
     });
+};
+
+
+// file help posts
+export const handleFileChange = async (
+  event: React.ChangeEvent<HTMLInputElement>,
+  getFileType: (val: string) => string,
+  setSelectedFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>,
+  setFileIds: React.Dispatch<React.SetStateAction<string[]>>
+) => {
+  const file = event.target.files && event.target.files[0];
+  if (file) {
+    const fileData: UploadedFile = {
+      name: file.name,
+      size: file.size,
+      type: getFileType(file.name)
+    };
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await axios.post('http://45.67.35.86:8080/attachment/upload', formData, config);
+      if (response.data && response.data.body) {
+        setSelectedFiles((prevState: UploadedFile[]) => [...prevState, fileData]);
+        setFileIds((prevState: string[]) => [...prevState, response.data.body]);
+      } else {
+        console.error('Invalid response from the server');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }
 };

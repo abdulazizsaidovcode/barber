@@ -10,6 +10,8 @@ const financeStore = create<HelpTypes>((set) => ({
   setDataClient: (val: HelpList[]) => set({ dataClient: val }),
   updateTextArea: null,
   setUpdateTextArea: (val: HelpList) => set({ updateTextArea: val }),
+  deleteFileId: [],
+  setDeleteFileId: (val: (string | number)[]) => set({ deleteFileId: val }),
 }));
 
 export default financeStore;

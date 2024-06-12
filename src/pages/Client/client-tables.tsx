@@ -153,7 +153,7 @@ const ClientTables: React.FC = () => {
         ) : (
           <tr className={`border-b border-[#eee] dark:border-strokedark`}>
             <td
-              className="min-w-full text-center py-10 text-xl font-bold"
+              className="min-w-full text-center py-10 text-xl dark:text-white font-bold"
               colSpan={5}
             >
               {t("No_data_available")}
@@ -174,7 +174,7 @@ const ClientTables: React.FC = () => {
         <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
           <div className={`flex flex-col justify-center`}>
             <p
-              className={`font-bold text-xl text-black opacity-80 text-center`}
+              className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}
             >
               {updateStatus.status === "ACTIVE" ? t("Activer") : t("Blocker")}
             </p>

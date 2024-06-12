@@ -20,6 +20,7 @@ const TariffsFunctionality: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [newTariffName, setNewTariffName] = useState('');
     const [loading, setLoading] = useState(true);
+    const [addLoading, setAddLoading] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -36,12 +37,21 @@ const TariffsFunctionality: React.FC = () => {
     };
 
     const addData = async (name: string) => {
-        try {
-            await axios.post(tarif_add_url, { name }, config);
-            fetchData();
-            toast.success('Tariff added successfully');
-            closeModal();
-        } catch { }
+        if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
+            toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+        } else {
+            setAddLoading(true);
+            try {
+                await axios.post(tarif_add_url, { name }, config);
+                fetchData();
+                toast.success('Tariff added successfully');
+                closeModal();
+            } catch {
+                toast.error('Failed to add tariff');
+            } finally {
+                setAddLoading(false);
+            }
+        }
     };
 
     const closeModal = () => {
@@ -110,8 +120,9 @@ const TariffsFunctionality: React.FC = () => {
                         <button
                             className="py-2 px-10 rounded-lg dark:bg-danger bg-slate-800 text-white"
                             onClick={() => addData(newTariffName)}
+                            disabled={addLoading}
                         >
-                            Добавить
+                            {addLoading ? 'Loading...' : 'Добавить'}
                         </button>
                     </div>
                 </div>

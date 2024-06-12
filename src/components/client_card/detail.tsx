@@ -9,6 +9,7 @@ import Modal from '../modals/modal';
 import { config } from '../../helpers/token';
 import { client_block_put, client_send_message } from '../../helpers/api';
 
+
 const { TextArea } = Input;
 
 type DetailClientProps = {
@@ -36,7 +37,6 @@ type DetailClientProps = {
 };
 
 const DetailClient: React.FC<DetailClientProps> = ({
-  ClientId,
   ClientName,
   ClientImg,
   turnover,
@@ -100,7 +100,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
   const handleSendMessage = async () => {
     console.log()
     
-    if (message.trim() === '' || message === '/' || message === '&' || message === `""` ) {
+    if (message.trim() === '' || message === '/' || message === '&' || message === `""` || message === `"` ) {
       toast.error(t('Message cannot be empty'));
       return;
     }
@@ -132,7 +132,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
     <div className="flex flex-col lg:flex-row gap-4 mt-4">
       <div className="flex flex-col h-full justify-between gap-4">
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex gap-3 items-center">
               <div className="bg-green-500 rounded-[50%] w-3 h-3"></div>
               <p>{StatusNow}</p>
@@ -151,14 +151,14 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-[#ffffffdf]  dark:bg-boxdark  dark:text-white border-black   w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold">{t('Status')}:</p>
+              <p className=" font-bold">{t('Status')}:</p>
               <div className="bg-green-500 px-6 rounded-xl font-bold">
                 {Status}
               </div>
             </div>
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center justify-between mt-4 ">
               <p>{t('Block')}</p>
               <div onClick={handleSwitchClick}>
                 <Switch isOn={isSwitchOn} handleToggle={() => {}} />
@@ -167,16 +167,16 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-[#ffffffdf] text-black   dark:bg-boxdark  dark:text-white border-black  w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold mb-2 mt-2">{t('Contacts')}:</p>
+              <p className=" font-bold mb-2 mt-2">{t('Contacts')}:</p>
             </div>
-            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
+            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Phone')}:</strong>
               <p>{Number}</p>
             </div>
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center justify-between mt-4 ">
               <strong>{t('Telegram')}:</strong>
               <p>{Telegram}</p>
             </div>
@@ -187,13 +187,13 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-[#ffffffdf] text-black  w-full dark:bg-boxdark  dark:text-white border-black  lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold mb-2 mt-2">
+              <p className=" font-bold mb-2 mt-2">
                 {t('Indicators')}:
               </p>
             </div>
-            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
+            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Completed Orders')}:</strong>
               <p>{CompOrders}</p>
@@ -214,7 +214,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
         </Skeleton>
       </div>
       <Skeleton loading={isLoading} active>
-        <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+        <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black  dark:bg-boxdark  dark:text-white   p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
           <div className="flex items-center justify-between">
             <p className="text-xl font-bold">{t('Profile')}:</p>
             <div
@@ -224,7 +224,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
               {t('Send Message')}
             </div>
           </div>
-          <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
+          <div className="w-[100%] bg-black dark:bg-white h-[1px] flex items-center mb-4 mt-3"></div>
           <p className="mb-5">
             <strong>{t('Name')}:</strong> {ClientName}
           </p>
@@ -274,7 +274,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
               key="submit"
               type="primary"
               onClick={handleSendMessage}
-              className="bg-boxdark px-12 "
+              className="bg-boxdark px-12  dark:text-white"
             >
               {t('Send')}
             </Button>
