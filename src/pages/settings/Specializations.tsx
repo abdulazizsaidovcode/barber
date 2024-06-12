@@ -32,7 +32,7 @@ const Specializations: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [fatherData, setFatherData] = useState<FatherData[]>([]);
   const [childDataMap, setChildDataMap] = useState<ChildDataMap>({});
-  const [newCategoryName, setNewCategoryName] = useState<string>('');
+  const [newCategoryNameMap, setNewCategoryNameMap] = useState<{ [key: string]: string }>({});
   const [selectedFatherId, setSelectedFatherId] = useState<string | null>(null);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [editedCategoryName, setEditedCategoryName] = useState<string>('');
@@ -69,8 +69,6 @@ const Specializations: React.FC = () => {
           ...prev,
           [categoryId]: res.data.body,
         }));
-      } else {
-        toast.error('Error fetching child data');
       }
       setChildLoading((prev) => ({ ...prev, [categoryId]: false }));
     } catch {
@@ -79,25 +77,32 @@ const Specializations: React.FC = () => {
   };
 
   // ADD CHILD DATA
-  const addChildData = async () => {
-    if (!newCategoryName || !selectedFatherId) {
-      toast.error('Please enter a category name');
+  const addChildData = async (fatherId: string) => {
+    const newCategoryName = newCategoryNameMap[fatherId];
+
+    if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
+      toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
       return;
     }
 
     const payload = {
       name: newCategoryName,
-      categoryFatherId: selectedFatherId,
+      categoryFatherId: fatherId,
     };
 
     try {
-      await axios.post(add_service_category, payload, config);
-      toast.success('Category added successfully');
-      fetchChildData(selectedFatherId);
-      setNewCategoryName('');
-      toggleInput(selectedFatherId);
+      const res = await axios.post(add_service_category, payload, config);
+      if (res.data.success) {
+        toast.success('Category added successfully');
+        fetchChildData(fatherId);
+        setNewCategoryNameMap((prev) => ({ ...prev, [fatherId]: '' }));
+        toggleInput(fatherId);
+      } else {
+        toast('This category already exits', { icon: '⚠️' });
+      }
     } catch { }
   };
+
 
   // DELETE CHILD DATA
   const deleteChildData = async (id: string, fatherId: string) => {
@@ -114,7 +119,6 @@ const Specializations: React.FC = () => {
   // UPDATE CHILD DATA
   const updateData = async (name: string, categoryFatherId: string, id: string) => {
     const payload = { name: name, categoryFatherId: categoryFatherId };
-
     try {
       await axios.put(`${edit_service_category}/${id}`, payload, config);
       toast.success('Category updated successfully');
@@ -214,12 +218,17 @@ const Specializations: React.FC = () => {
                       type="text"
                       placeholder="Type something..."
                       className="dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3"
-                      value={newCategoryName}
-                      onChange={(e) => setNewCategoryName(e.target.value)}
+                      value={newCategoryNameMap[fatherItem.id] || ''}
+                      onChange={(e) =>
+                        setNewCategoryNameMap((prev) => ({
+                          ...prev,
+                          [fatherItem.id]: e.target.value,
+                        }))
+                      }
                     />
                     <button
                       className="bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5"
-                      onClick={addChildData}
+                      onClick={() => addChildData(fatherItem.id)}
                     >
                       Добавить
                     </button>

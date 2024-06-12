@@ -8,6 +8,8 @@ export interface HelpTypes {
   setDataClient: (val: HelpList[]) => void;
   updateTextArea: HelpList | null
   setUpdateTextArea: (val: HelpList) => void;
+  deleteFileId: (string | number)[];
+  setDeleteFileId: (val: (string | number)[]) => void;
 }
 
 // help list types
@@ -16,6 +18,12 @@ export interface HelpList {
   helpStatus: string;
   text: null | string;
   attachmentList: null | string | number;
-  attachments: null | string | number;
+  attachments: null | string | number | Attachments[];
   active: boolean;
+}
+
+export interface Attachments {
+  id: string
+  name: string
+  size: number
 }

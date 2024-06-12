@@ -32,6 +32,7 @@ const ServiceCategories = () => {
         fetchData();
     }, []);
 
+    // FETCH DATA
     const fetchData = () => {
         axios.get(service_category_list, config)
             .then(res => {
@@ -43,6 +44,7 @@ const ServiceCategories = () => {
             });
     };
 
+    // ADD DATA
     const addData = () => {
         const newCategory = {
             name: newCategoryName,
@@ -53,18 +55,29 @@ const ServiceCategories = () => {
             toast(t("Please_fill_in_the_line"), {
                 icon: '⚠️'
             });
+        } else if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
+            toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
         } else {
             axios.post(add_service_category, newCategory, config)
-                .then(() => {
-                    toast.success(t("Category_added_successfully"));
-                    fetchData();
-                    addCloseModal();
+                .then((res) => {
+                    if (res.data.success) {
+                        toast.success(t("Category_added_successfully"));
+                        fetchData();
+                        addCloseModal();
+                    } else {
+                        toast(t('This_category_already_exists'), {
+                            icon: '⚠️'
+                        });
+                    }
                 })
-                .catch(() => { });
+                .catch(() => {
+                    setLoading(false);
+                });
 
         }
     };
 
+    // DELETE DATA
     const deleteData = () => {
         if (categoryToDelete) {
             axios.delete(`${del_service_category}/${categoryToDelete}`, config)
@@ -73,24 +86,56 @@ const ServiceCategories = () => {
                     setData(data.filter(item => item.id !== categoryToDelete));
                     delCloseModal();
                 })
-                .catch(() => { });
+                .catch(() => {
+                    setLoading(false);
+                });
 
         }
     };
 
+    // UPDATE DATA
     const updateData = () => {
         if (editingCategory) {
+            if (editedCategoryName.trim() === "") {
+                toast(t("Please_fill_in_the_line"), {
+                    icon: '⚠️'
+                });
+                return;
+            }
+
             const updatedCategory = {
                 name: editedCategoryName
             };
+
+            if (data.some(item => item.name === editedCategoryName)) {
+                toast(t("This_category_already_exists"), {
+                    icon: '⚠️'
+                });
+                return;
+            }
+
+            if (data.find(item => item.id === editingCategory)?.name === editedCategoryName) {
+                toast(t("Please_change_something"), {
+                    icon: '⚠️'
+                });
+                return;
+            }
+
             axios.put(`${edit_service_category}/${editingCategory}`, updatedCategory, config)
                 .then((res) => {
-                    toast.success(t("Category_updated_successfully"));
-                    fetchData();
-                    console.log(res.data);
-                    editCloseModal();
+                    if (res.data.success) {
+                        toast.success(t("Category_updated_successfully"));
+                        fetchData();
+                        editCloseModal();
+                    } else {
+                        toast(t("This_category_already_exists"), {
+                            icon: '⚠️'
+                        });
+                    }
                 })
-                .catch(() => { });
+                .catch(() => {
+                    setLoading(false);
+                });
         }
     };
 
@@ -131,7 +176,7 @@ const ServiceCategories = () => {
                 <div className="mt-4 md:w-[75%] w-full">
                     {loading ? (
                         <Skeleton active paragraph={{ rows: 4 }} />
-                    ) : (
+                    ) : (data.length === 0 ? <div><p className="text-xl dark:text-white">Categories not found</p></div> :
                         data.map(item => (
                             <div key={item.id}>
                                 <ServiceCategoriesCard

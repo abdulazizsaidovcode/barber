@@ -60,7 +60,7 @@ const RequestFoto: React.FC = () => {
               <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
             ))
           ) : data.length === 0 ? (
-            <div className='w-full h-[600px] flex items-center justify-center'>
+            <div className='w-full h-[510px] flex items-center justify-center'>
               <p className='text-xl dark:text-white'>
                 New fotos not found
               </p>

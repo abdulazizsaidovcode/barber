@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import Modal from '../../components/modals/modal.tsx';
 import { Buttons } from '../../components/buttons';
 import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
-import { Toaster } from 'react-hot-toast';
 
 export interface UpdateStatus {
   status: string;
@@ -52,7 +51,6 @@ const MasterTables: React.FC = () => {
 
   return (
     <>
-      <Toaster position={`top-center`} />
       <Filters />
       <MasterTable thead={thead}>
         {data.length > 0 ? (

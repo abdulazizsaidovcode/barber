@@ -128,6 +128,7 @@ export const tarif_put_url = `${base_url}tariff/web`;
 export const getFileId = `${base_url}attachment/getFile/`; // get chat list
 export const postFileId = `${base_url}attachment/upload`; // get chat list
 export const postFilelist = `${base_url}attachment/upload/list`; // get chat list
+export const deleteFile: string = `${base_url}help/attachment/`
 
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url
