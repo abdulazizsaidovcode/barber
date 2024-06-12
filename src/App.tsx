@@ -43,6 +43,8 @@ import DetailClient from './pages/Client/detail/detail.tsx';
 import TabsComponentForSecondDetail from './pages/Calculation/detail/secondTab.tsx';
 import ThirdTab from './pages/Calculation/detail/third.tab.tsx';
 import { FirstTab } from './pages/Calculation/detail/firstTab.tsx';
+import AddMails from './pages/notification/mails/addMails.tsx';
+import MailDetail from './pages/notification/mails/mailDetail.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -411,6 +413,15 @@ function App() {
             <>
               <PageTitle title="Order | Barber" />
               <ThirdTab />
+            </>
+          }
+        />
+        <Route
+          path="mail/:id"
+          element={
+            <>
+              <PageTitle title="Order | Barber" />
+              <MailDetail />
             </>
           }
         />

@@ -26,6 +26,8 @@ const ServiceCategories = () => {
     const [editingCategory, setEditingCategory] = useState<string | null>(null);
     const [editedCategoryName, setEditedCategoryName] = useState('');
     const [loading, setLoading] = useState(true);
+    const [addLoading, setAddLoading] = useState(false);
+    const [editLoading, setEditLoading] = useState(false);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -58,6 +60,7 @@ const ServiceCategories = () => {
         } else if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
             toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
         } else {
+            setAddLoading(true);
             axios.post(add_service_category, newCategory, config)
                 .then((res) => {
                     if (res.data.success) {
@@ -72,8 +75,10 @@ const ServiceCategories = () => {
                 })
                 .catch(() => {
                     setLoading(false);
+                })
+                .finally(() => {
+                    setAddLoading(false);
                 });
-
         }
     };
 
@@ -89,7 +94,6 @@ const ServiceCategories = () => {
                 .catch(() => {
                     setLoading(false);
                 });
-
         }
     };
 
@@ -100,6 +104,9 @@ const ServiceCategories = () => {
                 toast(t("Please_fill_in_the_line"), {
                     icon: '⚠️'
                 });
+                return;
+            } else if (!editedCategoryName.trim() || /[^a-zA-Z0-9]/.test(editedCategoryName)) {
+                toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
                 return;
             }
 
@@ -121,6 +128,8 @@ const ServiceCategories = () => {
                 return;
             }
 
+            setEditLoading(true);
+
             axios.put(`${edit_service_category}/${editingCategory}`, updatedCategory, config)
                 .then((res) => {
                     if (res.data.success) {
@@ -135,6 +144,9 @@ const ServiceCategories = () => {
                 })
                 .catch(() => {
                     setLoading(false);
+                })
+                .finally(() => {
+                    setEditLoading(false);
                 });
         }
     };
@@ -199,7 +211,13 @@ const ServiceCategories = () => {
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
                     <div className="flex mt-10 justify-center">
-                        <button onClick={addData} className="py-2 rounded-lg dark:bg-danger px-10 bg-slate-800 text-white">{t("Add")}</button>
+                        <button
+                            onClick={addData}
+                            className="py-2 rounded-lg dark:bg-danger px-10 bg-slate-800 text-white"
+                            disabled={addLoading}
+                        >
+                            {addLoading ? 'Loading...' : t("Add")}
+                        </button>
                     </div>
                     <Toaster
                         position="top-center"
@@ -214,6 +232,7 @@ const ServiceCategories = () => {
                 value={editedCategoryName}
                 onChange={(e) => setEditedCategoryName(e.target.value)}
                 onSave={updateData}
+                disabled={editLoading}
             />
             <Toaster
                 position="top-center"
