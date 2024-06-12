@@ -108,7 +108,6 @@ const RequestSpecializations: React.FC = () => {
                 pageSize={pageSize}
                 total={totalNewSpecializations}
                 onChange={onNewPageChange}
-                showTotal={(total) => `Total ${total} items`}
               />
             </div>
           </div>
@@ -150,7 +149,6 @@ const RequestSpecializations: React.FC = () => {
                 pageSize={pageSize}
                 total={totalChangedSpecializations}
                 onChange={onChangedPageChange}
-                showTotal={(total) => `Total ${total} items`}
               />
             </div>
           </div>
