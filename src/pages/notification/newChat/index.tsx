@@ -102,7 +102,7 @@ function NewChat() {
                 <Modal isOpen={modalOpen} onClose={openModal}>
                     <div className='dark:text-gray-400'>
                         <div className='flex gap-10'>
-                            <div>
+                            <div className='w-56'>
                                 <p>Имя или фамилия мастера:</p>
                                 <Select
                                     className='z-100 w-full mt-3'
@@ -117,7 +117,7 @@ function NewChat() {
                                     ))}
                                 </Select>
                             </div>
-                            <div>
+                            <div className='w-56'>
                                 <p>Телефон мастера:</p>
                                 <Select
                                     className='z-100 w-full mt-3'

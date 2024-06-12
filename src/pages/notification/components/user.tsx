@@ -15,15 +15,6 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
         userIds(userId)        
     }, [userId])
 
-    const formatDateTime = (dateTimeString: string) => {
-        const [datePart, timePart] = dateTimeString.split('T');
-        const [time,] = timePart.split('.');
-        return {
-            date: datePart,
-            time: time
-        };
-    };
-
     return (
         <div className='h-full overflow-y-auto'>
             <ul>
@@ -39,7 +30,7 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
                                     </div>
                                     <div className='flex'>
                                         {item.chatDto.createdAt ?
-                                            `${formatDateTime(item.chatDto.createdAt).date} ${formatDateTime(item.chatDto.createdAt).time}`
+                                            `${item.chatDto.createdAt}`
                                             : "yaqinda oline edi"}
                                     </div>
                                 </div>
