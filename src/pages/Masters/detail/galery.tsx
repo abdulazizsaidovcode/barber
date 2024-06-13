@@ -4,6 +4,7 @@ import { master_gallery_id } from '../../../helpers/api';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
 import ProcedureItem from '../../../components/MasterCard/master_galery';
+import { useTranslation } from 'react-i18next';
 
 const Gallery: React.FC = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const Gallery: React.FC = () => {
         console.error('Gallery ga oid malumotlar topilmadi', error);
       });
   };
+  const { t } = useTranslation()
 
   const handleDelete = (attachmentId: string) => {
     setOrderDetails((prevDetails) =>
@@ -45,7 +47,7 @@ const Gallery: React.FC = () => {
         <React.Fragment key={index}>
           <div className="flex items-center justify-between shadow-8 p-4 rounded-lg">
             <div className="flex items-center gap-4">
-              <p>Album {orderDetail.id}</p>
+              <p>{t("Album")}{orderDetail.id}</p>
               <p className="text-xl font-bold">{orderDetail.albumName}</p>
             </div>
             <div>
