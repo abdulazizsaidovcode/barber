@@ -10,8 +10,9 @@ import { Dropdown, Menu } from 'antd';
 import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import { BiReply } from 'react-icons/bi';
 import { ImCancelCircle } from "react-icons/im";
+import { EditFilled } from '@ant-design/icons';
 
-const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent, content }: ChatSentSmsType) => {
+const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent, content, reply }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
   const [selreplyId, setSelreplyId] = useState<string>("");
 
@@ -135,11 +136,17 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
                   <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
                 </div>
                 <FaCheck />
-                {content.trim() && (
-                  <button onClick={sendMessage}>
+                {content.trim() ?
+                  !replyId ? <button onClick={sendMessage}>
                     <IoSend />
                   </button>
-                )}
+                    :
+                    <button onClick={reply}>
+                      <EditFilled />
+                    </button>
+                  :
+                  null
+                }
               </div>
             </div>
           </div>
