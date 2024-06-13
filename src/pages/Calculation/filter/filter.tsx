@@ -62,6 +62,32 @@ const FilterOrder: React.FC = () => {
     
   }, [filters]);
 
+  useEffect(() => {
+    filters.districtId = 0
+    const params: any = {
+      status: statusO,
+      setData: setData,
+      setTotalPage: setTotalPage,
+      ...filters,
+    };
+    // Remove empty filter values
+    Object.keys(params).forEach((key) => {
+      if (
+        params[key] === "" ||
+        params[key] === null ||
+        params[key] === 0 ||
+        params[key] === "0"
+      ) {
+        delete params[key];
+      }
+    });
+
+    // Fetch clients data
+    getOrder(params);
+    
+  }, [filters.regionId]);
+
+
   const queryParams: string = [
     filters.fullName ? `fullName=${filters.fullName}` : "",
     filters.regionId ? `regionId=${filters.regionId}` : 0,
