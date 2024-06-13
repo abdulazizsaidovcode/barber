@@ -40,7 +40,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   const location = useLocation();
 
   const id = location.pathname.substring(8);
-  console.log(id);
+
   const handleImageLoad = () => {
     setLoading(false);
   };
@@ -81,7 +81,6 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
           messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_DELETE',
           read: true,
         },
-
         config,
       )
       .then(() => {
@@ -111,8 +110,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       .then((response) => {
         if (response.status === 200) {
           message.success('Image confirmed successfully');
+          if (status) {
+            handleDeleteConfirm();
+          }
         }
-        return handleDeleteConfirm();
       })
       .catch((error) => {
         console.error('Error confirming the image', error);
@@ -190,7 +191,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
             <Button key="cancel" onClick={handleCancel}>
               Cancel
             </Button>
-            <Button key="next" type="primary" onClick={handleNextClick}>
+            <Button key="next" onClick={handleNextClick}>
               Next
             </Button>
           </div>
