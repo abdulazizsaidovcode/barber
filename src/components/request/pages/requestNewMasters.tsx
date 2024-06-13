@@ -123,21 +123,21 @@ const RequestNewMasters: React.FC = () => {
       setDetailIsOpen(true);
       fetchService(id);
       fetchGallery(id);
-    } catch {}
+    } catch { }
   };
 
   const fetchService = async (id: string) => {
     try {
       const res = await axios.get(`${masters_service_url}/${id}`, config);
       setServiceData(res.data.body);
-    } catch {}
+    } catch { }
   };
 
   const fetchGallery = async (id: string) => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
       setGalleryData(res.data.body);
-    } catch {}
+    } catch { }
   };
 
   const confirmMasters = async (id: string, callback: () => void) => {
@@ -145,7 +145,7 @@ const RequestNewMasters: React.FC = () => {
       await axios.put(`${masters_confirm_url}/${id}`, {}, config);
       callback();
       toast.success("Master confirmed successfully");
-    } catch {}
+    } catch { }
   };
 
   const sendMessageForReject = async (id: string, message: string) => {
@@ -157,7 +157,7 @@ const RequestNewMasters: React.FC = () => {
     try {
       await axios.post(send_message, payload, config);
       toast.success("Мастер успешно отклонен");
-    } catch {}
+    } catch { }
   };
 
   const cancelReject = async (id: string) => {
@@ -169,7 +169,7 @@ const RequestNewMasters: React.FC = () => {
       const res = await axios.put(masters_cancel_url, payload, config);
       console.log(res.data.body);
       fetchData(currentPage, pageSize);
-    } catch {}
+    } catch { }
   };
 
   const openReasonModal = () => setReasonIsOpen(true);
@@ -208,7 +208,7 @@ const RequestNewMasters: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex mt-5 gap-x-2 gap-y-8 flex-wrap px-5">
+        <div className=" mt-5 gap-x-2 gap-y-8 flex-wrap px-5">
           {loading ? (
             Array.from({ length: 6 }).map((_, index) => (
               <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
@@ -218,30 +218,34 @@ const RequestNewMasters: React.FC = () => {
               <p className="text-xl dark:text:white">New Masters Not found</p>
             </div>
           ) : (
-            data.map((item, index) => (
-              <div key={index}>
-                <NewMastersCard
-                  salonName={item.salonName || "не настроено"}
-                  salonCategory={item.categoryName}
-                  salonAddress={item.address || "не настроено"}
-                  ownerImage={item.attachmentId}
-                  salonOwner={`${item.firstName} ${item.lastName || ""}`}
-                  phoneNumber={item.phoneNumber || "не настроено"}
-                  salonCreateDate={item.createdAt || "не настроено"}
-                  modal={() => fetchFullData(item.id)}
+            <div>
+              <div className="flex flex-wrap gap-3">
+                {data.map((item, index) => (
+                  <div key={index}>
+                    <NewMastersCard
+                      salonName={item.salonName || "не настроено"}
+                      salonCategory={item.categoryName}
+                      salonAddress={item.address || "не настроено"}
+                      ownerImage={item.attachmentId}
+                      salonOwner={`${item.firstName} ${item.lastName || ""}`}
+                      phoneNumber={item.phoneNumber || "не настроено"}
+                      salonCreateDate={item.createdAt || "не настроено"}
+                      modal={() => fetchFullData(item.id)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5">
+                <Pagination
+                  showSizeChanger
+                  current={currentPage + 1}
+                  pageSize={pageSize}
+                  total={totalItems}
+                  onChange={onPageChange}
                 />
               </div>
-            ))
+            </div>
           )}
-        </div>
-        <div className="p-3 mt-5">
-          <Pagination
-            showSizeChanger
-            current={currentPage + 1}
-            pageSize={pageSize}
-            total={totalItems}
-            onChange={onPageChange}
-          />
         </div>
       </div>
       <NewMastersDetail

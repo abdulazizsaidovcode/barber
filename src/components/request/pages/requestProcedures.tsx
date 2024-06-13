@@ -54,14 +54,14 @@ const RequestProcedures: React.FC = () => {
   };
 
   const onChangedPageChange = (page: number, pageSize: number) => {
-    setCurrentChangedPage(page - 1); 
+    setCurrentChangedPage(page - 1);
     setPageSize(pageSize);
   };
 
   return (
     <RequestLayout>
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
-        <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center px-5">
+        <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex  justify-center items-center px-5">
           <div className="flex gap-3">
             <p className="dark:text-[#000]">Специализации</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -69,8 +69,8 @@ const RequestProcedures: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between mt-4">
-          <div className='w-1/2 mr-1'>
+        <div className="flex md:flex-row flex-col justify-between mt-4">
+          <div className='md:w-1/2 mr-1'>
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000] ">Новые</p>
@@ -79,7 +79,7 @@ const RequestProcedures: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className='flex items-center flex-col gap-4 mt-4  px-5'>
+            <div className='flex items-center flex-col gap-4 mt-4 px-5'>
               {loading ? (
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
@@ -88,31 +88,34 @@ const RequestProcedures: React.FC = () => {
                 <div className='w-full h-[510px] flex justify-center items-center'>
                   <p>New Procedures Not Found</p>
                 </div> :
-                newProcedures.map(item => (
-                  <SpecializationsCard
-                    key={item.id}
-                    link={item.id}
-                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                    salonOwner={`${item.firstName} ${item.lastName}`}
-                    phoneNumber={item.phoneNumber}
-                    salonCreateDate={item.createdAt}
-                    salonDescription="Мастер добавил новую специализацию"
-                  />
-                ))
+                <div className='flex flex-col gap-3'>
+                  {newProcedures.map(item => (
+                    <SpecializationsCard
+                      key={item.id}
+                      link={item.id}
+                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                      salonOwner={`${item.firstName} ${item.lastName}`}
+                      phoneNumber={item.phoneNumber}
+                      salonCreateDate={item.createdAt}
+                      salonDescription="Мастер добавил новую специализацию"
+                    />
+                  ))
+                  }
+                  <div className='mt-5'>
+                    <Pagination
+                      showSizeChanger
+                      current={currentNewPage + 1}
+                      pageSize={pageSize}
+                      total={totalNewProcedures}
+                      onChange={onNewPageChange}
+                    />
+                  </div>
+                </div>
               )}
             </div>
-            <div className='p-3 mt-5'>
-              <Pagination
-                showSizeChanger
-                current={currentNewPage + 1} 
-                pageSize={pageSize}
-                total={totalNewProcedures}
-                onChange={onNewPageChange}
-              />
-            </div>
           </div>
-          <div className='w-1/2 ml-1'>
-            <div className="w-full bg-[#cccccc] h-12   justify-center items-center flex dark:bg-white p-2">
+          <div className='md:w-1/2 ml-1'>
+            <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -129,32 +132,34 @@ const RequestProcedures: React.FC = () => {
                 <div className='w-full h-[510px] flex justify-center items-center'>
                   <p>New Procedures Not Found</p>
                 </div> :
-                changedProcedures.map(item => (
-                  <SpecializationsCard
-                    key={item.id}
-                    link={item.id}
-                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                    salonOwner={`${item.firstName} ${item.lastName}`}
-                    phoneNumber={item.phoneNumber}
-                    salonCreateDate={item.createdAt}
-                    salonDescription="Мастер изменил название специализации"
-                  />
-                ))
+                <div className='gap-3'>
+                  {changedProcedures.map(item => (
+                    <SpecializationsCard
+                      key={item.id}
+                      link={item.id}
+                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                      salonOwner={`${item.firstName} ${item.lastName}`}
+                      phoneNumber={item.phoneNumber}
+                      salonCreateDate={item.createdAt}
+                      salonDescription="Мастер изменил название специализации"
+                    />
+                  ))}
+                  <div className='p-3 mt-5'>
+                    <Pagination
+                      showSizeChanger
+                      current={currentChangedPage + 1}
+                      pageSize={pageSize}
+                      total={totalChangedProcedures}
+                      onChange={onChangedPageChange}
+                    />
+                  </div>
+                </div>
               )}
-            </div>
-            <div className='p-3 mt-5'>
-              <Pagination
-                showSizeChanger
-                current={currentChangedPage + 1} 
-                pageSize={pageSize}
-                total={totalChangedProcedures}
-                onChange={onChangedPageChange}
-              />
             </div>
           </div>
         </div>
       </div>
-    </RequestLayout>
+    </RequestLayout >
   );
 };
 

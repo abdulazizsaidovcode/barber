@@ -8,13 +8,14 @@ import { ChatSentSmsType, ChatSentSmstList } from '../../../types/chat';
 import { getFileId } from '../../../helpers/api';
 import { Dropdown, Menu } from 'antd';
 import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
-import { BiReply } from 'react-icons/bi';
+import { BiReply, BiReplyAll } from 'react-icons/bi';
 import { ImCancelCircle } from "react-icons/im";
 import { EditFilled } from '@ant-design/icons';
 
-const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent, content, reply }: ChatSentSmsType) => {
+const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
   const [selreplyId, setSelreplyId] = useState<string>("");
+  const [seleditId, setseleditId] = useState<string>("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -25,14 +26,14 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
   useEffect(() => {
     setChats(chat);
   }, [chat]);
-  console.log(chat);
 
-
-  const handleMenuClick = (id: any) => {
+  const handleDelete = (id: any) => {
     chatId(id);
+    deleteMessage();
   };
 
   const handleReply = (id: any) => {
+    setseleditId("")
     setSelreplyId(id)
     replyId(id);
   };
@@ -40,24 +41,25 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
   const handleEdit = (id: any) => {
     let cont = chats.find((item) => item.id === id)?.content;
     editId(id);
-    // setContent(cont);
+    setseleditId(id)
+    setContent(cont);
   };
 
   const items = (id: number) => [
     {
       key: '1',
-      onClick: () => handleMenuClick(id),
+      onClick: () => handleDelete(id),
       label: "Удалить",
     },
     {
       key: '2',
       onClick: () => handleReply(id),
-      label: "otvet",
+      label: "Ответить",
     },
     {
       key: '3',
       onClick: () => handleEdit(id),
-      label: "edit",
+      label: "Редактировать",
     },
   ];
 
@@ -112,7 +114,7 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
                   </div>
                   <button onClick={() => {
                     setSelreplyId("")
-                    replyId("")
+                    handleReply(null)
                   }}>
                     <ImCancelCircle />
                   </button>
@@ -136,17 +138,9 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
                   <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
                 </div>
                 <FaCheck />
-                {content.trim() ?
-                  !replyId ? <button onClick={sendMessage}>
-                    <IoSend />
-                  </button>
-                    :
-                    <button onClick={reply}>
-                      <EditFilled />
-                    </button>
-                  :
-                  null
-                }
+                {content.trim() ? !selreplyId && !seleditId && <button onClick={sendMessage}><IoSend /></button> : null}
+                {content.trim() ? selreplyId && <button onClick={reply}><BiReplyAll /></button> : null}
+                {content.trim() ? seleditId && <button onClick={editMessage}><EditFilled /></button> : null}
               </div>
             </div>
           </div>

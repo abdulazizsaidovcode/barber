@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { getFileId } from '../../../helpers/api';
 import orderStore from '../../../helpers/state_managment/order/orderStore';
 import userImg from '../../../images/user.png';
- import DetailOrder from '../../../components/orders/detail';
+import DetailOrder from '../../../components/orders/detail';
 
 const FirstDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -33,15 +33,13 @@ const FirstDetail: React.FC = () => {
             </div>
           </div>
           <DetailOrder
-             OrderEnterTime={orderDetail.orderFrom}
+            OrderEnterTime={orderDetail.orderFrom}
             OrderEndTime={orderDetail.orderTo}
-             Prepayment={orderDetail.prePayment}
-
+            Prepayment={orderDetail.prePayment}
             MasterNumber={orderDetail.masterPhone}
-
-            isLoading={false}
              MasterName={orderDetail.masterFullName}
-             MasterImg={
+            MasterStatus={'sd'}
+            MasterImg={
               orderDetail.masterPhotoId
                 ? getFileId + orderDetail.masterPhotoId
                 : userImg
@@ -49,7 +47,7 @@ const FirstDetail: React.FC = () => {
             ClientName={orderDetail.clientFullName}
             ClientPhoto={getFileId + orderDetail.clientPhotoId}
             ClientNumber={orderDetail.clientPhone}
-           />
+          />
         </div>
       ) : (
         <p className="dark:text-white">Loading order details...</p>

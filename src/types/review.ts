@@ -37,6 +37,22 @@ export interface ListData {
     favouriteStatusName: string
 }
 
+export interface ListMasterData {
+    id: string,
+    masterId: string,
+    masterFirstName: string,
+    masterLastName: string,
+    masterAttachmentId: string| null,
+    masterFeedbackCount: number,
+    clientId: string,
+    clientFirstName: string,
+    clientLastName: string,
+    clientAttachmentId: string,
+    feedbackCount: number,
+    feedbackDate: string,
+    description: string
+}
+
 export interface ReviewsClient {
     id: string,
     firstName: string,

@@ -5,17 +5,25 @@ import SecondTab from './tabs/SecondTab';
 import { Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import useReviewsStore from '../../helpers/state_managment/reviews/reviews';
-import { fetchDataList, fetchMainData } from '../../helpers/api-function/reviews/reviews';
+import { fetchDataList, fetchMainData, fetchMasterDataList } from '../../helpers/api-function/reviews/reviews';
+import { getRegion } from '../../helpers/api-function/master/master';
+import masterStore from '../../helpers/state_managment/master/masterStore';
+import { reviews_list_data, reviews_list_master_data, reviews_main_data } from '../../helpers/api';
 
 const Reviews: React.FC = () => {
-  const { setMainData, setListData, pageSize, currentPage, setTotalPage } = useReviewsStore();
+  const { setMainData, setListData, pageSize, currentPage, setTotalPage, setListMasterData } = useReviewsStore();
+  const { setRegionData } = masterStore();
   const { t } = useTranslation();
+
   useEffect(() => {
-    fetchMainData(setMainData)
-  }, [])
+    fetchMainData(setMainData, reviews_main_data);
+    getRegion(setRegionData);
+    fetchMasterDataList(setListMasterData, `reviews_list_master_data?page=0&size=${pageSize}`);
+  }, []);
+
   useEffect(() => {
-    fetchDataList(setListData, currentPage, pageSize, setTotalPage)
-  }, [currentPage, pageSize])
+    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`);
+  }, [currentPage, pageSize]);
 
   const items = [
     {

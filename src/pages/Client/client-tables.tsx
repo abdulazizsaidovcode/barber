@@ -35,6 +35,49 @@ const ClientTables: React.FC = () => {
   const openIsModal = () => setIsModal(!isModal)
   const openIsMessageModal = () => setIsMessageModal(!isMessageModal)
 
+  const thead = [
+    {
+      id: 1,
+      name: t("Photo"),
+    },
+    {
+      id: 2,
+      name: t("Client"),
+    },
+    {
+      id: 3,
+      name: t("Registration_date"),
+    },
+    {
+      id: 4,
+      name: t("Phone"),
+    },
+    {
+      id: 5,
+      name: t("Total_sessions"),
+    },
+    {
+      id: 6,
+      name: t("Turnover"),
+    },
+    {
+      id: 7,
+      name: t("Age"),
+    },
+    {
+      id: 8,
+      name: t("master"),
+    },
+    {
+      id: 9,
+      name: t("Canceled"),
+    },
+    {
+      id: 10,
+      name: t("Status"),
+    },
+  ];
+
   const getItems = (id: string): MenuProps["items"] => [
     {
       key: "1",
@@ -60,7 +103,7 @@ const ClientTables: React.FC = () => {
   const handleMenuClick = (e: any, id: string) => {
     setUpdateStatus({ status: e.key, id });
   };
-  
+
 
   return (
     <>
@@ -77,7 +120,7 @@ const ClientTables: React.FC = () => {
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
-                  src={item ? item.imgId ?getFileId + item.imgId : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg"}
+                  src={item ? item.imgId ? getFileId + item.imgId : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg"}
                   alt="img"
                   className={"w-10 h-10 scale-[1.4] rounded-full object-cover"}
                 />
@@ -200,7 +243,7 @@ const ClientTables: React.FC = () => {
           </div>
         </div>
       </Modal>
-      <ClientModal/>
+      <ClientModal />
     </>
   );
 };

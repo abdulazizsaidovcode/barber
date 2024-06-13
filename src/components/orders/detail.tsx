@@ -1,5 +1,9 @@
-import React from 'react';
-import { Skeleton, Rate } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Skeleton, Rate, message } from 'antd';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { get_orders_otis } from '../../helpers/api';
+import { config } from '../../helpers/token';
 
 interface Props {
   OrderEnterTime: string;
@@ -11,28 +15,50 @@ interface Props {
   ClientPhoto: string;
   ClientNumber: string;
   MasterNumber: any;
-  isLoading: boolean;
   MasterStatus: any;
-  Count: string;
-  Description: string;
+}
+
+interface RatingData {
+  rating: number;
+  count: number;
+  text: string;
 }
 
 const DetailOrder: React.FC<Props> = ({
-  Description,
   MasterNumber,
   MasterName,
   MasterImg,
   ClientName,
   ClientNumber,
-  isLoading,
   ClientPhoto,
   MasterStatus,
-  Count,
 }) => {
+  const [ratingData, setRatingData] = useState<RatingData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const location = useLocation();
+  const id = location.pathname.substring(8);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${get_orders_otis}${id}`, config);
+        setRatingData(response.data);
+      } catch (error) {
+        message.error('Failed to fetch data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-4">
       <div className="flex flex-col h-full justify-between gap-4">
-        <Skeleton loading={isLoading} active>
+        <Skeleton loading={loading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="font-bold">Master:</p>
@@ -51,7 +77,7 @@ const DetailOrder: React.FC<Props> = ({
             </div>
           </div>
         </Skeleton>
-        <Skeleton loading={isLoading} active>
+        <Skeleton loading={loading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="font-bold">Client:</p>
@@ -60,7 +86,7 @@ const DetailOrder: React.FC<Props> = ({
             <div className="flex items-center justify-center border-black p-1 rounded-full">
               <img
                 src={ClientPhoto}
-                alt="Master"
+                alt="Client"
                 className="w-40 border h-40 rounded-full"
               />
             </div>
@@ -70,16 +96,20 @@ const DetailOrder: React.FC<Props> = ({
           </div>
         </Skeleton>
       </div>
-      <Skeleton loading={isLoading} active>
+      <Skeleton loading={loading} active>
         <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
-          <div className="flex items-center justify-between px-4 p-2 rounded-lg bg-[#f6d0db]">
-            <p>Оценка (рейтинг)</p>
-            <Rate disabled defaultValue={2} />
-            <p>{Count}</p>
-          </div>
-          <div>
-            <p>{Description}</p>
-          </div>
+          {ratingData.map((item, index) => (
+            <div key={index}>
+              <div className="flex items-center justify-between px-4 p-2 rounded-lg bg-[#f6d0db]">
+                <p>Оценка (рейтинг)</p>
+                <Rate disabled value={item.rating} />
+                <p>{item.count}</p>
+              </div>
+              <div>
+                <p>{item.text}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </Skeleton>
     </div>

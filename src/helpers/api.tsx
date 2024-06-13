@@ -46,16 +46,18 @@ export const master_url: string = `${base_url}user/web/masters-by-filter`;
 export const master_full_data: string = `${base_url}user/web/master-full-info`;
 export const master_gallery_id: string = `${base_url}gallery/web/`;
 export const master_send_message_master: string = `${base_url}message/for/master/by/admin`;
-export const master_delate_service: string = `${base_url}service/web/not-confirmed/`;
+export const master_delate_service: string = `${base_url}service/isActive/`;
 export const master_confirm_new_service: string = `${base_url}service/web/check/`;
-export const master_delate_new_service: string = `${base_url}service/isActive/`;
+export const master_delate_new_service: string = `${base_url}service/web/not-confirmed/`; //service/web/not-confirmed/
 export const master_gallery_delate: string = `${base_url}gallery/`;
 export const master_new_gallery_delate: string = `${base_url}gallery/web/check/`; //master_gallery_message
 export const master_gallery_message: string = `${base_url}message/for/master/by/admin`; //master_gallery_message
+export const master_gallery_message_conform: string = `${base_url}gallery/web/check/attachment/`; //master_gallery_message
 export const master_block_put: string = `${base_url}user/web/master-edit-status`; //master_review_data
 export const master_review_data: string = `${base_url}user/web/cleint-edit-status`; //master_review_data//master_default_values
 export const master_default_values: string = `${base_url}feedback/for/master/`; //master_review_data//master_default_values
-export const master_default_feedback: string = `${base_url}feedback/filter/`; //master_review_data//master_default_values
+export const master_default_feedback: string = `${base_url}feedback/filter/`; //master_review_data//master_default_values/ post_message_api
+export const post_message_api: string = `${base_url}message/for/master/by/admin`; //master_review_data//master_default_values/ post_message_api
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
@@ -64,7 +66,7 @@ export const help_url: string = `${base_url}help`;
 
 // client url
 export const client_url: string = `${base_url}client/web/clients-by-filter`;
-export const client_update_status: string = `${base_url}user/web/cleint-edit-status`;
+export const client_update_status: string = `${base_url}user/web/client-edit-status`;
 export const client_full_data: string = `${base_url}client/web/`;
 
 //login url
@@ -73,6 +75,7 @@ export const login_url: string = `${base_url}auth/admin-login`;
 export const add_precent_list: string = `${base_url}percent`;
 // order url
 export const get_orders_list: string = `${base_url}order/web`;
+export const get_orders_otis: string = `${base_url}feedback/web/one/feedback/`;
 
 // settings url
 export const service_category_list: string = `${base_url}category`;
@@ -134,7 +137,7 @@ export const tarif_put_url = `${base_url}tariff/web`;
 export const getFileId = `${base_url}attachment/getFile/`; // get chat list
 export const postFileId = `${base_url}attachment/upload`; // get chat list
 export const postFilelist = `${base_url}attachment/upload/list`; // get chat list
-export const deleteFile: string = `${base_url}help/attachment/`
+export const deleteFile: string = `${base_url}help/attachment/`;
 
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url
@@ -159,4 +162,5 @@ export const send_message = `${base_url}message/for/master/by/admin`;
 // reviews url
 export const reviews_main_data = `${base_url}feedback/web/reviews/for/service`;
 export const reviews_list_data = `${base_url}feedback/web/list/for/service`;
+export const reviews_list_master_data = `${base_url}feedback/web/list/for/master`;
 export const reviews_list_delete = `${base_url}feedback/delete`;
