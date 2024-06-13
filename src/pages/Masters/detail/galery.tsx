@@ -28,7 +28,7 @@ const Gallery: React.FC = () => {
         console.error('Gallery ga oid malumotlar topilmadi', error);
       });
   };
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const handleDelete = (attachmentId: string) => {
     setOrderDetails((prevDetails) =>
@@ -47,7 +47,10 @@ const Gallery: React.FC = () => {
         <React.Fragment key={index}>
           <div className="flex items-center justify-between shadow-8 p-4 rounded-lg">
             <div className="flex items-center gap-4">
-              <p>{t("Album")}{orderDetail.id}</p>
+              <p>
+                {t('Album')}
+                {orderDetail.id}
+              </p>
               <p className="text-xl font-bold">{orderDetail.albumName}</p>
             </div>
             <div>
@@ -65,7 +68,7 @@ const Gallery: React.FC = () => {
                     attechmentId={attachment.attachmentId}
                     galleryId={orderDetail.id}
                     key={subIndex}
-                    status={attachment.main}
+                    status={attachment.newStatus}
                     imgUrl={attachment.attachmentId}
                     attachmentId={attachment.attachmentId}
                     onDelete={handleDelete}
