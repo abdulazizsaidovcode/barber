@@ -9,25 +9,22 @@ import {
   master_gallery_message_conform,
 } from '../../helpers/api';
 import { config } from '../../helpers/token';
-import { useLocation } from 'react-router-dom';
 import Modal from '../modals/modal';
 
 interface ProcedureItemProps {
   imgUrl: string;
   status: boolean;
-  attachmentId: string;
   onDelete: (attachmentId: string) => void;
   galleryId: string;
-  attechmentId: string;
+  attachmentId: string;
 }
 
 const ProcedureItem: React.FC<ProcedureItemProps> = ({
   imgUrl,
   status,
-  attachmentId,
   onDelete,
   galleryId,
-  attechmentId,
+  attachmentId,
 }) => {
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -37,9 +34,6 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   const [isCheckModalVisible, setIsCheckModalVisible] = useState(false);
   const [deleteReason, setDeleteReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const location = useLocation();
-
-  const id = location.pathname.substring(8);
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -57,7 +51,11 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   };
 
   const handleDeleteIconClick = () => {
-    setIsTextAreaModalVisible(true);
+    if (status) {
+      setIsTextAreaModalVisible(true);
+    } else {
+      handleDeleteConfirm();
+    }
   };
 
   const handleNextClick = () => {
@@ -72,10 +70,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
     setIsSubmitting(true);
     axios
       .post(
-        `${master_gallery_message}${id}`,
+        `${master_gallery_message}${galleryId}`,
         {
           clientId: null,
-          masterId: id,
+          masterId: galleryId,
           adminId: null,
           message: deleteReason,
           messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_DELETE',
@@ -85,7 +83,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       )
       .then(() => {
         return axios.delete(
-          `${master_gallery_delate}${galleryId}/${attechmentId}`,
+          `${master_gallery_delate}${galleryId}/${attachmentId}`,
           config,
         );
       })
@@ -106,13 +104,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   const handleCheckConfirm = () => {
     setIsSubmitting(true);
     axios
-      .put(`${master_gallery_message_conform}${attechmentId}`, '', config)
+      .put(`${master_gallery_message_conform}${attachmentId}`, '', config)
       .then((response) => {
         if (response.status === 200) {
           message.success('Image confirmed successfully');
-          if (status) {
-            handleDeleteConfirm();
-          }
         }
       })
       .catch((error) => {

@@ -65,7 +65,6 @@ const Gallery: React.FC = () => {
               orderDetail.resGalleryAttachments.map(
                 (attachment: any, subIndex: number) => (
                   <ProcedureItem
-                    attechmentId={attachment.attachmentId}
                     galleryId={orderDetail.id}
                     key={subIndex}
                     status={attachment.newStatus}
