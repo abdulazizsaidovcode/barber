@@ -21,7 +21,7 @@ export interface UpdateStatus {
 
 const ClientTables: React.FC = () => {
   const { t } = useTranslation();
-  const { totalPage, clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid } = clientFilterStore();
+  const { clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: "",
     id: "",

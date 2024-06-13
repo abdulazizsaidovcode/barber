@@ -42,7 +42,14 @@ export const getMasters = ({
         setTotalPage(res.data.body.totalPage);
       } else setData([]);
     })
-    .catch(() => setData([]));
+    .catch((err) => {
+      if (err.response) {
+        if (err.response.status === 404) console.error('error');
+        else console.error(`Error: ${err.response.status} - ${err.response.statusText}`);
+      } else if (err.request) console.error('No response received');
+      else console.error('Request setup error');
+      setData([]);
+    });
 };
 
 export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
@@ -77,26 +84,26 @@ export const getCategory = (setCategoryChild: (data: CategoryChild[]) => void) =
 export const updateStatusFunc = (masterId: string, status: string, setData: (val: Data[]) => void, setTotalPage: (val: number) => void, openIsModal: () => void, setIsLoading: (val: boolean) => void) => {
   let data = { id: masterId, status };
   if (data.id && data.status) {
-    setIsLoading(true)
+    setIsLoading(true);
     axios.put(update_master_status, data, config)
       .then(res => {
-        setIsLoading(false)
+        setIsLoading(false);
         if (res.data.success === true) {
           getMasters({ setData, setTotalPage });
           toast.success('Successfully update status');
-          openIsModal()
+          openIsModal();
         } else {
-          toast.error('Serverda xatolik yuz berdi')
-          openIsModal()
+          toast.error('Serverda xatolik yuz berdi');
+          openIsModal();
         }
       })
       .catch(() => {
-        setIsLoading(false)
-        toast.error('Error updating status!')
-        openIsModal()
+        setIsLoading(false);
+        toast.error('Error updating status!');
+        openIsModal();
       });
   } else {
     toast.error('Error updating status');
-    openIsModal()
+    openIsModal();
   }
 };
