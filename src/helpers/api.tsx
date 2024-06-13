@@ -73,6 +73,7 @@ export const login_url: string = `${base_url}auth/admin-login`;
 export const add_precent_list: string = `${base_url}percent`;
 // order url
 export const get_orders_list: string = `${base_url}order/web`;
+export const get_orders_otis: string = `${base_url}feedback/web/one/feedback/`;
 
 // settings url
 export const service_category_list: string = `${base_url}category`;
@@ -134,7 +135,7 @@ export const tarif_put_url = `${base_url}tariff/web`;
 export const getFileId = `${base_url}attachment/getFile/`; // get chat list
 export const postFileId = `${base_url}attachment/upload`; // get chat list
 export const postFilelist = `${base_url}attachment/upload/list`; // get chat list
-export const deleteFile: string = `${base_url}help/attachment/`
+export const deleteFile: string = `${base_url}help/attachment/`;
 
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url

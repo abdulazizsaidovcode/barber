@@ -34,10 +34,8 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
   const [value, setValue] = useState('');
-  const [currentServiceId, setCurrentServiceId] = useState<string>(ServesId.id);
+  const [currentServiceId, setCurrentServiceId] = useState<string>(servicesId);
   const location = useLocation();
-
-  const id = location.pathname.substring(8);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -65,9 +63,8 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         `${apiEndpoint}${currentServiceId}`,
         config,
       );
-      if (response) {
+      if (response.status === 200) {
         message.success('Procedure deleted successfully');
-        // Perform any additional state updates or refresh the list
       } else {
         throw new Error('Failed to delete procedure');
       }
@@ -84,7 +81,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         config,
       );
 
-      if (response) {
+      if (response.status === 200) {
         message.success('Procedure confirmed successfully');
         const updatedServiceId = response.data.servicesId;
         setCurrentServiceId(updatedServiceId);
@@ -131,28 +128,25 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           </div>
         </div>
         <div className="flex items-center w-full h-[1px] bg-black"></div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-start mt-4 flex-col">
-            <div className="mb-2 flex items-center justify-between gap-8 lg:justify-start">
-              <p className="font-bold">Цена:</p>
-              <p>{price} сум</p>
-            </div>
-            <div className="mb-2 flex items-center justify-between gap-6 lg:justify-start">
-              <p className="font-bold">Длительность:</p>
-              <p>
-                {Math.floor(duration / 60)} час {duration % 60} минут
-              </p>
-            </div>
+        <div className="flex items-start mt-4 flex-col">
+          <div className="mb-2 flex items-center justify-between gap-8 lg:justify-start">
+            <p className="font-bold">Цена:</p>
+            <p>{price} сум</p>
           </div>
-          <div
-            className={`p-1 text-white px-4 rounded-xl cursor-pointer ${
-              serviceStatus === 'APPROVED' ? 'bg-green-500' : 'bg-red-500'
-            }`}
-          >
-            {serviceStatus}
+          <div className="mb-2 flex items-center justify-between gap-6 lg:justify-start">
+            <p className="font-bold">Длительность:</p>
+            <p>
+              {Math.floor(duration / 60)} час {duration % 60} минут
+            </p>
           </div>
         </div>
-
+        <div
+          className={`p-1 text-white px-4 rounded-xl cursor-pointer ${
+            serviceStatus === 'APPROVED' ? 'bg-green-500' : 'bg-red-500'
+          }`}
+        >
+          {serviceStatus}
+        </div>
         <div className="mb-2 flex items-center justify-between gap-6 lg:justify-start">
           <p className="font-bold">Описание:</p>
           <p>{description}</p>
