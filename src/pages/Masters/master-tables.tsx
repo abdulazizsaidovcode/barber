@@ -67,7 +67,7 @@ const MasterTables: React.FC = () => {
     },
     {
       id: 12,
-      name: t("siderbar_client"),
+      name: t("Phone"),
     },
     {
       id: 13,
