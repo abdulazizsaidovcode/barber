@@ -214,7 +214,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
         </Skeleton>
       </div>
       <Skeleton loading={isLoading} active>
-        <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black  dark:bg-boxdark  dark:text-white   p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+        <div className="bg-gray-100  text-black  dark:bg-boxdark  dark:text-white   p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
           <div className="flex items-center justify-between">
             <p className="text-xl font-bold">{t('Profile')}:</p>
             <div
