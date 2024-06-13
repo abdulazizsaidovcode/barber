@@ -94,7 +94,6 @@ const DirectoriesOnlineBooking: React.FC = () => {
                       onClick={() => {
                         addPercent(newPercent, setData, toggleInputOpen);
                         setNewPercent('');
-                        setIsInputOpen(false);
                       }}
                     >
                       Добавить

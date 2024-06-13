@@ -58,6 +58,23 @@ const Filters: React.FC = () => {
     if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue);
   }, [filters]);
 
+  useEffect(() => {
+    filters.cityValue = null
+    getMasters({
+      fullName: filters.searchValue ? filters.searchValue : '',
+      regionId: filters.regionValue ? filters.regionValue : '',
+      districtId: filters.cityValue ? filters.cityValue : '',
+      startDate: datePicker(0),
+      endDate: datePicker(1),
+      categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
+      statusName: filters.statusValue ? filters.statusValue : '',
+      selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
+      workPlace: filters.placeOfWorkValue ? filters.placeOfWorkValue : '',
+      setData,
+      setTotalPage
+    });
+  }, [filters.regionValue]);
+
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
   const handleInputChange = (key: string, value: any) => setFilters({ ...filters, [key]: value });
