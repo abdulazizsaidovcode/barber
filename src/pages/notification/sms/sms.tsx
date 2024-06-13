@@ -11,12 +11,16 @@ import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import { BiReply, BiReplyAll } from 'react-icons/bi';
 import { ImCancelCircle } from "react-icons/im";
 import { EditFilled } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
+import Modal from '../../../components/modals/modal';
+import { Buttons } from '../../../components/buttons';
+import TextArea from 'antd/es/input/TextArea';
 
-const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage }: ChatSentSmsType) => {
+const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
   const [selreplyId, setSelreplyId] = useState<string>("");
   const [seleditId, setseleditId] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,15 +32,16 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
     setChats(chat);
   }, [chat]);
 
-  const handleDelete = (id: any) => {
-    chatId(id);
+  const handleDelete = () => {
     deleteMessage();
   };
 
   const handleReply = (id: any) => {
     setseleditId("")
     setSelreplyId(id)
-    replyId(id);
+    replyId(id)
+    setseleditId("")
+    setContent("")
   };
 
   const handleEdit = (id: any) => {
@@ -44,26 +49,39 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
     editId(id);
     setseleditId(id)
     setContent(cont);
+    setSelreplyId("")
   };
-  const { t } = useTranslation()
 
-  const items = (id: number) => [
+  const items = (id: any) => [
     {
       key: '1',
-      onClick: () => handleDelete(id),
-      label: t("Delete"),
+      onClick: () => {
+        openModal()
+        deleteId(id)
+      },
+      label: "Удалить",
     },
     {
       key: '2',
       onClick: () => handleReply(id),
-      label: t("Answer"),
+      label: "Ответить",
     },
     {
       key: '3',
       onClick: () => handleEdit(id),
-      label: t("Edit"),
+      label: "Редактировать",
     },
   ];
+
+  const openModal = () => {
+    setModalOpen(!modalOpen)
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault(); // Enter bosilganda yangi qatorga tushishni to'xtatish
+    }
+  };
 
   return (
     <div className='h-full relative pl-4'>
@@ -126,14 +144,12 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
           }
           <div className="px-4 py-2 border">
             <div className="flex items-center gap-5 w-full">
-              <textarea
-                rows={1}
-                id="chat"
-                className="w-full border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0"
-                placeholder={t("Type_your_message")}
-                value={content}
+              <TextArea value={content}
+                className="w-full border-none py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0 custom-textarea"
                 onChange={(e) => setContent(e.target.value)}
-              ></textarea>
+                placeholder="Type your message..."
+                onKeyDown={handleKeyDown}
+                autoSize />
               <div className="flex justify-end items-center text-2xl w-1/2 gap-5">
                 <div>
                   <input type="file" className="hidden" ref={fileInputRef} />
@@ -141,8 +157,15 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
                 </div>
                 <FaCheck />
                 {content.trim() ? !selreplyId && !seleditId && <button onClick={sendMessage}><IoSend /></button> : null}
-                {content.trim() ? selreplyId && <button onClick={reply}><BiReplyAll /></button> : null}
-                {content.trim() ? seleditId && <button onClick={editMessage}><EditFilled /></button> : null}
+                {content.trim() ? selreplyId && <button onClick={() => {
+                  reply()
+                  setSelreplyId("")
+                }}><BiReplyAll /></button> : null}
+                {content.trim() ? seleditId && <button onClick={() => {
+                  editMessage()
+                  setseleditId("")
+                }
+                }><EditFilled /></button> : null}
               </div>
             </div>
           </div>
@@ -152,7 +175,24 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
           <Notselected />
         </div>
       )}
-    </div>
+      <Modal isOpen={modalOpen} onClose={openModal}>
+        <div className=' max-w-96 w-96 pt-10'>
+          <p className='mb-20 text-center '>habarni o'chirish</p>
+
+          <div className='flex gap-5 justify-center'>
+            <Buttons onClick={() => openModal}>
+              cansel
+            </Buttons>
+            <Buttons onClick={() => {
+              handleDelete()
+              openModal()
+            }}>
+              Delete
+            </Buttons>
+          </div>
+        </div>
+      </Modal >
+    </div >
   );
 };
 
