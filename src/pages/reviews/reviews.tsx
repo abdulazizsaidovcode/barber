@@ -6,15 +6,20 @@ import { Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import useReviewsStore from '../../helpers/state_managment/reviews/reviews';
 import { fetchDataList, fetchMainData } from '../../helpers/api-function/reviews/reviews';
+import { getRegion } from '../../helpers/api-function/master/master.tsx';
+import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
+import { reviews_list_data, reviews_main_data } from '../../helpers/api.tsx';
 
 const Reviews: React.FC = () => {
   const { setMainData, setListData, pageSize, currentPage, setTotalPage } = useReviewsStore();
+  const {setRegionData} = masterStore()
   const { t } = useTranslation();
   useEffect(() => {
-    fetchMainData(setMainData)
+    fetchMainData(setMainData, reviews_main_data)
+    getRegion(setRegionData)
   }, [])
   useEffect(() => {
-    fetchDataList(setListData, currentPage, pageSize, setTotalPage)
+    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`)
   }, [currentPage, pageSize])
 
   const items = [
