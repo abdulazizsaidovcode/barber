@@ -17,6 +17,7 @@
   "Consumption": "Consumption",
   "Canceled": "Canceled",
   "Customer_churn": "Customer churn",
+  "Registration_date": "Registration date",
   "Master_churn": "Master churn",
   "Clients_per_1_specialist_on_average": "Clients per 1 specialist on average",
   "Dynamics_of_connecting_masters_and_clients": "Dynamics of connecting masters and clients",
