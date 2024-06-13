@@ -118,6 +118,8 @@ const Chatdetail: React.FC = () => {
       axios.get(`${messages_url}/${adminId}/${recipientId}`, config)
         .then(res => {
           setMessages(res.data.body);
+          console.log(res.data.body);
+          
         }).catch(err => {
           if (err.response.status == 404) {
             setMessages([]);
@@ -207,6 +209,12 @@ const Chatdetail: React.FC = () => {
       toast.error(t("Enter_your_message"));
     }
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Inter') {
+      console.log("salom");
+    }
+  })
 
   return (
     <div className="h-[92%]">

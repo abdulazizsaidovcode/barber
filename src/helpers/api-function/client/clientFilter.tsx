@@ -6,10 +6,11 @@ import { config } from "../../token";
 import { FilterData } from "../../state_managment/client/clientFilterStore";
 
 export const updateClientStatus = (id: string, status: string, setData: (val: FilterData[]) => void, setTotalPage: (val: number) => void, openIsModal: () => void, setIsLoading: (val: boolean) => void) => {
-    let data = { id, status };
+    let data = { id: id, status };
+    
     if (data.id && data.status) {
       setIsLoading(true)
-      axios.put(client_update_status, data, config)
+      axios.put(`${client_update_status}`, data, config)
         .then(res => {
           setIsLoading(false)
           if (res.data.success === true) {

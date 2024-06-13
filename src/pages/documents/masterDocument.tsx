@@ -45,7 +45,7 @@ const MasterDocument = () => {
             <>
               {trueFalse(item.helpStatus) && item.text && (
                 <div
-                  className="border-[1px] px-5 py-3 rounded-xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300">
+                  className="border-[1px] text-[.8rem] sm:text-base px-2 sm:px-5 py-3 rounded-xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300">
                   {item.text}
                 </div>
               )}
@@ -54,7 +54,7 @@ const MasterDocument = () => {
                 {!trueFalse(item.helpStatus) &&
                   <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />}
                 <div className="flex gap-3 items-center my-4">
-                  <p>{t('Show_in_apps')}</p>
+                  <p className={`text-[.8rem] sm:text-base`}>{t('Show_in_apps')}</p>
                   <Switch
                     isOn={item.active}
                     handleToggle={() => updateIsActive(item, setDataMaster, 'FOR_MASTER')}

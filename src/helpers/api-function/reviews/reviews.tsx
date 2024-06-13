@@ -10,7 +10,9 @@ export const fetchMainData = async (setMainData: (data: MainData) => void, url: 
     if (res.data.success) {
       setMainData(res.data.body);
     }
-  } catch { }
+  } catch {
+    // Handle error
+  }
 };
 
 export const fetchDataList = async (setDataList: (data: ListData[]) => void, setTotalPage: (data: number) => void, url: string) => {
@@ -29,7 +31,7 @@ export const fetchDataList = async (setDataList: (data: ListData[]) => void, set
 
 export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterData[]) => void, url: string) => {
   try {
-    const res = await axios.get(`${url}`, config);
+    const res = await axios.get(url, config);
     if (res.data.success) {
       setMasterDataList(res.data.body.object);
     } else {
@@ -47,5 +49,17 @@ export const deleteListData = async (id: string | null, setDataList: (data: List
       toast.success('Review successfully deleted');
       fetchDataList(setDataList, setTotalPage, url);
     }
-  } catch { }
+  } catch {
+    // Handle error
+  }
+};
+
+export const deleteMasterDataList = async (id: string, setMasterDataList: (data: ListMasterData[]) => void, url: string) => {
+  try {
+    await axios.delete(`${reviews_list_delete}/${id}`, config);
+    toast.success('Review successfully deleted');
+    fetchMasterDataList(setMasterDataList, url);
+  } catch {
+    // Handle error
+  }
 };

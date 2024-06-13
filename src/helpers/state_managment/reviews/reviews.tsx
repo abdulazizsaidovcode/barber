@@ -31,6 +31,9 @@ interface ReviewsStore {
   totalPage: number;
   currentPage: number;
   pageSize: number;
+  totalMasterPage: number;
+  currentMasterPage: number;
+  pageMasterSize: number;
   isDelModal: boolean;
   filterObj: FiltersReview;
   filters: FiltersReview;
@@ -42,6 +45,9 @@ interface ReviewsStore {
   setTotalPage: (page: number) => void;
   setCurrentPage: (currentPage: number) => void;
   setPageSize: (size: number) => void;
+  setMasterTotalPage: (page: number) => void;
+  setMasterCurrentPage: (currentPage: number) => void;
+  setMasterPageSize: (size: number) => void;
   setFilters: (val: FiltersReview) => void;
   setMasterFilters: (val: MasterFiltersReview) => void;
 }
@@ -122,8 +128,11 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
   listMasterData: [],
   totalPage: 0,
   currentPage: 0,
+  totalMasterPage: 0,
+  currentMasterPage: 0,
   isDelModal: false,
   pageSize: 10,
+  pageMasterSize: 10,
   setMainData: (val: MainData) => set({ mainData: val }),
   setDelModal: (val: boolean) => set({ isDelModal: val }),
   setListData: (val: ListData[]) => set({ listData: val }),
@@ -131,6 +140,9 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
   setTotalPage: (page: number) => set({ totalPage: page }),
   setPageSize: (size: number) => set({ pageSize: size }),
   setCurrentPage: (current: number) => set({ currentPage: current }),
+  setMasterTotalPage: (page: number) => set({ totalMasterPage: page }),
+  setMasterPageSize: (size: number) => set({ pageMasterSize: size }),
+  setMasterCurrentPage: (current: number) => set({ currentMasterPage: current }),
 }));
 
 export default useReviewsStore;
