@@ -42,6 +42,7 @@ type MasterCardInfoProps = {
   StatusNow: string;
 };
 
+
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   MasterName,
   MasterImg,
@@ -222,11 +223,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center gap-4">
               <div
-                className={` rounded-[50%] w-2 h-2 font-bold ${
-                  StatusNow === 'OFFLINE'
+                className={` rounded-[50%] w-2 h-2 font-bold ${StatusNow === 'OFFLINE'
                     ? 'bg-red-500 text-white'
                     : 'bg-green-500'
-                }`}
+                  }`}
               ></div>
               <p>{StatusNow}</p>
             </div>
@@ -248,11 +248,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <div className="flex items-center justify-between">
               <p className="text-black font-bold">Status:</p>
               <div
-                className={`px-6 rounded-xl font-bold ${
-                  Status === 'BLOCKED'
+                className={`px-6 rounded-xl font-bold ${Status === 'BLOCKED'
                     ? 'bg-red-500 text-white'
                     : 'bg-green-500'
-                }`}
+                  }`}
               >
                 {Status}
               </div>
@@ -260,7 +259,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <div className="flex items-center justify-between mt-4">
               <p>Заблокировать</p>
               <div onClick={handleSwitchClick}>
-                <Switch isOn={isSwitchOn} handleToggle={() => {}} />
+                <Switch isOn={isSwitchOn} handleToggle={() => { }} />
               </div>
             </div>
           </div>
@@ -322,6 +321,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <Button key="back" onClick={closeModal}>
               {t('No')}
             </Button>
+
             <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
           </div>
         </Modal>

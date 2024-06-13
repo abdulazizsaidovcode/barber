@@ -5,11 +5,13 @@ import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
 import { master_full_data } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import userImg from '../../../images/user.png';
+import { useTranslation } from 'react-i18next';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   const id = location.pathname.substring(8);
   console.log(id);
@@ -34,7 +36,7 @@ const DetailMaster: React.FC = () => {
   return (
     <div>
       {isLoading ? (
-        <p className="dark:text-white">Loading order details...</p>
+        <p className="dark:text-white">{t("Loading_order_details")}</p>
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
@@ -45,63 +47,63 @@ const DetailMaster: React.FC = () => {
             PlaceOfWork={orderDetails.placeOfWork}
             StartData={
               orderDetails.startDate === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.startDate
             }
             Telegram={
               orderDetails.telegramLink === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.telegramLink
             }
             Level={
               orderDetails.masterFeedbackCount === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.masterFeedbackCount
             }
             Clients={
               orderDetails.clientCount === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.clientCount
             }
             rejectedOrderCount={
               orderDetails.rejectedOrderCount === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.rejectedOrderCount
             }
             CompOrders={
               orderDetails.completedOrderCount === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.completedOrderCount
             }
             Instagram={
               orderDetails.instagramLink === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.instagramLink
             }
             Number={orderDetails.phoneNumber}
             Region={
               orderDetails.regionName === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.regionName
             }
             City={
               orderDetails.districtName === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.districtName
             }
-            Age={orderDetails.age === null ? 'Mavjud emas' : orderDetails.age}
+            Age={orderDetails.age === null ? t("Not_available") : orderDetails.age}
             Gender={
-              orderDetails.gender === null ? 'Mavjud emas' : orderDetails.gender
+              orderDetails.gender === null ? t("Not_available") : orderDetails.gender
             }
             UserName={
               orderDetails.nickname === null
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.nickname
             }
             SurName={orderDetails.lastName}
             Location={
               orderDetails.address === null
-                ? 'Manzil Mavjud emas'
+                ? t("Address_Not_available")
                 : orderDetails.address
             }
             scheduleType={orderDetails.scheduleType}
@@ -113,7 +115,7 @@ const DetailMaster: React.FC = () => {
             }
             definitionType={
               orderDetails.masterPhone === undefined
-                ? 'Mavjud emas'
+                ? t("Not_available")
                 : orderDetails.masterPhone
             }
             Status={orderDetails.status}
@@ -121,7 +123,7 @@ const DetailMaster: React.FC = () => {
           />
         </div>
       ) : (
-        <p className="dark:text-white">No order details found.</p>
+        <p className="dark:text-white">{t("No_order_details_found")}</p>
       )}
     </div>
   );
