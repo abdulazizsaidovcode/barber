@@ -60,16 +60,18 @@ const FileUploader = ({ id, item }: { id: string, item: any }) => {
     <div>
       {selectedFilesDef.length > 0 && (
         <div className="flex w-[100%] flex-col flex-wrap">
-          <div className="flex gap-3 flex-wrap">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-3">
             {selectedFilesDef.map((file, index) => (
-              <div className="border-[1px] border-[#000] dark:border-white p-3 w-max h-17 rounded-md flex" key={index}>
+              <div className="border-[1px] border-[#000] dark:border-white p-3 h-17 rounded-md flex justify-between" key={index}>
                 <div className="flex">
                   <div className="bg-black dark:bg-danger px-3 flex rounded-md justify-center items-center">
                     <p className="text-sm text-white">{file.type}</p>
                   </div>
                   <div className="flex flex-col justify-center p-2">
-                    <p className="text-md font-bold tracking-normal text-[#000] dark:text-white ">{file.name}</p>
-                    <p className="text-sm">{convertBytesToMegabytes(file.size).toFixed(2)} MB</p>
+                    <p className="text-md font-bold tracking-normal text-[#000] dark:text-white sm:text-[1rem] text-[.75rem]">
+                      {file.name.length > 12 ? file.name.slice(0, 12) + '...' : file.name}
+                    </p>
+                    <p className="text-sm text-black dark:text-white opacity-60">{convertBytesToMegabytes(file.size).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <div>
@@ -92,7 +94,7 @@ const FileUploader = ({ id, item }: { id: string, item: any }) => {
         onChange={(e) => handleFileChange(e, getFileType, setSelectedFiles, setFileIds, setIsLoading)}
       />
       {isLoading ? <p className={`my-3 text-black dark:text-white`}>loading...</p> : (
-        <button className="flex items-center my-3 text-black dark:text-white opacity-75" onClick={handleUploadButtonClick}>{t('Attach_file')}
+        <button className="flex items-center my-3 text-black dark:text-white opacity-75 text-[.8rem] sm:text-base" onClick={handleUploadButtonClick}>{t('Attach_file')}
           <MdFileDownload
             className="ms-1 text-[#000] dark:text-white"
           />

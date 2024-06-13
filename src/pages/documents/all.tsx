@@ -42,14 +42,14 @@ const All = () => {
       <>
         {name && params && (
           <div
-            className="border-[1px] px-5 py-3 rounded-xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300">
+            className="border-[1px] text-[.8rem] sm:text-base px-2 sm:px-5 py-3 rounded-xl dark:border-white bg-white dark:bg-black text-slate-700 dark:text-slate-300">
             {name}
           </div>
         )}
         <div className={`mt-3 ${params && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
           {!params && <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />}
           <div className="flex gap-3 items-center my-3">
-            <p>{t("Show_in_apps")}</p>
+            <p className={`text-[.8rem] sm:text-base`}>{t("Show_in_apps")}</p>
             <Switch
               isOn={item.active}
               handleToggle={() => updateIsActive(item, setDataAll, 'ALL')}

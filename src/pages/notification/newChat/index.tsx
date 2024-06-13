@@ -11,6 +11,8 @@ import { newChat_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
 import { GetChatList } from '../../../helpers/api-function/chat/chat';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 
 function NewChat() {
@@ -58,6 +60,7 @@ function NewChat() {
             message: content,
             status: role
         }
+        const { t } = useTranslation()
 
         if (recipientId && recipientName && content.trim()) {
             console.log(editMessage);
@@ -67,7 +70,7 @@ function NewChat() {
                     console.log(res.data);
                     if (res.data.success === true) {
                         openModal()
-                        toast.success('Сообщение отправлено');
+                        toast.success(t("Message_sent"));
 
                         if (role === 'master') {
                             GetChatList({
@@ -88,7 +91,7 @@ function NewChat() {
                 })
 
         } else {
-            toast.error('Заполните все поля');
+            toast.error(t("Fill_in_all_the_fields"));
         }
     }
 
@@ -96,17 +99,17 @@ function NewChat() {
     return (
         <section>
             <div className='relative z-0' onClick={openModal}>
-                <Buttons>Начать</Buttons>
+                <Buttons>{t("Begin")}</Buttons>
             </div>
             <div className='z-1'>
                 <Modal isOpen={modalOpen} onClose={openModal}>
                     <div className='dark:text-gray-400'>
                         <div className='flex gap-10'>
                             <div className='w-56'>
-                                <p>Имя или фамилия мастера:</p>
+                                <p>{t("Masters_name_or_surname")}</p>
                                 <Select
                                     className='z-100 w-full mt-3'
-                                    placeholder="выберите номер"
+                                    placeholder={t("select_a_master")}
                                     value={recipientName || undefined} // Use value instead of defaultValue
                                     showSearch
                                     onChange={handleChange}
@@ -118,10 +121,10 @@ function NewChat() {
                                 </Select>
                             </div>
                             <div className='w-56'>
-                                <p>Телефон мастера:</p>
+                                <p>{t("Master_phone_number")}</p>
                                 <Select
                                     className='z-100 w-full mt-3'
-                                    placeholder="выберите номер"
+                                    placeholder={t("select_a_number")}
                                     value={recipientPhone || undefined} // Use value instead of defaultValue
                                     showSearch
                                     onChange={handleChange}
@@ -134,12 +137,12 @@ function NewChat() {
                             </div>
                         </div>
                         <div className='mt-5'>
-                            <label className="block mb-2 text-sm font-medium text-gray-900">Сообщение</label>
-                            <textarea id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-700 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                            <label className="block mb-2 text-sm font-medium text-gray-900">{t("Message")}</label>
+                            <textarea id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-700 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={t("Write_your")}></textarea>
                         </div>
                         <div className='flex justify-center mt-4'>
                             <div onClick={sentNotification}>
-                                <Buttons>Отправить</Buttons >
+                                <Buttons>{t("Sent")}</Buttons >
                             </div>
                         </div>
                     </div>

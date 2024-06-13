@@ -4,12 +4,14 @@ import { MdAdminPanelSettings } from 'react-icons/md';
 import ChatTable from '../mails';
 import { BiChat } from 'react-icons/bi';
 import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
+import { useTranslation } from 'react-i18next';
 
 function Chat() {
+  const { t } = useTranslation()
   const { role, setRole } = chatStore();
   return (
     <div className='h-[80vh]'>
-      <div className="w-full h-[8%]">
+      <div className="w-full md:h-[8%] h-max">
         <div className="h-full border-b border-gray-200 dark:border-gray-700">
           <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
             <li className="me-2 cursor-pointer">
@@ -19,7 +21,7 @@ function Chat() {
               >
                 <MdAdminPanelSettings className="text-2xl" />
 
-                <p className="ml-2">Мастера</p>
+                <p className="ml-2">{t("master")}</p>
               </div>
             </li>
             <li className="me-2 cursor-pointer">
@@ -28,7 +30,7 @@ function Chat() {
                 onClick={() => setRole('client')}
               >
                 <BsFillPersonLinesFill className="text-2xl" />
-                <p className="ml-2">Клиенты</p>
+                <p className="ml-2">{t("siderbar_client")}</p>
               </div>
             </li>
             <li className="me-2 cursor-pointer">
@@ -37,7 +39,7 @@ function Chat() {
                 onClick={() => setRole('mailings')}
               >
                 <BiChat className="text-2xl" />
-                <p className="ml-2">Рассылки</p>
+                <p className="ml-2">{t("Newsletters")}</p>
               </div>
             </li>
           </ul>

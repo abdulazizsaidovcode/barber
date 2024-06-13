@@ -17,6 +17,7 @@ import { GetChatLetters } from '../../../helpers/api-function/chat/mail';
 import { MdOutlineSpeakerNotesOff } from 'react-icons/md';
 import { SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ChatTable: React.FC = () => {
     const { chatData, setLetterData } = MailStore();
@@ -58,14 +59,15 @@ const ChatTable: React.FC = () => {
         }));
         setOptions(newOptions);
     }, [chatData]);
+    const { t } = useTranslation()
 
     const thead = [
-        { id: 1, name: 'Картинка' },
-        { id: 2, name: 'Тема' },
-        { id: 3, name: 'Кому' },
-        { id: 4, name: 'Дата' },
-        { id: 5, name: 'Вложения' },
-        { id: 6, name: 'Описание' },
+        { id: 1, name: t("Picture") },
+        { id: 2, name: t("Subject") },
+        { id: 3, name: t("To_whom") },
+        { id: 4, name: t("Date") },
+        { id: 5, name: t("Attachments") },
+        { id: 6, name: t("Description") },
         { id: 7, name: ' ' },
     ];
 
@@ -90,7 +92,7 @@ const ChatTable: React.FC = () => {
                         setLetterData: setLetterData
                     });
                     openModal()
-                    toast.success('Успешно удалено');
+                    toast.success(t("Successfully_done"));
                 }).catch(err => {
                     console.error(err.data);
                 })
@@ -101,12 +103,12 @@ const ChatTable: React.FC = () => {
         {
             key: '1',
             onClick: () => handleOpenDetail(id),
-            label: "Открыть",
+            label: t("Open"),
         },
         {
             key: '2',
             onClick: () => handleMenuClick(id),
-            label: "Удалить",
+            label: t("Delete"),
         },
     ];
 
@@ -133,11 +135,11 @@ const ChatTable: React.FC = () => {
                         />
                         <DatePicker
                             className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
-                            placeholder='Дата'
+                            placeholder={t("Date")}
                             onChange={handleChange}
                         />
                         <div onClick={() => setShowAddMails(true)}>
-                            <Buttons>Создать рассылку</Buttons>
+                            <Buttons>{t("Create_a_newsletter")}</Buttons>
                         </div>
                     </div>
 
@@ -150,7 +152,7 @@ const ChatTable: React.FC = () => {
                                 >
                                     <td className='min-w-[150px] p-5'>
                                         <Image
-                                            style={{width: 80, height: 60,borderRadius: '10px' }}
+                                            style={{ width: 80, height: 60, borderRadius: '10px' }}
                                             src={item.attachmentId ? getFileId + item.attachmentId : "https://picsum.photos/200/300"}
                                             alt="Mail img"
                                             className='w-16 h-10 scale-[1.4] rounded-md bg-gray p-2 object-cover'
@@ -184,7 +186,7 @@ const ChatTable: React.FC = () => {
                                     className="min-w-full text-center py-10 text-xl font-bold flex gap-5 items-center"
                                     colSpan={12}
                                 >
-                                    <p>письмо недоступно!</p>
+                                    <p>{t("the_is_unavailable")}</p>
                                     <MdOutlineSpeakerNotesOff />
                                 </td>
                             </tr>
@@ -195,10 +197,10 @@ const ChatTable: React.FC = () => {
             <Modal isOpen={modalOpen} onClose={openModal}>
                 <div className='dark:text-gray-400 pt-10 px-10'>
                     <div className='flex justify-center flex-col items-center mt-4'>
-                        <p>Вы уверены, что хотите открыть этот рассылки ?</p>
+                        <p>{t("Are_you_sure_you")}</p>
                         <div className='flex gap-10 mt-16'>
-                            <Buttons bWidth={"w-40"} onClick={() => openModal()}>закрывать</Buttons>
-                            <Buttons bWidth={"w-40"} onClick={() => deleteMail(selectedMailId)}>удалить</Buttons>
+                            <Buttons bWidth={"w-40"} onClick={() => openModal()}>{t("Close")}</Buttons>
+                            <Buttons bWidth={"w-40"} onClick={() => deleteMail(selectedMailId)}>{t("Delete")}</Buttons>
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ import axios from 'axios';
 import { config } from '../../../helpers/token.tsx';
 import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const Chatdetail: React.FC = () => {
   const { role, chatData, setChatData } = chatStore();
@@ -37,6 +38,7 @@ const Chatdetail: React.FC = () => {
   const [chatId, setChatId] = useState<string | null>(null);
   const [replyId, setreplyId] = useState<string | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
+  const { t } = useTranslation()
 
   useEffect(() => {
     connect();
@@ -116,8 +118,10 @@ const Chatdetail: React.FC = () => {
       axios.get(`${messages_url}/${adminId}/${recipientId}`, config)
         .then(res => {
           setMessages(res.data.body);
+          console.log(res.data.body);
+          
         }).catch(err => {
-          if(err.response.status == 404){
+          if (err.response.status == 404) {
             setMessages([]);
             GetChatList({
               status: role,
@@ -170,7 +174,7 @@ const Chatdetail: React.FC = () => {
         setContent("")
       }
     } else {
-      toast.error("Введите сообщение");
+      toast.error(t("Enter_your_message"));
     }
   }
 
@@ -202,9 +206,15 @@ const Chatdetail: React.FC = () => {
         setContent("")
       }
     } else {
-      toast.error("Введите сообщение");
+      toast.error(t("Enter_your_message"));
     }
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Inter') {
+      console.log("salom");
+    }
+  })
 
   return (
     <div className="h-[92%]">
@@ -214,7 +224,7 @@ const Chatdetail: React.FC = () => {
         </button>
 
         <Input
-          placeholder="Поиск по ФИО"
+          placeholder={t("Search_by_fullname")}
           prefix={<IoSearchOutline />}
           className="w-56"
           onChange={(e) => {
@@ -240,14 +250,14 @@ const Chatdetail: React.FC = () => {
             });
           }}
           options={[
-            { value: 'ALL_MESSAGES', label: 'Все сообщения' },
-            { value: 'UNREAD', label: 'Непрочитанные' },
-            { value: 'READ', label: 'Прочитанные' },
+            { value: 'ALL_MESSAGES', label: t("All_messages") },
+            { value: 'UNREAD', label: t("Unread") },
+            { value: 'READ', label: t("Read") },
           ]}
         />
 
         <NewChat />
-        <Buttons onClick={readAllMessages}>Удалить все прочитанные</Buttons>
+        <Buttons onClick={readAllMessages}>{t("Delete_all_read")}</Buttons>
       </div>
 
       <div className="flex w-[100%] h-full relative">

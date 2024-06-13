@@ -121,7 +121,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-[#ffffffdf] text-black dark:text-black border-gray-300 shadow-lg p-3 rounded-xl mb-4">
+    <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-boxdark text-black dark:text-white border-gray-300 shadow-lg p-3 rounded-xl mb-4">
       <div className="w-full lg:w-1/3 mb-4 lg:mb-0 flex justify-center items-center">
         <img
           src={imgUrl}
@@ -131,11 +131,11 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
       </div>
       <div className="w-full lg:w-2/3 pl-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold mb-2 text-black">{title}</h2>
+          <h2 className="text-xl font-bold mb-2 text-black dark:text-white">{title}</h2>
           <div className="flex items-center">
             {serviceStatus !== 'APPROVED' && (
               <div
-                className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center mr-2"
+                className="p-1 bg-gray  rounded-md flex items-center cursor-pointer shadow-3 justify-center mr-2"
                 onClick={handleConfirm}
               >
                 <CheckOutlined />
@@ -153,7 +153,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
             </div>
           </div>
         </div>
-        <div className="flex items-center w-full h-[1px] bg-black"></div>
+        <div className="flex items-center w-full h-[1px] bg-black dark:bg-white"></div>
         <div className="flex items-start mt-4 flex-col">
           <div className="mb-2 flex items-center sm:justify-between  lg:gap-8 lg:justify-start">
             <p className="font-bold">Цена:</p>

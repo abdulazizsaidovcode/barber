@@ -11,6 +11,7 @@ import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import { BiReply, BiReplyAll } from 'react-icons/bi';
 import { ImCancelCircle } from "react-icons/im";
 import { EditFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
@@ -44,22 +45,23 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
     setseleditId(id)
     setContent(cont);
   };
+  const { t } = useTranslation()
 
   const items = (id: number) => [
     {
       key: '1',
       onClick: () => handleDelete(id),
-      label: "Удалить",
+      label: t("Delete"),
     },
     {
       key: '2',
       onClick: () => handleReply(id),
-      label: "Ответить",
+      label: t("Answer"),
     },
     {
       key: '3',
       onClick: () => handleEdit(id),
-      label: "Редактировать",
+      label: t("Edit"),
     },
   ];
 
@@ -128,7 +130,7 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
                 rows={1}
                 id="chat"
                 className="w-full border-none rounded-full py-2 px-4 mr-2 bg-transparent focus:outline-none focus:ring-0"
-                placeholder="Type your message..."
+                placeholder={t("Type_your_message")}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               ></textarea>
