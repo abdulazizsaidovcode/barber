@@ -24,7 +24,7 @@ const RequestSidebar: React.FC<{
   ];
 
   return (
-    <div className='bg-[#F5F6F7] md:mt-2 md:ms-1 dark:bg-[#21212e] reviews-shadow p-3 w-[100%] h-[600px] fixed py-10'>
+    <div className='bg-[#F5F6F7] md:mt-2 md:ms-1 dark:bg-[#21212e] reviews-shadow p-3 w-full h-[600px] fixed py-10'>
       <div className='w-full flex items-center px-4 justify-between h-14 rounded-3xl bg-white'>
         <p className='dark:text-[#000]'>Все запросы</p>
         <p className='text-[#7D8FB3] font-bold'>{allCount}</p>

@@ -66,8 +66,6 @@ const ChartMasterRate: React.FC = () => {
             .get(`${dashboard_url}web/diagram`, config)
             .then((response) => {
                 const data = response.data.body;
-                console.log(data);
-
                 const series = [
                     data.five,
                     data.four,

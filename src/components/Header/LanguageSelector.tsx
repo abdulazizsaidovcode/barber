@@ -1,28 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
 import i18n from '../../i18n';
 
 const LanguageSelector = () => {
-  const [language, setLanguage] = useState('English');
+  const getInitialLanguage = () => {
+    const savedLanguage = localStorage.getItem('language');
+    return savedLanguage || 'English';
+  };
+
+  const [language, setLanguage] = useState(getInitialLanguage());
+
+  useEffect(() => {
+    changeLanguage(language);
+  }, [language]);
 
   const handleMenuClick = (e: any) => {
     setLanguage(e.key);
+    localStorage.setItem('language', e.key);
   };
+
   const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
+    i18n.changeLanguage(language === 'English' ? 'en' : language === 'Uzbek' ? 'uz' : 'ru');
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="Uzbek" onClick={() => changeLanguage('uz')}>
+      <Menu.Item key="Uzbek">
         <img src="../../images/uzbekistan (1).png" alt="" />
         O'zbekcha
       </Menu.Item>
-      <Menu.Item key="English" onClick={() => changeLanguage('en')}>
+      <Menu.Item key="English">
         <span className="flag-icon flag-icon-us" /> English
       </Menu.Item>
-      <Menu.Item key="Russian" onClick={() => changeLanguage('ru')}>
+      <Menu.Item key="Russian">
         <span className="flag-icon flag-icon-ru" /> Русский
       </Menu.Item>
     </Menu>

@@ -76,6 +76,11 @@ const Calendar: React.FC = () => {
   useEffect(() => {
     fetchCalendarData();
   }, [regionId, districtId, categoryId, isMonth, currentDate, endDate]);
+  
+  useEffect(() => {
+    setDistrictId(null)
+    fetchCalendarData();
+  }, [regionId]);
 
   const handleButtonClick = (buttonId: string, id: string) => {
     setCategoryIdState(id);

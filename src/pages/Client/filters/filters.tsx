@@ -28,7 +28,7 @@ const Filters: React.FC = () => {
   const [filters, setFilters] = useState({
     fullName: "",
     regionId: 0,
-    districtId: 0,
+    districtId: null,
     startDate: null,
     endDate: null,
     status: "",
@@ -53,6 +53,25 @@ const Filters: React.FC = () => {
     // Fetch clients data
     getClients(params);
   }, [filters]);
+
+  useEffect(() => {
+    filters.districtId = null
+    const params: any = {
+      setData: setClientFilterData,
+      setTotalPage: setClientTotalPage,
+      ...filters,
+    };
+
+    // Remove empty filter values
+    Object.keys(params).forEach((key) => {
+      if (params[key] === "" || params[key] === null) {
+        delete params[key];
+      }
+    });
+
+    // Fetch clients data
+    getClients(params);
+  }, [filters.regionId]);
 
   const handleInputChange = (key: string, value: any) => {
     if (key === "startDate" || key === "endDate") {
@@ -81,7 +100,7 @@ const Filters: React.FC = () => {
     setFilters({
       fullName: "",
       regionId: 0,
-      districtId: 0,
+      districtId: null,
       startDate: null,
       endDate: null,
       status: "",
