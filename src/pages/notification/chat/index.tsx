@@ -9,7 +9,7 @@ function Chat() {
   const { role, setRole } = chatStore();
   return (
     <div className='h-[80vh]'>
-      <div className="w-full h-[8%]">
+      <div className="w-full md:h-[8%] h-max">
         <div className="h-full border-b border-gray-200 dark:border-gray-700">
           <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
             <li className="me-2 cursor-pointer">
