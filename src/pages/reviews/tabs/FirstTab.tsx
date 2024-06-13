@@ -87,28 +87,29 @@ const FirstTab: React.FC = () => {
         </div>
       </div>
       <div className="mt-4">
-        {listData.length === 0 ? (
+        {listData.length === 0 ?
           <div className="w-full h-[200px] flex justify-center items-center">
             <p className="text-xl dark:text-white">Reviews not found</p>
           </div>
-        ) : (
-          listData.map((item, index) => (
-            <div key={index}>
-              <ReviewsServiceCard data={item} openModal={() => openDelModal(item.id)} />
+          : listData.map((item, index) => (
+            <div>
+              <div className='flex flex-col gap-3' key={index}>
+                <ReviewsServiceCard data={item} openModal={() => openDelModal(item.id)} />
+              </div>
+              <div>
+                <Pagination
+                  showSizeChanger
+                  current={currentPage + 1}
+                  pageSize={pageSize}
+                  total={totalPage}
+                  onChange={onPageChange}
+                />
+              </div>
             </div>
           ))
-        )}
+        }
       </div>
       <DelModal isOpen={isDelModal} onDelete={handleDelete} onClose={closeDelModal} />
-      <div>
-        <Pagination
-          showSizeChanger
-          current={currentPage + 1}
-          pageSize={pageSize}
-          total={totalPage}
-          onChange={onPageChange}
-        />
-      </div>
     </div>
   );
 };

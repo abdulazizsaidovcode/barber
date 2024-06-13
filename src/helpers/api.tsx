@@ -161,4 +161,5 @@ export const send_message = `${base_url}message/for/master/by/admin`;
 // reviews url
 export const reviews_main_data = `${base_url}feedback/web/reviews/for/service`;
 export const reviews_list_data = `${base_url}feedback/web/list/for/service`;
+export const reviews_list_master_data = `${base_url}feedback/web/list/for/master`;
 export const reviews_list_delete = `${base_url}feedback/delete`;

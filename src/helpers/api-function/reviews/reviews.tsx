@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { reviews_list_delete } from '../../api';
 import { config } from '../../token';
-import { ListData, MainData } from '../../../types/review';
+import { ListData, ListMasterData, MainData } from '../../../types/review';
 import toast from 'react-hot-toast';
 
 export const fetchMainData = async (setMainData: (data: MainData) => void, url: string) => {
@@ -10,9 +10,7 @@ export const fetchMainData = async (setMainData: (data: MainData) => void, url: 
     if (res.data.success) {
       setMainData(res.data.body);
     }
-  } catch (error) {
-    console.error('Error fetching main data:', error);
-  }
+  } catch { }
 };
 
 export const fetchDataList = async (setDataList: (data: ListData[]) => void, setTotalPage: (data: number) => void, url: string) => {
@@ -24,9 +22,21 @@ export const fetchDataList = async (setDataList: (data: ListData[]) => void, set
     } else {
       setDataList([]);
     }
-  } catch (error) {
+  } catch {
     setDataList([]);
-    console.error('Error fetching data list:', error);
+  }
+};
+
+export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterData[]) => void, url: string) => {
+  try {
+    const res = await axios.get(`${url}`, config);
+    if (res.data.success) {
+      setMasterDataList(res.data.body.object);
+    } else {
+      setMasterDataList([]);
+    }
+  } catch {
+    setMasterDataList([]);
   }
 };
 
@@ -37,7 +47,5 @@ export const deleteListData = async (id: string | null, setDataList: (data: List
       toast.success('Review successfully deleted');
       fetchDataList(setDataList, setTotalPage, url);
     }
-  } catch (error) {
-    console.error('Error deleting review:', error);
-  }
+  } catch { }
 };
