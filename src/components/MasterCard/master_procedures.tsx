@@ -40,30 +40,21 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   const [value, setValue] = useState('');
   const [currentServiceId, setCurrentServiceId] = useState<string>(servicesId);
 
-  console.log(currentServiceId);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
   const location = useLocation();
-
   const id = location.pathname.substring(8);
-  const hideModal = () => {
-    setIsModalVisible(false);
-  };
-
-  const showSecondModal = () => {
-    setIsSecondModalVisible(true);
-  };
-
-  const hideSecondModal = () => {
-    setIsSecondModalVisible(false);
-  };
   const { t } = useTranslation();
+
+  const toggleModal = (modalType: string, visible: boolean) => {
+    if (modalType === 'first') {
+      setIsModalVisible(visible);
+    } else {
+      setIsSecondModalVisible(visible);
+    }
+  };
 
   const handleDelete = async (apiEndpoint: string) => {
     try {
-      const response = await axios.delete(
+      const response = await axios.put(
         `${apiEndpoint}${currentServiceId}`,
         config,
       );
@@ -97,11 +88,9 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     }
   };
 
- 
-
   const handleDeleteAndMessage = async () => {
     try {
-      await handleDelete(master_delate_new_service);
+      await handleDelete(master_delate_service);
       await axios.post(
         post_message_api,
         {
@@ -118,29 +107,29 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     } catch (error) {
       message.error('An error occurred while deleting and sending the message');
     }
-    hideSecondModal();
+    toggleModal('second', false);
   };
 
   const handleDeleteWithMessage = async () => {
-    hideModal();
+    toggleModal('first', false);
     try {
       await axios.post(post_message_api, { message: value }, config);
-      showSecondModal();
+      toggleModal('second', true);
     } catch (error) {
       message.error('An error occurred while sending the message');
     }
   };
 
   return (
-    <div className="flex w-full lg:w-[100%] bg-white dark:bg-[#ffffffdf] text-black dark:text-black border-gray-300 shadow-lg p-3 rounded-xl mb-4">
-      <div className="w-1/3">
+    <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-[#ffffffdf] text-black dark:text-black border-gray-300 shadow-lg p-3 rounded-xl mb-4">
+      <div className="w-full lg:w-1/3 mb-4 lg:mb-0 flex justify-center items-center">
         <img
           src={imgUrl}
           alt="Procedure"
-          className="w-[50%] ml-6 h-auto rounded"
+          className="w-48 h-48 object-cover rounded"
         />
       </div>
-      <div className="w-2/3 pl-4">
+      <div className="w-full lg:w-2/3 pl-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold mb-2 text-black">{title}</h2>
           <div className="flex items-center">
@@ -152,26 +141,21 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
                 <CheckOutlined />
               </div>
             )}
-            {serviceStatus === 'APPROVED' ? (
-              <div
-                className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
-                onClick={showModal}
-              >
-                <DeleteOutlined />
-              </div>
-            ) : (
-              <div
-                className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
-                onClick={showModal}
-              >
-                <DeleteOutlined />
-              </div>
-            )}
+            <div
+              className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
+              onClick={
+                serviceStatus === 'APPROVED'
+                  ? () => handleDelete(master_delate_new_service)
+                  : () => toggleModal('first', true)
+              }
+            >
+              <DeleteOutlined />
+            </div>
           </div>
         </div>
         <div className="flex items-center w-full h-[1px] bg-black"></div>
         <div className="flex items-start mt-4 flex-col">
-          <div className="mb-2 flex items-center justify-between gap-8 lg:justify-start">
+          <div className="mb-2 flex items-center sm:justify-between  lg:gap-8 lg:justify-start">
             <p className="font-bold">Цена:</p>
             <p>{price} сум</p>
           </div>
@@ -205,7 +189,10 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           </span>
         </div>
       </div>
-      <Modal isOpen={isModalVisible} onClose={hideModal}>
+      <Modal
+        isOpen={isModalVisible}
+        onClose={() => toggleModal('first', false)}
+      >
         <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
           <p>Are you sure you want to delete this procedure?</p>
           <TextArea
@@ -215,7 +202,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
             autoSize={{ minRows: 3, maxRows: 5 }}
           />
           <div className="flex justify-end gap-2">
-            <Button key="cancel" onClick={hideModal}>
+            <Button key="cancel" onClick={() => toggleModal('first', false)}>
               Cancel
             </Button>
             <Button key="delete" danger onClick={handleDeleteWithMessage}>
@@ -224,7 +211,10 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           </div>
         </div>
       </Modal>
-      <Modal isOpen={isSecondModalVisible} onClose={hideSecondModal}>
+      <Modal
+        isOpen={isSecondModalVisible}
+        onClose={() => toggleModal('second', false)}
+      >
         <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
           <div className={`flex flex-col justify-center`}>
             <p
@@ -237,7 +227,10 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
             <Buttons bWidth={`w-[200px]`} onClick={handleDeleteAndMessage}>
               Yeah
             </Buttons>
-            <Buttons bWidth={`w-[200px]`} onClick={hideSecondModal}>
+            <Buttons
+              bWidth={`w-[200px]`}
+              onClick={() => toggleModal('second', false)}
+            >
               {t('Not')}
             </Buttons>
           </div>

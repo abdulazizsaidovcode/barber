@@ -322,6 +322,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <Button key="back" onClick={closeModal}>
               {t('No')}
             </Button>
+
             <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
           </div>
         </Modal>
