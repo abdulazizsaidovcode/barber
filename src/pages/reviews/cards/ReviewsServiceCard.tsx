@@ -22,7 +22,7 @@ const ReviewsServiceCard: React.FC<ReviewsServiceCardProps> = ({ data, openModal
     return (
         <div className="w-full bg-white p-4 flex items-start shadow-lg rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
             <div className='flex items-center flex-col'>
-                <img className='w-20 h-20' src={clientAttachmentId || masterAttachmentId ? getFileId + clientAttachmentId || getFileId + masterAttachmentId : userImg} alt="MASTER IMAGE" />
+                <img className='w-20 h-20 rounded-full' src={clientAttachmentId || masterAttachmentId ? getFileId + clientAttachmentId || getFileId + masterAttachmentId : userImg} alt="MASTER IMAGE" />
                 <div className="text-gray-500">{client ? 'Client' : 'Master'}</div>
             </div>
             <div className="flex-1 ms-4">

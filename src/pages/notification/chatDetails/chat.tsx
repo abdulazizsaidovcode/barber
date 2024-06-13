@@ -117,7 +117,13 @@ const Chatdetail: React.FC = () => {
         .then(res => {
           setMessages(res.data.body);
         }).catch(err => {
-          console.error(err);
+          if(err.response.status == 404){
+            setMessages([]);
+            GetChatList({
+              status: role,
+              setData: setChatData
+            });
+          }
         });
     }
   };
@@ -126,21 +132,14 @@ const Chatdetail: React.FC = () => {
     axios.get(`${chat_url}/all-message-ready`, config)
       .then(res => {
         toast.success('All messages marked as read successfully');
+        GetChatList({
+          status: role,
+          setData: setChatData
+        })
       }).catch(err => {
         console.log(err);
       });
   };
-  // delete message
-  useEffect(() => {
-    console.log(chatId);
-    if (chatId) {
-      if (stompClient && stompClient.connected) {
-        stompClient.send('/app/deleteMessage', {}, JSON.stringify(chatId));
-        fetchMessages(adminId, recipientId);
-        console.log("ochdi");
-      }
-    }
-  }, [chatId])
 
   // read all messages
 
@@ -150,31 +149,6 @@ const Chatdetail: React.FC = () => {
       fetchMessages(adminId, recipientId);
     }
   }
-
-  // edit messagi
-  useEffect(() => {
-    const editMessage = {
-      messageId: editId,
-      chatDto: {
-        senderId: adminId,
-        recipientId: recipientId,
-        content: content,
-        isRead: false,
-        attachmentIds: []
-      }
-    }
-    console.log(editId);
-
-    if (editId && content) {
-      if (stompClient && stompClient.connected) {
-        stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
-        fetchMessages(adminId, recipientId);
-        console.log("edit boldi");
-      }
-    } else {
-      toast.error("Введите сообщение");
-    }
-  }, [editId])
 
   //reply message
   function replyMessage() {
@@ -188,21 +162,49 @@ const Chatdetail: React.FC = () => {
         attachmentIds: []
       }
     }
-    console.log(replyId);
-    console.log(replyObj);
-
 
     if (replyId && content) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/replay', {}, JSON.stringify(replyObj));
         fetchMessages(adminId, recipientId);
-        console.log("reply boldi");
+        setContent("")
       }
     } else {
       toast.error("Введите сообщение");
     }
   }
 
+  // delete chat
+  function deleteMessage() {
+    if (chatId) {
+      if (stompClient && stompClient.connected) {
+        stompClient.send('/app/deleteMessage', {}, JSON.stringify(chatId));
+        fetchMessages(adminId, recipientId);
+      }
+    }
+  }
+  // edit message
+  function editMessage() {
+    const editMessage = {
+      messageId: editId,
+      chatDto: {
+        senderId: adminId,
+        recipientId: recipientId,
+        content: content,
+        isRead: false,
+        attachmentIds: []
+      }
+    }
+    if (editId && content) {
+      if (stompClient && stompClient.connected) {
+        stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
+        fetchMessages(adminId, recipientId);
+        setContent("")
+      }
+    } else {
+      toast.error("Введите сообщение");
+    }
+  }
 
   return (
     <div className="h-[92%]">
@@ -259,7 +261,20 @@ const Chatdetail: React.FC = () => {
           <ChatusersList user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative ">
-          {recipientId ? <Sms editId={setEditId} replyId={setreplyId} chatId={setChatId} senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} reply={replyMessage} /> : <Notselected />}
+          {recipientId ?
+            <Sms
+              editId={setEditId}
+              replyId={setreplyId}
+              chatId={setChatId}
+              senderId={adminId}
+              sendMessage={sendMessage}
+              chat={messages}
+              content={content}
+              setContent={setContent}
+              reply={replyMessage}
+              deleteMessage={deleteMessage}
+              editMessage={editMessage}
+            /> : <Notselected />}
         </div>
       </div>
     </div>
