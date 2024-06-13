@@ -257,8 +257,8 @@ const DetailClient: React.FC<DetailClientProps> = ({
           <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
         </div>
       </Modal>
-      <Modal isOpen={SendOpen} onClose={closeSendModal}>
-        <div className="w-[45rem]">
+      <Modal isOpen={SendOpen} onClose={closeSendModal} mt={'w-[70%]'}>
+        <div className="w-[100%]">
           <p className="text-2xl text-black dark:text-white">
             {t('Send message')}:
           </p>
