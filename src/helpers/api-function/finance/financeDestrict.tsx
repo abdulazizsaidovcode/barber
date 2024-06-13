@@ -14,8 +14,6 @@ export const getFinanceDestrict = (destrict: string, month: string | null, year:
 };
 
 export const finance_Destrictlist_Url = (destrict: string, month: string | null, year: number | null) => {
-  console.log(destrict, month, year);
-
   let url = `${base_url}finance/web/${destrict}`;
   if (month && year) {
     url += `?month=${month}&year=${year}`;
