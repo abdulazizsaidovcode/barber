@@ -25,7 +25,7 @@ const MailDetail: React.FC = () => {
             <DefaultLayout>
                 <Breadcrumbs pageName='Maildetail' />
                 <div className="p-5 dark:bg-boxdark dark:text-white">
-                    <p>Mail not found.</p>
+                    <p>{t("Mail_not_found")}.</p>
                 </div>
             </DefaultLayout>
         );
@@ -69,7 +69,7 @@ const MailDetail: React.FC = () => {
                     <Buttons onClick={() => window.history.back()}>Назад</Buttons>
                 </div>
             </div>
-            
+
         </DefaultLayout>
     );
 };

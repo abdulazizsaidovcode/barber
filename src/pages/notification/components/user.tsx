@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import admin from '../../../images/user/admin-panel.png';
 import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 import { ChatusersListType } from '../../../types/chat';
+import { t } from 'i18next';
 
 const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
     let i = 0
@@ -12,7 +13,7 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
         setChatData(user)
     }, [user])
     useEffect(() => {
-        userIds(userId)        
+        userIds(userId)
     }, [userId])
 
     return (
@@ -25,13 +26,13 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
                             <div className={`flex gap-1 flex-col w-full relative`}>
                                 <div className='flex gap-3 justify-between w-full'>
                                     <div className={`flex  gap-1 flex-col items-start}`}>
-                                        <p className='text-sm'>{item.name ? item.name : "Master "} </p>
-                                        <p className='text-xs'>{item.phone ? item.phone : "phoneNumber"}</p>
+                                        <p className='text-sm'>{item.name ? item.name : t("master")} </p>
+                                        <p className='text-xs'>{item.phone ? item.phone : t("Phone")}</p>
                                     </div>
                                     <div className='flex'>
                                         {item.chatDto.createdAt ?
                                             `${item.chatDto.createdAt}`
-                                            : "yaqinda oline edi"}
+                                            : t("was_recently_oline")}
                                     </div>
                                 </div>
                                 <div className='flex w-full justify-between items-center '>
@@ -45,7 +46,7 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
                     :
                     <div className='w-full flex items-center mt-3 flex-col'>
                         <HiOutlineChatBubbleBottomCenterText className='text-4xl' />
-                        <p>{role == "client" ? "никакой переписки с клиентом" : "никакой переписки с мастером"}</p>
+                        <p>{role == "client" ? t("no_correspondence_with_the_client") : t("no_correspondence_with_the_master")}</p>
                     </div>}
             </ul>
         </div>
