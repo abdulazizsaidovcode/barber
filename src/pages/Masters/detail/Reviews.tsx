@@ -9,6 +9,7 @@ import {
 import { config } from '../../../helpers/token';
 import Review from '../../../components/MasterCard/rewiev';
 import { Rate } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
@@ -52,12 +53,13 @@ const DetailMaster: React.FC = () => {
       setmasters([]);
     }
   };
+  const { t } = useTranslation()
 
   return (
     <>
       <div>
         {isLoading ? (
-          <p className="dark:text-white">Loading order details...</p>
+          <p className="dark:text-white">{t("Loading_order_details")}</p>
         ) : orderDetails ? (
           <div>
             <Review
@@ -71,7 +73,7 @@ const DetailMaster: React.FC = () => {
             />
           </div>
         ) : (
-          <p className="dark:text-white">No order details found.</p>
+          <p className="dark:text-white">{t("No_order_details_found")}</p>
         )}
       </div>
       {masters.length !== 0 ? (
@@ -102,7 +104,7 @@ const DetailMaster: React.FC = () => {
         ))
       ) : (
         <div className="mt-10 bg-gray-100 dark:bg-[#ffffffdf] text-black  dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
-          <p>Page notFound :(</p>
+          <p>{t("Page_notFound")} </p>
         </div>
       )}
     </>

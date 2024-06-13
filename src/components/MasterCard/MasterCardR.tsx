@@ -42,6 +42,7 @@ type MasterCardInfoProps = {
   StatusNow: string;
 };
 
+
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   MasterName,
   MasterImg,
@@ -108,10 +109,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       );
 
       console.log('Switch toggled successfully:', response.data);
-      toast.success(t('Switch toggled successfully'));
+      toast.success(t("Switch_toggled_successfully"));
     } catch (error) {
       console.error('Error toggling switch:', error);
-      toast.error(t('Error toggling switch'));
+      toast.error(t('Error_toggling_switch'));
     }
     closeModal();
   };
@@ -134,11 +135,11 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         config,
       );
       console.log('Message sent successfully:', response.data);
-      toast.success('Message sent successfully');
+      toast.success(t("Message_sent_successfully"));
       closeSendModal();
     } catch (error) {
       console.error('There was an error sending the message!', error);
-      toast.error('Failed to send message');
+      toast.error(t("Failed_to_send_message"));
     }
   };
   const handleClickSendBtn = () => {
@@ -147,7 +148,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   };
   const handlePostBtn = () => {
     if (message.valueOf() === '') {
-      toast.error('информация не введена');
+      toast.error(t("information_not_entered"));
     } else {
       sendMessage();
     }
@@ -163,56 +164,56 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 onClick={handleClickSendBtn}
                 className="bg-green-500 p-2 rounded-xl text-white px-3 cursor-pointer"
               >
-                Send Message
+                {t("Send_Message")}
               </div>
             </div>
             <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
-              <strong>Name:</strong> {MasterName}
+              <strong>{t("Name")}:</strong> {MasterName}
             </p>
             <p className="mb-5">
-              <strong>SurName:</strong> {SurName}
+              <strong>{t("Surname")}:</strong> {SurName}
             </p>
             <p className="mb-5">
-              <strong>User Name:</strong> {UserName}
+              <strong>{t("User_Name")}:</strong> {UserName}
             </p>
             <p className="mb-5">
-              <strong>Gender:</strong> {Gender}
+              <strong>{t("Gender")}:</strong> {Gender}
             </p>
             <p className="mb-5">
-              <strong>Age:</strong> {Age}
+              <strong>{t("Age")}:</strong> {Age}
             </p>
             <p className="mb-5">
-              <strong>Region:</strong> {Region}
+              <strong>{t("Regions")}:</strong> {Region}
             </p>
             <p className="mb-5">
-              <strong>City:</strong> {City}
+              <strong>{t("City")}:</strong> {City}
             </p>
             <p className="mb-5">
-              <strong>Location:</strong> {Location}
+              <strong>{t("Location")}:</strong> {Location}
             </p>
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
           <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
             <div className="flex items-center">
-              <p className="text-xl font-bold">Profession information:</p>
+              <p className="text-xl font-bold">{t("Profession_information")}:</p>
             </div>
             <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
-              <strong>Place of work:</strong> {PlaceOfWork}
+              <strong>{t("Place_of_work")}:</strong> {PlaceOfWork}
             </p>
             <p className="mb-5">
-              <strong>Direction by gender:</strong> {GenderType}
+              <strong>{t("Direction_by_gender")}:</strong> {GenderType}
             </p>
             <p className="mb-5">
-              <strong>Service category:</strong> {ServiceCategory}
+              <strong>{t("Service_category")}:</strong> {ServiceCategory}
             </p>
             <p className="mb-5">
-              <strong>Specialization:</strong> {Specialization}
+              <strong>{t("Specialization")}:</strong> {Specialization}
             </p>
             <p className="mb-5">
-              <strong>Schedule Type:</strong> {scheduleType}
+              <strong>{t("Schedule_Type")}:</strong> {scheduleType}
             </p>
           </div>
         </Skeleton>
@@ -222,11 +223,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center gap-4">
               <div
-                className={` rounded-[50%] w-2 h-2 font-bold ${
-                  StatusNow === 'OFFLINE'
-                    ? 'bg-red-500 text-white'
-                    : 'bg-green-500'
-                }`}
+                className={` rounded-[50%] w-2 h-2 font-bold ${StatusNow === 'OFFLINE'
+                  ? 'bg-red-500 text-white'
+                  : 'bg-green-500'
+                  }`}
               ></div>
               <p>{StatusNow}</p>
             </div>
@@ -238,7 +238,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               />
             </div>
             <div className="flex items-center mt-3 justify-between">
-              <p className="text-gray-600">Ta'rif:</p>
+              <p className="text-gray-600">{t("Rate")}:</p>
               <p className="text-gray-600">{definitionType}</p>
             </div>
           </div>
@@ -248,19 +248,18 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <div className="flex items-center justify-between">
               <p className="text-black font-bold">Status:</p>
               <div
-                className={`px-6 rounded-xl font-bold ${
-                  Status === 'BLOCKED'
-                    ? 'bg-red-500 text-white'
-                    : 'bg-green-500'
-                }`}
+                className={`px-6 rounded-xl font-bold ${Status === 'BLOCKED'
+                  ? 'bg-red-500 text-white'
+                  : 'bg-green-500'
+                  }`}
               >
                 {Status}
               </div>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <p>Заблокировать</p>
+              <p>{t("Block")}</p>
               <div onClick={handleSwitchClick}>
-                <Switch isOn={isSwitchOn} handleToggle={() => {}} />
+                <Switch isOn={isSwitchOn} handleToggle={() => { }} />
               </div>
             </div>
           </div>
@@ -268,19 +267,19 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold mb-2 mt-2">Контакты:</p>
+              <p className="text-black font-bold mb-2 mt-2">{t("Contacts")}:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Telefon :</strong>
+              <strong>{t("Phone")} :</strong>
               <p>{Number}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Telegram :</strong>
+              <strong>{t("Telegram")} :</strong>
               <p>{Telegram}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Instagram :</strong>
+              <strong>{t("Instagram")} :</strong>
               <p>{Instagram}</p>
             </div>
           </div>
@@ -288,28 +287,28 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold mb-2 mt-2">Indicators:</p>
+              <p className="text-black font-bold mb-2 mt-2">{t("Indicators")}:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Completed Orders:</strong>
+              <strong>{t("Completed_Orders")}:</strong>
               <p>{CompOrders}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Cancelled orders:</strong>
+              <strong>{t("Cancelled_orders")}:</strong>
               <p>{rejectedOrderCount}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Clients:</strong>
+              <strong>{t("Clients")}:</strong>
               <p>{Clients}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Level:</strong>
+              <strong>{t("Level")}:</strong>
 
               <Rate disabled defaultValue={Level} />
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>Start work:</strong>
+              <strong>{t("Start_work")}:</strong>
               <p>{StartData}</p>
             </div>
           </div>
@@ -322,6 +321,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <Button key="back" onClick={closeModal}>
               {t('No')}
             </Button>
+
             <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
           </div>
         </Modal>
@@ -329,7 +329,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
 
       <Modal isOpen={SendOpen} onClose={closeSendModal} mt={'w-[70%]'}>
         <div className="w-[100%]">
-          <p className="text-2xl text-black dark:text-white">Send message:</p>
+          <p className="text-2xl text-black dark:text-white">{t("Send_Message")}:</p>
           <TextArea
             required
             className="mt-4"
@@ -344,7 +344,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               className="text-black mt-4 w-[40%] dark:text-white"
               size="large"
             >
-              Send
+              {t("Send")}
             </Button>
           </div>
         </div>

@@ -117,7 +117,13 @@ const Chatdetail: React.FC = () => {
         .then(res => {
           setMessages(res.data.body);
         }).catch(err => {
-          console.error(err);
+          if(err.response.status == 404){
+            setMessages([]);
+            GetChatList({
+              status: role,
+              setData: setChatData
+            });
+          }
         });
     }
   };
@@ -189,12 +195,11 @@ const Chatdetail: React.FC = () => {
         attachmentIds: []
       }
     }
-    console.log(editId);
-
     if (editId && content) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
         fetchMessages(adminId, recipientId);
+        setContent("")
       }
     } else {
       toast.error("Введите сообщение");
