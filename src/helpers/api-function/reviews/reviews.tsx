@@ -2,21 +2,28 @@
 import axios from 'axios';
 import { reviews_list_data, reviews_main_data } from '../../api';
 import { config } from '../../token';
+import { ListData, MainData } from '../../../types/review';
 
-export const fetchMainData = async () => {
+
+export const fetchMainData = async (setMainData: (data: MainData) => void) => {
     try {
-        const res = await axios.get(`${reviews_main_data}`, config);
+        const res = await axios.get(`${reviews_main_data}`, config)
         if (res.data.success) {
-            return res.data.body;
+            setMainData(res.data.body);
         }
-    } catch { }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-export const fetchReviewsData = async () => {
+export const fetchDataList = async (setDataList: (data: ListData[]) => void, page: number, size: number,  setTotalPage: (data: number) => void) => {
     try {
-        const res = await axios.get(`${reviews_list_data}`, config);
+        const res = await axios.get(`${reviews_list_data}?page=${page}&size=${size}`, config);
         if (res.data.success) {
-            return res.data.body.object;
+            setDataList(res.data.body.object);
+            setTotalPage(res.data.body.totalElements);
         }
-    } catch { }
-};
+    } catch (error) {
+        console.log(error);
+    }
+}

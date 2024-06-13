@@ -13,7 +13,7 @@ interface OnlineBooking {
   setEditModal: (isEdit: boolean) => void;
   setIsInputOpen: (isOpen: boolean) => void;
   setData: (data: Data[]) => void;
-}
+} 
 
 const onlineBookingStore = create<OnlineBooking>((set) => ({
   data: [],

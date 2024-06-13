@@ -1,32 +1,18 @@
 import create from 'zustand';
+import { ListData, MainData } from '../../../types/review';
 
-interface MainData {
-  allAverageFeedback: number;
-  allReviewsCount: number;
-  clientAverageFeedback: number;
-  clientReviewsCount: number;
-  femaleClientCount: number;
-  femaleClientFeedback: number;
-  femaleMasterCount: number;
-  femaleMasterFeedback: number;
-  fiveStarFeedbackCount: number;
-  fourStarFeedbackCount: number;
-  maleClientCount: number;
-  maleClientFeedback: number;
-  maleMasterCount: number;
-  maleMasterFeedback: number;
-  masterAverageFeedback: number;
-  masterReviewsCount: number;
-  oneStarFeedbackCount: number;
-  threeStarFeedbackCount: number;
-  twoStarFeedbackCount: number;
-}
 
 interface ReviewsStore {
   mainData: MainData;
-  reviewsData: any[];
-  setMainData: (mainData: MainData) => void;
-  setReviewsData: (reviewsData: any[]) => void;
+  listData: ListData[];
+  totalPage: number;
+  currentPage: number;
+  pageSize: number;
+  setMainData: (data: MainData) => void;
+  setListData: (data: ListData[]) => void;
+  setTotalPage: (page: number) => void;
+  setCurrentPage: (currentPage: number) => void;
+  setPageSize: (size: number) => void;
 }
 
 const useReviewsStore = create<ReviewsStore>((set) => ({
@@ -51,9 +37,15 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
     threeStarFeedbackCount: 0,
     twoStarFeedbackCount: 0,
   },
-  reviewsData: [],
-  setMainData: (mainData) => set({ mainData }),
-  setReviewsData: (reviewsData) => set({ reviewsData }),
-}));
+  listData: [],
+  totalPage: 0,
+  currentPage: 0,
+  pageSize: 10,
+  setMainData: (val: MainData) => set({ mainData: val }),
+  setListData: (val: ListData[]) => set({ listData: val }),
+  setTotalPage: (page: number) => set({ totalPage: page }),
+  setPageSize: (size: number) => set({ pageSize: size }),
+  setCurrentPage: (current: number) => set({ currentPage: current }),
+}))
 
 export default useReviewsStore;

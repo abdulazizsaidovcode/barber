@@ -5,28 +5,17 @@ import SecondTab from './tabs/SecondTab';
 import { Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
 import useReviewsStore from '../../helpers/state_managment/reviews/reviews';
-import { fetchMainData, fetchReviewsData } from '../../helpers/api-function/reviews/reviews';
+import { fetchDataList, fetchMainData } from '../../helpers/api-function/reviews/reviews';
 
 const Reviews: React.FC = () => {
-  const { mainData, setMainData, setReviewsData } = useReviewsStore();
+  const { setMainData, setListData, pageSize, currentPage, setTotalPage } = useReviewsStore();
   const { t } = useTranslation();
-
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const mainData = await fetchMainData();
-        setMainData(mainData);
-        const reviewsData = await fetchReviewsData();
-        console.log(reviewsData);
-        
-        setReviewsData(reviewsData);
-      } catch (error) {
-        console.error("Failed to load data", error);
-      }
-    };
-
-    loadData();
-  }, [setMainData, setReviewsData]);
+    fetchMainData(setMainData)
+  }, [])
+  useEffect(() => {
+    fetchDataList(setListData, currentPage, pageSize, setTotalPage)
+  }, [currentPage, pageSize])
 
   const items = [
     {
@@ -36,7 +25,7 @@ const Reviews: React.FC = () => {
           {t("About_the_service")}
         </span>
       ),
-      children: <FirstTab mainData={mainData} />,
+      children: <FirstTab />,
     },
     {
       key: '2',

@@ -27,7 +27,6 @@ export const addPercent = (percent: string, setData: (data: Data[]) => void, tog
     toggleInput();
   } else if (percent.length === 0) {
     toast('Bosh ma\'lumot qo\'shyapsz', { icon: '⚠️' });
-    toggleInput();
   } else {
     axios.post(add_precent_list, { percent }, config)
       .then((res) => {
