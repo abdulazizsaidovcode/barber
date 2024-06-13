@@ -244,7 +244,13 @@ span.flatpickr-weekday,
   @apply text-xs; /* Date and time font size */
   @apply md:text-[17px]; /* Date and time font size */
 }
-
+/* Adding horizontal scroll to FullCalendar container */
 .fullcalendar-container {
   @apply overflow-x-auto;
+  white-space: nowrap;
+}
+
+.fc-event {
+  @apply text-sm; /* Event text size */
+  height: auto; /* Adjust event height */
 }
