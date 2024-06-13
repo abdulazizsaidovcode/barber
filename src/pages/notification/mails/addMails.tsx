@@ -14,8 +14,10 @@ import { Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 function AddMails() {
-    const [fileName, setFileName] = useState<string>("Выберите изображение");
-    const [photoName, setPhotoName] = useState<string>("Выберите изображение");
+    const { t } = useTranslation();
+
+    const [fileName, setFileName] = useState<string>(t("Select_an_image"));
+    const [photoName, setPhotoName] = useState<string>(t("Select_an_image"));
     const [file, setFile] = useState<File | null>(null);
     const [photo, setPhoto] = useState<File | null>(null);
     const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -76,7 +78,6 @@ function AddMails() {
         setPhotoPreview(null);
         setErrors({});
     };
-    const { t } = useTranslation();
 
     const postMail = async () => {
         if (!validateFields()) {
