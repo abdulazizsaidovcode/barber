@@ -81,6 +81,7 @@
   "By_region": "По региону",
   "Please_enter": "Введите допустимое название категории без пробелов и специальных символов.",
   "Add": "Добавить",
+  "This_category_already_exists": "Эта категория уже существует",
   "Add_Category": "Добавить категорию",
   "Prepayment_in_percentage": "Предоплата в процентах",
   "Dynamics_of_connecting_masters_and_clients": "Динамика подключения мастеров и клиентов",
