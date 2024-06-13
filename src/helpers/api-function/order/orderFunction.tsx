@@ -17,23 +17,40 @@ export async function getOrder({
     setData,
     setTotalPage
 }: Filter) {
-    axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryName ? `categoryName=${categoryName}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}page=${page}&size=${size}`, config)
-        .then(res => {
-            if (res.data.success === true) {
-                setData(res.data.body.object)
-                setTotalPage(res.data.body.totalPage)
-            } else setData([])
-        })
-        .catch(() => setData([]));
+    try {
+        const res = await axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryName ? `categoryName=${categoryName}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}page=${page}&size=${size}`, config);
+        
+        if (res.data.success === true) {
+            setData(res.data.body.object);
+            setTotalPage(res.data.body.totalPage);
+        } else {
+            setData([]);
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(`Error fetching orders: ${error}, Status: ${error.response?.status}`);
+        } else {
+            console.error('Unexpected error:', error);
+        }
+        setData([]);
+    }
 }
 
-export function getChildCategory(setData: (val: CategoryChild[]) => void) {
-    axios.get(`${Category_Child}`, config)
-        .then(res => {
-            if (res.data.success === true) {
-                setData(res.data.body)
-            } else setData([])
-        })
-        .catch(() => setData([]));
+export async function getChildCategory(setData: (val: CategoryChild[]) => void) {
+    try {
+        const res = await axios.get(`${Category_Child}`, config);
+        
+        if (res.data.success === true) {
+            setData(res.data.body);
+        } else {
+            setData([]);
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(`Error fetching child categories: ${error}, Status: ${error.response?.status}`);
+        } else {
+            console.error('Unexpected error:', error);
+        }
+        setData([]);
+    }
 }
-
