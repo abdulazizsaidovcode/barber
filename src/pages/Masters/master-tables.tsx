@@ -18,9 +18,64 @@ export interface UpdateStatus {
 }
 
 const MasterTables: React.FC = () => {
+  const { t } = useTranslation();
+
+  const thead = [
+    {
+      id: 1,
+      name: t("Photo"),
+    },
+    {
+      id: 2,
+      name: t("master"),
+    },
+    {
+      id: 3,
+      name: t("Service_category"),
+    },
+    {
+      id: 4,
+      name: t("Started_work"),
+    },
+    {
+      id: 5,
+      name: t("Total_sessions"),
+    },
+    {
+      id: 6,
+      name: t("Rating"),
+    },
+    {
+      id: 7,
+      name: t("Status"),
+    },
+    {
+      id: 8,
+      name: t("Schedule_Type"),
+    },
+    {
+      id: 9,
+      name: t("Canceled"),
+    },
+    {
+      id: 10,
+      name: t("Specializations"),
+    },
+    {
+      id: 11,
+      name: t("siderbar_client"),
+    },
+    {
+      id: 12,
+      name: t("siderbar_client"),
+    },
+    {
+      id: 13,
+      name: t("Place_of_work"),
+    }
+  ];
   const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading } = masterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ status: '', masterId: '' });
-  const { t } = useTranslation();
 
   const onChange = (page: number, pageSize: number): void => {
     console.log('clicked number:', page);
@@ -133,7 +188,9 @@ const MasterTables: React.FC = () => {
                 <p className="text-black dark:text-white">{item.workPlace}</p>
               </td>
             </tr>
+
           ))
+
         ) : (
           <tr className={`border-b border-[#eee] dark:border-strokedark`}>
             <td
@@ -144,6 +201,7 @@ const MasterTables: React.FC = () => {
             </td>
           </tr>
         )}
+
       </MasterTable>
       <Pagination
         showSizeChanger={false}
