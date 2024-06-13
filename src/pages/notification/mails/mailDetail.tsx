@@ -7,6 +7,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumb';
 import { getFileId } from '../../../helpers/api';
 import { Image } from 'antd';
 import { truncateText } from '../../../helpers/splitText';
+import { useTranslation } from 'react-i18next';
 
 const MailDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -30,27 +31,28 @@ const MailDetail: React.FC = () => {
             </DefaultLayout>
         );
     }
+    const { t } = useTranslation()
 
     return (
         <DefaultLayout>
             <Breadcrumbs pageName='Maildetail' />
             <div className="h-max w-full p-5 dark:bg-boxdark bg-slate-200 dark:text-white rounded-md">
                 <div className="mb-4">
-                    <p className="text-lg"><strong>Subject:</strong> {mail.subject}</p>
+                    <p className="text-lg"><strong>{t("Subject")}:</strong> {mail.subject}</p>
                 </div>
                 <div className="mb-4">
-                    <p className="text-lg"><strong>To:</strong> {mail.toWhom}</p>
+                    <p className="text-lg"><strong>{t("That")}:</strong> {mail.toWhom}</p>
                 </div>
                 <div className="mb-4">
-                    <p className="text-lg"><strong>Date:</strong> {mail.date}</p>
+                    <p className="text-lg"><strong>{t("Date")}:</strong> {mail.date}</p>
                 </div>
                 <div className="mb-4 w-full text-wrap">
-                    <strong>Content:</strong>
+                    <strong>{t("Content")}:</strong>
                     <p className="text-lg w-full"> {mail.content}</p>
                 </div>
                 {mail.attachmentId ? (
                     <div className="mb-4 p-3 border h-64 object-cover  rounded-md dark:border-[#9c0935] flex flex-col">
-                        <strong>Attachment:</strong>
+                        <strong>{t("Attachment")}:</strong>
                         <Image style={{ width: 200, height: 200 }} src={getFileId + mail.attachmentId} alt="Attachment" className="mt-2 w-full h-full rounded-md" />
                     </div>
                 ) :
