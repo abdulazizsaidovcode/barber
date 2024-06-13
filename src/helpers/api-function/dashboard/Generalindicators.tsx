@@ -14,7 +14,7 @@ interface DGeneralIndecator {
 
 
 export const DGeneralIndecators = ({ year, localDate, starDate, endDate, setDashdata }: DGeneralIndecator) => {
-    console.log("salom");
+    
 
     axios.get(`${dashboard_url}web/statistic${year ? `?year=${year}` : "?year=0"}${localDate ? `&localDate=${localDate}` : ""}${starDate ? `&starDate=${starDate}` : ""}${endDate ? `&endDate=${endDate}` : ""}`, config)
         .then((response) => {

@@ -73,13 +73,13 @@ const RequestProcedures: React.FC = () => {
           <div className='w-1/2 mr-1'>
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
-                <p className="dark:text-[#000]">Новые</p>
+                <p className="dark:text-[#000] ">Новые</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
                   <p className="text-sm">{newProcedures.length}</p>
                 </div>
               </div>
             </div>
-            <div className='flex items-center flex-col gap-4 mt-4'>
+            <div className='flex items-center flex-col gap-4 mt-4  px-5'>
               {loading ? (
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
@@ -120,7 +120,7 @@ const RequestProcedures: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className='flex items-center flex-col mt-4 gap-4'>
+            <div className='flex items-center flex-col mt-4 gap-4  px-5'>
               {loading ? (
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
