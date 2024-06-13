@@ -7,7 +7,7 @@ import orderStore from "../../helpers/state_managment/order/orderStore";
 import { getRegion } from "../../helpers/api-function/master/master";
 
 const onChange = (key: string) => {
-  console.log(key);
+  
 };
 
 
