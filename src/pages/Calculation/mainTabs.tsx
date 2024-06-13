@@ -6,11 +6,6 @@ import { getChildCategory, getOrder } from "../../helpers/api-function/order/ord
 import orderStore from "../../helpers/state_managment/order/orderStore";
 import { getRegion } from "../../helpers/api-function/master/master";
 
-const onChange = (key: string) => {
-  
-};
-
-
 
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
@@ -102,7 +97,7 @@ const MainTabs: React.FC = () => {
       className="dark:bg-boxdark bg-white p-2 w-full"
       defaultActiveKey="1"
       items={items}
-      onChange={onChange}
+      // onChange={onChange}
     />
   );
 };

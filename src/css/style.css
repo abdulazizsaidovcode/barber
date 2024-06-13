@@ -227,4 +227,24 @@ span.flatpickr-weekday,
 .table-row {
   height: 70px; /* Adjust this value as needed */
 }
+.fc .fc-toolbar-title {
+  @apply text-sm; /* Tailwind CSS sinfini qo'llash */
+  @apply md:text-xl; /* Tailwind CSS sinfini qo'llash */
+}
 
+.fc .fc-button {
+  @apply text-sm px-2 py-1; /* Button font size and padding */
+  @apply md:text-lg md:px-3 md:py-2; /* Button font size and padding */
+
+}
+
+.fc .fc-daygrid-day-number, 
+.fc .fc-timegrid-slot-label,
+.fc .fc-col-header-cell-cushion {
+  @apply text-xs; /* Date and time font size */
+  @apply md:text-[17px]; /* Date and time font size */
+}
+
+.fullcalendar-container {
+  @apply overflow-x-auto;
+}
