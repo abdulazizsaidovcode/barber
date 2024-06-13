@@ -69,8 +69,8 @@ const RequestSpecializations: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between mt-4">
-          <div className='w-1/2 mr-1'>
+        <div className="flex md:flex-row flex-col justify-between mt-4">
+          <div className='md:w-1/2 mr-1'>
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Новые</p>
@@ -88,30 +88,32 @@ const RequestSpecializations: React.FC = () => {
                 <div className='w-full h-[510px] flex justify-center items-center'>
                   <p>New Specializations Not Found</p>
                 </div> :
-                newSpecializations.map(item => (
-                  <SpecializationsCard
-                    key={item.id}
-                    link={item.id}
-                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                    salonOwner={`${item.firstName} ${item.lastName}`}
-                    phoneNumber={item.phoneNumber}
-                    salonCreateDate={item.createdAt}
-                    salonDescription="Мастер добавил новую специализацию"
-                  />
-                ))
+                <div className='flex flex-col gap-3'>
+                  {newSpecializations.map(item => (
+                    <SpecializationsCard
+                      key={item.id}
+                      link={item.id}
+                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                      salonOwner={`${item.firstName} ${item.lastName}`}
+                      phoneNumber={item.phoneNumber}
+                      salonCreateDate={item.createdAt}
+                      salonDescription="Мастер добавил новую специализацию"
+                    />
+                  ))}
+                  <div className='mt-5'>
+                    <Pagination
+                      showSizeChanger
+                      current={currentNewPage + 1}
+                      pageSize={pageSize}
+                      total={totalNewSpecializations}
+                      onChange={onNewPageChange}
+                    />
+                  </div>
+                </div>
               )}
             </div>
-            <div className='p-3 mt-5'>
-              <Pagination
-                showSizeChanger
-                current={currentNewPage + 1}
-                pageSize={pageSize}
-                total={totalNewSpecializations}
-                onChange={onNewPageChange}
-              />
-            </div>
           </div>
-          <div className='w-1/2 ml-1'>
+          <div className='md:w-1/2 ml-1'>
             <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">Изменённые</p>
@@ -129,27 +131,29 @@ const RequestSpecializations: React.FC = () => {
                 <div className='w-full h-[510px] flex justify-center items-center'>
                   <p>Changed Specializations Not Found</p>
                 </div> :
-                changedSpecializations.map(item => (
-                  <SpecializationsCard
-                    key={item.id}
-                    link={item.id}
-                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                    salonOwner={`${item.firstName} ${item.lastName}`}
-                    phoneNumber={item.phoneNumber}
-                    salonCreateDate={item.createdAt}
-                    salonDescription="Мастер изменил название специализации"
-                  />
-                ))
+                <div className='flex flex-col gap-3'>
+                  {changedSpecializations.map(item => (
+                    <SpecializationsCard
+                      key={item.id}
+                      link={item.id}
+                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                      salonOwner={`${item.firstName} ${item.lastName}`}
+                      phoneNumber={item.phoneNumber}
+                      salonCreateDate={item.createdAt}
+                      salonDescription="Мастер изменил название специализации"
+                    />
+                  ))}
+                  <div className='mt-5'>
+                    <Pagination
+                      showSizeChanger
+                      current={currentChangedPage + 1}
+                      pageSize={pageSize}
+                      total={totalChangedSpecializations}
+                      onChange={onChangedPageChange}
+                    />
+                  </div>
+                </div>
               )}
-            </div>
-            <div className='p-3 mt-5'>
-              <Pagination
-                showSizeChanger
-                current={currentChangedPage + 1}
-                pageSize={pageSize}
-                total={totalChangedSpecializations}
-                onChange={onChangedPageChange}
-              />
             </div>
           </div>
         </div>
