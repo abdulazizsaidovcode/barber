@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pagination } from 'antd';
 import ReviewsMasersCard from '../cards/ReviewsMasersCard';
 import ReviewMastersFilters from '../components/masterFilters';
 import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
 import { fetchMasterDataList, deleteMasterDataList } from '../../../helpers/api-function/reviews/reviews';
+import DelModal from '../../../components/settings/modals/delModal';
+import { reviews_list_master_data } from '../../../helpers/api';
 
 const SecondTab: React.FC = () => {
   const {
@@ -14,10 +16,14 @@ const SecondTab: React.FC = () => {
     setMasterCurrentPage,
     setMasterPageSize,
     setListMasterData,
+    isDelModal,
+    setDelModal,
   } = useReviewsStore();
 
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
   useEffect(() => {
-    fetchMasterDataList(setListMasterData, `reviews_list_master_data?page=${currentMasterPage}&size=${pageMasterSize}`);
+    fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`);
   }, [currentMasterPage, pageMasterSize]);
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -25,8 +31,21 @@ const SecondTab: React.FC = () => {
     setMasterPageSize(pageSize);
   };
 
-  const handleDelete = async (id: string) => {
-    await deleteMasterDataList(id, setListMasterData, `reviews_list_master_data?page=${currentMasterPage}&size=${pageMasterSize}`);
+  const openDelModal = (id: string) => {
+    setSelectedId(id);
+    setDelModal(true);
+  };
+
+  const closeDelModal = () => {
+    setSelectedId(null);
+    setDelModal(false);
+  };
+
+  const handleDelete = async () => {
+    if (selectedId) {
+      await deleteMasterDataList(selectedId, setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`);
+      closeDelModal();
+    }
   };
 
   return (
@@ -39,7 +58,7 @@ const SecondTab: React.FC = () => {
       ) : (
         <div>
           {listMasterData.map((item, index) => (
-            <ReviewsMasersCard key={index} data={item} openModal={() => handleDelete(item.id)} />
+            <ReviewsMasersCard key={index} data={item} openModal={() => openDelModal(item.id)} />
           ))}
           <Pagination
             showSizeChanger
@@ -50,6 +69,7 @@ const SecondTab: React.FC = () => {
           />
         </div>
       )}
+      <DelModal isOpen={isDelModal} onDelete={handleDelete} onClose={closeDelModal} />
     </div>
   );
 };

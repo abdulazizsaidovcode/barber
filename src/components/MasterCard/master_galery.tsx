@@ -44,7 +44,8 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   };
 
   const handleDeleteIconClick = () => {
-     handleDelete()
+    setModalType('textarea');
+    setIsModalVisible(true);
   };
 
   const handleNextClick = () => {
@@ -54,30 +55,6 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
     setModalType('confirmation');
   };
 
-  const handleDelete = () => {
-    setIsSubmitting(true);
-    axios
-      .delete(
-        `${master_gallery_delate}${galleryId}/${attachmentId}`,
-
-        config,
-      )
-      .then(() => {
-        message.success('Delete picture');
-      })
-      .then(() => {
-        onDelete(attachmentId);
-        message.success('Procedure deleted successfully');
-      })
-      .catch((error) => {
-        console.error('Error deleting the image', error);
-        message.error('An error occurred while deleting the procedure');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-        handleCancel();
-      });
-  };
   const handleDeleteConfirm = () => {
     setIsSubmitting(true);
     axios
@@ -91,12 +68,12 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
           messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_DELETE',
           read: true,
         },
-        config,
+        config
       )
       .then(() => {
         return axios.delete(
           `${master_gallery_delate}${galleryId}/${attachmentId}`,
-          config,
+          config
         );
       })
       .then(() => {
@@ -135,12 +112,12 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   return (
     <div className="flex flex-col justify-center items-center">
       <div
-        className="shadow-xl flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover"
+        className="shadow-xl flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover cursor-pointer"
         onClick={() => setIsModalVisible(true)}
       >
         {loading && <Skeleton.Image />}
         <img
-          className={`w-full h-full ${loading ? 'hidden' : ''}`}
+          className={`w-full h-full object-cover ${loading ? 'hidden' : ''}`}
           src={getFileId + imgUrl}
           alt=""
           onLoad={handleImageLoad}
@@ -149,7 +126,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       <div
         className={`p-2 text-white ${
           status ? 'bg-red-500' : 'bg-green-500'
-        } mt-2 w-[50%] flex items-center justify-center rounded-md`}
+        } mt-2 w-1/2 flex items-center justify-center rounded-md`}
       >
         {status ? 'Новая' : 'Одобрена'}
       </div>
@@ -157,7 +134,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
         {status ? (
           <div className="flex space-x-2">
             <div
-              className="p-1 bg-green-200 flex items-center justify-center rounded-full"
+              className="p-1 bg-green-200 flex items-center justify-center rounded-full cursor-pointer"
               onClick={() => {
                 setModalType('check');
                 setIsModalVisible(true);
@@ -166,14 +143,14 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
               <CheckOutlined className="text-green-600" />
             </div>
             <div
-              className="p-1 bg-red-200 flex items-center justify-center rounded-full"
+              className="p-1 bg-red-200 flex items-center justify-center rounded-full cursor-pointer"
               onClick={handleDeleteIconClick}
             >
               <DeleteOutlined className="text-red-600" />
             </div>
           </div>
         ) : (
-          <div className="p-1 bg-gray-200 flex items-center justify-center rounded-md">
+          <div className="p-1 bg-gray-200 flex items-center justify-center rounded-md cursor-pointer">
             <DeleteOutlined onClick={handleDeleteIconClick} />
           </div>
         )}

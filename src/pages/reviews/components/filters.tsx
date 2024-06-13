@@ -4,22 +4,21 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { Buttons } from '../../../components/buttons';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
-import masterStore from '../../../helpers/state_managment/master/masterStore';
-import { fetchDataList, fetchMainData, fetchMasterDataList } from '../../../helpers/api-function/reviews/reviews';
-import { getDistrict } from '../../../helpers/api-function/master/master';
-import { reviews_main_data, reviews_list_data, reviews_list_master_data } from '../../../helpers/api';
+import useReviewsStore from '../../../helpers/state_managment/reviews/reviews.tsx';
+import masterStore from '../../../helpers/state_managment/master/masterStore.tsx';
+import { fetchDataList, fetchMainData } from '../../../helpers/api-function/reviews/reviews.tsx';
+import { getDistrict } from '../../../helpers/api-function/master/master.tsx';
+import { reviews_main_data, reviews_list_data } from '../../../helpers/api.tsx';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const ReviewFilters: React.FC = () => {
-  const { filterObj, filters, setFilters, setMainData, setListData, setListMasterData, currentPage, pageSize, setTotalPage } = useReviewsStore();
+  const { filterObj, filters, setFilters, setMainData, setListData, currentPage, pageSize, setTotalPage } = useReviewsStore();
   const { setDistrictData, districtData } = masterStore();
   const { regionData } = masterStore();
   const [showMore, setShowMore] = useState(false);
   const { t } = useTranslation();
-
   const queryParams: string = [
     filters.firstNameOrLastName ? `firstNameOrLastName=${filters.firstNameOrLastName}` : '',
     filters.GENDER ? `GENDER=${filters.GENDER}` : '',
@@ -32,14 +31,14 @@ const ReviewFilters: React.FC = () => {
     datePicker(1) ? `endDate=${datePicker(1)}` : ''
   ].filter(Boolean).join('&');
 
+  // filters urls
   const url_main: string = `${reviews_main_data}${queryParams ? '?' : ''}${queryParams}`;
   const url_list: string = `${reviews_list_data}?${queryParams}&page=${currentPage}&size=${pageSize}`;
-  const url_master_list: string = `${reviews_list_master_data}?${queryParams}&page=${currentPage}&size=${pageSize}`;
+
 
   useEffect(() => {
     fetchMainData(setMainData, url_main);
     fetchDataList(setListData, setTotalPage, url_list);
-    fetchMasterDataList(setListMasterData, url_master_list);
     if (filters.regionId) getDistrict(setDistrictData, +filters.regionId);
   }, [filters]);
 
@@ -146,4 +145,4 @@ const ReviewFilters: React.FC = () => {
   );
 };
 
-export default ReviewFilters;
+export default ReviewFilters

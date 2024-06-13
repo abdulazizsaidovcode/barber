@@ -38,7 +38,7 @@ const ClientDocument = () => {
           <Accordion title={t('Terms_of_use')}>
             <FileGetUploader getList={item.attachments} openModal={openModal} idIn={item.id} />
             <div className="flex gap-3 items-center my-7 text-slate-700 dark:text-slate-300">
-              <p>{t('Show_in_apps')}</p>
+              <p className={`text-[.8rem] sm:text-base`}>{t('Show_in_apps')}</p>
               <Switch
                 isOn={item.active}
                 handleToggle={() => updateIsActive(item, setDataClient, 'FOR_CLIENT')}

@@ -42,7 +42,6 @@ type MasterCardInfoProps = {
   StatusNow: string;
 };
 
-
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   MasterName,
   MasterImg,
@@ -89,27 +88,23 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
     setPendingSwitchState(!isSwitchOn);
     openModal();
   };
+
   const confirmToggleSwitch = async () => {
     setIsSwitchOn(pendingSwitchState);
     try {
-      const type = () => {
-        if (pendingSwitchState) {
-          return 'ACTIVE';
-        } else {
-          return 'BLOCKED';
-        }
-      };
+      const status = isSwitchOn ? 'BLOCKED' : 'ACTIVE';
       const response = await axios.put(
-        `${master_block_put}`,
+        master_block_put,
         {
           id: idMaster,
-          status: type(),
+          status,
         },
         config,
       );
 
       console.log('Switch toggled successfully:', response.data);
-      toast.success(t("Switch_toggled_successfully"));
+      toast.success(t('Switch_toggled_successfully'));
+      setIsSwitchOn(!isSwitchOn);
     } catch (error) {
       console.error('Error toggling switch:', error);
       toast.error(t('Error_toggling_switch'));
@@ -135,11 +130,11 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         config,
       );
       console.log('Message sent successfully:', response.data);
-      toast.success(t("Message_sent_successfully"));
+      toast.success(t('Message_sent_successfully'));
       closeSendModal();
     } catch (error) {
       console.error('There was an error sending the message!', error);
-      toast.error(t("Failed_to_send_message"));
+      toast.error(t('Failed_to_send_message'));
     }
   };
   const handleClickSendBtn = () => {
@@ -148,7 +143,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   };
   const handlePostBtn = () => {
     if (message.valueOf() === '') {
-      toast.error(t("information_not_entered"));
+      toast.error(t('information_not_entered'));
     } else {
       sendMessage();
     }
@@ -164,56 +159,58 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 onClick={handleClickSendBtn}
                 className="bg-green-500 p-2 rounded-xl text-white px-3 cursor-pointer"
               >
-                {t("Send_Message")}
+                {t('Send_Message')}
               </div>
             </div>
             <div className="w-[100%] bg-black dark:bg-white h-[1px] flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
-              <strong>{t("Name")}:</strong> {MasterName}
+              <strong>{t('Name')}:</strong> {MasterName}
             </p>
             <p className="mb-5">
-              <strong>{t("Surname")}:</strong> {SurName}
+              <strong>{t('Surname')}:</strong> {SurName}
             </p>
             <p className="mb-5">
-              <strong>{t("User_Name")}:</strong> {UserName}
+              <strong>{t('User_Name')}:</strong> {UserName}
             </p>
             <p className="mb-5">
-              <strong>{t("Gender")}:</strong> {Gender}
+              <strong>{t('Gender')}:</strong> {Gender}
             </p>
             <p className="mb-5">
-              <strong>{t("Age")}:</strong> {Age}
+              <strong>{t('Age')}:</strong> {Age}
             </p>
             <p className="mb-5">
-              <strong>{t("Regions")}:</strong> {Region}
+              <strong>{t('Regions')}:</strong> {Region}
             </p>
             <p className="mb-5">
-              <strong>{t("City")}:</strong> {City}
+              <strong>{t('City')}:</strong> {City}
             </p>
             <p className="mb-5">
-              <strong>{t("Location")}:</strong> {Location}
+              <strong>{t('Location')}:</strong> {Location}
             </p>
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
           <div className="bg-gray-100 dark:bg-boxdark text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
             <div className="flex items-center">
-              <p className="text-xl font-bold">{t("Profession_information")}:</p>
+              <p className="text-xl font-bold">
+                {t('Profession_information')}:
+              </p>
             </div>
             <div className="w-[100%] bg-black dark:bg-white h-[1px] flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
-              <strong>{t("Place_of_work")}:</strong> {PlaceOfWork}
+              <strong>{t('Place_of_work')}:</strong> {PlaceOfWork}
             </p>
             <p className="mb-5">
-              <strong>{t("Direction_by_gender")}:</strong> {GenderType}
+              <strong>{t('Direction_by_gender')}:</strong> {GenderType}
             </p>
             <p className="mb-5">
-              <strong>{t("Service_category")}:</strong> {ServiceCategory}
+              <strong>{t('Service_category')}:</strong> {ServiceCategory}
             </p>
             <p className="mb-5">
-              <strong>{t("Specialization")}:</strong> {Specialization}
+              <strong>{t('Specialization')}:</strong> {Specialization}
             </p>
             <p className="mb-5">
-              <strong>{t("Schedule_Type")}:</strong> {scheduleType}
+              <strong>{t('Schedule_Type')}:</strong> {scheduleType}
             </p>
           </div>
         </Skeleton>
@@ -223,10 +220,11 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center gap-4">
               <div
-                className={` rounded-[50%] w-2 h-2 font-bold ${StatusNow === 'OFFLINE'
-                  ? 'bg-red-500 text-white'
-                  : 'bg-green-500'
-                  }`}
+                className={` rounded-[50%] w-2 h-2 font-bold ${
+                  StatusNow === 'OFFLINE'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-green-500'
+                }`}
               ></div>
               <p>{StatusNow}</p>
             </div>
@@ -238,7 +236,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               />
             </div>
             <div className="flex items-center mt-3 justify-between">
-              <p className="text-gray-600">{t("Rate")}:</p>
+              <p className="text-gray-600">{t('Rate')}:</p>
               <p className="text-gray-600">{definitionType}</p>
             </div>
           </div>
@@ -248,18 +246,19 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <div className="flex items-center justify-between">
               <p className="text-black dark:text-white font-bold">Status:</p>
               <div
-                className={`px-6 rounded-xl font-bold ${Status === 'BLOCKED'
-                  ? 'bg-red-500 text-white'
-                  : 'bg-green-500'
-                  }`}
+                className={`px-6 rounded-xl font-bold ${
+                  Status === 'BLOCKED'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-green-500'
+                }`}
               >
                 {Status}
               </div>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <p>{t("Block")}</p>
+              <p>{t('Block')}</p>
               <div onClick={handleSwitchClick}>
-                <Switch isOn={isSwitchOn} handleToggle={() => { }} />
+                <Switch isOn={isSwitchOn} handleToggle={() => {}} />
               </div>
             </div>
           </div>
@@ -267,19 +266,20 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col  dark:bg-boxdark dark:text-white text-black  border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
+              <p className="text-black font-bold mb-2 mt-2">{t('Contacts')}:</p>
               <p className="text-black dark:text-white font-bold mb-2 mt-2">{t("Contacts")}:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Phone")} :</strong>
+              <strong>{t('Phone')} :</strong>
               <p>{Number}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Telegram")} :</strong>
+              <strong>{t('Telegram')} :</strong>
               <p>{Telegram}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Instagram")} :</strong>
+              <strong>{t('Instagram')} :</strong>
               <p>{Instagram}</p>
             </div>
           </div>
@@ -287,28 +287,31 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-boxdark  text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
+              <p className="text-black font-bold mb-2 mt-2">
+                {t('Indicators')}:
+              </p>
               <p className="text-black dark:text-white font-bold mb-2 mt-2">{t("Indicators")}:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Completed_Orders")}:</strong>
+              <strong>{t('Completed_Orders')}:</strong>
               <p>{CompOrders}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Cancelled_orders")}:</strong>
+              <strong>{t('Cancelled_orders')}:</strong>
               <p>{rejectedOrderCount}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Clients")}:</strong>
+              <strong>{t('Clients')}:</strong>
               <p>{Clients}</p>
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Level")}:</strong>
+              <strong>{t('Level')}:</strong>
 
               <Rate disabled defaultValue={Level} />
             </div>
             <div className="flex items-center justify-between mt-4">
-              <strong>{t("Start_work")}:</strong>
+              <strong>{t('Start_work')}:</strong>
               <p>{StartData}</p>
             </div>
           </div>
@@ -326,13 +329,15 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
           </div>
           </div>
-         
+
         </Modal>
       </div>
 
       <Modal isOpen={SendOpen} onClose={closeSendModal} mt={'w-[70%]'}>
         <div className="w-[100%]">
-          <p className="text-2xl text-black dark:text-white">{t("Send_Message")}:</p>
+          <p className="text-2xl text-black dark:text-white">
+            {t('Send_Message')}:
+          </p>
           <TextArea
             required
             className="mt-4"
@@ -347,7 +352,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               className="text-black mt-4 w-[40%] dark:text-white"
               size="large"
             >
-              {t("Send")}
+              {t('Send')}
             </Button>
           </div>
         </div>

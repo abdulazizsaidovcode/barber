@@ -3,15 +3,16 @@ import { Rate, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import userImg from '../../../images/user.png'
 import { ListMasterData } from '../../../types/review';
+import { getFileId } from '../../../helpers/api';
 
 
 const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void }> = ({ data, openModal }) => {
-    const { clientFirstName, clientLastName, masterFirstName, masterLastName, description, masterFeedbackCount, feedbackCount, feedbackDate } = data;
+    const { clientFirstName, clientLastName, masterFirstName, masterLastName, description, masterFeedbackCount, feedbackCount, feedbackDate, clientAttachmentId, masterAttachmentId } = data;
     return (
         <div className="w-full p-4 reviews-shadow mt-3 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex md:flex-row flex-col md:gap-0 gap-3 justify-between items-start mb-4">
                 <div className='flex'>
-                    <img src={userImg} className='w-20 h-20' alt="" />
+                    <img src={masterAttachmentId ? getFileId + masterAttachmentId : userImg} className='md:w-20 w-10 h-10 md:h-20' alt="" />
                     <div className="flex-1 ms-3">
                         <div className="font-bold text-lg">{clientFirstName} {clientLastName}</div>
                         <div className="text-gray-500">Мастер</div>
@@ -19,7 +20,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
                     </div>
                 </div>
                 <div className='flex '>
-                    <img src={userImg} className='w-20 h-20' alt="" />
+                    <img src={clientAttachmentId ? getFileId + clientAttachmentId : userImg} className='md:w-20 w-10 h-10 md:h-20' alt="" />
                     <div className="flex-1 ms-3">
                         <div className="font-bold text-lg">{masterFirstName} {masterLastName}</div>
                         <div className="text-gray-500">Клиент</div>
@@ -54,7 +55,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
                     <p>{feedbackDate}</p>
                 </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex md:flex-row flex-col justify-between">
                 <div className="text-gray-700 mb-2">
                     {description}
                 </div>

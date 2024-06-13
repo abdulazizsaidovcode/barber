@@ -107,10 +107,10 @@ const TariffsFunctionality: React.FC = () => {
                 </div>
             </DefaultLayout>
             <Modal isOpen={isOpen} onClose={closeModal}>
-                <div className="w-[500px] h-[160px]">
-                    <p className="text-xl text-black dark:text-white">Название тарифа:</p>
+                <div className="md:w-[500px] md:h-[160px] sm:w-[300px] ">
+                    <p className="sm:text-xl text-black dark:text-white text-center">Название тарифа:</p>
                     <input
-                        className="w-full border-[1px] dark:text-black border-black p-2 rounded-lg mt-3"
+                        className="w-full border-[1px] dark:text-black border-black sm:p-2 p-1 rounded-lg mt-3"
                         type="text"
                         placeholder="Оздоровительные процедуры"
                         value={newTariffName}
@@ -118,7 +118,7 @@ const TariffsFunctionality: React.FC = () => {
                     />
                     <div className="flex mt-10 justify-center">
                         <button
-                            className="py-2 px-10 rounded-lg dark:bg-danger bg-slate-800 text-white"
+                            className="sm:py-2 sm:px-10 px-5 py-1 rounded-lg dark:bg-danger bg-slate-800 text-white"
                             onClick={() => addData(newTariffName)}
                             disabled={addLoading}
                         >
