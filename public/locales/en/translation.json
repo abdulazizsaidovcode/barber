@@ -182,6 +182,7 @@
   "Activer": "Client activation",
   "Attachments": "Attachments",
   "Attachment":"Attachment",
+  "Image_not":"Image not loaded or file type unknown",
   "Create_a_newsletter": "Create a newsletter",
   "Successfully_done": "Successfully done",
   "the_is_unavailable": "the letter is unavailable!",

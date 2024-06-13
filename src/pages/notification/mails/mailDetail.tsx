@@ -56,19 +56,19 @@ const MailDetail: React.FC = () => {
                         <Image style={{ width: 200, height: 200 }} src={getFileId + mail.attachmentId} alt="Attachment" className="mt-2 w-full h-full rounded-md" />
                     </div>
                 ) :
-                    <div>Изображение не загружено или тип файла неизвестен.</div>
+                    <div>{t("Image_not")}.</div>
                 }
                 {mail.fileId && (
                     <div className="mb-4">
                         <strong>File:</strong>
                         <div className='flex gap-2'>
                             <p>{mail.fileName}</p>
-                            <a href={getFileId + mail.fileId} download className="text-blue-500 underline ml-2">Download</a>
+                            <a href={getFileId + mail.fileId} download className="text-blue-500 underline ml-2">{t("Download")}</a>
                         </div>
                     </div>
                 )}
                 <div className="mt-5 flex gap-2">
-                    <Buttons onClick={() => window.history.back()}>Назад</Buttons>
+                    <Buttons onClick={() => window.history.back()}>{t("Back")}</Buttons>
                 </div>
             </div>
 
