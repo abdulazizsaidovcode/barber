@@ -61,14 +61,14 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
         onChange={handleValueChange}
         onSave={handleOk}
       />
-      <div className='w-full flex justify-between px-5'>
-        <div className='w-1/2 flex flex-col gap-3'>
+      <div className='w-full gap-3 flex md:flex-row flex-col justify-between'>
+        <div className='md:w-1/2  flex flex-col gap-3'>
           <Accordion title='Ограничение длительности бронирования (день)'>
-            <div className='flex justify-between'>
-              <div className='w-[66%]'>
+            <div className='flex md:flex-row flex-col justify-between'>
+              <div className='md:w-[66%]'>
                 <FunctionlityCard editOnClick={() => showModal('bookingDuration')} title={`${data.bookingDuration ?? "0"}`} />
               </div>
-              <div className='w-[30%] flex items-center justify-between'>
+              <div className='md:w-[30%] flex items-center justify-between'>
                 <Checkbox
                   className='dark:text-white'
                   checked={data.bookingDuration === 0}
@@ -80,11 +80,11 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
             </div>
           </Accordion>
           <Accordion title='Ограничение бронирований в месяц'>
-            <div className='flex justify-between'>
-              <div className='w-[66%]'>
+            <div className='flex md:flex-row flex-col justify-between'>
+              <div className='md:w-[66%]'>
                 <FunctionlityCard editOnClick={() => showModal('bookingPerMonth')} title={`${data.bookingPerMonth ?? "0"}`} />
               </div>
-              <div className='w-[30%] flex items-center justify-between'>
+              <div className='md:w-[30%] flex items-center justify-between'>
                 <Checkbox
                   className='dark:text-white'
                   checked={data.bookingPerMonth === 0}
@@ -96,11 +96,11 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
             </div>
           </Accordion>
           <Accordion title='Ограничение бронирований с предоплатой в месяц'>
-            <div className='flex justify-between'>
-              <div className='w-[66%]'>
+            <div className='flex md:flex-row flex-col justify-between'>
+              <div className='md:w-[66%]'>
                 <FunctionlityCard editOnClick={() => showModal('prePaymentCount')} title={`${data.prePaymentCount ?? "0"}`} />
               </div>
-              <div className='w-[30%] flex items-center justify-between'>
+              <div className='md:w-[30%] flex items-center justify-between'>
                 <Checkbox
                   className='dark:text-white'
                   checked={data.prePaymentCount === 0}
@@ -112,7 +112,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
             </div>
           </Accordion>
         </div>
-        <div className='w-1/2 flex flex-col gap-3 px-5'>
+        <div className='md:w-1/2 flex flex-col gap-3'>
           <Accordion title='Ограничение галереи'>
             <div className='flex flex-col justify-between'>
               <p className='mt-3 mb-3 dark:text-white'>Количество альбомов</p>
@@ -165,7 +165,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
           </Accordion>
         </div>
       </div>
-      <div className='ms-5 mt-3'>
+      <div className='md:ms-5 mt-3'>
         <Buttons onClick={onSave}>
           Сохранить изменения
         </Buttons>

@@ -37,7 +37,9 @@ const Sms = ({ editId, replyId, chatId, senderId, sendMessage, chat, setContent,
   };
 
   const handleEdit = (id: any) => {
+    let cont = chats.find((item) => item.id === id)?.content;
     editId(id);
+    // setContent(cont);
   };
 
   const items = (id: number) => [

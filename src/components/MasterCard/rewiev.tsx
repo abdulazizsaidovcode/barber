@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Progress, Radio, RadioChangeEvent, Skeleton } from 'antd';
 
 import { Toaster } from 'react-hot-toast';

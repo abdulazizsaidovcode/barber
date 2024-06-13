@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Switch from './TableSwitcher';
 
 interface StoragePath {
@@ -52,10 +52,6 @@ interface DetailsFirstTabProps {
 }
 
 const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState }) => {
-  useEffect(() => {
-    setNewState(newState);
-  }, [newState, setNewState]);
-
   const toggleSwitch = (id: number) => {
     setNewState(prev => ({
       ...prev,
@@ -64,28 +60,31 @@ const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState
   };
 
   return (
-    <table className='w-full'>
-      <thead>
-        <tr className='bg-[#d0eeff] h-10'>
-          <th className='text-start px-4'>Категория функционала</th>
-          <th className='text-start px-4'>Функционал</th>
-          <th className='text-start px-4'>Описание</th>
-          <th className='text-start px-4'>Статус</th>
-        </tr>
-      </thead>
-      <tbody>
-        {storagePaths.map((path) => (
-          <tr key={path.id} className='table-row'>
-            <td className='px-4 py-7 dark:text-white'>{path.component}</td>
-            <td className='px-4 py-7 dark:text-white'>{path.mount}</td>
-            <td className='px-4 py-7 dark:text-white'>{path.name}</td>
-            <td className='px-4 py-7 dark:text-white'>
-              <Switch isOn={!!newState[path.id]} handleToggle={() => toggleSwitch(path.id)} />
-            </td>
+    <div className='overflow-x-auto'>
+      <table className='w-full table-auto'>
+        <thead>
+          <tr className='bg-[#d0eeff] h-10'>
+            <th className='text-start px-4'>Категория функционала</th>
+            <th className='text-start px-4'>Функционал</th>
+            <th className='text-start px-4'>Описание</th>
+            <th className='text-start px-4'>Статус</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {storagePaths.map((path) => (
+            <tr key={path.id}>
+              <td className='px-4 py-7 dark:text-white'>{path.component}</td>
+              <td className='px-4 py-7 dark:text-white'>{path.mount}</td>
+              <td className='px-4 py-7 dark:text-white'>{path.name}</td>
+              <td className='px-4 py-7 dark:text-white'>
+                <Switch isOn={!!newState[path.id]} handleToggle={() => toggleSwitch(path.id)} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
   );
 };
 
