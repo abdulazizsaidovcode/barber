@@ -53,7 +53,11 @@ function App() {
   useEffect(() => {
     setConfig();
     window.scrollTo(0, 0);
-    if (!isToken) navigate(`/auth/signin`);
+    if (!isToken) {
+      if (pathname === '/') window.location.reload();
+      navigate(`/auth/signin`);
+      sessionStorage.clear();
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -427,5 +431,6 @@ function App() {
     </>
   );
 }
+
 // Rejected
 export default App;

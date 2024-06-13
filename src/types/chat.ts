@@ -24,6 +24,7 @@ export interface ChatSentSmsType {
   chat: ChatSentSmstList[],
   content: string
   setContent: (val: any) => void
+  reply: any
 }
 
 export interface ChatSentSmstList {
