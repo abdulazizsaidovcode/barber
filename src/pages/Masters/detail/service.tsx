@@ -34,7 +34,7 @@ const Service: React.FC = () => {
         {orderDetails.map((orderDetail, index) => (
           <MasterProcedures
             key={index}
-            ServesId={orderDetail.id}
+            servicesId={orderDetail.id}
             title={orderDetail.name}
             imgUrl={`${getFileId}${orderDetail.attachmentId}`}
             price={orderDetail.price}
