@@ -1,8 +1,8 @@
-// src/helpers/apiService.ts
 import axios from 'axios';
-import { reviews_list_data, reviews_main_data } from '../../api';
+import { reviews_list_data, reviews_list_delete, reviews_main_data } from '../../api';
 import { config } from '../../token';
 import { ListData, MainData } from '../../../types/review';
+import toast from 'react-hot-toast';
 
 
 export const fetchMainData = async (setMainData: (data: MainData) => void) => {
@@ -11,19 +11,25 @@ export const fetchMainData = async (setMainData: (data: MainData) => void) => {
         if (res.data.success) {
             setMainData(res.data.body);
         }
-    } catch (error) {
-        console.log(error);
-    }
+    } catch { }
 };
 
-export const fetchDataList = async (setDataList: (data: ListData[]) => void, page: number, size: number,  setTotalPage: (data: number) => void) => {
+export const fetchDataList = async (setDataList: (data: ListData[]) => void, page: number, size: number, setTotalPage: (data: number) => void) => {
     try {
         const res = await axios.get(`${reviews_list_data}?page=${page}&size=${size}`, config);
         if (res.data.success) {
             setDataList(res.data.body.object);
             setTotalPage(res.data.body.totalElements);
         }
-    } catch (error) {
-        console.log(error);
-    }
+    } catch { }
 }
+
+export const deleteListData = async (id: string | null, setDataList: (data: ListData[]) => void, page: number, size: number, setTotalPage: (totalPages: number) => void) => {
+    try {
+        await axios.delete(`${reviews_list_delete}/${id}`, config);
+        if (id !== null) {
+            toast.success('Review successfully deleted');
+            fetchDataList(setDataList, page, size, setTotalPage);
+        }
+    } catch { }
+};

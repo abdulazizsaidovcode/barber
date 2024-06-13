@@ -7,9 +7,10 @@ import { getFileId } from '../../../helpers/api';
 
 interface ReviewsServiceCardProps {
     data: ListData;
+    openModal: () => void
 }
 
-const ReviewsServiceCard: React.FC<ReviewsServiceCardProps> = ({ data }) => {
+const ReviewsServiceCard: React.FC<ReviewsServiceCardProps> = ({ data, openModal }) => {
     const { count, client, text, date, master } = data;
     const clientFirstName = client?.firstName || '';
     const clientLastName = client?.lastName || '';
@@ -36,7 +37,7 @@ const ReviewsServiceCard: React.FC<ReviewsServiceCardProps> = ({ data }) => {
                     <div>
                         <span>{date}</span>
                     </div>
-                    <div className='w-10 h-10 border-[1px] border-red-900 flex items-center justify-center rounded-full'>
+                    <div onClick={openModal} className='w-10 h-10 border-[1px] border-red-900 flex items-center justify-center rounded-full'>
                         <DeleteOutlined className="text-red-900 text-xl cursor-pointer" />
                     </div>
                 </div>
