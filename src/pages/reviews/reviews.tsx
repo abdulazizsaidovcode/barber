@@ -18,7 +18,7 @@ const Reviews: React.FC = () => {
   useEffect(() => {
     fetchMainData(setMainData, reviews_main_data);
     getRegion(setRegionData);
-    fetchMasterDataList(setListMasterData, reviews_list_master_data)
+    fetchMasterDataList(setListMasterData, `reviews_list_master_data?page=0&size=${pageSize}`);
   }, []);
 
   useEffect(() => {

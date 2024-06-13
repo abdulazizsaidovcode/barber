@@ -5,7 +5,7 @@ import userImg from '../../../images/user.png'
 import { ListMasterData } from '../../../types/review';
 
 
-const ReviewsMasersCard: React.FC<{ data: ListMasterData }> = ({ data }) => {
+const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void }> = ({ data, openModal }) => {
     const { clientFirstName, clientLastName, masterFirstName, masterLastName, description, masterFeedbackCount, feedbackCount, feedbackDate } = data;
     return (
         <div className="w-full p-4 reviews-shadow mt-3 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
@@ -48,7 +48,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData }> = ({ data }) => {
                     </div>
                 </div>
                 <div className="text-gray-500 flex flex-col items-center">
-                    <div className='w-10 h-10 border-[1px] border-red-500 flex items-center justify-center rounded-full'>
+                    <div onClick={openModal} className='w-10 h-10 border-[1px] border-red-500 flex items-center justify-center rounded-full'>
                         <DeleteOutlined className="text-red-500 text-xl cursor-pointer" />
                     </div>
                     <p>{feedbackDate}</p>
