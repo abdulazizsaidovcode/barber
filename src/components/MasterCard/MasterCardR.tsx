@@ -152,7 +152,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
     <div className="flex flex-col lg:flex-row-reverse gap-4 mt-4">
       <div className="w-[100%] flex flex-col items-center justify-center gap-4">
         <Skeleton loading={isLoading} active>
-          <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+          <div className="bg-gray-100 dark:bg-boxdark  text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Profile:</p>
               <div
@@ -162,7 +162,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Send_Message')}
               </div>
             </div>
-            <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
+            <div className="w-[100%] bg-black dark:bg-white h-[1px] flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
               <strong>{t('Name')}:</strong> {MasterName}
             </p>
@@ -190,13 +190,13 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+          <div className="bg-gray-100 dark:bg-boxdark text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
             <div className="flex items-center">
               <p className="text-xl font-bold">
                 {t('Profession_information')}:
               </p>
             </div>
-            <div className="w-[100%] bg-black h-[1px] flex items-center mb-4 mt-3"></div>
+            <div className="w-[100%] bg-black dark:bg-white h-[1px] flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
               <strong>{t('Place_of_work')}:</strong> {PlaceOfWork}
             </p>
@@ -217,7 +217,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       </div>
       <div className="flex flex-col h-full justify-between gap-4">
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center gap-4">
               <div
                 className={` rounded-[50%] w-2 h-2 font-bold ${
@@ -242,9 +242,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-boxdark  text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold">Status:</p>
+              <p className="text-black dark:text-white font-bold">Status:</p>
               <div
                 className={`px-6 rounded-xl font-bold ${
                   Status === 'BLOCKED'
@@ -264,11 +264,12 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col  dark:bg-boxdark dark:text-white text-black  border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black font-bold mb-2 mt-2">{t('Contacts')}:</p>
+              <p className="text-black dark:text-white font-bold mb-2 mt-2">{t("Contacts")}:</p>
             </div>
-            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
+            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Phone')} :</strong>
               <p>{Number}</p>
@@ -284,13 +285,14 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-boxdark  text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black font-bold mb-2 mt-2">
                 {t('Indicators')}:
               </p>
+              <p className="text-black dark:text-white font-bold mb-2 mt-2">{t("Indicators")}:</p>
             </div>
-            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black"></div>
+            <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Completed_Orders')}:</strong>
               <p>{CompOrders}</p>
@@ -316,8 +318,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         </Skeleton>
       </div>
       <div>
-        <Modal isOpen={isOpen} onClose={closeModal}>
-          <p className="text-2xl font-bold">{t('Modal_answer')}</p>
+        <Modal isOpen={isOpen} onClose={closeModal} mt={'lg:w-[30%] w-[70%]'}>
+          <div className='w-[100%] dark:text-white text-black '>
+             <p className="text-2xl md:text-lg font-bold">{t('Modal_answer')}</p>
           <div className="flex items-center gap-2 justify-end mt-3">
             <Button key="back" onClick={closeModal}>
               {t('No')}
@@ -325,6 +328,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
 
             <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
           </div>
+          </div>
+
         </Modal>
       </div>
 

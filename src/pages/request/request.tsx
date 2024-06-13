@@ -49,7 +49,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
                     <CgMenuLeft className="text-[1.5rem] font-bold" />
                 </button>
                 <div
-                    className={`fixed z-10 h-full transition-transform transform ${
+                    className={`fixed z-5 h-full transition-transform transform ${
                         isSidebarOpen ? 'translate-x-0 top-9' : '-translate-x-full'
                     } md:translate-x-0 lg:w-1/5 md:w-[240px] sm:w-3/5 w-4/5 dark:bg-gray-800`}>
                    

@@ -16,15 +16,15 @@ const OrderDetail: React.FC = () => {
           <MainTabs />
           {statusO === "UPCOMING" ? (
             <div className="rounded-xl text-white bg-[#ffa723] p-1 px-4 flex items-center justify-center">
-              {t("detail_payment_type")}
+              Не начиналась
             </div>
           ) : statusO === "COMPLETED" ? (
             <div className="rounded-xl text-white bg-[#288f23] p-1 px-4 flex items-center justify-center">
-              {t("detail_payment_type")}
+              Завершён
             </div>
           ) : (
             <div className="rounded-xl text-white bg-[#f13d3d] p-1 px-4 flex items-center justify-center">
-              {t("detail_payment_type")}
+              Отклонена
             </div>
           )}
         </div>

@@ -4,14 +4,18 @@ import { config } from '../../token';
 import { ListData, ListMasterData, MainData } from '../../../types/review';
 import toast from 'react-hot-toast';
 
+const handleApiError = (error: any) => {
+  console.error(error);
+};
+
 export const fetchMainData = async (setMainData: (data: MainData) => void, url: string) => {
   try {
     const res = await axios.get(url, config);
     if (res.data.success) {
       setMainData(res.data.body);
     }
-  } catch {
-    // Handle error
+  } catch (error) {
+    handleApiError(error);
   }
 };
 
@@ -24,7 +28,8 @@ export const fetchDataList = async (setDataList: (data: ListData[]) => void, set
     } else {
       setDataList([]);
     }
-  } catch {
+  } catch (error) {
+    handleApiError(error);
     setDataList([]);
   }
 };
@@ -37,20 +42,21 @@ export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterDa
     } else {
       setMasterDataList([]);
     }
-  } catch {
+  } catch (error) {
+    handleApiError(error);
     setMasterDataList([]);
   }
 };
 
 export const deleteListData = async (id: string | null, setDataList: (data: ListData[]) => void, setTotalPage: (totalPages: number) => void, url: string) => {
   try {
-    await axios.delete(`${reviews_list_delete}/${id}`, config);
-    if (id !== null) {
+    if (id) {
+      await axios.delete(`${reviews_list_delete}/${id}`, config);
       toast.success('Review successfully deleted');
-      fetchDataList(setDataList, setTotalPage, url);
+      await fetchDataList(setDataList, setTotalPage, url);
     }
-  } catch {
-    // Handle error
+  } catch (error) {
+    handleApiError(error);
   }
 };
 
@@ -58,8 +64,8 @@ export const deleteMasterDataList = async (id: string, setMasterDataList: (data:
   try {
     await axios.delete(`${reviews_list_delete}/${id}`, config);
     toast.success('Review successfully deleted');
-    fetchMasterDataList(setMasterDataList, url);
-  } catch {
-    // Handle error
+    await fetchMasterDataList(setMasterDataList, url);
+  } catch (error) {
+    handleApiError(error);
   }
 };

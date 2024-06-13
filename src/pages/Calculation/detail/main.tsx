@@ -1,20 +1,16 @@
 import React from "react";
 import { Tabs } from "antd";
-import { useTranslation } from "react-i18next";
 import orderStore from "../../../helpers/state_managment/order/orderStore";
+import { useTranslation } from "react-i18next";
 
 const { TabPane } = Tabs;
 
 const MainTabs: React.FC = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation()
   const { setIsDetail, isComplated } = orderStore();
 
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
   return (
-    <Tabs defaultActiveKey="1" onChange={onChange}>
+    <Tabs moreIcon={false} more={undefined} defaultActiveKey="1" >
       <TabPane
         tab={
           <span
@@ -23,7 +19,7 @@ const MainTabs: React.FC = () => {
             }}
             className="text-black text-lg md:text-xl lg:text-2xl"
           >
-            {t("FirstTab_name")}
+            Детали записи
           </span>
         }
         key="1"
@@ -37,7 +33,7 @@ const MainTabs: React.FC = () => {
               }}
               className="text-black text-lg md:text-xl lg:text-2xl"
             >
-              {t("SecondTab_name")}
+              {t("Отзывы")}
             </span>
           }
           key="2"

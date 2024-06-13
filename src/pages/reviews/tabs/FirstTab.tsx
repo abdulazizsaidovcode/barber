@@ -57,9 +57,9 @@ const FirstTab: React.FC = () => {
       </div>
       <div className="flex md:flex-row gap-3 flex-col reviews-shadow mt-5 items-center bg-white w-full h-max p-5 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
         <div className="md:w-1/3 w-full">
-          <p className="md:text-xl">{mainData.allAverageFeedback} ({mainData.allReviewsCount} отзывов)</p>
-          <p className="md:text-xl">Мастера - {mainData.masterAverageFeedback} ({mainData.masterReviewsCount})</p>
-          <p className="md:text-xl">Клиенты - {mainData.clientAverageFeedback} ({mainData.clientReviewsCount})</p>
+          <p className="md:text-xl">{mainData.allAverageFeedback.toFixed(1)} ({mainData.allReviewsCount} отзывов)</p>
+          <p className="md:text-xl">Мастера - {mainData.masterAverageFeedback.toFixed(1)} ({mainData.masterReviewsCount})</p>
+          <p className="md:text-xl">Клиенты - {mainData.clientAverageFeedback.toFixed(1)} ({mainData.clientReviewsCount})</p>
         </div>
         <div className="md:w-1/3 w-full">
           <div className="flex">
@@ -80,33 +80,33 @@ const FirstTab: React.FC = () => {
           </div>
         </div>
         <div className="md:w-1/3 w-full">
-          <p className="md:text-xl">Мастера мужчины - {mainData.maleMasterFeedback} ({mainData.maleMasterCount})</p>
-          <p className="md:text-xl">Мастера женщины - {mainData.femaleMasterFeedback} ({mainData.femaleMasterCount})</p>
-          <p className="md:text-xl">Клиенты мужчины - {mainData.maleClientFeedback} ({mainData.maleClientCount})</p>
-          <p className="md:text-xl">Клиенты женщины - {mainData.femaleClientFeedback} ({mainData.femaleClientCount})</p>
+          <p className="md:text-xl">Мастера мужчины - {mainData.maleMasterFeedback.toFixed(1)} ({mainData.maleMasterCount})</p>
+          <p className="md:text-xl">Мастера женщины - {mainData.femaleMasterFeedback.toFixed(1)} ({mainData.femaleMasterCount})</p>
+          <p className="md:text-xl">Клиенты мужчины - {mainData.maleClientFeedback.toFixed(1)} ({mainData.maleClientCount})</p>
+          <p className="md:text-xl">Клиенты женщины - {mainData.femaleClientFeedback.toFixed(1)} ({mainData.femaleClientCount})</p>
         </div>
       </div>
       <div className="mt-4">
         {listData.length === 0 ?
           <div className="w-full h-[200px] flex justify-center items-center">
             <p className="text-xl dark:text-white">Reviews not found</p>
-          </div>
-          : listData.map((item, index) => (
-            <div>
+          </div> :
+          <div>
+            {listData.map((item, index) => (
               <div className='flex flex-col gap-3' key={index}>
                 <ReviewsServiceCard data={item} openModal={() => openDelModal(item.id)} />
               </div>
-              <div>
-                <Pagination
-                  showSizeChanger
-                  current={currentPage + 1}
-                  pageSize={pageSize}
-                  total={totalPage}
-                  onChange={onPageChange}
-                />
-              </div>
+            ))}
+            <div>
+              <Pagination
+                showSizeChanger
+                current={currentPage + 1}
+                pageSize={pageSize}
+                total={totalPage}
+                onChange={onPageChange}
+              />
             </div>
-          ))
+          </div>
         }
       </div>
       <DelModal isOpen={isDelModal} onDelete={handleDelete} onClose={closeDelModal} />
