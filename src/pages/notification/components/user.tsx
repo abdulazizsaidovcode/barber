@@ -38,7 +38,7 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
 
                                     {item.status !== "OFFLINE" && <p>✅</p>}
                                 </div>
-                                <div className='absolute right-3 -top-4 bg-green-600 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full'>{item.newMessageCount}</div>
+                                {item.newMessageCount > 0 && <div className='absolute right-3 -top-4 bg-green-600 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full'>{item.newMessageCount}</div>}
                             </div>
                         </li>
                     )

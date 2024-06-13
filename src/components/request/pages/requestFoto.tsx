@@ -76,27 +76,31 @@ const RequestFoto: React.FC = () => {
               </p>
             </div>
           ) : (
-            data.map((item, index) => (
-              <FotoCard
-                key={index}
-                link={item.id}
-                ownerImage={item.attachmentId ? getFileId + item.attachmentId : ''}
-                salonOwner={`${item.firstName} ${item.lastName}`}
-                phoneNumber={item.phoneNumber}
-                salonCreateDate={item.createdAt}
-                salonDescription='Мастер добавил/изменил фото в галерею'
-              />
-            ))
+            <div>
+              <div className='flex gap-3'>
+                {data.map((item, index) => (
+                  <FotoCard
+                    key={index}
+                    link={item.id}
+                    ownerImage={item.attachmentId ? getFileId + item.attachmentId : ''}
+                    salonOwner={`${item.firstName} ${item.lastName}`}
+                    phoneNumber={item.phoneNumber}
+                    salonCreateDate={item.createdAt}
+                    salonDescription='Мастер добавил/изменил фото в галерею'
+                  />
+                ))}
+              </div>
+              <div className='mt-5'>
+                <Pagination
+                  showSizeChanger
+                  current={currentPage + 1}
+                  pageSize={pageSize}
+                  total={totalItems}
+                  onChange={onPageChange}
+                />
+              </div>
+            </div>
           )}
-        </div>
-        <div className='p-3 mt-5'>
-          <Pagination
-            showSizeChanger
-            current={currentPage + 1}
-            pageSize={pageSize}
-            total={totalItems}
-            onChange={onPageChange}
-          />
         </div>
       </div>
     </RequestLayout>

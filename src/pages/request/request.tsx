@@ -50,22 +50,21 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
                     <CgMenuLeft className="text-[1.5rem] font-bold" />
                 </button>
                 <div
-                    className={`${isSidebarOpen ? '-mt-8 left-0 top-0 z-10 w-full' : 'hidden'
-                        } md:flex md:w-1/5 md:fixed dark:bg-gray-800 h-full transition-all duration-300 ease-in-out transform`}>
-                    {isMobileView && (
-                        <button onClick={toggleSidebar} className="text-black dark:text-blue-950 bg-transparent">
-                            <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
-                        </button>
-                    )}
+                    className={`fixed z-10 h-full transition-transform transform ${
+                        isSidebarOpen ? 'translate-x-0 top-9' : '-translate-x-full'
+                    } md:translate-x-0 lg:w-1/5 md:w-[240px] sm:w-3/5 w-4/5 dark:bg-gray-800`}>
+                   
                     <RequestSidebar
                         newMastersCount={counts.masterCount}
+                        toggleSidebar={toggleSidebar}
+                        isMobileView={isMobileView}
                         newFotoCount={counts.galleryCount}
                         categoryCount={counts.categoryCount}
                         serviceCount={counts.serviceCount}
                         allCount={counts.allCount}
                     />
                 </div>
-                <div className="w-full p-2 md:ms-[310px]">
+                <div className="md:w-4/5 p-2 md:ms-[25%]">
                     {children}
                 </div>
             </div>

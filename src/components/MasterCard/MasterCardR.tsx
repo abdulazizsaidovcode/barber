@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Skeleton, Button } from 'antd';
+import { Skeleton, Button, Rate } from 'antd';
 import Switch from './../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
 import { useTranslation } from 'react-i18next';
@@ -221,7 +221,13 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center gap-4">
-              <div className="bg-green-500 rounded-[50%] w-3 h-3"></div>
+              <div
+                className={` rounded-[50%] w-2 h-2 font-bold ${
+                  StatusNow === 'OFFLINE'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-green-500'
+                }`}
+              ></div>
               <p>{StatusNow}</p>
             </div>
             <div className="flex items-center justify-center border-black p-1 rounded-full">
@@ -241,7 +247,13 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:text-black border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black font-bold">Status:</p>
-              <div className="bg-green-500 px-6 rounded-xl font-bold">
+              <div
+                className={`px-6 rounded-xl font-bold ${
+                  Status === 'BLOCKED'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-green-500'
+                }`}
+              >
                 {Status}
               </div>
             </div>
@@ -293,7 +305,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             </div>
             <div className="flex items-center justify-between mt-4">
               <strong>Level:</strong>
-              <p>{Level}⭐</p>
+
+              <Rate disabled defaultValue={Level} />
             </div>
             <div className="flex items-center justify-between mt-4">
               <strong>Start work:</strong>

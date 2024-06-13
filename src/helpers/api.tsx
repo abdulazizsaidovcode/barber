@@ -55,7 +55,8 @@ export const master_gallery_message: string = `${base_url}message/for/master/by/
 export const master_block_put: string = `${base_url}user/web/master-edit-status`; //master_review_data
 export const master_review_data: string = `${base_url}user/web/cleint-edit-status`; //master_review_data//master_default_values
 export const master_default_values: string = `${base_url}feedback/for/master/`; //master_review_data//master_default_values
-export const master_default_feedback: string = `${base_url}feedback/filter/`; //master_review_data//master_default_values
+export const master_default_feedback: string = `${base_url}feedback/filter/`; //master_review_data//master_default_values/ post_message_api
+export const post_message_api: string = `${base_url}message/for/master/by/admin`; //master_review_data//master_default_values/ post_message_api
 
 export const update_master_status: string = `${base_url}user/web/master-edit-status`;
 
@@ -73,6 +74,7 @@ export const login_url: string = `${base_url}auth/admin-login`;
 export const add_precent_list: string = `${base_url}percent`;
 // order url
 export const get_orders_list: string = `${base_url}order/web`;
+export const get_orders_otis: string = `${base_url}feedback/web/one/feedback/`;
 
 // settings url
 export const service_category_list: string = `${base_url}category`;
@@ -134,7 +136,7 @@ export const tarif_put_url = `${base_url}tariff/web`;
 export const getFileId = `${base_url}attachment/getFile/`; // get chat list
 export const postFileId = `${base_url}attachment/upload`; // get chat list
 export const postFilelist = `${base_url}attachment/upload/list`; // get chat list
-export const deleteFile: string = `${base_url}help/attachment/`
+export const deleteFile: string = `${base_url}help/attachment/`;
 
 export const newsletters_url = `${base_url}newsletters`; // newsletters url
 export const messages_url = `${base_url}chat/messages`; // newsletters url

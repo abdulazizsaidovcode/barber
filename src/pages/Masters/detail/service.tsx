@@ -35,7 +35,7 @@ const Service: React.FC = () => {
           <MasterProcedures
             key={index}
             servicesId={orderDetail.id}
-            title={orderDetail.name}
+             title={orderDetail.name}
             imgUrl={`${getFileId}${orderDetail.attachmentId}`}
             price={orderDetail.price}
             duration={orderDetail.serviceTime}
