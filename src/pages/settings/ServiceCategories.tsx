@@ -58,7 +58,7 @@ const ServiceCategories = () => {
                 icon: '⚠️'
             });
         } else if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
-            toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+            toast(t("Please_enter"), { icon: '⚠️' });
         } else {
             setAddLoading(true);
             axios.post(add_service_category, newCategory, config)
@@ -106,7 +106,7 @@ const ServiceCategories = () => {
                 });
                 return;
             } else if (!editedCategoryName.trim() || /[^a-zA-Z0-9]/.test(editedCategoryName)) {
-                toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+                toast(t("Please_enter"), { icon: '⚠️' });
                 return;
             }
 
@@ -216,7 +216,7 @@ const ServiceCategories = () => {
                             className="sm:py-2 py-1 px-8 sm:px-10 rounded-lg dark:bg-danger bg-slate-800 text-white "
                             disabled={addLoading}
                         >
-                            {addLoading ? 'Loading...' : t("Add")}
+                            {addLoading ? t("Loading") : t("Add")}
                         </button>
                     </div>
                     <Toaster
