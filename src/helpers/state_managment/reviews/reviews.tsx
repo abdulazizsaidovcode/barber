@@ -12,6 +12,7 @@ interface FiltersReview {
   startDate: string | null | any;
   endDate: string | null | any;
 }
+
 interface MasterFiltersReview {
   firstNameOrLastName: string;
   regionId: string | null;
@@ -35,9 +36,9 @@ interface ReviewsStore {
   currentMasterPage: number;
   pageMasterSize: number;
   isDelModal: boolean;
-  filterObj: FiltersReview;
   filters: FiltersReview;
   masterFilters: MasterFiltersReview;
+  filterObj: FiltersReview;
   setMainData: (data: MainData) => void;
   setDelModal: (isDel: boolean) => void;
   setListData: (data: ListData[]) => void;
@@ -83,20 +84,7 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
     MASTER_OR_CLIENT: null,
     date: null,
     startDate: null,
-    endDate: null,
-  },
-  masterFilterObj: {
-    firstNameOrLastName: '',
-    GENDER: null,
-    regionId: null,
-    districtId: null,
-    startRating: null,
-    endRating: null,
-    combinedRating: null,
-    MASTER_OR_CLIENT: null,
-    date: null,
-    startDate: null,
-    endDate: null,
+    endDate: null
   },
   filters: {
     firstNameOrLastName: '',
@@ -111,13 +99,11 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
   },
   masterFilters: {
     firstNameOrLastName: '',
-    GENDER: null,
     regionId: null,
     districtId: null,
     startRating: null,
     endRating: null,
     combinedRating: null,
-    MASTER_OR_CLIENT: null,
     date: null,
     startDate: null,
     endDate: null,

@@ -57,9 +57,7 @@ const TariffDetail: React.FC = () => {
         monthPrice: res.data.body.monthPrice,
         yearPrice: res.data.body.yearPrice
       });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    } catch {}
   };
 
   const updateData = async () => {
@@ -77,9 +75,7 @@ const TariffDetail: React.FC = () => {
     try {
       await axios.put(tarif_put_url, payload, config);
       toast.success('Tariff updated successfully');
-    } catch (error) {
-      console.error('Error updating tariff:', error);
-    }
+    } catch {}
   };
 
   const onChange = (key: string) => {
