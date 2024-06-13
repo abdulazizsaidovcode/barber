@@ -118,7 +118,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const sendMessage = async () => {
     try {
       const response = await axios.post(
-        master_send_message_master,
+        `${master_send_message_master}`,
         {
           clientId: null,
           masterId: id,
@@ -267,7 +267,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className="flex flex-col  dark:bg-boxdark dark:text-white text-black  border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black font-bold mb-2 mt-2">{t('Contacts')}:</p>
-              <p className="text-black dark:text-white font-bold mb-2 mt-2">{t("Contacts")}:</p>
+              <p className="text-black dark:text-white font-bold mb-2 mt-2">
+                {t('Contacts')}:
+              </p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
@@ -290,7 +292,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <p className="text-black font-bold mb-2 mt-2">
                 {t('Indicators')}:
               </p>
-              <p className="text-black dark:text-white font-bold mb-2 mt-2">{t("Indicators")}:</p>
+              <p className="text-black dark:text-white font-bold mb-2 mt-2">
+                {t('Indicators')}:
+              </p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
@@ -319,17 +323,16 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       </div>
       <div>
         <Modal isOpen={isOpen} onClose={closeModal} mt={'lg:w-[30%] w-[70%]'}>
-          <div className='w-[100%] dark:text-white text-black '>
-             <p className="text-2xl md:text-lg font-bold">{t('Modal_answer')}</p>
-          <div className="flex items-center gap-2 justify-end mt-3">
-            <Button key="back" onClick={closeModal}>
-              {t('No')}
-            </Button>
+          <div className="w-[100%] dark:text-white text-black ">
+            <p className="text-2xl md:text-lg font-bold">{t('Modal_answer')}</p>
+            <div className="flex items-center gap-2 justify-end mt-3">
+              <Button key="back" onClick={closeModal}>
+                {t('No')}
+              </Button>
 
-            <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
+              <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
+            </div>
           </div>
-          </div>
-
         </Modal>
       </div>
 
