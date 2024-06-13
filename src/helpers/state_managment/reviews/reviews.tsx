@@ -1,6 +1,17 @@
 import create from 'zustand';
 import { ListData, MainData } from '../../../types/review';
 
+interface FiltersReview {
+  firstNameOrLastName: string;
+  GENDER: string | null;
+  regionId: string | null;
+  districtId: string | null;
+  rating: string | null | number;
+  MASTER_OR_CLIENT: string | null;
+  date: string | null | any;
+  startDate: string | null | any;
+  endDate: string | null | any;
+}
 
 interface ReviewsStore {
   mainData: MainData;
@@ -18,18 +29,6 @@ interface ReviewsStore {
   filterObj: FiltersReview;
   filters: FiltersReview;
   setFilters: (val: FiltersReview) => void;
-}
-
-export interface FiltersReview {
-  firstNameOrLastName: string;
-  GENDER: string | null;
-  regionId: string | null;
-  districtId: string | null;
-  rating: string | null | number;
-  MASTER_OR_CLIENT: string | null;
-  date: string | null | any;
-  startDate: string | null | any;
-  endDate: string | null | any;
 }
 
 const useReviewsStore = create<ReviewsStore>((set) => ({
@@ -52,7 +51,7 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
     masterReviewsCount: 0,
     oneStarFeedbackCount: 0,
     threeStarFeedbackCount: 0,
-    twoStarFeedbackCount: 0
+    twoStarFeedbackCount: 0,
   },
   filterObj: {
     firstNameOrLastName: '',
@@ -63,7 +62,7 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
     MASTER_OR_CLIENT: null,
     date: null,
     startDate: null,
-    endDate: null
+    endDate: null,
   },
   filters: {
     firstNameOrLastName: '',
@@ -74,7 +73,7 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
     MASTER_OR_CLIENT: null,
     date: null,
     startDate: null,
-    endDate: null
+    endDate: null,
   },
   setFilters: (val: FiltersReview) => set({ filters: val }),
   listData: [],
@@ -87,7 +86,7 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
   setListData: (val: ListData[]) => set({ listData: val }),
   setTotalPage: (page: number) => set({ totalPage: page }),
   setPageSize: (size: number) => set({ pageSize: size }),
-  setCurrentPage: (current: number) => set({ currentPage: current })
+  setCurrentPage: (current: number) => set({ currentPage: current }),
 }));
 
 export default useReviewsStore;
