@@ -1,19 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pagination, Rate } from 'antd';
 import ReviewsServiceCard from '../cards/ReviewsServiceCard';
 import DelModal from '../../../components/settings/modals/delModal';
 import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
 import ReviewFilters from '../components/filters';
+import { deleteListData, fetchDataList } from '../../../helpers/api-function/reviews/reviews';
 
 const FirstTab: React.FC = () => {
-  const [isDelOpen, setIsDelOpen] = useState(false);
-  const openDelModal = () => setIsDelOpen(true);
-  const closeDelModal = () => setIsDelOpen(false);
-  const { mainData, listData, totalPage, pageSize, setPageSize, setCurrentPage, currentPage } = useReviewsStore();
+  const {
+    mainData,
+    listData,
+    totalPage,
+    pageSize,
+    currentPage,
+    isDelModal,
+    setDelModal,
+    setPageSize,
+    setCurrentPage,
+    setListData,
+    setTotalPage
+  } = useReviewsStore();
+  
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const openDelModal = (id: string) => {
+    setSelectedId(id);
+    setDelModal(true);
+  };
+
+  const closeDelModal = () => {
+    setSelectedId(null);
+    setDelModal(false);
+  };
+
+  const handleDelete = async () => {
+    if (selectedId) {
+      await deleteListData(selectedId, setListData, currentPage, pageSize, setTotalPage);
+      closeDelModal();
+    }
+  };
+
+  useEffect(() => {
+    fetchDataList(setListData, currentPage, pageSize, setTotalPage);
+  }, [currentPage, pageSize]);
+
   const onPageChange = (page: number, pageSize: number) => {
     setCurrentPage(page - 1);
     setPageSize(pageSize);
   };
+
   return (
     <div>
       <div>
@@ -57,10 +92,13 @@ const FirstTab: React.FC = () => {
           </div>
         ) : (
           listData.map((item, index) => (
-            <ReviewsServiceCard key={index} data={item} />
+            <div key={index}>
+              <ReviewsServiceCard data={item} openModal={() => openDelModal(item.id)} />
+            </div>
           ))
         )}
       </div>
+      <DelModal isOpen={isDelModal} onDelete={handleDelete} onClose={closeDelModal} />
       <div>
         <Pagination
           showSizeChanger
@@ -70,7 +108,6 @@ const FirstTab: React.FC = () => {
           onChange={onPageChange}
         />
       </div>
-      <DelModal isOpen={isDelOpen} onClose={closeDelModal} />
     </div>
   );
 };

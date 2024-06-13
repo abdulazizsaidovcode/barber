@@ -8,7 +8,9 @@ interface ReviewsStore {
   totalPage: number;
   currentPage: number;
   pageSize: number;
+  isDelModal: boolean;
   setMainData: (data: MainData) => void;
+  setDelModal: (isDel: boolean) => void;
   setListData: (data: ListData[]) => void;
   setTotalPage: (page: number) => void;
   setCurrentPage: (currentPage: number) => void;
@@ -40,8 +42,10 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
   listData: [],
   totalPage: 0,
   currentPage: 0,
+  isDelModal: false,
   pageSize: 10,
   setMainData: (val: MainData) => set({ mainData: val }),
+  setDelModal: (val: boolean) => set({ isDelModal: val }),
   setListData: (val: ListData[]) => set({ listData: val }),
   setTotalPage: (page: number) => set({ totalPage: page }),
   setPageSize: (size: number) => set({ pageSize: size }),
