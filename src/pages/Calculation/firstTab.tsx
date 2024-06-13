@@ -24,12 +24,13 @@ const FilterComponent: React.FC = () => {
     { id: 11, name: t("master") },
     { id: 12, name: "" },
   ];
-
   return (
     <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
 
       <FilterOrder />
+      
+      
 
       <div>
         <MasterTable thead={tableHeaders}>

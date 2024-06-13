@@ -21,9 +21,10 @@ const MainTabs: React.FC = () => {
     getRegion(setRegionData)
     getChildCategory(setChildCategoy)
   }, [])
+
   useEffect(() => {
     getOrder({
-      status: "Upcoming",
+      status: statusO,
       setData: setData,
       setTotalPage: setTotalPage
     });
@@ -36,11 +37,6 @@ const MainTabs: React.FC = () => {
       label: (
         <span
           onClick={() => {
-            getOrder({
-              status: "UPCOMING",
-              setData: setData,
-              setTotalPage: setTotalPage
-            });
             setStatus("UPCOMING")
             setIsComplated(false)
           }}
@@ -56,11 +52,6 @@ const MainTabs: React.FC = () => {
       label: (
         <span
           onClick={() => {
-            getOrder({
-              status: "COMPLETED",
-              setData: setData,
-              setTotalPage: setTotalPage
-            });
             setStatus("COMPLETED")
             setIsComplated(true)
           }}
@@ -76,11 +67,6 @@ const MainTabs: React.FC = () => {
       label: (
         <span
           onClick={() => {
-            getOrder({
-              status: "REJECTED",
-              setData: setData,
-              setTotalPage: setTotalPage
-            });
             setStatus("REJECTED")
             setIsComplated(false)
           }}
