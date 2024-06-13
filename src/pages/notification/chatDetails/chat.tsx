@@ -142,6 +142,15 @@ const Chatdetail: React.FC = () => {
     }
   }, [chatId])
 
+  // read all messages
+
+  function readMeessage() {
+    if (stompClient && stompClient.connected) {
+      stompClient.send('/app/isRead', {}, JSON.stringify(chatId));
+      fetchMessages(adminId, recipientId);
+    }
+  }
+
   // edit messagi
   useEffect(() => {
     const editMessage = {
@@ -168,8 +177,7 @@ const Chatdetail: React.FC = () => {
   }, [editId])
 
   //reply message
-
-  useEffect(() => {
+  function replyMessage() {
     const replyObj = {
       messageId: replyId,
       chatDto: {
@@ -182,7 +190,7 @@ const Chatdetail: React.FC = () => {
     }
     console.log(replyId);
     console.log(replyObj);
-    
+
 
     if (replyId && content) {
       if (stompClient && stompClient.connected) {
@@ -193,7 +201,8 @@ const Chatdetail: React.FC = () => {
     } else {
       toast.error("Введите сообщение");
     }
-  }, [replyId])
+  }
+
 
   return (
     <div className="h-[92%]">
@@ -250,7 +259,7 @@ const Chatdetail: React.FC = () => {
           <ChatusersList user={chatData} role={role} userIds={setRecipientId} />
         </div>
         <div className="w-full relative ">
-          {recipientId ? <Sms editId={setEditId} replyId={setreplyId} chatId={setChatId} senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} /> : <Notselected />}
+          {recipientId ? <Sms editId={setEditId} replyId={setreplyId} chatId={setChatId} senderId={adminId} sendMessage={sendMessage} chat={messages} content={content} setContent={setContent} reply={replyMessage} /> : <Notselected />}
         </div>
       </div>
     </div>

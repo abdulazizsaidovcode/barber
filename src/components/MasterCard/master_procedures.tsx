@@ -7,8 +7,8 @@ import {
   master_confirm_new_service,
   master_delate_new_service,
 } from '../../helpers/api';
-import { config } from '../../helpers/token';
 import axios from 'axios';
+import { config } from '../../helpers/token';
 
 const { TextArea } = Input;
 
@@ -19,7 +19,7 @@ interface ProceduresProps {
   duration: number;
   description: string;
   serviceStatus: string;
-  ServesId: string;
+  servicesId: string;
 }
 
 const MasterProcedures: React.FC<ProceduresProps> = ({
@@ -29,11 +29,12 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   duration,
   description,
   serviceStatus,
-  ServesId,
+  servicesId,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
   const [value, setValue] = useState('');
+  const [currentServiceId, setCurrentServiceId] = useState<string>(ServesId.id);
   const location = useLocation();
 
   const id = location.pathname.substring(8);
@@ -60,7 +61,10 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         ? master_delate_service
         : master_delate_new_service;
     try {
-      const response = await axios.delete(`${apiEndpoint}${ServesId}`, config);
+      const response = await axios.delete(
+        `${apiEndpoint}${currentServiceId}`,
+        config,
+      );
       if (response) {
         message.success('Procedure deleted successfully');
         // Perform any additional state updates or refresh the list
@@ -75,10 +79,15 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
   const handleConfirm = async () => {
     try {
-      const response = await axios.put(`${master_confirm_new_service}${ServesId}`, config);
+      const response = await axios.put(
+        `${master_confirm_new_service}${servicesId}`,
+        config,
+      );
+
       if (response) {
         message.success('Procedure confirmed successfully');
-        // Perform any additional state updates or refresh the list
+        const updatedServiceId = response.data.servicesId;
+        setCurrentServiceId(updatedServiceId);
       } else {
         throw new Error('Failed to confirm procedure');
       }
@@ -168,7 +177,11 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           <Button key="cancel" onClick={hideModal}>
             Cancel
           </Button>,
-          <Button key="delete" type="primary" onClick={handleFirstModalDeleteClick}>
+          <Button
+            key="delete"
+            type="primary"
+            onClick={handleFirstModalDeleteClick}
+          >
             Delete
           </Button>,
         ]}

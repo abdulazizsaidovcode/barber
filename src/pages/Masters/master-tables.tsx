@@ -158,7 +158,7 @@ const MasterTables: React.FC = () => {
       <Modal isOpen={isModal} onClose={openIsModal}>
         <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
           <div className={`flex flex-col justify-center`}>
-            <p className={`font-bold text-xl text-black opacity-80 text-center`}>
+            <p className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}>
               {updateStatus.status === 'ACTIVE' ? 'Активный' : 'Заблокировать'} мастра?
             </p>
           </div>
