@@ -5,6 +5,7 @@ import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 
 const MasterLocation: React.FC = () => {
   const API_KEY: string = 'AIzaSyA1XGfEqBwWmScDF1KREhDpYHVdJX0VxuE';
+  // const API_KEY: string = 'AIzaSyDmtHK-BpQgKGdQfVY1Q_lL_aR7IIBRoRc';
   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const { data } = masterStore();
   return (
