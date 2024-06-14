@@ -69,7 +69,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
       <EditModal
         isOpen={isModalVisible}
         onClose={handleCancel}
-        value={currentValue}
+        defaultValue={`${currentValue}`}
         type='number'
         onChange={handleValueChange}
         onSave={handleOk}
