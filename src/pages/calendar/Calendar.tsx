@@ -223,7 +223,7 @@ const Calendar: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 text-sm gap-3 my-3">
         <button
           onClick={() => {
-                  handleButtonClick("All", "all");
+                  handleButtonClick("All", "");
           }}
           className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${activeButton === "All"
             ? "bg-[#2C3E50] text-white"
