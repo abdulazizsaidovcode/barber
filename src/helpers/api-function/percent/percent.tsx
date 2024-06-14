@@ -22,9 +22,8 @@ export const fetchData = (setData: (data: Data[]) => void) => {
 export const addPercent = (percent: string, setData: (data: Data[]) => void, toggleInput: () => void) => {
   const percentValue = parseFloat(percent);
 
-  if (percentValue < 0 || percentValue > 100) {
+  if (percentValue <= 0 || percentValue >= 100) {
     toast('Percent value must be between 0 and 100', { icon: '⚠️' });
-    toggleInput();
   } else if (percent.length === 0) {
     toast('Bosh ma\'lumot qo\'shyapsz', { icon: '⚠️' });
   } else {

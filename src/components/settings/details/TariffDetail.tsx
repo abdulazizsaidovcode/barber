@@ -20,6 +20,7 @@ interface SecondTabData {
 
 const TariffDetail: React.FC = () => {
   const [newState, setNewState] = useState<{ [key: number]: boolean }>({});
+  const [initialState, setInitialState] = useState<{ [key: number]: boolean }>({});
   const [name, setName] = useState<string>('');
   const [secondTabData, setSecondTabData] = useState<SecondTabData>({
     bookingDuration: 0,
@@ -30,12 +31,18 @@ const TariffDetail: React.FC = () => {
     monthPrice: 0,
     yearPrice: 0
   });
+  const [initialSecondTabData, setInitialSecondTabData] = useState<SecondTabData>(secondTabData);
+  const [hasChanges, setHasChanges] = useState(false);
 
   const id = window.location.pathname.substring(17);
 
   useEffect(() => {
     fetchData(id);
   }, [id]);
+
+  useEffect(() => {
+    checkForChanges();
+  }, [newState, secondTabData]);
 
   const fetchData = async (id: string) => {
     try {
@@ -47,8 +54,9 @@ const TariffDetail: React.FC = () => {
       }, {});
 
       setNewState(newState);
+      setInitialState(newState); // Save initial state
       setName(res.data.body.name);
-      setSecondTabData({
+      const fetchedSecondTabData = {
         bookingDuration: res.data.body.bookingDuration,
         bookingPerMonth: res.data.body.bookingPerMonth,
         prePaymentCount: res.data.body.prePaymentCount,
@@ -56,26 +64,16 @@ const TariffDetail: React.FC = () => {
         numberOfFoto: res.data.body.numberOfFoto,
         monthPrice: res.data.body.monthPrice,
         yearPrice: res.data.body.yearPrice
-      });
+      };
+      setSecondTabData(fetchedSecondTabData);
+      setInitialSecondTabData(fetchedSecondTabData); // Save initial data
     } catch {}
   };
 
-  const updateData = async () => {
-    const payload = {
-      id: id,
-      funcReqList: Object.keys(newState).filter(key => newState[Number(key)]).map(key => Number(key)),
-      bookingDuration: secondTabData.bookingDuration ?? 0,
-      bookingPerMonth: secondTabData.bookingPerMonth ?? 0,
-      prePaymentCount: secondTabData.prePaymentCount ?? 0,
-      numberOfAlbums: secondTabData.numberOfAlbums ?? 0,
-      numberOfFoto: secondTabData.numberOfFoto ?? 0,
-      monthPrice: secondTabData.monthPrice ?? 0,
-      yearPrice: secondTabData.yearPrice ?? 0
-    };
-    try {
-      await axios.put(tarif_put_url, payload, config);
-      toast.success('Tariff updated successfully');
-    } catch {}
+  const checkForChanges = () => {
+    const isStateChanged = JSON.stringify(newState) !== JSON.stringify(initialState);
+    const isSecondTabDataChanged = JSON.stringify(secondTabData) !== JSON.stringify(initialSecondTabData);
+    setHasChanges(isStateChanged || isSecondTabDataChanged);
   };
 
   const onChange = (key: string) => {
@@ -99,9 +97,30 @@ const TariffDetail: React.FC = () => {
           Ограничения
         </span>
       ),
-      children: <DetailsSecondTab onSave={updateData} data={secondTabData} setData={setSecondTabData} />,
+      children: <DetailsSecondTab onSave={() => updateData()} data={secondTabData} setData={setSecondTabData} hasChanges={hasChanges} />,
     },
   ];
+
+  const updateData = async () => {
+    const payload = {
+      id: id,
+      funcReqList: Object.keys(newState).filter(key => newState[Number(key)]).map(key => Number(key)),
+      bookingDuration: secondTabData.bookingDuration ?? 0,
+      bookingPerMonth: secondTabData.bookingPerMonth ?? 0,
+      prePaymentCount: secondTabData.prePaymentCount ?? 0,
+      numberOfAlbums: secondTabData.numberOfAlbums ?? 0,
+      numberOfFoto: secondTabData.numberOfFoto ?? 0,
+      monthPrice: secondTabData.monthPrice ?? 0,
+      yearPrice: secondTabData.yearPrice ?? 0
+    };
+    try {
+      await axios.put(tarif_put_url, payload, config);
+      toast.success('Tariff updated successfully');
+      setInitialState(newState);
+      setInitialSecondTabData(secondTabData);
+      setHasChanges(false);
+    } catch {}
+  };
 
   return (
     <DefaultLayout>

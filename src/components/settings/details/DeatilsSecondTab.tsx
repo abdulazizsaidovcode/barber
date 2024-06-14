@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import Accordion from '../../accordion/accordion';
 import FunctionlityCard from './FunctionlityCard';
@@ -19,12 +19,18 @@ interface DetailsSecondTabProps {
   data: SecondTabData;
   setData: React.Dispatch<React.SetStateAction<SecondTabData>>;
   onSave: () => void;
+  hasChanges: boolean;
 }
 
-const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSave }) => {
+const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSave, hasChanges }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentField, setCurrentField] = useState<keyof SecondTabData | null>(null);
   const [currentValue, setCurrentValue] = useState<number>(0);
+  const [localHasChanges, setLocalHasChanges] = useState(false);
+
+  useEffect(() => {
+    setLocalHasChanges(hasChanges);
+  }, [hasChanges]);
 
   const showModal = (field: keyof SecondTabData) => {
     setCurrentField(field);
@@ -35,6 +41,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
   const handleOk = () => {
     if (currentField !== null) {
       setData(prevData => ({ ...prevData, [currentField]: currentValue }));
+      setLocalHasChanges(true);
     }
     setIsModalVisible(false);
   };
@@ -49,6 +56,12 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
 
   const handleCheckboxChange = (field: keyof SecondTabData, isChecked: boolean) => {
     setData(prevData => ({ ...prevData, [field]: isChecked ? 0 : prevData[field] }));
+    setLocalHasChanges(true);
+  };
+
+  const handleSave = () => {
+    onSave();
+    setLocalHasChanges(false);
   };
 
   return (
@@ -165,8 +178,8 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
           </Accordion>
         </div>
       </div>
-      <div className='md:ms-5 mt-3'>
-        <Buttons onClick={onSave}>
+      <div className='mt-3'>
+        <Buttons onClick={handleSave} disabled={!localHasChanges}>
           Сохранить изменения
         </Buttons>
       </div>
