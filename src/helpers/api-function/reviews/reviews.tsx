@@ -4,9 +4,6 @@ import { config } from '../../token';
 import { ListData, ListMasterData, MainData } from '../../../types/review';
 import toast from 'react-hot-toast';
 
-const handleApiError = (error: any) => {
-  console.error(error);
-};
 
 export const fetchMainData = async (setMainData: (data: MainData) => void, url: string) => {
   try {
@@ -14,9 +11,7 @@ export const fetchMainData = async (setMainData: (data: MainData) => void, url: 
     if (res.data.success) {
       setMainData(res.data.body);
     }
-  } catch (error) {
-    handleApiError(error);
-  }
+  } catch { }
 };
 
 export const fetchDataList = async (setDataList: (data: ListData[]) => void, setTotalPage: (data: number) => void, url: string) => {
@@ -28,22 +23,21 @@ export const fetchDataList = async (setDataList: (data: ListData[]) => void, set
     } else {
       setDataList([]);
     }
-  } catch (error) {
-    handleApiError(error);
+  } catch {
     setDataList([]);
   }
 };
 
-export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterData[]) => void, url: string) => {
+export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterData[]) => void, url: string, setTotalMasterPage: (data: number) => void) => {
   try {
     const res = await axios.get(url, config);
     if (res.data.success) {
       setMasterDataList(res.data.body.object);
+      setTotalMasterPage(res.data.body.totalElements);
     } else {
       setMasterDataList([]);
     }
-  } catch (error) {
-    handleApiError(error);
+  } catch {
     setMasterDataList([]);
   }
 };
@@ -55,17 +49,13 @@ export const deleteListData = async (id: string | null, setDataList: (data: List
       toast.success('Review successfully deleted');
       await fetchDataList(setDataList, setTotalPage, url);
     }
-  } catch (error) {
-    handleApiError(error);
-  }
+  } catch { }
 };
 
-export const deleteMasterDataList = async (id: string, setMasterDataList: (data: ListMasterData[]) => void, url: string) => {
+export const deleteMasterDataList = async (id: string, setMasterDataList: (data: ListMasterData[]) => void, url: string, setTotalMasterPage: (data: number) => void) => {
   try {
     await axios.delete(`${reviews_list_delete}/${id}`, config);
     toast.success('Review successfully deleted');
-    await fetchMasterDataList(setMasterDataList, url);
-  } catch (error) {
-    handleApiError(error);
-  }
+    await fetchMasterDataList(setMasterDataList, url, setTotalMasterPage);
+  } catch { }
 };

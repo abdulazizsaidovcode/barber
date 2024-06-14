@@ -18,12 +18,13 @@ const SecondTab: React.FC = () => {
     setListMasterData,
     isDelModal,
     setDelModal,
+    setMasterTotalPage
   } = useReviewsStore();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`);
+    fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
   }, [currentMasterPage, pageMasterSize]);
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -43,7 +44,7 @@ const SecondTab: React.FC = () => {
 
   const handleDelete = async () => {
     if (selectedId) {
-      await deleteMasterDataList(selectedId, setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`);
+      await deleteMasterDataList(selectedId, setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
       closeDelModal();
     }
   };
