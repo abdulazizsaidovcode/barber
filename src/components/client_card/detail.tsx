@@ -152,20 +152,23 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               </div>
             </div>
             <div className="w-full bg-black dark:bg-white border flex items-center mb-10 mt-3"></div>
-            <p className="mb-20">
+            <p className="mb-10">
               <strong>{t('Name')}:</strong> {ClientName}
             </p>
+            <p className="mb-10">
+              <strong>{t('Surname')}:</strong> {SurName}
+            </p>
 
-            <p className="mb-20">
+            <p className="mb-10">
               <strong>{t('Gender')}:</strong> {Gender}
             </p>
-            <p className="mb-20">
+            <p className="mb-10">
               <strong>{t('Age')}:</strong> {Age}
             </p>
-            <p className="mb-20">
+            <p className="mb-10">
               <strong>{t('Region')}:</strong> {Region}
             </p>
-            <p className="mb-20">
+            <p className="mb-10">
               <strong>{t('City')}:</strong> {City}
             </p>
             <p className="mb-10">
@@ -277,10 +280,19 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             {Status === 'BLOCKED' ? t('Unblock Master') : t('Modal answer')}
           </p>
           <div className="flex items-center gap-2 justify-end mt-3">
-            <Button key="back" onClick={closeModal}>
+            <Button
+              className="text-black dark:text-white"
+              key="back"
+              onClick={closeModal}
+            >
               {t('No')}
             </Button>
-            <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
+            <Button
+              className="text-black dark:text-white"
+              onClick={confirmToggleSwitch}
+            >
+              {t('Ok')}
+            </Button>
           </div>
         </div>
       </Modal>
@@ -295,7 +307,6 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             rows={4}
             placeholder={t('Enter your message')}
             value={message}
-          
             onChange={(e) => setMessage(e.target.value)}
           />
           <div className="flex items-center justify-center">
