@@ -121,21 +121,34 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                           <div className='w-10 h-10 flex justify-center items-center'>
                             <BiReply style={{ fontSize: 25 }} />
                           </div>
-                          <div className={`bg-gray text-black py-1 px-3 mb-1 rounded-md  dark:border-[#9c0935] ${item.senderId === senderId ? "border-r-2" : "border-l-2"}`}>{item.replayDto.content}</div>
+                          <div className={`bg-gray text-black py-1 px-3 mb-1 rounded-md  dark:border-[#9c0935] ${item.senderId === senderId ? "border-r-2" : "border-l-2"}`}>{item.replayDto.content ? item.replayDto.content : <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='w-10 h-10' />}</div>
                         </div>
                       }
                       {
                         item.attachmentIds.length > 0 ?
-                          <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='rounded-md mb-2' />
+                          <div className='relative'>
+                            <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='rounded-md mb-2' />
+                            {
+                              !item.content &&
+                              <div className='absolute top-3 right-2'>
+                                <Dropdown overlay={<Menu items={items(item.id)} />} placement="bottomLeft" arrow>
+                                  <PiDotsThreeOutlineVertical style={{ fontSize: 24, color: "white" }} />
+                                </Dropdown>
+                              </div>
+                            }
+                          </div>
                           : null
 
                       }
-                      <p className={`flex items-center gap-5 ${item.senderId === senderId ? "bg-white rounded-lg py-2 px-3 shadow max-w-sm w-max" : "bg-lime-500 text-white rounded-lg py-2 px-3 shadow mb-2 max-w-max flex-col-reverse"}`}>
-                        <p className='w-[95%]'>{item.content ? item.content : "(null)"}</p>
-                        <Dropdown overlay={<Menu items={items(item.id)} />} placement="bottomLeft" arrow>
-                          <PiDotsThreeOutlineVertical style={{ fontSize: 16 }} />
-                        </Dropdown>
-                      </p>
+                      {
+                        item.content &&
+                        <p className={`flex items-center gap-5 ${item.senderId === senderId ? "bg-white rounded-lg py-2 px-3 shadow max-w-sm w-max" : "bg-lime-500 text-white rounded-lg py-2 px-3 shadow mb-2 max-w-max flex-col-reverse"}`}>
+                          <p className='w-[95%]'>{item.content ? item.content : "(null)"}</p>
+                          <Dropdown overlay={<Menu items={items(item.id)} />} placement="bottomLeft" arrow>
+                            <PiDotsThreeOutlineVertical style={{ fontSize: 16 }} />
+                          </Dropdown>
+                        </p>
+                      }
                     </div>
                     <p className="text-xs">{item.createdAt}</p>
                   </div>
@@ -161,7 +174,6 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                   </button>
                 </div>
               )) : null
-
           }
           <div className="px-4 py-2 border">
             <div className="flex items-center gap-5 w-full">
@@ -191,14 +203,22 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                     null}
 
                 </div>
-                {(content.trim() || photoPreview) && !selreplyId && !seleditId && <button onClick={sendMessage}><IoSend /></button>}
+                {(content.trim() || photoPreview) && !selreplyId && !seleditId && <button onClick={() => {
+                  sendMessage()
+                  setPhotoPreview(null)
+                  setPhoto(null)
+                }}><IoSend /></button>}
                 {(content.trim() || photoPreview) ? selreplyId && <button onClick={() => {
                   reply()
                   setSelreplyId("")
+                  setPhotoPreview(null)
+                  setPhoto(null)
                 }}><BiReplyAll /></button> : null}
                 {(content.trim() || photoPreview) ? seleditId && <button onClick={() => {
                   editMessage()
                   setseleditId("")
+                  setPhotoPreview(null)
+                  setPhoto(null)
                 }
                 }><EditFilled /></button> : null}
               </div>
