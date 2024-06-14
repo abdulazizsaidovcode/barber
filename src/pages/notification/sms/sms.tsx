@@ -126,7 +126,7 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                       }
                       {
                         item.attachmentIds.length > 0 ?
-                          <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='rounded-md mb-2'/>
+                          <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='rounded-md mb-2' />
                           : null
 
                       }
@@ -191,13 +191,12 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                     null}
 
                 </div>
-                {/* {content.trim() ? (photoPreview || (!selreplyId && !seleditId)) && <button onClick={sendMessage}><IoSend /></button> : null} */}
                 {(content.trim() || photoPreview) && !selreplyId && !seleditId && <button onClick={sendMessage}><IoSend /></button>}
-                {content.trim() ? selreplyId && <button onClick={() => {
+                {(content.trim() || photoPreview) ? selreplyId && <button onClick={() => {
                   reply()
                   setSelreplyId("")
                 }}><BiReplyAll /></button> : null}
-                {content.trim() ? seleditId && <button onClick={() => {
+                {(content.trim() || photoPreview) ? seleditId && <button onClick={() => {
                   editMessage()
                   setseleditId("")
                 }

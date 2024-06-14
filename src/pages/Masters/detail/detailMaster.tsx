@@ -45,11 +45,7 @@ const DetailMaster: React.FC = () => {
           <MasterCardInfo
             getFunc={getMasterDetails}
             StatusNow={orderDetails.masterChatStatus}
-            Specialization={
-              orderDetails.specialization === null
-                ? t('Not_available')
-                : orderDetails.specialization
-            }
+            Specialization={'Mavjud emas'}
             ServiceCategory={orderDetails.masterServiceCategory}
             GenderType={orderDetails.directionByGender}
             PlaceOfWork={orderDetails.placeOfWork}
