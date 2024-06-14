@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { ListData, ListMasterData, MainData } from '../../../types/review';
 
 interface FiltersReview {

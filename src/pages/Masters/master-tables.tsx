@@ -144,7 +144,7 @@ const MasterTables: React.FC = () => {
                 <p className="text-black dark:text-white">{item.orderCount}</p>
               </td>
               <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">{item.rating}</p>
+                <p className="text-black dark:text-white">{item.rating.toFixed(3)}</p>
               </td>
               <td className="min-w-[150px] p-5 pt-7 flex items-center justify-between">
                 <p
