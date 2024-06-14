@@ -5,7 +5,7 @@ import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 import { useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 interface StylesType {
   container: string;
@@ -36,9 +36,9 @@ export const Login: React.FC = () => {
   }, [goPage]);
 
   const styles: StylesType = {
-    container: 'min-h-screen flex items-center justify-center bg-gray-100',
+    container: 'min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-0',
     card: 'max-w-md w-full space-y-8 z-10',
-    title: 'mb-6 text-center text-3xl font-extrabold text-slate-900',
+    title: 'mb-6 text-center text-xl md:text-3xl font-extrabold text-slate-900',
     input: 'appearance-none rounded-none relative block w-full p-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-150',
     button: 'group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
     hideShowIcon: 'absolute top-4 right-4 text-[1.5rem] hover:cursor-pointer opacity-60 hover:opacity-90 duration-150 z-40'
@@ -46,10 +46,6 @@ export const Login: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
       <div className={styles.card}>
         <div className={`flex justify-center items-center`}>
           <img src={logo} alt={`bookers logo`} className={`w-24 h-24 rounded-full`} />
