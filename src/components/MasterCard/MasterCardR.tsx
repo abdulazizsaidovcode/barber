@@ -38,7 +38,7 @@ type MasterCardInfoProps = {
   PlaceOfWork: string;
   GenderType: [];
   ServiceCategory: [];
-  Specialization: [];
+  Specialization: string;
   scheduleType: string;
   StatusNow: string;
 };
