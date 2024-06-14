@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pagination, Rate } from 'antd';
+import { Pagination, Skeleton, Rate } from 'antd';
 import ReviewsServiceCard from '../cards/ReviewsServiceCard';
 import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
 import ReviewFilters from '../components/filters';
@@ -23,6 +23,7 @@ const FirstTab: React.FC = () => {
   } = useReviewsStore();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const openDelModal = (id: string) => {
     setSelectedId(id);
@@ -42,7 +43,12 @@ const FirstTab: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`);
+    const fetchData = async () => {
+      setLoading(true);
+      await fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`);
+      setLoading(false);
+    };
+    fetchData();
   }, [currentPage, pageSize]);
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -87,13 +93,20 @@ const FirstTab: React.FC = () => {
         </div>
       </div>
       <div className="mt-4">
-        {listData.length === 0 ?
+        {loading ? (
+          <div className="w-full">
+            <Skeleton active paragraph={{ rows: 4 }} />
+            <Skeleton active paragraph={{ rows: 4 }} />
+            <Skeleton active paragraph={{ rows: 4 }} />
+          </div>
+        ) : listData.length === 0 ? (
           <div className="w-full h-[200px] flex justify-center items-center">
             <p className="text-xl dark:text-white">Reviews not found</p>
-          </div> :
+          </div>
+        ) : (
           <div>
             {listData.map((item, index) => (
-              <div className='flex flex-col gap-3' key={index}>
+              <div className="flex flex-col gap-3" key={index}>
                 <ReviewsServiceCard data={item} openModal={() => openDelModal(item.id)} />
               </div>
             ))}
@@ -107,7 +120,7 @@ const FirstTab: React.FC = () => {
               />
             </div>
           </div>
-        }
+        )}
       </div>
       <DelModal isOpen={isDelModal} onDelete={handleDelete} onClose={closeDelModal} />
     </div>
