@@ -13,21 +13,23 @@ const Gallery: React.FC = () => {
   const id = location.pathname.substring(8);
 
   useEffect(() => {
-    fetchData(id);
+     getMasterGalleryDetails();
   }, [id]);
-
-  const fetchData = (id: string) => {
-    axios
-      .get(`${master_gallery_id}${id}`, config)
-      .then((response) => {
-        const masterArray = response.data.body;
-        console.log(`service id =>`, masterArray);
-        setOrderDetails(masterArray);
-      })
-      .catch((error) => {
-        console.error('Gallery ga oid malumotlar topilmadi', error);
-      });
+  const getMasterGalleryDetails = () => {
+    const fetchData = (id: string) => {
+      axios
+        .get(`${master_gallery_id}${id}`, config)
+        .then((response) => {
+          const masterArray = response.data.body;
+          console.log(`service id =>`, masterArray);
+          setOrderDetails(masterArray);
+        })
+        .catch((error) => {
+          console.error('Gallery ga oid malumotlar topilmadi', error);
+        });
+    };
   };
+
   const { t } = useTranslation();
 
   const handleDelete = (attachmentId: string) => {
@@ -67,6 +69,8 @@ const Gallery: React.FC = () => {
               orderDetail.resGalleryAttachments.map(
                 (attachment: any, subIndex: number) => (
                   <ProcedureItem
+                  getFunc={getMasterGalleryDetails}
+
                     galleryId={orderDetail.id}
                     key={subIndex}
                     status={attachment.newStatus}

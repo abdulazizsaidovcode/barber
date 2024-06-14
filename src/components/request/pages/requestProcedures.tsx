@@ -25,18 +25,19 @@ const RequestProcedures: React.FC = () => {
   const [totalChangedProcedures, setTotalChangedProcedures] = useState<number>(0);
   const [currentNewPage, setCurrentNewPage] = useState<number>(0);
   const [currentChangedPage, setCurrentChangedPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [newPageSize, setNewPageSize] = useState<number>(10);
+  const [chanPageSize, setChanPageSize] = useState<number>(10);
 
   useEffect(() => {
-    fetchData(currentNewPage, currentChangedPage, pageSize);
-  }, [currentNewPage, currentChangedPage, pageSize]);
+    fetchData(currentNewPage, currentChangedPage, newPageSize, chanPageSize);
+  }, [currentNewPage, currentChangedPage, newPageSize, chanPageSize]);
 
-  const fetchData = async (newPage: number, changedPage: number, size: number) => {
+  const fetchData = async (newPage: number, changedPage: number, newSize: number, chanSize: number) => {
     setLoading(true);
     try {
       const [newRes, changedRes] = await Promise.all([
-        axios.get(`${new_procedure_url}?page=${newPage}&size=${size}`, config),
-        axios.get(`${changed_procedure_url}?page=${changedPage}&size=${size}`, config)
+        axios.get(`${new_procedure_url}?page=${newPage}&size=${newSize}`, config),
+        axios.get(`${changed_procedure_url}?page=${changedPage}&size=${chanSize}`, config)
       ]);
       setNewProcedures(newRes.data.body.object);
       setTotalNewProcedures(newRes.data.body.totalElements);
@@ -50,18 +51,18 @@ const RequestProcedures: React.FC = () => {
 
   const onNewPageChange = (page: number, pageSize: number) => {
     setCurrentNewPage(page - 1);
-    setPageSize(pageSize);
+    setNewPageSize(pageSize);
   };
 
   const onChangedPageChange = (page: number, pageSize: number) => {
     setCurrentChangedPage(page - 1);
-    setPageSize(pageSize);
+    setChanPageSize(pageSize);
   };
 
   return (
     <RequestLayout>
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
-        <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex  justify-center items-center px-5">
+        <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center px-5">
           <div className="flex gap-3">
             <p className="dark:text-[#000]">Специализации</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
@@ -105,7 +106,7 @@ const RequestProcedures: React.FC = () => {
                     <Pagination
                       showSizeChanger
                       current={currentNewPage + 1}
-                      pageSize={pageSize}
+                      pageSize={newPageSize}
                       total={totalNewProcedures}
                       onChange={onNewPageChange}
                     />
@@ -148,7 +149,7 @@ const RequestProcedures: React.FC = () => {
                     <Pagination
                       showSizeChanger
                       current={currentChangedPage + 1}
-                      pageSize={pageSize}
+                      pageSize={chanPageSize}
                       total={totalChangedProcedures}
                       onChange={onChangedPageChange}
                     />

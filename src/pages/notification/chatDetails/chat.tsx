@@ -18,6 +18,7 @@ import { config } from '../../../helpers/token.tsx';
 import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { uploadFile } from '../../../helpers/attachment/uploadFile.tsx';
 
 const Chatdetail: React.FC = () => {
   const { role, chatData, setChatData } = chatStore();
@@ -38,6 +39,7 @@ const Chatdetail: React.FC = () => {
   const [chatId, setChatId] = useState<string | null>(null);
   const [replyId, setreplyId] = useState<string | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
+  const [photo, setPhoto] = useState<any | null>(null);
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -97,15 +99,28 @@ const Chatdetail: React.FC = () => {
     }
   };
 
-  const sendMessage = () => {
+  // send message
+  const sendMessage = async () => {
+    let fileUrl = null;
+    if (photo) {
+      console.log(photo);
+      await uploadFile({
+        file: photo,
+        setUploadResponse: (response) => (fileUrl = response.body),
+      })
+    }
+
+
+
     if (stompClient && recipientId) {
       const chatMessage = {
         senderId: adminId,
         recipientId: recipientId,
         content: content,
         isRead: false,
-        attachmentIds: []
+        attachmentIds: fileUrl ? [fileUrl] : [],
       };
+      console.log(JSON.stringify(chatMessage));
 
       stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
       setTimeout(() => {
@@ -156,7 +171,15 @@ const Chatdetail: React.FC = () => {
   }
 
   //reply message
-  function replyMessage() {
+  async function replyMessage() {
+    let fileUrl = null;
+    if (photo) {
+      console.log(photo);
+      await uploadFile({
+        file: photo,
+        setUploadResponse: (response) => (fileUrl = response.body),
+      })
+    }
     const replyObj = {
       messageId: replyId,
       chatDto: {
@@ -164,7 +187,7 @@ const Chatdetail: React.FC = () => {
         recipientId: recipientId,
         content: content,
         isRead: false,
-        attachmentIds: []
+        attachmentIds: fileUrl ? [fileUrl] : [],
       }
     }
 
@@ -195,7 +218,17 @@ const Chatdetail: React.FC = () => {
     }
   }
   // edit message
-  function editMessage() {
+  async function editMessage() {
+    let fileUrl = null;
+
+    if (photo) {
+      console.log(photo);
+      await uploadFile({
+        file: photo,
+        setUploadResponse: (response) => (fileUrl = response.body),
+      })
+    }
+
     const editMessage = {
       messageId: editId,
       chatDto: {
@@ -203,7 +236,7 @@ const Chatdetail: React.FC = () => {
         recipientId: recipientId,
         content: content,
         isRead: false,
-        attachmentIds: []
+        attachmentIds: fileUrl ? [fileUrl] : []
       }
     }
     if (editId && content) {
@@ -222,6 +255,9 @@ const Chatdetail: React.FC = () => {
       console.log("salom");
     }
   })
+
+
+
 
   return (
     <div className="h-[92%]">
@@ -269,7 +305,7 @@ const Chatdetail: React.FC = () => {
 
       <div className="flex w-[100%] h-full relative">
         <div
-          className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-3/4 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5  border md:py-5 h-full duration-300 flex flex-col`}>
+          className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-7/8 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5  border md:py-5 h-full duration-300 flex flex-col`}>
           <div className='flex justify-end mb-4'>
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
@@ -291,6 +327,7 @@ const Chatdetail: React.FC = () => {
               reply={replyMessage}
               deleteMessage={deleteMessage}
               editMessage={editMessage}
+              setPhoto={setPhoto}
             /> : <Notselected />}
         </div>
       </div>

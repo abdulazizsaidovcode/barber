@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Skeleton, Button, Rate, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import {
   master_block_put,
@@ -41,9 +41,11 @@ type MasterCardInfoProps = {
   Specialization: string;
   scheduleType: string;
   StatusNow: string;
+  getFunc: () => void;
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
+  getFunc,
   MasterName,
   MasterImg,
   definitionType,
@@ -97,9 +99,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       await axios.put(master_block_put, { id: idMaster, status }, config);
       toast.success(t('Switch_toggled_successfully'));
       setIsSwitchOn(!isSwitchOn);
-      setTimeout(() => {
-        window.location.href = `/master/${idMaster}`;
-      }, 2000);
+      getFunc();
+      // setTimeout(() => {
+      //   window.location.href = `/master/${idMaster}`;
+      // }, 2000);
     } catch (error) {
       toast.error(t('Error_toggling_switch'));
     }
@@ -318,10 +321,12 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               : t('Modal_answer')}
           </p>
           <div className="flex items-center gap-2 justify-end mt-3">
-            <Button key="back" onClick={closeModal}>
+            <Button key="back" className="dark:text-white" onClick={closeModal}>
               {t('No')}
             </Button>
-            <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
+            <Button className="dark:text-white" onClick={confirmToggleSwitch}>
+              {t('Ok')}
+            </Button>
           </div>
         </div>
       </Modal>
@@ -349,7 +354,6 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </div>
       </Modal>
-      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
