@@ -12,7 +12,7 @@ type MasterCardInfoProps = {
   simpleLev: number;
   badLev: number;
   verBadLev: number;
-  getFeedbek: (id: string, count: number) => void 
+  getFeedbek: (id: string, count: number) => void
 };
 
 const Review: React.FC<MasterCardInfoProps> = ({
