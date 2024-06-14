@@ -125,8 +125,8 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                         </div>
                       }
                       {
-                        item.attachmentIds.lebgth > 0 ?
-                          <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='w'/>
+                        item.attachmentIds.length > 0 ?
+                          <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='rounded-md mb-2' />
                           : null
 
                       }
@@ -176,25 +176,27 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                   <input type="file" onChange={setAttachment} className="hidden" ref={fileInputRef} />
                   <IoMdAttach className="cursor-pointer text-3xl" onClick={handleClick} />
                   {photoPreview ? (
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2 '>
                       <img
                         className="w-10 h-10 rounded-md p-1 bg-[#9c0935]"
                         src={photoPreview}
                         alt="User Avatar" />
-                      <button onClick={() => setPhotoPreview(null)}>
+                      <button onClick={() => {
+                        setPhotoPreview(null)
+                        setPhoto(null)
+                      }}>
                         <GiCancel />
                       </button>
                     </div>) :
                     null}
 
                 </div>
-                <FaCheck />
-                {content.trim() ? (attachmentIds || (!selreplyId && !seleditId)) && <button onClick={sendMessage}><IoSend /></button> : null}
-                {content.trim() ? selreplyId && <button onClick={() => {
+                {(content.trim() || photoPreview) && !selreplyId && !seleditId && <button onClick={sendMessage}><IoSend /></button>}
+                {(content.trim() || photoPreview) ? selreplyId && <button onClick={() => {
                   reply()
                   setSelreplyId("")
                 }}><BiReplyAll /></button> : null}
-                {content.trim() ? seleditId && <button onClick={() => {
+                {(content.trim() || photoPreview) ? seleditId && <button onClick={() => {
                   editMessage()
                   setseleditId("")
                 }

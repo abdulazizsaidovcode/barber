@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination } from 'antd';
+import { Pagination, Skeleton } from 'antd';
 import ReviewsMasersCard from '../cards/ReviewsMasersCard';
 import ReviewMastersFilters from '../components/masterFilters';
 import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
@@ -22,9 +22,15 @@ const SecondTab: React.FC = () => {
   } = useReviewsStore();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
+    const fetchData = async () => {
+      setLoading(true);
+      await fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
+      setLoading(false);
+    };
+    fetchData();
   }, [currentMasterPage, pageMasterSize]);
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -52,7 +58,13 @@ const SecondTab: React.FC = () => {
   return (
     <div>
       <ReviewMastersFilters />
-      {listMasterData.length === 0 ? (
+      {loading ? (
+        <div className='w-full'>
+          <Skeleton active paragraph={{ rows: 4 }} />
+          <Skeleton active paragraph={{ rows: 4 }} />
+          <Skeleton active paragraph={{ rows: 4 }} />
+        </div>
+      ) : listMasterData.length === 0 ? (
         <div className='w-full h-[200px] flex justify-center items-center'>
           <p className='text-xl dark:text-white'>Reviews not found</p>
         </div>

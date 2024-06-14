@@ -80,7 +80,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       })
       .then(() => {
         onDelete(attachmentId);
-        getFunc()
+        getFunc();
         message.success('Procedure deleted successfully');
       })
       .catch((error) => {
@@ -99,7 +99,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       .put(`${master_gallery_message_conform}${attachmentId}`, '', config)
       .then((response) => {
         if (response.data.status) {
-          getFunc()
+          getFunc();
           message.success('Image confirmed successfully');
         }
       })
@@ -116,7 +116,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   return (
     <div className="flex flex-col justify-center items-center">
       <div
-        className="shadow-xl flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover cursor-pointer"
+        className="shadow-lg flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover cursor-pointer"
         onClick={() => setIsModalVisible(true)}
       >
         {loading && <Skeleton.Image />}
@@ -138,24 +138,27 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
         {status ? (
           <div className="flex space-x-2">
             <div
-              className="p-1 bg-green-200 flex items-center justify-center rounded-full cursor-pointer"
+              className="p-1 bg-green-200 dark:bg-green-700 flex items-center justify-center rounded-full cursor-pointer"
               onClick={() => {
                 setModalType('check');
                 setIsModalVisible(true);
               }}
             >
-              <CheckOutlined className="text-green-600" />
+              <CheckOutlined className="text-green-600 dark:text-green-300" />
             </div>
             <div
-              className="p-1 bg-red-200 flex items-center justify-center rounded-full cursor-pointer"
+              className="p-1 bg-red-200 dark:bg-red-700 flex items-center justify-center rounded-full cursor-pointer"
               onClick={handleDeleteIconClick}
             >
-              <DeleteOutlined className="text-red-600" />
+              <DeleteOutlined className="text-red-600 dark:text-red-300" />
             </div>
           </div>
         ) : (
-          <div className="p-1 bg-gray-200 flex items-center justify-center rounded-md cursor-pointer">
-            <DeleteOutlined onClick={handleDeleteIconClick} />
+          <div className="p-1 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-md cursor-pointer">
+            <DeleteOutlined
+              className="text-gray-600 dark:text-gray-300"
+              onClick={handleDeleteIconClick}
+            />
           </div>
         )}
       </div>
@@ -163,7 +166,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       <Modal isOpen={isModalVisible} onClose={handleCancel}>
         {modalType === 'textarea' && (
           <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
-            <h2>Reason for Deletion</h2>
+            <h2 className="dark:text-white">Reason for Deletion</h2>
             <Input.TextArea
               rows={4}
               value={deleteReason}
@@ -183,8 +186,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
         )}
         {modalType === 'confirmation' && (
           <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
-            <h2>Confirmation</h2>
-            <p>Are you sure you want to delete this image?</p>
+            <h2 className="dark:text-white">Confirmation</h2>
+            <p className="dark:text-white">
+              Are you sure you want to delete this image?
+            </p>
             <div className="flex justify-end gap-2 mt-4">
               <Button key="cancel" onClick={handleCancel}>
                 Cancel
@@ -202,8 +207,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
         )}
         {modalType === 'check' && (
           <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
-            <h2>Confirmation</h2>
-            <p>Are you sure you want to confirm this image?</p>
+            <h2 className="dark:text-white">Confirmation</h2>
+            <p className="dark:text-white">
+              Are you sure you want to confirm this image?
+            </p>
             <div className="flex justify-end gap-2 mt-4">
               <Button key="cancel" onClick={handleCancel}>
                 Cancel

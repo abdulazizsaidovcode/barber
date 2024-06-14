@@ -5,7 +5,7 @@ import { client_full_data, getFileId } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import DetailClient from '../../../components/client_card/detail';
 import DefaultLayout from '../../../layout/DefaultLayout';
-import userImg from "../../../images/user.png"
+import userImg from '../../../images/user.png';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
@@ -16,6 +16,9 @@ const DetailMaster: React.FC = () => {
   console.log(id);
 
   useEffect(() => {
+    getClient_data()
+  }, []);
+  const getClient_data = () => {
     setIsLoading(true);
 
     axios
@@ -30,7 +33,7 @@ const DetailMaster: React.FC = () => {
         console.error('There was an error fetching the data!', error);
         setIsLoading(false);
       });
-  }, [id]);
+  };
 
   return (
     <DefaultLayout>
@@ -40,11 +43,12 @@ const DetailMaster: React.FC = () => {
         ) : orderDetails ? (
           <div>
             <DetailClient
-              ClientId=""
+            getFunc={getClient_data}
+              
               StatusNow={orderDetails.chatStatus}
-              ClientImg={  orderDetails.image
-                ? getFileId + orderDetails.image
-                : userImg }
+              ClientImg={
+                orderDetails.image ? getFileId + orderDetails.image : userImg
+              }
               StartData={orderDetails.registrationDate ?? 'Mavjud emas'}
               Telegram={orderDetails.telegram ?? 'Mavjud emas'}
               Clients={orderDetails.masterCount ?? 'Mavjud emas'}
@@ -59,7 +63,7 @@ const DetailMaster: React.FC = () => {
               SurName={orderDetails.lastName ?? 'Mavjud emas'}
               Location={orderDetails.address ?? 'Manzil Mavjud emas'}
               ClientName={orderDetails.firstName ?? 'Mavjud emas'}
-              turnover={orderDetails.turnover ?? 'Mavjud emas'}
+              turnover={orderDetails.birthDate ?? 'Mavjud emas'}
               Status={orderDetails.status ?? 'Mavjud emas'}
               isLoading={isLoading}
             />

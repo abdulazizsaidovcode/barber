@@ -259,7 +259,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold mb-2 mt-2">{t('Contacts')}:</p>
+              <p className="text-black dark:text-white font-bold mb-2 mt-2">
+                {t('Contacts')}:
+              </p>
               <p className="text-black dark:text-white font-bold mb-2 mt-2">
                 {t('Contacts')}:
               </p>
@@ -282,7 +284,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         <Skeleton loading={isLoading} active>
           <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className="text-black font-bold mb-2 mt-2">
+              <p className="text-black dark:text-white font-bold mb-2 mt-2">
                 {t('Indicators')}:
               </p>
               <p className="text-black dark:text-white font-bold mb-2 mt-2">
