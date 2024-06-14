@@ -6,33 +6,35 @@ import { useTranslation } from "react-i18next";
 const { TabPane } = Tabs;
 
 const MainTabs: React.FC = () => {
-  const {t} = useTranslation()
-  const { setIsDetail, isComplated } = orderStore();
+  const { t } = useTranslation();
+  const { setIsDetail } = orderStore();
+
+  const handleTabClick = (key: string) => {
+    if (key === "1") {
+      setIsDetail(true);
+    } else if (key === "2") {
+      setIsDetail(false);
+    }
+  };
 
   return (
-    <Tabs moreIcon={false} more={undefined} defaultActiveKey="1" >
+    <Tabs
+      moreIcon={false}
+      defaultActiveKey="1"
+      onChange={handleTabClick}
+    >
       <TabPane
         tab={
-          <span
-            onClick={() => {
-              setIsDetail(true);
-            }}
-            className="text-black text-lg md:text-xl lg:text-2xl"
-          >
+          <span className="text-black text-lg md:text-xl lg:text-2xl">
             Детали записи
           </span>
         }
         key="1"
       />
-      {isComplated && (
+      {localStorage.getItem("orderStatus") === "COMPLETED" && (
         <TabPane
           tab={
-            <span
-              onClick={() => {
-                setIsDetail(false);
-              }}
-              className="text-black text-lg md:text-xl lg:text-2xl"
-            >
+            <span className="text-black text-lg md:text-xl lg:text-2xl">
               {t("Отзывы")}
             </span>
           }

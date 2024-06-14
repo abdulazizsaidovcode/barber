@@ -54,3 +54,19 @@ export async function getChildCategory(setData: (val: CategoryChild[]) => void) 
         setData([]);
     }
 }
+
+
+export const getDetail = (id: string, setOrderDetails: (val: any) => void) => {
+    axios
+    .get(`${get_orders_list}?status=${localStorage.getItem("orderStatus")}&page=0&size=10`, config)
+    .then((response) => {
+      const orders = response.data.body.object;
+      const matchingOrder = orders.find((order: any) => order.orderId === id);
+      if (matchingOrder) {
+        setOrderDetails(matchingOrder);
+      }
+    })
+    .catch(() => {
+      setOrderDetails(null)
+    });
+}
