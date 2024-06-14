@@ -23,7 +23,6 @@ const DetailMaster: React.FC = () => {
       .get(`${master_full_data}/${id}`, config)
       .then((response) => {
         const master = response.data.body;
-        console.log(`detail page with id${master}`);
         setOrderDetails(master);
         setIsLoading(false); // Set loading to false when data is fetched
       })
@@ -41,7 +40,11 @@ const DetailMaster: React.FC = () => {
         <div>
           <MasterCardInfo
             StatusNow={orderDetails.masterChatStatus}
-            Specialization={orderDetails.masterSpecialization[0].name}
+            Specialization={
+              orderDetails.specialization === null
+                ? t('Not_available')
+                : orderDetails.specialization
+            }
             ServiceCategory={orderDetails.masterServiceCategory}
             GenderType={orderDetails.directionByGender}
             PlaceOfWork={orderDetails.placeOfWork}

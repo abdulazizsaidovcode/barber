@@ -1,5 +1,4 @@
 import ClientTable from "../../components/Tables/MasterTable.tsx";
-import { thead } from "./data.tsx";
 import { CiMenuKebab } from "react-icons/ci";
 import type { MenuProps } from "antd";
 import { Dropdown, Menu, Pagination, Space } from "antd";

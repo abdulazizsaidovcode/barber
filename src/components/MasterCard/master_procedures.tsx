@@ -4,7 +4,6 @@ import { Button, message, Input } from 'antd';
 import {
   master_delate_service,
   master_confirm_new_service,
-  master_delate_new_service,
   post_message_api,
 } from '../../helpers/api';
 import axios from 'axios';
@@ -13,6 +12,7 @@ import Modal from '../modals/modal';
 import { Buttons } from '../buttons';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import DelModal from './../settings/modals/delModal';
 
 const { TextArea } = Input;
 
@@ -37,6 +37,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
+  const [isDelModalVisible, setIsDelModalVisible] = useState(false);
   const [value, setValue] = useState('');
   const [currentServiceId, setCurrentServiceId] = useState<string>(servicesId);
 
@@ -47,8 +48,10 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   const toggleModal = (modalType: string, visible: boolean) => {
     if (modalType === 'first') {
       setIsModalVisible(visible);
-    } else {
+    } else if (modalType === 'second') {
       setIsSecondModalVisible(visible);
+    } else if (modalType === 'delete') {
+      setIsDelModalVisible(visible);
     }
   };
 
@@ -76,9 +79,9 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         config,
       );
 
-      if (response.status === 200) {
+      if (response.data.success) {
         message.success('Procedure confirmed successfully');
-        const updatedServiceId = response.data.servicesId;
+        const updatedServiceId = response.data.id;
         setCurrentServiceId(updatedServiceId);
       } else {
         throw new Error('Failed to confirm procedure');
@@ -90,7 +93,6 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
   const handleDeleteAndMessage = async () => {
     try {
-      await handleDelete(master_delate_service);
       await axios.post(
         post_message_api,
         {
@@ -120,6 +122,18 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     }
   };
 
+  const handleDeleteApprovedService = async () => {
+    try {
+      await axios.put(`${master_delate_service}${currentServiceId}`, '', config);
+      message.success('Approved procedure deleted successfully');
+
+      toggleModal('delete', false);
+    } catch (error) {
+      message.error('An error occurred while deleting the approved procedure');
+      toggleModal('delete', false);
+    }
+  };
+
   return (
     <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-boxdark text-black dark:text-white border-gray-300 shadow-lg p-3 rounded-xl mb-4">
       <div className="w-full lg:w-1/3 mb-4 lg:mb-0 flex justify-center items-center">
@@ -131,11 +145,13 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
       </div>
       <div className="w-full lg:w-2/3 pl-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold mb-2 text-black dark:text-white">{title}</h2>
+          <h2 className="text-xl font-bold mb-2 text-black dark:text-white">
+            {title}
+          </h2>
           <div className="flex items-center">
             {serviceStatus !== 'APPROVED' && (
               <div
-                className="p-1 bg-gray  rounded-md flex items-center cursor-pointer shadow-3 justify-center mr-2"
+                className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center mr-2"
                 onClick={handleConfirm}
               >
                 <CheckOutlined />
@@ -145,7 +161,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
               className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
               onClick={
                 serviceStatus === 'APPROVED'
-                  ? () => handleDelete(master_delate_new_service)
+                  ? () => toggleModal('delete', true)
                   : () => toggleModal('first', true)
               }
             >
@@ -155,7 +171,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         </div>
         <div className="flex items-center w-full h-[1px] bg-black dark:bg-white"></div>
         <div className="flex items-start mt-4 flex-col">
-          <div className="mb-2 flex items-center sm:justify-between  lg:gap-8 lg:justify-start">
+          <div className="mb-2 flex items-center sm:justify-between lg:gap-8 lg:justify-start">
             <p className="font-bold">Цена:</p>
             <p>{price} сум</p>
           </div>
@@ -215,20 +231,18 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         isOpen={isSecondModalVisible}
         onClose={() => toggleModal('second', false)}
       >
-        <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
-          <div className={`flex flex-col justify-center`}>
-            <p
-              className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}
-            >
+        <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
+          <div className="flex flex-col justify-center">
+            <p className="font-bold text-xl text-black dark:text-white opacity-80 text-center">
               Rostan Ham Masterni uchiraszmi ?
             </p>
           </div>
-          <div className={`flex justify-center items-center gap-10 mt-8`}>
-            <Buttons bWidth={`w-[200px]`} onClick={handleDeleteAndMessage}>
+          <div className="flex justify-center items-center gap-10 mt-8">
+            <Buttons bWidth="w-[200px]" onClick={handleDeleteAndMessage}>
               Yeah
             </Buttons>
             <Buttons
-              bWidth={`w-[200px]`}
+              bWidth="w-[200px]"
               onClick={() => toggleModal('second', false)}
             >
               {t('Not')}
@@ -236,6 +250,11 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           </div>
         </div>
       </Modal>
+      <DelModal
+        isOpen={isDelModalVisible}
+        onDelete={handleDeleteApprovedService}
+        onClose={() => toggleModal('delete', false)}
+      />
     </div>
   );
 };
