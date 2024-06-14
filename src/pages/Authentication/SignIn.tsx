@@ -5,7 +5,6 @@ import logo from '../../images/logo/logo.jpeg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 
 interface StylesType {
   container: string;
