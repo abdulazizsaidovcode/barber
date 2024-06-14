@@ -198,7 +198,7 @@ const ChatTable: React.FC = () => {
             <Modal isOpen={modalOpen} onClose={openModal}>
                 <div className='dark:text-gray-400 pt-10 px-10'>
                     <div className='flex justify-center flex-col items-center mt-4'>
-                        <p>{t("Are_you_sure_you")}</p>
+                        <p>{t("Are_you_sure_your")}</p>
                         <div className='flex gap-10 mt-16'>
                             <Buttons bWidth={"w-40"} onClick={() => openModal()}>{t("Close")}</Buttons>
                             <Buttons bWidth={"w-40"} onClick={() => deleteMail(selectedMailId)}>{t("Delete")}</Buttons>
