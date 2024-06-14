@@ -44,7 +44,7 @@ const FilterComponent: React.FC = () => {
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
+    // console.log(date, dateString);
   };
 
   const renderPopoverContent = (orderId: number) => (
