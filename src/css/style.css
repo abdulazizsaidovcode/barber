@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-textarea {
+  background: transparent;
+  border: none;
+}
+
+.custom-textarea:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important; /* Focus bo'lganda shadowni ham o'chirish */
+}
+
 @layer base {
   body {
     @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
@@ -244,7 +255,13 @@ span.flatpickr-weekday,
   @apply text-xs; /* Date and time font size */
   @apply md:text-[17px]; /* Date and time font size */
 }
-
+/* Adding horizontal scroll to FullCalendar container */
 .fullcalendar-container {
   @apply overflow-x-auto;
+  white-space: nowrap;
+}
+
+.fc-event {
+  @apply text-sm; /* Event text size */
+  height: auto; /* Adjust event height */
 }

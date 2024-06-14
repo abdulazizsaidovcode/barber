@@ -36,11 +36,11 @@ const MasterLocation: React.FC = () => {
                   className={`w-40 min-h-max`}
                 >
                   <div className={`font-medium text-black dark:text-white text-lg mt-0 pt-0`}>{selectedLocation.workPlace}</div>
-                  <div className={`text-sm`}>Mutaxassislik: {selectedLocation.specialization.map(item => <p className={`inline`}>{item}</p>)}</div>
+                  <div className={`text-sm my-2`}><span className={`font-medium`}>Mutaxassislik:</span> {selectedLocation.specialization.map((item: any, idx: number) => <p className={`${idx === 0 ? 'inline' : 'block'} leading-4`}>{item}</p>)}</div>
                   <div className={`text-sm`}>
                     {selectedLocation.status === 'ACTIVE'
                       ? <p className={`bg-green-500 px-4 rounded-md text-white inline font-medium`}>Active</p>
-                      : selectedLocation.status === 'BLOCKED' ? <p className={`bg-green-500 px-4 rounded-md text-white inline font-medium`}></p>
+                      : selectedLocation.status === 'BLOCKED' ? <p className={`bg-red-500 px-4 rounded-md text-white inline font-medium`}>Block</p>
                       : ''
                     }
                   </div>

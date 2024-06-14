@@ -8,8 +8,10 @@ import onlineBookingStore from '../../helpers/state_managment/settings/online_bo
 import { addPercent, deletePercent, editPercent, fetchData } from '../../helpers/api-function/percent/percent.tsx';
 import DelModal from '../../components/settings/modals/delModal.tsx';
 import EditModal from '../../components/settings/modals/editModal.tsx';
+import { useTranslation } from 'react-i18next';
 
 const DirectoriesOnlineBooking: React.FC = () => {
+  const { t } = useTranslation()
   // STATE MANAGMENT
   const { data, setData, isInputOpen, setIsInputOpen, setEditModal, isEditModal, items, setItems } = onlineBookingStore();
   // STATES
@@ -34,9 +36,9 @@ const DirectoriesOnlineBooking: React.FC = () => {
     <>
       <DefaultLayout>
         <div>
-          <p className="text-xl">Онлайн бронирование</p>
+          <p className="text-xl">{t("Online_booking")}</p>
           <div className="lg:w-2/3 mt-5">
-            <Accordion title="Предоплата в процентах">
+            <Accordion title={t("Prepayment_in_percentage")}>
               <div className="flex sm:flex-row flex-col justify-between">
                 <div className="sm:w-[75%] w-full">
                   {data.map(item => (
@@ -82,7 +84,7 @@ const DirectoriesOnlineBooking: React.FC = () => {
                   <div className="flex gap-2">
                     <input
                       type="number"
-                      placeholder="Type something..."
+                      placeholder={t("Type_something")}
                       className="dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3"
                       value={newPercent}
                       onChange={(e) =>
@@ -96,7 +98,7 @@ const DirectoriesOnlineBooking: React.FC = () => {
                         setNewPercent('');
                       }}
                     >
-                      Добавить
+                      {t("Add")}
                     </button>
                   </div>
                 )}

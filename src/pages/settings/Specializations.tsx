@@ -10,6 +10,7 @@ import ServiceCategoriesCard from '../../components/settings/details/ServiceCate
 import DelModal from '../../components/settings/modals/delModal';
 import EditModal from '../../components/settings/modals/editModal';
 import { Skeleton } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface FatherData {
   id: string;
@@ -27,6 +28,7 @@ interface ChildDataMap {
 }
 
 const Specializations: React.FC = () => {
+  const { t } = useTranslation()
   const [isInputOpen, setIsInputOpen] = useState<{ [key: string]: boolean }>({});
   const [isDelModalOpen, setIsDelModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -83,7 +85,7 @@ const Specializations: React.FC = () => {
     const newCategoryName = newCategoryNameMap[fatherId];
 
     if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
-      toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+      toast(t("Please_enter"), { icon: '⚠️' });
       return;
     }
 
@@ -97,12 +99,12 @@ const Specializations: React.FC = () => {
     try {
       const res = await axios.post(add_service_category, payload, config);
       if (res.data.success) {
-        toast.success('Category added successfully');
+        toast.success(t("Category_added_successfully"));
         fetchChildData(fatherId);
         setNewCategoryNameMap((prev) => ({ ...prev, [fatherId]: '' }));
         toggleInput(fatherId);
       } else {
-        toast('This category already exits', { icon: '⚠️' });
+        toast(t("This_category_already_exists"), { icon: '⚠️' });
       }
     } catch { }
     finally {

@@ -10,6 +10,7 @@ import { truncateText } from '../../../helpers/splitText';
 import { useTranslation } from 'react-i18next';
 
 const MailDetail: React.FC = () => {
+    const { t } = useTranslation()
     const { id } = useParams<{ id: string }>();
     const [mail, setMail] = useState<any>(null);
     const { chatData } = MailStore();
@@ -31,7 +32,6 @@ const MailDetail: React.FC = () => {
             </DefaultLayout>
         );
     }
-    const { t } = useTranslation()
 
     return (
         <DefaultLayout>

@@ -36,74 +36,78 @@ const DetailMaster: React.FC = () => {
   return (
     <div>
       {isLoading ? (
-        <p className="dark:text-white">{t("Loading_order_details")}</p>
+        <p className="dark:text-white">{t('Loading_order_details')}</p>
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
             StatusNow={orderDetails.masterChatStatus}
-            Specialization={orderDetails.masterSpecialization[1]}
+            Specialization={orderDetails.masterSpecialization[0].name}
             ServiceCategory={orderDetails.masterServiceCategory}
             GenderType={orderDetails.directionByGender}
             PlaceOfWork={orderDetails.placeOfWork}
             StartData={
               orderDetails.startDate === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.startDate
             }
             Telegram={
               orderDetails.telegramLink === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.telegramLink
             }
             Level={
               orderDetails.masterFeedbackCount === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.masterFeedbackCount
             }
             Clients={
               orderDetails.clientCount === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.clientCount
             }
             rejectedOrderCount={
               orderDetails.rejectedOrderCount === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.rejectedOrderCount
             }
             CompOrders={
               orderDetails.completedOrderCount === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.completedOrderCount
             }
             Instagram={
               orderDetails.instagramLink === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.instagramLink
             }
             Number={orderDetails.phoneNumber}
             Region={
               orderDetails.regionName === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.regionName
             }
             City={
               orderDetails.districtName === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.districtName
             }
-            Age={orderDetails.age === null ? t("Not_available") : orderDetails.age}
+            Age={
+              orderDetails.age === null ? t('Not_available') : orderDetails.age
+            }
             Gender={
-              orderDetails.gender === null ? t("Not_available") : orderDetails.gender
+              orderDetails.gender === null
+                ? t('Not_available')
+                : orderDetails.gender
             }
             UserName={
               orderDetails.nickname === null
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.nickname
             }
             SurName={orderDetails.lastName}
             Location={
               orderDetails.address === null
-                ? t("Address_Not_available")
+                ? t('Address_Not_available')
                 : orderDetails.address
             }
             scheduleType={orderDetails.scheduleType}
@@ -115,7 +119,7 @@ const DetailMaster: React.FC = () => {
             }
             definitionType={
               orderDetails.masterPhone === undefined
-                ? t("Not_available")
+                ? t('Not_available')
                 : orderDetails.masterPhone
             }
             Status={orderDetails.status}
@@ -123,7 +127,7 @@ const DetailMaster: React.FC = () => {
           />
         </div>
       ) : (
-        <p className="dark:text-white">{t("No_order_details_found")}</p>
+        <p className="dark:text-white">{t('No_order_details_found')}</p>
       )}
     </div>
   );

@@ -47,14 +47,16 @@ const Gallery: React.FC = () => {
         <React.Fragment key={index}>
           <div className="flex items-center justify-between shadow-8 p-4 rounded-lg">
             <div className="flex items-center gap-4">
-              <p>
+              <p className="lg:block hidden">
                 {t('Album')}
                 {orderDetail.id}
               </p>
-              <p className="text-xl font-bold">{orderDetail.albumName}</p>
+              <p className="text-sm sm:text-lg lg:text-xl font-bold ">
+                {orderDetail.albumName}
+              </p>
             </div>
             <div>
-              <p className="font-bold text-xl">{orderDetail.date}</p>
+              <p className="font-bold lg:text-xl text-sm">{orderDetail.date}</p>
             </div>
           </div>
           <div
