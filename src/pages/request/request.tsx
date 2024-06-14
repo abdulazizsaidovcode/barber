@@ -44,7 +44,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
 
     return (
         <DefaultLayout padding={true}>
-            <div className="w-full md:flex md:justify-between">
+            <div className="w-full md:flex gap-3 md:justify-between">
                 <button onClick={toggleSidebar} className="md:hidden ms-4 text-black mb-2">
                     <CgMenuLeft className="text-[1.5rem] font-bold" />
                 </button>
@@ -63,7 +63,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
                         allCount={counts.allCount}
                     />
                 </div>
-                <div className="md:w-4/5 p-2 md:ms-[25%]">
+                <div className="md:w-4/5 p-2 lg:ms-[25%] sm:ms-[28%]">
                     {children}
                 </div>
             </div>
