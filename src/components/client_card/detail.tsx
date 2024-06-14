@@ -37,8 +37,7 @@ type MasterCardInfoProps = {
   ServiceCategory: string[];
 
   StatusNow: string;
-  ClientId: string;
-  getFunc: () => void;
+   getFunc: () => void;
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
@@ -64,7 +63,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   StartData,
   Status,
   StatusNow,
-  ClientId,
+
 }) => {
   const { t } = useTranslation();
   const location = useLocation();

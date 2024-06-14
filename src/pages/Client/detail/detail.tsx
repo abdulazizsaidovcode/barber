@@ -44,7 +44,7 @@ const DetailMaster: React.FC = () => {
           <div>
             <DetailClient
             getFunc={getClient_data}
-              ClientId=""
+              
               StatusNow={orderDetails.chatStatus}
               ClientImg={
                 orderDetails.image ? getFileId + orderDetails.image : userImg
