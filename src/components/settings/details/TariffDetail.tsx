@@ -6,7 +6,9 @@ import { tarif_detail, tarif_put_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
 import DetailsSecondTab from './DeatilsSecondTab';
+import { MdEdit } from 'react-icons/md';
 import DetailsFirstTab from './DeatilsFirstTab';
+import EditModal from '../modals/editModal';
 
 interface SecondTabData {
   bookingDuration: number;
@@ -22,6 +24,8 @@ const TariffDetail: React.FC = () => {
   const [newState, setNewState] = useState<{ [key: number]: boolean }>({});
   const [initialState, setInitialState] = useState<{ [key: number]: boolean }>({});
   const [name, setName] = useState<string>('');
+  const [initialName, setInitialName] = useState<string>('');
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [secondTabData, setSecondTabData] = useState<SecondTabData>({
     bookingDuration: 0,
     bookingPerMonth: 0,
@@ -54,8 +58,9 @@ const TariffDetail: React.FC = () => {
       }, {});
 
       setNewState(newState);
-      setInitialState(newState); // Save initial state
+      setInitialState(newState);
       setName(res.data.body.name);
+      setInitialName(res.data.body.name);
       const fetchedSecondTabData = {
         bookingDuration: res.data.body.bookingDuration,
         bookingPerMonth: res.data.body.bookingPerMonth,
@@ -66,8 +71,10 @@ const TariffDetail: React.FC = () => {
         yearPrice: res.data.body.yearPrice
       };
       setSecondTabData(fetchedSecondTabData);
-      setInitialSecondTabData(fetchedSecondTabData); // Save initial data
-    } catch {}
+      setInitialSecondTabData(fetchedSecondTabData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const checkForChanges = () => {
@@ -78,6 +85,58 @@ const TariffDetail: React.FC = () => {
 
   const onChange = (key: string) => {
     console.log(key);
+  };
+
+  const openEditModal = () => setIsEditOpen(true);
+  const closeEditModal = () => setIsEditOpen(false);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const isNameValid = () => {
+    const trimmedName = name.trim();
+    return (
+      trimmedName.length > 0 &&
+      trimmedName !== initialName &&
+      !/^[',", ]+$/.test(trimmedName)
+    );
+  };
+
+  const updateData = async () => {
+    if (!isNameValid()) {
+      toast.error('Invalid name input');
+      return;
+    }
+    
+    const payload = {
+      id: id,
+      name: name,
+      funcReqList: Object.keys(newState).filter(key => newState[Number(key)]).map(key => Number(key)),
+      bookingDuration: secondTabData.bookingDuration ?? 0,
+      bookingPerMonth: secondTabData.bookingPerMonth ?? 0,
+      prePaymentCount: secondTabData.prePaymentCount ?? 0,
+      numberOfAlbums: secondTabData.numberOfAlbums ?? 0,
+      numberOfFoto: secondTabData.numberOfFoto ?? 0,
+      monthPrice: secondTabData.monthPrice ?? 0,
+      yearPrice: secondTabData.yearPrice ?? 0
+    };
+    try {
+      const res = await axios.put(tarif_put_url, payload, config);
+      if (res.data.success) {
+        toast.success('Tariff updated successfully');
+        setInitialState(newState);
+        setInitialSecondTabData(secondTabData);
+        setHasChanges(false);
+        closeEditModal();
+      } else {
+        toast.error('Something went wrong updating the tariff');
+        setHasChanges(true);
+      }
+    } catch (error) {
+      toast.error('An error occurred while updating the tariff');
+      console.error(error);
+    }
   };
 
   const items = [
@@ -97,35 +156,24 @@ const TariffDetail: React.FC = () => {
           Ограничения
         </span>
       ),
-      children: <DetailsSecondTab onSave={() => updateData()} data={secondTabData} setData={setSecondTabData} hasChanges={hasChanges} />,
+      children: <DetailsSecondTab onSave={updateData} data={secondTabData} setData={setSecondTabData} hasChanges={hasChanges} />,
     },
   ];
 
-  const updateData = async () => {
-    const payload = {
-      id: id,
-      funcReqList: Object.keys(newState).filter(key => newState[Number(key)]).map(key => Number(key)),
-      bookingDuration: secondTabData.bookingDuration ?? 0,
-      bookingPerMonth: secondTabData.bookingPerMonth ?? 0,
-      prePaymentCount: secondTabData.prePaymentCount ?? 0,
-      numberOfAlbums: secondTabData.numberOfAlbums ?? 0,
-      numberOfFoto: secondTabData.numberOfFoto ?? 0,
-      monthPrice: secondTabData.monthPrice ?? 0,
-      yearPrice: secondTabData.yearPrice ?? 0
-    };
-    try {
-      await axios.put(tarif_put_url, payload, config);
-      toast.success('Tariff updated successfully');
-      setInitialState(newState);
-      setInitialSecondTabData(secondTabData);
-      setHasChanges(false);
-    } catch {}
-  };
-
   return (
     <DefaultLayout>
-      <div className='w-full my-2 rounded-lg dark:text-black h-15 p-5 bg-white'>
-        <p>{name}</p>
+      <div className='w-full flex justify-between items-center my-2 rounded-lg dark:text-black h-15 px-5 bg-white'>
+        <div>
+          <p>{name}</p>
+        </div>
+        <div>
+          <button
+            onClick={openEditModal}
+            className="p-[6px] border-[#000] border-[1px] rounded-lg"
+          >
+            <MdEdit size={20} color="black" className="dark:text-white" />
+          </button>
+        </div>
       </div>
       <Tabs
         className="dark:bg-boxdark bg-white p-2 w-full"
@@ -138,9 +186,13 @@ const TariffDetail: React.FC = () => {
           </Tabs.TabPane>
         ))}
       </Tabs>
-      <Toaster
-        position='top-center'
-        reverseOrder={false}
+      <Toaster position='top-center' reverseOrder={false} />
+      <EditModal
+        isOpen={isEditOpen}
+        onClose={closeEditModal}
+        onChange={handleNameChange}
+        onSave={updateData}
+        defaultValue={name}
       />
     </DefaultLayout>
   );

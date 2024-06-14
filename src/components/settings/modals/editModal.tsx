@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next';
 interface EditModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSave?: () => void;
-    onChange?: (e: any) => void;
-    defaultValue?: any;
-    value?: any;
+    onSave: () => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    defaultValue?: string;
+    value?: string;
     type?: string;
     disabled?: boolean;
 }
@@ -25,10 +25,11 @@ const EditModal: React.FC<EditModalProps> = ({
     disabled,
 }) => {
     const { t } = useTranslation();
+
     const handleSave = () => {
         if (defaultValue === value) {
             toast.error(t('No_changes_detected_Please_modify_the_value_before_saving'));
-        } else if (onSave) {
+        } else {
             onSave();
         }
     };

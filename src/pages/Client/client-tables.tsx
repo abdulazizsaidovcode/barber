@@ -27,8 +27,8 @@ const ClientTables: React.FC = () => {
   });
 
   const onChange = (page: number, pageSize: number): void => {
-    console.log("clicked number:", page);
-    console.log("Total page:", pageSize);
+    // console.log("clicked number:", page);
+    // console.log("Total page:", pageSize);
   };
 
   const openIsModal = () => setIsModal(!isModal)
@@ -99,6 +99,7 @@ const ClientTables: React.FC = () => {
     }
   ];
 
+
   const handleMenuClick = (e: any, id: string) => {
     setUpdateStatus({ status: e.key, id });
   };
@@ -119,7 +120,7 @@ const ClientTables: React.FC = () => {
             >
               <td className={`min-w-[150px] p-5`}>
                 <img
-                  src={item ? item.imgId ? getFileId + item.imgId : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg"}
+                  src={item.imgId ? getFileId + item.imgId : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg"}
                   alt="img"
                   className={"w-10 h-10 scale-[1.4] rounded-full object-cover"}
                 />
