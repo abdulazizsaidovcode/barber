@@ -2,13 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Skeleton, Button, Rate, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
-import {
-  client_block_put,
-  client_send_message,
-  master_send_message_master,
-} from '../../helpers/api';
+import { client_block_put, client_send_message } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import Switch from '../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
@@ -42,13 +38,14 @@ type MasterCardInfoProps = {
 
   StatusNow: string;
   ClientId: string;
+  getFunc: () => void;
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   ClientName,
   ClientImg,
   turnover,
-
+  getFunc,
   isLoading,
   SurName,
   Location,
@@ -97,11 +94,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         { id: idMaster, status: status },
         config,
       );
+      getFunc();
       toast.success(t('Switch toggled successfully'));
       setIsSwitchOn(!isSwitchOn);
-      setTimeout(() => {
-        window.location.href = `/client_id/${idMaster}`;
-      }, 2000);
     } catch (error) {
       toast.error(t('Error toggling switch'));
     }
@@ -300,6 +295,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             rows={4}
             placeholder={t('Enter your message')}
             value={message}
+          
             onChange={(e) => setMessage(e.target.value)}
           />
           <div className="flex items-center justify-center">
@@ -313,7 +309,6 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </div>
       </Modal>
-      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
