@@ -1,5 +1,4 @@
 import MasterTable from '../../components/Tables/MasterTable.tsx';
-import { thead } from './data.tsx';
 import { CiMenuKebab } from 'react-icons/ci';
 import { MenuProps, Pagination, Dropdown, Space, Menu } from 'antd';
 import Filters from './filters/filters.tsx';
@@ -74,13 +73,8 @@ const MasterTables: React.FC = () => {
       name: t("Place_of_work"),
     }
   ];
-  const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading } = masterStore();
+  const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading, setPage } = masterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ status: '', masterId: '' });
-
-  const onChange = (page: number, pageSize: number): void => {
-    console.log('clicked number:', page);
-    console.log('Total page:', pageSize);
-  };
 
   const getItems = (id: string): MenuProps['items'] => [
     {
@@ -98,12 +92,9 @@ const MasterTables: React.FC = () => {
       onClick: () => openIsModal(),
     }
   ];
-
   const openIsModal = () => setIsModal(!isModal);
-
-  const handleMenuClick = (e: any, masterId: string) => {
-    setUpdateStatus({ status: e.key, masterId });
-  };
+  const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId })
+  const onChange = (page: number): void => setPage(page - 1)
 
   return (
     <>
@@ -144,7 +135,9 @@ const MasterTables: React.FC = () => {
                 <p className="text-black dark:text-white">{item.orderCount}</p>
               </td>
               <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">{item.rating.toFixed(3)}</p>
+                <p className="text-black dark:text-white">
+                  {item.rating !== 0 ? item.rating.toFixed(3) : item.rating}
+                </p>
               </td>
               <td className="min-w-[150px] p-5 pt-7 flex items-center justify-between">
                 <p

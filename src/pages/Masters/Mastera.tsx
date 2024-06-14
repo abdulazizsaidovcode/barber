@@ -1,20 +1,48 @@
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Tabs } from 'antd';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
-import { items } from './data.tsx';
 import { useEffect } from 'react';
 import { getCategory, getMasters, getRegion } from '../../helpers/api-function/master/master.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { useTranslation } from 'react-i18next';
+import { IMasterItems } from '../../types/master.ts';
+import MasterTables from './master-tables.tsx';
+import MasterLocation from './master-location.tsx';
 
 const Master = () => {
-  const { setData, setTotalPage, setRegionData, setCategory } = masterStore()
+  const { setData, setTotalPage, setRegionData, setCategory, page } = masterStore()
   const { t } = useTranslation();
   useEffect(() => {
     getMasters({ setData, setTotalPage })
     getRegion(setRegionData)
     getCategory(setCategory)
   }, [])
+
+  useEffect(() => {
+    getMasters({setData, setTotalPage, page})
+  }, [page])
+
+  const items: IMasterItems[] = [
+    {
+      key: '1',
+      label: (
+        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+        Masterlar ro'yxati
+      </span>
+      ),
+      children: <MasterTables />,
+    },
+    {
+      key: '2',
+      label: (
+        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+        Masterning joylashuvi
+      </span>
+      ),
+      children: <MasterLocation />,
+    },
+  ];
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={t('master')} />
