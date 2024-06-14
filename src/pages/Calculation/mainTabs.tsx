@@ -12,6 +12,7 @@ const MainTabs: React.FC = () => {
   const { setData, setTotalPage, setStatus, setRegionData, setChildCategoy, statusO } = orderStore();
 
   useEffect(() => {
+    localStorage.setItem("orderStatus", "UPCOMING")
     getOrder({
       status: "UPCOMING",
       setData: setData,
