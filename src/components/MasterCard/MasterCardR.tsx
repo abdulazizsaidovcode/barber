@@ -261,7 +261,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Contacts')}:
               </p>
             </div>
-            <div className="flex items-center justify-center w-full border bg-black dark:bg-white"></div>
+            <div className="flex items-center justify-center w-full h-1 bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Phone')} :</strong>
               <p>{Number}</p>
@@ -286,7 +286,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Indicators')}:
               </p>
             </div>
-            <div className="flex items-center justify-center w-full border bg-black dark:bg-white"></div>
+            <div className="flex items-center justify-center w-full h-1 bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Completed_Orders')}:</strong>
               <p>{CompOrders}</p>

@@ -106,6 +106,9 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         config,
       );
       message.success('Procedure deleted and message sent successfully');
+      setTimeout(() => {
+        window.location.href = `/master/${id}`;
+      }, 2000);
     } catch (error) {
       message.error('An error occurred while deleting and sending the message');
     }
@@ -117,6 +120,9 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     try {
       await axios.post(post_message_api, { message: value }, config);
       toggleModal('second', true);
+      setTimeout(() => {
+        window.location.href = `/master/${id}`;
+      }, 2000);
     } catch (error) {
       message.error('An error occurred while sending the message');
     }
@@ -124,10 +130,17 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
   const handleDeleteApprovedService = async () => {
     try {
-      await axios.put(`${master_delate_service}${currentServiceId}`, '', config);
+      await axios.put(
+        `${master_delate_service}${currentServiceId}`,
+        '',
+        config,
+      );
       message.success('Approved procedure deleted successfully');
 
       toggleModal('delete', false);
+      setTimeout(() => {
+        window.location.href = `/master/${id}`;
+      }, 2000);
     } catch (error) {
       message.error('An error occurred while deleting the approved procedure');
       toggleModal('delete', false);
