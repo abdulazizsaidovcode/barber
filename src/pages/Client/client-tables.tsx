@@ -20,19 +20,28 @@ export interface UpdateStatus {
 
 const ClientTables: React.FC = () => {
   const { t } = useTranslation();
-  const { clientFilterData, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid } = clientFilterStore();
+  const { clientFilterData,totalPage,setPage, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: "",
     id: "",
   });
 
-  const onChange = (page: number, pageSize: number): void => {
-    // console.log("clicked number:", page);
-    // console.log("Total page:", pageSize);
-  };
+  const onChange = (page: number): void => setPage(page - 1)
+
 
   const openIsModal = () => setIsModal(!isModal)
   const openIsMessageModal = () => setIsMessageModal(!isMessageModal)
+
+  const itemRender = (_: any, type: string, originalElement: any) => {
+    if (type === 'page') {
+      return (
+        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
 
   const thead = [
     {
@@ -207,9 +216,11 @@ const ClientTables: React.FC = () => {
       <Pagination
         showSizeChanger={false}
         responsive={true}
-        total={3}
+        defaultCurrent={1}
+        total={totalPage}
         onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
+        itemRender={itemRender}
       />
 
       <Modal isOpen={isModal} onClose={openIsModal}>
