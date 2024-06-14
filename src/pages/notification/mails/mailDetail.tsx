@@ -60,7 +60,7 @@ const MailDetail: React.FC = () => {
                 }
                 {mail.fileId && (
                     <div className="mb-4">
-                        <strong>File:</strong>
+                        <strong>{t("File")}:</strong>
                         <div className='flex gap-2'>
                             <p>{mail.fileName}</p>
                             <a href={getFileId + mail.fileId} download className="text-blue-500 underline ml-2">{t("Download")}</a>

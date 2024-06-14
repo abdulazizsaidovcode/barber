@@ -19,7 +19,7 @@ const Master = () => {
   }, [])
 
   useEffect(() => {
-    getMasters({setData, setTotalPage, page})
+    getMasters({ setData, setTotalPage, page })
   }, [page])
 
   const items: IMasterItems[] = [
@@ -27,8 +27,8 @@ const Master = () => {
       key: '1',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-        Masterlar ro'yxati
-      </span>
+          {t("List_of_masters")}
+        </span>
       ),
       children: <MasterTables />,
     },
@@ -36,8 +36,8 @@ const Master = () => {
       key: '2',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-        Masterning joylashuvi
-      </span>
+          {t("The_location_of_the_master")}
+        </span>
       ),
       children: <MasterLocation />,
     },

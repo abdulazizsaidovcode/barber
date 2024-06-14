@@ -103,6 +103,7 @@
   "Address_Not_available": "Manzil Mavjud emas",
   "No_order_details_found": "Buyurtma tafsilotlari topilmadi.",
   "Search_by_name": "Ism bo'yicha qidirish",
+  "Search_F_I_O": "F.I.O. bo'yicha qidirish",
   "Mutual_settlements": "O'zaro hisob-kitoblar",
   "Reviews": "Sharhlar",
   "Name": "Ism",
@@ -161,6 +162,7 @@
   "Total_income": "Umumiy daromad",
   "January": "Yanvar",
   "Information_not_available": " Ma'lumot mavjud emas!",
+  "The_location_of_the_master": "Masterning joylashuvi",
   "List_of_masters": "Masterlar ro'yxati",
   "Active": "Aktiv",
   "Not_available": "Mavjud emas!",
@@ -253,8 +255,11 @@
   "Mail_not_found": "Pochta topilmadi",
   "Topic_name": "Mavzu nomi:",
   "Create_a_newsletter": "Axborot byulleteni yarating",
-  "Are_you_sure_you": "Haqiqatan ham bu xabarnomani ochmoqchimisiz?",
+  "Are_you_sure_your": "Haqiqatan ham bu xabarnomani ochmoqchimisiz?",
   "the_is_unavailable": "xat mavjud emas!",
+  "delete_the_message": "Xabarni o'chirish",
+  "File": "Fayl",
+  "cancel": "Bekor qilish",
   "Answer": "Javob",
   "Edit": "Tahrirlash"
 }

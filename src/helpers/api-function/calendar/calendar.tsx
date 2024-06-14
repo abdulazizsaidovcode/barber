@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from '../../token';
-import { calendar_url, service_category_list } from '../../api';
+import { calendar_url, child_category_list } from '../../api';
 import { CalendarData } from '../../state_managment/calendar/calendarStore';
 
 interface Category {
@@ -28,7 +28,7 @@ interface ResponseBody {
 
 export const getCategoryId = (setCategory: (data: Category[]) => void) => {
   axios
-    .get<ResponseBody>(service_category_list, config)
+    .get<ResponseBody>(child_category_list, config)
     .then((res) => {
       if (res.data.success) {
         setCategory(res.data.body);

@@ -138,7 +138,7 @@ const Filters: React.FC = () => {
       <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Input
-            placeholder="Search F.I.O"
+            placeholder={t("Search_F_I_O")}
             prefix={<IoSearchOutline />}
             style={styles.filterInput}
             value={filters.fullName}
