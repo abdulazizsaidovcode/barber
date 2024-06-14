@@ -18,7 +18,11 @@ const DetailMaster: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    getMasterDetails();
+  }, [id]);
 
+  //get master detail
+  const getMasterDetails = () => {
     axios
       .get(`${master_full_data}/${id}`, config)
       .then((response) => {
@@ -30,7 +34,7 @@ const DetailMaster: React.FC = () => {
         console.error('There was an error fetching the data!', error);
         setIsLoading(false); // Set loading to false in case of error
       });
-  }, [id]);
+  };
 
   return (
     <div>
@@ -39,6 +43,7 @@ const DetailMaster: React.FC = () => {
       ) : orderDetails ? (
         <div>
           <MasterCardInfo
+            getFunc={getMasterDetails}
             StatusNow={orderDetails.masterChatStatus}
             Specialization={
               orderDetails.specialization === null

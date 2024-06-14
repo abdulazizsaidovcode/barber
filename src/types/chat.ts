@@ -27,6 +27,7 @@ export interface ChatSentSmsType {
   reply: (val: any) => void,
   deleteMessage: () => void
   editMessage: () => void
+  setPhoto: any
 }
 
 export interface ChatSentSmstList {
@@ -40,7 +41,7 @@ export interface ChatSentSmstList {
   userImgId: string | null,
   receiverName: string,
   receiverImg: string | null
-  senderImg: string | null
-  replayDto: any
-
+  senderImg: string | null,
+  replayDto: any,
+  attachmentIds: any,
 }

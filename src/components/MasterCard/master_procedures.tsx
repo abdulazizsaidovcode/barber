@@ -24,10 +24,12 @@ interface ProceduresProps {
   description: string;
   serviceStatus: string;
   servicesId: string;
+  getFunc: () => void;
 }
 
 const MasterProcedures: React.FC<ProceduresProps> = ({
   title,
+  getFunc,
   imgUrl,
   price,
   duration,
@@ -83,6 +85,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         message.success('Procedure confirmed successfully');
         const updatedServiceId = response.data.id;
         setCurrentServiceId(updatedServiceId);
+        getFunc();
       } else {
         throw new Error('Failed to confirm procedure');
       }
@@ -106,9 +109,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         config,
       );
       message.success('Procedure deleted and message sent successfully');
-      setTimeout(() => {
-        window.location.href = `/master/${id}`;
-      }, 2000);
+      getFunc();
     } catch (error) {
       message.error('An error occurred while deleting and sending the message');
     }
@@ -138,9 +139,8 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
       message.success('Approved procedure deleted successfully');
 
       toggleModal('delete', false);
-      setTimeout(() => {
-        window.location.href = `/master/${id}`;
-      }, 2000);
+      getFunc();
+
     } catch (error) {
       message.error('An error occurred while deleting the approved procedure');
       toggleModal('delete', false);
