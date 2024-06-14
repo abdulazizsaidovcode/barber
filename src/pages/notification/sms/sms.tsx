@@ -14,15 +14,17 @@ import { EditFilled } from '@ant-design/icons';
 import Modal from '../../../components/modals/modal';
 import { Buttons } from '../../../components/buttons';
 import TextArea from 'antd/es/input/TextArea';
+import { GiCancel } from 'react-icons/gi';
 
-const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage }: ChatSentSmsType) => {
+const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage, setPhoto }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
   const [selreplyId, setSelreplyId] = useState<string>("");
   const [seleditId, setseleditId] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-
+  const [attachmentIds, setAttachmentIds] = useState<any>(null);
+  const [photo, setPhotos] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   const handleClick = () => {
     fileInputRef.current?.click();
@@ -83,6 +85,19 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
     }
   };
 
+
+  const setAttachment = (info: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = info.target.files ? info.target.files[0] : null;
+    setPhoto(selectedFile);
+    setAttachmentIds(selectedFile)
+
+    if (selectedFile) {
+      setPhotoPreview(URL.createObjectURL(selectedFile));
+    } else {
+      setPhotoPreview(null);
+    }
+  };
+
   return (
     <div className='h-full relative pl-4'>
       {chat.length > 0 ? (
@@ -108,6 +123,12 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                           </div>
                           <div className={`bg-gray text-black py-1 px-3 mb-1 rounded-md  dark:border-[#9c0935] ${item.senderId === senderId ? "border-r-2" : "border-l-2"}`}>{item.replayDto.content}</div>
                         </div>
+                      }
+                      {
+                        item.attachmentIds.lebgth > 0 ?
+                          <img src={`${getFileId + item.attachmentIds[0]}`} alt="" className='w'/>
+                          : null
+
                       }
                       <p className={`flex items-center gap-5 ${item.senderId === senderId ? "bg-white rounded-lg py-2 px-3 shadow max-w-sm w-max" : "bg-lime-500 text-white rounded-lg py-2 px-3 shadow mb-2 max-w-max flex-col-reverse"}`}>
                         <p className='w-[95%]'>{item.content ? item.content : "(null)"}</p>
@@ -151,12 +172,24 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                 onKeyDown={handleKeyDown}
                 autoSize />
               <div className="flex justify-end items-center text-2xl w-1/2 gap-5">
-                <div>
-                  <input type="file" className="hidden" ref={fileInputRef} />
-                  <IoMdAttach className="cursor-pointer text-xl" onClick={handleClick} />
+                <div className='flex items-center'>
+                  <input type="file" onChange={setAttachment} className="hidden" ref={fileInputRef} />
+                  <IoMdAttach className="cursor-pointer text-3xl" onClick={handleClick} />
+                  {photoPreview ? (
+                    <div className='flex items-center gap-2'>
+                      <img
+                        className="w-10 h-10 rounded-md p-1 bg-[#9c0935]"
+                        src={photoPreview}
+                        alt="User Avatar" />
+                      <button onClick={() => setPhotoPreview(null)}>
+                        <GiCancel />
+                      </button>
+                    </div>) :
+                    null}
+
                 </div>
                 <FaCheck />
-                {content.trim() ? !selreplyId && !seleditId && <button onClick={sendMessage}><IoSend /></button> : null}
+                {content.trim() ? (attachmentIds || (!selreplyId && !seleditId)) && <button onClick={sendMessage}><IoSend /></button> : null}
                 {content.trim() ? selreplyId && <button onClick={() => {
                   reply()
                   setSelreplyId("")
