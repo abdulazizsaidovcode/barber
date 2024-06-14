@@ -34,8 +34,6 @@ export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterDa
     if (res.data.success) {
       setMasterDataList(res.data.body.object);
       setTotalMasterPage(res.data.body.totalElements);
-    } else {
-      setMasterDataList([]);
     }
   } catch {
     setMasterDataList([]);
