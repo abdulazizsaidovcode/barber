@@ -4,7 +4,6 @@ import { Button, message, Input } from 'antd';
 import {
   master_delate_service,
   master_confirm_new_service,
-  master_delate_new_service,
   post_message_api,
 } from '../../helpers/api';
 import axios from 'axios';
@@ -80,9 +79,9 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
         config,
       );
 
-      if (response.status === 200) {
+      if (response.data.success) {
         message.success('Procedure confirmed successfully');
-        const updatedServiceId = response.data.servicesId;
+        const updatedServiceId = response.data.id;
         setCurrentServiceId(updatedServiceId);
       } else {
         throw new Error('Failed to confirm procedure');
@@ -125,10 +124,13 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
   const handleDeleteApprovedService = async () => {
     try {
-      await axios.post(`${master_delate_service}${currentServiceId}`, config);
-      toggleModal('delete', true);
+      await axios.put(`${master_delate_service}${currentServiceId}`, '', config);
+      message.success('Approved procedure deleted successfully');
+
+      toggleModal('delete', false);
     } catch (error) {
       message.error('An error occurred while deleting the approved procedure');
+      toggleModal('delete', false);
     }
   };
 
