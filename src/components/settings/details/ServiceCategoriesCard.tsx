@@ -4,7 +4,7 @@ import onlineBookingStore from '../../../helpers/state_managment/settings/online
 
 interface ServiceCategoriesCardProps {
   title: string;
-  itemVal: Data;
+  itemVal?: Data | undefined;
   editOnClick: () => void;
   deleteOnClick: () => void;
 }
