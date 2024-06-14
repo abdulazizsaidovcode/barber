@@ -191,7 +191,7 @@ const Chatdetail: React.FC = () => {
       }
     }
 
-    if (replyId && content) {
+    if ((replyId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/replay', {}, JSON.stringify(replyObj));
         setTimeout(() => {
@@ -239,7 +239,7 @@ const Chatdetail: React.FC = () => {
         attachmentIds: fileUrl ? [fileUrl] : []
       }
     }
-    if (editId && content) {
+    if ((editId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
         fetchMessages(adminId, recipientId);
