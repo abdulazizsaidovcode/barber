@@ -16,18 +16,18 @@ export interface ChatusersListType {
 }
 
 export interface ChatSentSmsType {
-  editId: any;
-  replyId: any
-  deleteId: any;
+  editId: any,
+  replyId: any,
+  deleteId: any,
   senderId: string | null,
   sendMessage: () => void,
   chat: ChatSentSmstList[],
-  content: string
-  setContent: (val: any) => void
-  reply: (val: any) => void,
-  deleteMessage: () => void
-  editMessage: () => void
-  setPhoto: any
+  content: string,
+  setContent: (val: any) => void,
+  reply: () => void,
+  deleteMessage: () => void,
+  editMessage: () => void,
+  setPhoto: any,
 }
 
 export interface ChatSentSmstList {
