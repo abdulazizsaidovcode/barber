@@ -101,8 +101,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
         window.location.href = `/master/${idMaster}`;
       }, 3000);
     } catch (error) {
-      console.error('Error toggling switch:', error);
-      toast.error(t('Error_toggling_switch'));
+       toast.error(t('Error_toggling_switch'));
     }
     closeModal();
   };
@@ -124,8 +123,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       toast.success(t('Message_sent_successfully'));
       closeSendModal();
     } catch (error) {
-      console.error('Error sending message:', error);
-      toast.error(t('Failed_to_send_message'));
+       toast.error(t('Failed_to_send_message'));
     }
   };
 
