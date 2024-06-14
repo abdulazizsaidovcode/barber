@@ -163,6 +163,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <strong>{t('Gender')}:</strong> {Gender}
             </p>
             <p className="mb-10">
+              <strong>{t('turnover')}:</strong> {turnover}
+            </p>
+            <p className="mb-10">
               <strong>{t('Age')}:</strong> {Age}
             </p>
             <p className="mb-10">

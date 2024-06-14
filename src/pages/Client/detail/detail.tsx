@@ -63,7 +63,7 @@ const DetailMaster: React.FC = () => {
               SurName={orderDetails.lastName ?? 'Mavjud emas'}
               Location={orderDetails.address ?? 'Manzil Mavjud emas'}
               ClientName={orderDetails.firstName ?? 'Mavjud emas'}
-              turnover={orderDetails.turnover ?? 'Mavjud emas'}
+              turnover={orderDetails.birthDate ?? 'Mavjud emas'}
               Status={orderDetails.status ?? 'Mavjud emas'}
               isLoading={isLoading}
             />
