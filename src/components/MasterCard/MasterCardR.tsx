@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Skeleton, Button, Rate, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -13,6 +13,7 @@ import Switch from './../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
 
 const { TextArea } = Input;
+
 type MasterCardInfoProps = {
   MasterName: string;
   MasterImg: any;
@@ -41,6 +42,7 @@ type MasterCardInfoProps = {
   scheduleType: string;
   StatusNow: string;
 };
+
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   MasterName,
   MasterImg,
@@ -73,7 +75,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const location = useLocation();
   const idMaster = location.pathname.substring(8);
 
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(Status !== 'BLOCKED');
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -312,7 +314,11 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       </div>
       <Modal isOpen={isOpen} onClose={closeModal} mt="lg:w-[30%] w-[70%]">
         <div className="w-full dark:text-white text-black">
-          <p className="text-2xl md:text-lg font-bold">{t('Modal_answer')}</p>
+          <p className="text-2xl md:text-lg font-bold">
+            {Status === 'BLOCKED'
+              ? 'Master Blokdan chiqarilsinmi'
+              : t('Modal_answer')}
+          </p>
           <div className="flex items-center gap-2 justify-end mt-3">
             <Button key="back" onClick={closeModal}>
               {t('No')}
