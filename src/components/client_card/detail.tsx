@@ -9,7 +9,6 @@ import Modal from '../modals/modal';
 import { config } from '../../helpers/token';
 import { client_block_put, client_send_message } from '../../helpers/api';
 
-
 const { TextArea } = Input;
 
 type DetailClientProps = {
@@ -58,10 +57,12 @@ const DetailClient: React.FC<DetailClientProps> = ({
   StatusNow,
 }) => {
   const { t } = useTranslation();
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const [isSwitchOn, setIsSwitchOn] = useState(Status !== 'BLOCKED');
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
-  const [pendingSwitchState, setPendingSwitchState] = useState(true);
+  const [pendingSwitchState, setPendingSwitchState] = useState(
+    Status !== 'BLOCKED',
+  );
   const [message, setMessage] = useState('');
   const location = useLocation();
   const id = location.pathname.substring(11);
@@ -69,38 +70,40 @@ const DetailClient: React.FC<DetailClientProps> = ({
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   const closeSendModal = () => setSendOpen(false);
-  
   const openSendModal = () => {
-    setMessage("")
+    setMessage('');
     setSendOpen(true);
-  }
-  const handleSwitchClick = () => {
-    setPendingSwitchState(!isSwitchOn);
-    openModal();
   };
 
-  const confirmToggleSwitch = async () => {
-    setIsSwitchOn(pendingSwitchState);
+  const handleSwitchClick = async () => {
+    setPendingSwitchState(!isSwitchOn);
     try {
       const response = await axios.put(
-        `${client_block_put}?isBlock=${pendingSwitchState}&clientId=${id}`,
-        null,
+        `${client_block_put}`,
+        {
+          id: id,
+          status: pendingSwitchState ? 'BLOCKED' : 'ACTIVE',
+        },
         config,
       );
-
-      console.log('Switch toggled successfully:', response.data);
+      setIsSwitchOn(pendingSwitchState);
       toast.success(t('Switch toggled successfully'));
     } catch (error) {
       console.error('Error toggling switch:', error);
       toast.error(t('Error toggling switch'));
     }
     closeModal();
+    openModal();
   };
 
   const handleSendMessage = async () => {
-    console.log()
-    
-    if (message.trim() === '' || message === '/' || message === '&' || message === `""` || message === `"` ) {
+    if (
+      message.trim() === '' ||
+      message === '/' ||
+      message === '&' ||
+      message === `""` ||
+      message === `"`
+    ) {
       toast.error(t('Message cannot be empty'));
       return;
     }
@@ -119,7 +122,6 @@ const DetailClient: React.FC<DetailClientProps> = ({
         config,
       );
 
-      console.log('Message sent successfully:', response.data);
       toast.success(t('Message sent successfully'));
       closeSendModal();
     } catch (error) {
@@ -151,10 +153,14 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf]  dark:bg-boxdark  dark:text-white border-black   w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-[#ffffffdf] dark:bg-boxdark dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className=" font-bold">{t('Status')}:</p>
-              <div className="bg-green-500 px-6 rounded-xl font-bold">
+              <p className="font-bold">{t('Status')}:</p>
+              <div
+                className={`px-6 rounded-xl font-bold ${
+                  Status === 'BLOCKED' ? 'bg-red-500' : 'bg-green-500'
+                }`}
+              >
                 {Status}
               </div>
             </div>
@@ -167,9 +173,9 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black   dark:bg-boxdark  dark:text-white border-black  w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-[#ffffffdf] text-black dark:bg-boxdark dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className=" font-bold mb-2 mt-2">{t('Contacts')}:</p>
+              <p className="font-bold mb-2 mt-2">{t('Contacts')}:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
@@ -187,11 +193,9 @@ const DetailClient: React.FC<DetailClientProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-[#ffffffdf] text-black  w-full dark:bg-boxdark  dark:text-white border-black  lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div className="flex flex-col dark:bg-[#ffffffdf] text-black w-full dark:bg-boxdark dark:text-white border-black lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
-              <p className=" font-bold mb-2 mt-2">
-                {t('Indicators')}:
-              </p>
+              <p className="font-bold mb-2 mt-2">{t('Indicators')}:</p>
             </div>
             <div className="flex items-center justify-center w-[100%] h-[1px] bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
@@ -214,7 +218,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
         </Skeleton>
       </div>
       <Skeleton loading={isLoading} active>
-        <div className="bg-gray-100  text-black  dark:bg-boxdark  dark:text-white   p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
+        <div className="bg-gray-100 text-black dark:bg-boxdark dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-[100%]">
           <div className="flex items-center justify-between">
             <p className="text-xl font-bold">{t('Profile')}:</p>
             <div
@@ -254,7 +258,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
           <Button key="back" onClick={closeModal}>
             {t('No')}
           </Button>
-          <Button onClick={confirmToggleSwitch}>{t('Ok')}</Button>
+          <Button>{t('Ok')}</Button>
         </div>
       </Modal>
       <Modal isOpen={SendOpen} onClose={closeSendModal} mt={'w-[70%]'}>
@@ -274,7 +278,7 @@ const DetailClient: React.FC<DetailClientProps> = ({
               key="submit"
               type="primary"
               onClick={handleSendMessage}
-              className="bg-boxdark px-12  dark:text-white"
+              className="bg-boxdark px-12 dark:text-white"
             >
               {t('Send')}
             </Button>
