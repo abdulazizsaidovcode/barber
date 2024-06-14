@@ -9,6 +9,8 @@ import DetailsSecondTab from './DeatilsSecondTab';
 import { MdEdit } from 'react-icons/md';
 import DetailsFirstTab from './DeatilsFirstTab';
 import EditModal from '../modals/editModal';
+import { FaArrowLeft } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 interface SecondTabData {
   bookingDuration: number;
@@ -108,7 +110,7 @@ const TariffDetail: React.FC = () => {
       toast.error('Invalid name input');
       return;
     }
-    
+
     const payload = {
       id: id,
       name: name,
@@ -162,7 +164,10 @@ const TariffDetail: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className='w-full flex justify-between items-center my-2 rounded-lg dark:text-black h-15 px-5 bg-white'>
+      <Link to={'/settings/tariffs-functionality'}>
+        <FaArrowLeft className='text-2xl my-3'/>
+      </Link>
+      {name ? <div className='w-full flex justify-between items-center my-2 rounded-lg dark:text-black h-15 px-5 bg-white'>
         <div>
           <p>{name}</p>
         </div>
@@ -174,7 +179,10 @@ const TariffDetail: React.FC = () => {
             <MdEdit size={20} color="black" className="dark:text-white" />
           </button>
         </div>
-      </div>
+      </div> :
+        <div className='h-15 bg-white flex items-center px-5 rounded-lg my-2'>
+          <p>Название тарифа не настроено</p>
+        </div>}
       <Tabs
         className="dark:bg-boxdark bg-white p-2 w-full"
         defaultActiveKey="1"

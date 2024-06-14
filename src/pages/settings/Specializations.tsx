@@ -28,7 +28,7 @@ interface ChildDataMap {
 }
 
 const Specializations: React.FC = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [isInputOpen, setIsInputOpen] = useState<{ [key: string]: boolean }>({});
   const [isDelModalOpen, setIsDelModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -84,8 +84,8 @@ const Specializations: React.FC = () => {
   const addChildData = async (fatherId: string) => {
     const newCategoryName = newCategoryNameMap[fatherId];
 
-    if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
-      toast(t("Please_enter"), { icon: '⚠️' });
+    if (!newCategoryName.trim() || !/[a-zA-Z0-9]/.test(newCategoryName)) {
+      toast(t("Please_enter_valid_category"), { icon: '⚠️' });
       return;
     }
 
@@ -116,32 +116,33 @@ const Specializations: React.FC = () => {
   const deleteChildData = async (id: string, fatherId: string) => {
     try {
       await axios.delete(`${del_service_category}/${id}`, config);
-      toast.success('Category deleted successfully');
-      setChildDataMap({})
+      toast.success(t("Category_deleted_successfully"));
+      setChildDataMap({});
       setTimeout(() => {
         fetchChildData(fatherId);
-      }, 150)
+      }, 150);
     } catch { }
   };
 
   // UPDATE CHILD DATA
   const updateData = async (name: string, categoryFatherId: string, id: string) => {
-    const payload = { name: name, categoryFatherId: categoryFatherId };
-    if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
-      toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+    if (!name.trim() || !/[a-zA-Z0-9]/.test(name)) {
+      toast(t("Please_enter_valid_category"), { icon: '⚠️' });
       return;
     }
+
+    const payload = { name: name, categoryFatherId: categoryFatherId };
 
     setEditLoading(true);
 
     try {
       const res = await axios.put(`${edit_service_category}/${id}`, payload, config);
       if (res.data.success) {
-        toast.success('Category updated successfully');
+        toast.success(t("Category_updated_successfully"));
         fetchChildData(categoryFatherId);
         setIsEditModalOpen(false);
       } else {
-        toast('This category already exists', { icon: '⚠️' });
+        toast(t("This_category_already_exists"), { icon: '⚠️' });
       }
     } catch { }
     finally {
@@ -189,11 +190,13 @@ const Specializations: React.FC = () => {
   return (
     <DefaultLayout>
       <div className="mb-5">
-        <p className="text-xl">Специализации</p>
+        <p className="text-xl">{t("Specializations")}</p>
       </div>
       <div>
         {loading ? (
           <Skeleton active paragraph={{ rows: 4 }} />
+        ) : fatherData.length === 0 ? (
+          <p className="text-xl mt-4">{t("No_father_categories_found")}</p>
         ) : (
           fatherData.map((fatherItem) => (
             <div className="mt-3" key={fatherItem.id}>
@@ -217,7 +220,7 @@ const Specializations: React.FC = () => {
                           </div>
                         ))
                       ) : (
-                        <p className='text-xl mt-4'>Child categories not found</p>
+                        <p className='text-xl mt-4'>{t("Child_categories_not_found")}</p>
                       )
                     )}
                   </div>
@@ -231,7 +234,7 @@ const Specializations: React.FC = () => {
                       aria-label="Add new child category"
                       disabled={addLoading[fatherItem.id]}
                     >
-                      {addLoading[fatherItem.id] ? 'Loading...' : <FaPlus size={25} />}
+                      {addLoading[fatherItem.id] ? t("Loading") : <FaPlus size={25} />}
                     </button>
                   </div>
                 </div>
@@ -239,7 +242,7 @@ const Specializations: React.FC = () => {
                   <div className="flex gap-2 mt-3">
                     <input
                       type="text"
-                      placeholder="Type something..."
+                      placeholder={t("Type_something")}
                       className="dark:bg-[#60606d] w-[323px] border-black h-13 bg-[#f1f5f9] border-[1px] dark:border-white active:outline-none dark:bg-gray-800 dark:text-white rounded-md px-3"
                       value={newCategoryNameMap[fatherItem.id] || ''}
                       onChange={(e) =>
@@ -252,9 +255,9 @@ const Specializations: React.FC = () => {
                     <button
                       className="bg-[#eaeaea] dark:bg-danger py-3 dark:text-white rounded-lg px-5"
                       onClick={() => addChildData(fatherItem.id)}
-                      disabled={!newCategoryNameMap[fatherItem.id]?.trim() || addLoading[fatherItem.id]}
+                      disabled={editLoading || addLoading[fatherItem.id]}
                     >
-                      {addLoading[fatherItem.id] ? 'Loading...' : 'Добавить'}
+                      {addLoading[fatherItem.id] ? t("Loading") : t("Add")}
                     </button>
                   </div>
                 )}
