@@ -108,7 +108,9 @@ const Chatdetail: React.FC = () => {
       };
 
       stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-      fetchMessages(adminId, recipientId);
+      setTimeout(() => {
+        fetchMessages(adminId, recipientId);
+      }, 500)
       setContent('');
     }
   };
@@ -119,7 +121,6 @@ const Chatdetail: React.FC = () => {
         .then(res => {
           setMessages(res.data.body);
           console.log(res.data.body);
-          
         }).catch(err => {
           if (err.response.status == 404) {
             setMessages([]);
@@ -170,7 +171,9 @@ const Chatdetail: React.FC = () => {
     if (replyId && content) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/replay', {}, JSON.stringify(replyObj));
-        fetchMessages(adminId, recipientId);
+        setTimeout(() => {
+          fetchMessages(adminId, recipientId);
+        }, 500)
         setContent("")
       }
     } else {
@@ -182,8 +185,12 @@ const Chatdetail: React.FC = () => {
   function deleteMessage() {
     if (chatId) {
       if (stompClient && stompClient.connected) {
-        stompClient.send('/app/deleteMessage', {}, JSON.stringify(chatId));
-        fetchMessages(adminId, recipientId);
+        setTimeout(() => {
+          stompClient.send('/app/deleteMessage', {}, JSON.stringify(chatId));
+        }, 300)
+        setTimeout(() => {
+          fetchMessages(adminId, recipientId);
+        }, 500)
       }
     }
   }
@@ -275,7 +282,7 @@ const Chatdetail: React.FC = () => {
             <Sms
               editId={setEditId}
               replyId={setreplyId}
-              chatId={setChatId}
+              deleteId={setChatId}
               senderId={adminId}
               sendMessage={sendMessage}
               chat={messages}
