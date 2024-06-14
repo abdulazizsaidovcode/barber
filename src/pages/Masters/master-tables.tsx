@@ -96,6 +96,17 @@ const MasterTables: React.FC = () => {
   const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId })
   const onChange = (page: number): void => setPage(page - 1)
 
+  const itemRender = (_: any, type: string, originalElement: any) => {
+    if (type === 'page') {
+      return (
+        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
+
   return (
     <>
       <Filters />
@@ -203,6 +214,7 @@ const MasterTables: React.FC = () => {
         total={totalPage}
         onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
+        itemRender={itemRender}
       />
 
       {/*modal*/}
