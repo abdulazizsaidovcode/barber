@@ -232,6 +232,7 @@ const Calendar: React.FC = () => {
         >
           {t("All_categories")}
         </button>
+        
         {category.length !== 0 &&
           category.map((item, i) => {
             if (!item) return null;

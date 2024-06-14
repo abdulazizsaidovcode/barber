@@ -216,8 +216,9 @@ const ClientTables: React.FC = () => {
       <Pagination
         showSizeChanger={false}
         responsive={true}
-        defaultCurrent={1}
         total={totalPage}
+        pageSize={5}
+        current={5}
         onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
         itemRender={itemRender}
