@@ -41,17 +41,9 @@ const DetailMaster: React.FC = () => {
           <MasterCardInfo
             StatusNow={orderDetails.masterChatStatus}
             Specialization={
-              orderDetails.specialization &&
-              orderDetails.specialization.length > 0 ? (
-                orderDetails.specialization.map((spec: any, index: any) => (
-                  <p key={index} className="">
-                    <strong>{t('Specialization')}:</strong>{' '}
-                    {spec.name || t('Not_available')}
-                  </p>
-                ))
-              ) : (
-                <p className="mb-5">{t('Not_available')}</p>
-              )
+              orderDetails.specialization === null
+                ? t('Not_available')
+                : orderDetails.specialization
             }
             ServiceCategory={orderDetails.masterServiceCategory}
             GenderType={orderDetails.directionByGender}

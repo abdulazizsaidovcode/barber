@@ -38,7 +38,7 @@ type MasterCardInfoProps = {
   PlaceOfWork: string;
   GenderType: [];
   ServiceCategory: [];
-  Specialization: [];
+  Specialization: string;
   scheduleType: string;
   StatusNow: string;
 };
@@ -75,7 +75,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const location = useLocation();
   const idMaster = location.pathname.substring(8);
 
-  const [isSwitchOn, setIsSwitchOn] = useState(Status !== 'BLOCKED');
+  const [isSwitchOn, setIsSwitchOn] = useState(Status == 'ACTIVE');
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -99,9 +99,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       setIsSwitchOn(!isSwitchOn);
       setTimeout(() => {
         window.location.href = `/master/${idMaster}`;
-      }, 3000);
+      }, 2000);
     } catch (error) {
-       toast.error(t('Error_toggling_switch'));
+      toast.error(t('Error_toggling_switch'));
     }
     closeModal();
   };
@@ -123,7 +123,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       toast.success(t('Message_sent_successfully'));
       closeSendModal();
     } catch (error) {
-       toast.error(t('Failed_to_send_message'));
+      toast.error(t('Failed_to_send_message'));
     }
   };
 
@@ -154,7 +154,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Send_Message')}
               </div>
             </div>
-            <div className="w-full bg-black dark:bg-white h-1 flex items-center mb-4 mt-3"></div>
+            <div className="w-full bg-black dark:bg-white border flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
               <strong>{t('Name')}:</strong> {MasterName}
             </p>
@@ -188,7 +188,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Profession_information')}:
               </p>
             </div>
-            <div className="w-full bg-black dark:bg-white h-1 flex items-center mb-4 mt-3"></div>
+            <div className="w-full bg-black dark:bg-white border flex items-center mb-4 mt-3"></div>
             <p className="mb-5">
               <strong>{t('Place_of_work')}:</strong> {PlaceOfWork}
             </p>
@@ -261,7 +261,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Contacts')}:
               </p>
             </div>
-            <div className="flex items-center justify-center w-full h-1 bg-black dark:bg-white"></div>
+            <div className="flex items-center justify-center w-full border bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Phone')} :</strong>
               <p>{Number}</p>
@@ -286,7 +286,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
                 {t('Indicators')}:
               </p>
             </div>
-            <div className="flex items-center justify-center w-full h-1 bg-black dark:bg-white"></div>
+            <div className="flex items-center justify-center w-full border bg-black dark:bg-white"></div>
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Completed_Orders')}:</strong>
               <p>{CompOrders}</p>
