@@ -17,11 +17,13 @@ interface ProcedureItemProps {
   onDelete: (attachmentId: string) => void;
   galleryId: string;
   attachmentId: string;
+  getFunc: () => void;
 }
 
 const ProcedureItem: React.FC<ProcedureItemProps> = ({
   imgUrl,
   status,
+  getFunc,
   onDelete,
   galleryId,
   attachmentId,
@@ -68,16 +70,17 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
           messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_DELETE',
           read: true,
         },
-        config
+        config,
       )
       .then(() => {
         return axios.delete(
           `${master_gallery_delate}${galleryId}/${attachmentId}`,
-          config
+          config,
         );
       })
       .then(() => {
         onDelete(attachmentId);
+        getFunc()
         message.success('Procedure deleted successfully');
       })
       .catch((error) => {
@@ -95,7 +98,8 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
     axios
       .put(`${master_gallery_message_conform}${attachmentId}`, '', config)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.data.status) {
+          getFunc()
           message.success('Image confirmed successfully');
         }
       })

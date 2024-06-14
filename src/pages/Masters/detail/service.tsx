@@ -12,20 +12,21 @@ const Service: React.FC = () => {
   const id = location.pathname.substring(8);
 
   useEffect(() => {
-    fetchData(id);
+    getMasterServicesDetails();
   }, [id]);
-
-  const fetchData = (id: string) => {
-    axios
-      .get(`${master_service_id}${id}`, config)
-      .then((response) => {
-        const masterArray = response.data.body;
-        console.log(`service id =>`, masterArray);
-        setOrderDetails(masterArray);
-      })
-      .catch((error) => {
-        console.error('There was an error fetching the data!', error);
-      });
+  const getMasterServicesDetails = () => {
+    const fetchData = (id: string) => {
+      axios
+        .get(`${master_service_id}${id}`, config)
+        .then((response) => {
+          const masterArray = response.data.body;
+          console.log(`service id =>`, masterArray);
+          setOrderDetails(masterArray);
+        })
+        .catch((error) => {
+          console.error('There was an error fetching the data!', error);
+        });
+    };
   };
 
   return (
@@ -33,9 +34,10 @@ const Service: React.FC = () => {
       <div>
         {orderDetails.map((orderDetail, index) => (
           <MasterProcedures
+            getFunc={getMasterServicesDetails}
             key={index}
             servicesId={orderDetail.id}
-             title={orderDetail.name}
+            title={orderDetail.name}
             imgUrl={`${getFileId}${orderDetail.attachmentId}`}
             price={orderDetail.price}
             duration={orderDetail.serviceTime}
