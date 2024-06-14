@@ -75,7 +75,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const location = useLocation();
   const idMaster = location.pathname.substring(8);
 
-  const [isSwitchOn, setIsSwitchOn] = useState(Status !== 'BLOCKED');
+  const [isSwitchOn, setIsSwitchOn] = useState(Status == 'ACTIVE');
   const [isOpen, setIsOpen] = useState(false);
   const [SendOpen, setSendOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -99,9 +99,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       setIsSwitchOn(!isSwitchOn);
       setTimeout(() => {
         window.location.href = `/master/${idMaster}`;
-      }, 3000);
+      }, 2000);
     } catch (error) {
-       toast.error(t('Error_toggling_switch'));
+      toast.error(t('Error_toggling_switch'));
     }
     closeModal();
   };
@@ -123,7 +123,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       toast.success(t('Message_sent_successfully'));
       closeSendModal();
     } catch (error) {
-       toast.error(t('Failed_to_send_message'));
+      toast.error(t('Failed_to_send_message'));
     }
   };
 
