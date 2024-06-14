@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import '../../css/style.css'
 
 interface ModalProps {
     isOpen: boolean;
@@ -31,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, mt }) => {
 
     return (
         <div
-            className="fixed inset-0 z-999 flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50"
+            className="fixed inset-0 z-999 flex items-center justify-center overflow-auto bg-slate-900 py-10 bg-opacity-50 modal"
             onClick={onClose}
         >
             <div

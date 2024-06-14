@@ -43,6 +43,7 @@ import TabsComponentForSecondDetail from './pages/Calculation/detail/secondTab.t
 import ThirdTab from './pages/Calculation/detail/third.tab.tsx';
 import { FirstTab } from './pages/Calculation/detail/firstTab.tsx';
 import MailDetail from './pages/notification/mails/mailDetail.tsx';
+import Salon from './pages/settings/Salon.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -217,6 +218,15 @@ function App() {
             <>
               <PageTitle title="Settings | Barber" />
               <ServiceCategories />
+            </>
+          }
+        />
+        <Route
+          path="/settings/salon"
+          element={
+            <>
+              <PageTitle title="Settings | Salon" />
+              <Salon />
             </>
           }
         />
