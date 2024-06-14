@@ -18,6 +18,7 @@ import {
   getRegion,
 } from "../../helpers/api-function/master/master";
 import { useTranslation } from "react-i18next";
+import AliceCarousel from "react-alice-carousel";
 
 export interface Event {
   title: string;
@@ -76,7 +77,7 @@ const Calendar: React.FC = () => {
   useEffect(() => {
     fetchCalendarData();
   }, [regionId, districtId, categoryId, isMonth, currentDate, endDate]);
-  
+
   useEffect(() => {
     setDistrictId(null)
     fetchCalendarData();
@@ -160,6 +161,34 @@ const Calendar: React.FC = () => {
     return events;
   });
 
+
+  // carousel uchun
+  // const data = [
+  //   {
+  //     salom: <div className="category__style">
+  //       <p className="text-center">sfnduesf</p>
+  //     </div>
+  //   },
+  //   {
+  //     salom: <div className="category__style">
+  //       <p className="text-center">sfnduesf</p>
+  //     </div>
+  //   },
+  //   {
+  //     salom: <div className="category__style">
+  //       <p className="text-center">sfnduesf</p>
+  //     </div>
+  //   },
+  // ]
+
+  // const responsive = {
+  //   0: { items: 1 },
+  //   500: { items: 2 },
+  //   700: { items: 3 },
+  //   991: { items: 4 },
+  //   1500: { items: 5 },
+  // };
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={t("siderbar_calendar")} />
@@ -223,7 +252,7 @@ const Calendar: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 text-sm gap-3 my-3">
         <button
           onClick={() => {
-                  handleButtonClick("All", "");
+            handleButtonClick("All", "");
           }}
           className={`inline-block rounded border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${activeButton === "All"
             ? "bg-[#2C3E50] text-white"
@@ -232,7 +261,7 @@ const Calendar: React.FC = () => {
         >
           {t("All_categories")}
         </button>
-        
+
         {category.length !== 0 &&
           category.map((item, i) => {
             if (!item) return null;
@@ -277,11 +306,25 @@ const Calendar: React.FC = () => {
         }}
         datesSet={handleDatesSet}
         eventAdd={() => { }}
-        
+
         eventBackgroundColor="#fff"
         events={events}
-        
+
       />
+
+      {/* <AliceCarousel
+        items={data.map(item => (
+          <>
+            {item.salom}
+          </>
+        ))}
+        // responsive={responsive}
+        autoPlay
+        autoPlayInterval={5000}
+        infinite
+        mouseTracking
+        disableButtonsControls
+      /> */}
     </DefaultLayout>
   );
 };
