@@ -103,7 +103,7 @@ const FirstTab: React.FC = () => {
           </div>
         ) : listData.length === 0 ? (
           <div className="w-full h-[200px] flex justify-center items-center">
-            <p className="text-xl dark:text-white">Reviews not found</p>
+            <p className="text-xl dark:text-white">{t("Reviews_not_found")}</p>
           </div>
         ) : (
           <div>
