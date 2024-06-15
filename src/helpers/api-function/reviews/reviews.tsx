@@ -34,10 +34,10 @@ export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterDa
     if (res.data.success) {
       setMasterDataList(res.data.body.object);
       setTotalMasterPage(res.data.body.totalElements);
+    } else {
+      setMasterDataList([])
     }
-  } catch {
-    setMasterDataList([]);
-  }
+  } catch { }
 };
 
 export const deleteListData = async (id: string | null, setDataList: (data: ListData[]) => void, setTotalPage: (totalPages: number) => void, url: string) => {

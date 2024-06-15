@@ -8,30 +8,65 @@ export const fetchData = async (setData: (data: SalonData[]) => void) => {
     try {
         const res = await axios.get(salon_list, config);
         setData(res.data.body);
-    } catch { }
-}
-
-export const addData = async (setData: (data: SalonData[]) => void, name: string, lat: number, lon: number, attachmentId: any) => {
-    const payload = { name, lat, lon, attachmentId };
-    try {
-        await axios.post(salon_list, payload, config);
-        fetchData(setData);
     } catch (error) {
         console.error(error);
     }
-}
+};
 
-export const editData = async (id: string, setData: (data: SalonData[]) => void, name: string, lat: number, lon: number, attachmentId: any) => {
-    const payload = { name, lat, lon, attachmentId };
-    try {
-        const res = await axios.put(`${salon_list}/${id}`, payload, config);
-        if (res.data.success) {
-            toast.success('Salon edited succesfuly')
-            fetchData(setData);
-        } else {
-            toast('Something error to edit salon')
+export const handleAddSalon = async (
+    setData: (data: SalonData[]) => void,
+    newSalonName: string,
+    selectedLat: number | null,
+    selectedLon: number | null,
+    attachmentId: any,
+    closeAddModal: () => void
+) => {
+    if (newSalonName && selectedLat !== null && selectedLon !== null) {
+        const payload = { name: newSalonName, lat: selectedLat, lon: selectedLon, attachmentId };
+        try {
+            const res = await axios.post(salon_list, payload, config);
+            if (res.data.success) {
+                fetchData(setData);
+                closeAddModal();
+            } else {
+                toast("Something went wrong while adding the salon", { icon: '⚠️' });
+            }
+        } catch (error) {
+            console.error(error);
         }
-    } catch (error) {
-        console.error(error);
+    } else {
+        toast("Please enter the salon name and select a location on the map.", {
+            icon: '⚠️'
+        });
     }
-}
+};
+
+export const handleEditSalon = async (
+    id: string | null,
+    setData: (data: SalonData[]) => void,
+    newSalonName: string,
+    selectedLat: number | null,
+    selectedLon: number | null,
+    attachmentId: any,
+    closeEditModal: () => void
+) => {
+    if (id && newSalonName && selectedLat !== null && selectedLon !== null) {
+        const payload = { name: newSalonName, lat: selectedLat, lon: selectedLon, attachmentId };
+        try {
+            const res = await axios.put(`${salon_list}/${id}`, payload, config);
+            if (res.data.success) {
+                toast.success("Salon edited successfully");
+                fetchData(setData);
+                closeEditModal();
+            } else {
+                toast("Something went wrong while editing the salon");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    } else {
+        toast("Please enter the salon name and select a location on the map.", {
+            icon: '⚠️'
+        });
+    }
+};

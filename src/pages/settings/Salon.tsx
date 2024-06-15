@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import useSalonStore from '../../helpers/state_managment/settings/salon';
-import { fetchData, addData, editData } from '../../helpers/api-function/salon/salon';
+import { fetchData, handleAddSalon, handleEditSalon } from '../../helpers/api-function/salon/salon';
 import Modal from '../../components/modals/modal';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import toast from 'react-hot-toast';
@@ -39,7 +39,7 @@ const Salon: React.FC = () => {
         setEditSalonId
     } = useSalonStore();
 
-    const API_KEY: string = 'YOUR_API_KEY';
+    const API_KEY: string = 'AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao';
 
     useEffect(() => {
         fetchData(setData);
@@ -68,40 +68,6 @@ const Salon: React.FC = () => {
     };
 
     const closeAddModal = () => setAddModal(false);
-
-    const containsInvalidCharacters = (text: string) => {
-        return /['"\s]/.test(text);
-    };
-
-    const handleAddSalon = async () => {
-        if (containsInvalidCharacters(newSalonName)) {
-            toast("Please avoid using spaces, single or double quotes in the salon name.", {
-                icon: '⚠️'
-            });
-        } else if (newSalonName && selectedLat !== null && selectedLon !== null) {
-            await addData(setData, newSalonName, selectedLat, selectedLon, attachmentId);
-            closeAddModal();
-        } else {
-            toast("Please enter the salon name and select a location on the map.", {
-                icon: '⚠️'
-            });
-        }
-    };
-
-    const handleEditSalon = async () => {
-        if (containsInvalidCharacters(newSalonName)) {
-            toast("Please avoid using spaces, single or double quotes in the salon name.", {
-                icon: '⚠️'
-            });
-        } else if (editSalonId && newSalonName && selectedLat !== null && selectedLon !== null) {
-            await editData(editSalonId, setData, newSalonName, selectedLat, selectedLon, attachmentId);
-            closeEditModal();
-        } else {
-            toast("Please enter the salon name and select a location on the map.", {
-                icon: '⚠️'
-            });
-        }
-    };
 
     const handleMapClick = (event: google.maps.MapMouseEvent) => {
         if (event.latLng) {
@@ -156,7 +122,7 @@ const Salon: React.FC = () => {
                         </APIProvider>
                     </div>
                     <div className='mt-5'>
-                        <button onClick={handleEditSalon} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg mb-5 text-black'>Edit Salon</button>
+                        <button onClick={() => handleEditSalon(editSalonId, setData, newSalonName, selectedLat, selectedLon, attachmentId, closeEditModal)} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg mb-5 text-black'>Edit Salon</button>
                     </div>
                 </div>
             </Modal>
@@ -189,7 +155,7 @@ const Salon: React.FC = () => {
                         </APIProvider>
                     </div>
                     <div className='mt-5'>
-                        <button onClick={handleAddSalon} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg mb-5 text-black'>Add Salon</button>
+                        <button onClick={() => handleAddSalon(setData, newSalonName, selectedLat, selectedLon, attachmentId, closeAddModal)} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg mb-5 text-black'>Add Salon</button>
                     </div>
                 </div>
             </Modal>

@@ -26,7 +26,7 @@ const ReviewFilters: React.FC = () => {
     filters.districtId ? `districtId=${filters.districtId}` : '',
     filters.rating ? `rating=${filters.rating}` : '',
     filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : '',
-    filters.date ? `date=${filters.date.year()}-${filters.date.month() + 1}-${filters.date.date()}` : '',
+    filters.date ? `date=${filters.date.year()}-${filters.date.month() > 10 ?  filters.date.month() + '0' + 1 : filters.date.month() + 1}-${filters.date.date()}` : '',
     datePicker(0) ? `startDate=${datePicker(0)}` : '',
     datePicker(1) ? `endDate=${datePicker(1)}` : ''
   ].filter(Boolean).join('&');
