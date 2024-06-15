@@ -6,6 +6,7 @@ import ReviewFilters from '../components/filters';
 import { deleteListData, fetchDataList } from '../../../helpers/api-function/reviews/reviews';
 import DelModal from '../../../components/settings/modals/delModal';
 import { reviews_list_data } from '../../../helpers/api';
+import { useTranslation } from 'react-i18next';
 
 const FirstTab: React.FC = () => {
   const {
@@ -55,6 +56,7 @@ const FirstTab: React.FC = () => {
     setCurrentPage(page - 1);
     setPageSize(pageSize);
   };
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -64,8 +66,8 @@ const FirstTab: React.FC = () => {
       <div className="flex md:flex-row gap-3 flex-col reviews-shadow mt-5 items-center bg-white w-full h-max p-5 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
         <div className="md:w-2/6 w-full">
           <p className="md:text-[17px]">{mainData.allAverageFeedback.toFixed(1)} ({mainData.allReviewsCount} отзывов)</p>
-          <p className="md:text-[17px]">Мастера - {mainData.masterAverageFeedback.toFixed(1)} ({mainData.masterReviewsCount})</p>
-          <p className="md:text-[17px]">Клиенты - {mainData.clientAverageFeedback.toFixed(1)} ({mainData.clientReviewsCount})</p>
+          <p className="md:text-[17px]">{t("master")} - {mainData.masterAverageFeedback.toFixed(1)} ({mainData.masterReviewsCount})</p>
+          <p className="md:text-[17px]">{t("Clients")} - {mainData.clientAverageFeedback.toFixed(1)} ({mainData.clientReviewsCount})</p>
         </div>
         <div className="md:w-1/3 w-full">
           <div className="flex">
@@ -77,16 +79,16 @@ const FirstTab: React.FC = () => {
               <Rate disabled defaultValue={5} className="text-[14px] mr-2" />
             </div>
             <div className="lg:w-1/3 md:w-1/2 w-full sm:w-1/5">
-              <p>{mainData.oneStarFeedbackCount} отзывов</p>
-              <p>{mainData.twoStarFeedbackCount} отзывов</p>
-              <p>{mainData.threeStarFeedbackCount} отзывов</p>
-              <p>{mainData.fourStarFeedbackCount} отзывов</p>
-              <p>{mainData.fiveStarFeedbackCount} отзывов</p>
+              <p>{mainData.oneStarFeedbackCount} {t("reviews")}</p>
+              <p>{mainData.twoStarFeedbackCount} {t("reviews")}</p>
+              <p>{mainData.threeStarFeedbackCount} {t("reviews")}</p>
+              <p>{mainData.fourStarFeedbackCount} {t("reviews")}</p>
+              <p>{mainData.fiveStarFeedbackCount} {t("reviews")}</p>
             </div>
           </div>
         </div>
         <div className="md:w-1/3 w-full">
-          <p className="md:text-[17px]">Мастера мужчины - {mainData.maleMasterFeedback.toFixed(1)} ({mainData.maleMasterCount})</p>
+          <p className="md:text-[17px]">{t("Masters_men")} - {mainData.maleMasterFeedback.toFixed(1)} ({mainData.maleMasterCount})</p>
           <p className="md:text-[17px]">Мастера женщины - {mainData.femaleMasterFeedback.toFixed(1)} ({mainData.femaleMasterCount})</p>
           <p className="md:text-[17px]">Клиенты мужчины - {mainData.maleClientFeedback.toFixed(1)} ({mainData.maleClientCount})</p>
           <p className="md:text-[17px]">Клиенты женщины - {mainData.femaleClientFeedback.toFixed(1)} ({mainData.femaleClientCount})</p>
