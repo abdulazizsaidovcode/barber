@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import Modal from '../../../components/modals/modal';
 import { Buttons } from '../../../components/buttons';
@@ -12,7 +12,7 @@ import { config } from '../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
 import { GetChatList } from '../../../helpers/api-function/chat/chat';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
+import { LoadingOutlined } from '@ant-design/icons';
 
 
 function NewChat() {
@@ -21,10 +21,13 @@ function NewChat() {
     const [recipientName, setRecipientName] = useState<string | null>(null);
     const [recipientPhone, setRecipientPhone] = useState<string | null>(null);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { role, setChatData } = chatStore();
     const { data } = masterStore();
     const { clientData } = clientStore();
+
+    const { t } = useTranslation()
 
     useEffect(() => {
         if (role === 'master') {
@@ -60,14 +63,11 @@ function NewChat() {
             message: content,
             status: role
         }
-        const { t } = useTranslation()
 
         if (recipientId && recipientName && content.trim()) {
-            console.log(editMessage);
 
             axios.post(`${newChat_url}`, editMessage, config)
                 .then((res) => {
-                    console.log(res.data);
                     if (res.data.success === true) {
                         openModal()
                         toast.success(t("Message_sent"));
@@ -98,8 +98,8 @@ function NewChat() {
 
     return (
         <section>
-            <div className='relative z-0' onClick={openModal}>
-                <Buttons>{t("Begin")}</Buttons>
+            <div className='relative z-0' >
+                <Buttons onClick={openModal}>{t("Begin")}</Buttons>
             </div>
             <div className='z-1'>
                 <Modal isOpen={modalOpen} onClose={openModal}>
@@ -141,9 +141,16 @@ function NewChat() {
                             <textarea id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-700 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={t("Write_your")}></textarea>
                         </div>
                         <div className='flex justify-center mt-4'>
-                            <div onClick={sentNotification}>
-                                <Buttons>{t("Sent")}</Buttons >
-                            </div>
+                            <Buttons onClick={sentNotification} disabled={loading}>
+                                {loading ? (
+                                    <div className="flex items-center">
+                                        <span className="mr-2">{t("Sent")} ...</span>
+                                        <Spin indicator={<LoadingOutlined style={{ fontSize: 20, color: "#fff" }} spin />} />
+                                    </div>
+                                ) : (
+                                    "Отправить"
+                                )}
+                            </Buttons>
                         </div>
                     </div>
                 </Modal>
