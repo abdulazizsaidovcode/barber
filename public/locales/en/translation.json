@@ -232,6 +232,8 @@
   "Master_services_not_found": "Master services not found",
   "Master_gallery_not_found": "Master gallery not found",
   "Start_work": "Start work",
+  "New_photos_not_found": "New photos not found",
+  "The_master_added": "The master added/modified a photo in the gallery",
   "Reject": "Reject",
   "Approve": "Approve",
   "Phone": "Phone",
