@@ -114,16 +114,16 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 </div>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] p-4 py-5 w-full mt-3'>
                     <div>
-                        <p className='text-2xl'>Информация о профессии:</p>
+                        <p className='text-2xl'>{t("Profession_information")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex lg:w-[60%] justify-between '>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>Место работы</p>
-                            <p className='text-xl font-semibold'>Напраление по полу</p>
-                            <p className='text-xl font-semibold'>Категория услуг</p>
-                            <p className='text-xl font-semibold'>Специализация</p>
-                            <p className='text-xl font-semibold'>Тип расписания</p>
+                            <p className='text-xl font-semibold'>{t("Place_of_work")}</p>
+                            <p className='text-xl font-semibold'>{t("Direction_by_gender")}</p>
+                            <p className='text-xl font-semibold'>{t("Service_category")}</p>
+                            <p className='text-xl font-semibold'>{t("Specialization")}</p>
+                            <p className='text-xl font-semibold'>{t("Schedule_Type")}</p>
                         </div>
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl'>{displayValue(placeOfWork)}</p>
