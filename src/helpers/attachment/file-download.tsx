@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import React from 'react';
 import { UploadedFile } from '../../components/FileDowlander.tsx';
 
-export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, page?: number, succesMessage: string, errorMessage: string) => {
+export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, successMessage: string, errorMessage: string, page?: number) => {
   setIsLoading(true);
   axios.get(url, { ...config, responseType: 'blob' })
     .then((res) => {
@@ -18,7 +18,7 @@ export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => v
       document.body.appendChild(a);
       a.click();
       setIsLoading(false);
-      toast.success(`${succesMessage}`);
+      toast.success(`${successMessage}`);
     })
     .catch(() => {
       toast.error(`${errorMessage}`);
