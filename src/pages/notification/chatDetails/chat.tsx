@@ -239,6 +239,8 @@ const Chatdetail: React.FC = () => {
         attachmentIds: fileUrl ? [fileUrl] : []
       }
     }
+    console.log(editMessage);
+    
     if ((editId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
@@ -250,8 +252,9 @@ const Chatdetail: React.FC = () => {
     }
   }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Inter') {
+  window.document.addEventListener('keydown', (e) => {
+    e.preventDefault()
+    if (e.key === 'Enter') {
       console.log("salom");
     }
   })

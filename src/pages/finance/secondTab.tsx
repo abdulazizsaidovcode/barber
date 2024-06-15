@@ -9,7 +9,7 @@ import { config } from '../../helpers/token';
 import CurrentYear from '../../helpers/date';
 import { Region } from '../../types/region';
 import { Buttons } from '../../components/buttons';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { downloadExcelFile } from '../../helpers/attachment/file-download';
 import { useTranslation } from 'react-i18next';
 
@@ -61,7 +61,7 @@ const FilterComponent: React.FC = () => {
     }
   };
 
-  const getDestrictFile = () => {
+  const getDestrictFile = (success: string, error: string) => {
     if (destrict) {
       let url = `${base_url}finance/web/district/download/${destrict}`;
       if (monthVal && yearVal) {
@@ -72,7 +72,7 @@ const FilterComponent: React.FC = () => {
         url += `?year=${yearVal}`;
       }
 
-      downloadExcelFile(url, setIsLoading);
+      downloadExcelFile(url, setIsLoading, success, error);
     } else {
       toast.error(t("Select_region"));
     }
@@ -108,7 +108,7 @@ const FilterComponent: React.FC = () => {
         <div>
           <DatePicker picker='year' placeholder={t("Select_year")} onChange={handleYearChange} />
         </div>
-        <Buttons onClick={getDestrictFile} disabled={isLoading}>
+        <Buttons onClick={() => getDestrictFile(t("File_downloaded_successfully"), t("There_was_an_error_fetching_the_data"))} disabled={isLoading}>
           {isLoading ? t("Downloading") : t("Download")}
         </Buttons>
       </div>
@@ -144,10 +144,6 @@ const FilterComponent: React.FC = () => {
               <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.totalIncome, 0)}</td>
             </tr>}
         </MasterTable>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-        />
       </div>
     </div>
   );

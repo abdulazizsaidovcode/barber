@@ -55,7 +55,7 @@ const FirstTab: React.FC = () => {
     }
   }, [yearVal]);
 
-  const handleDownload = () => {
+  const handleDownload = (success: string, error: string) => {
     let url = `${base_url}finance/web/region/download?page=0&size=10`;
     if (yearVal) {
       url += `&year=${yearVal}`;
@@ -63,7 +63,7 @@ const FirstTab: React.FC = () => {
     if (monthVal) {
       url += `&month=${monthVal}`;
     }
-    downloadExcelFile(url, setIsLoading);
+    downloadExcelFile(url, setIsLoading, success, error);
   };
   const { t } = useTranslation()
   // Create an array for summary data
@@ -136,7 +136,7 @@ const FirstTab: React.FC = () => {
               </div>
             </div>
           </div>
-          <Buttons onClick={handleDownload} disabled={isLoading}>
+          <Buttons onClick={() => handleDownload(t("File_downloaded_successfully"), t("There_was_an_error_fetching_the_data"))} disabled={isLoading}>
             {isLoading ? t("Downloading") : t("Download")}
           </Buttons>
         </div>
