@@ -91,7 +91,7 @@ const FirstTab: React.FC = () => {
           <p className="md:text-[17px]">{t("Masters_men")} - {mainData.maleMasterFeedback.toFixed(1)} ({mainData.maleMasterCount})</p>
           <p className="md:text-[17px]">{t("Master_women")} - {mainData.femaleMasterFeedback.toFixed(1)} ({mainData.femaleMasterCount})</p>
           <p className="md:text-[17px]">{t("Male_clients")} - {mainData.maleClientFeedback.toFixed(1)} ({mainData.maleClientCount})</p>
-          <p className="md:text-[17px]">Клиенты женщины - {mainData.femaleClientFeedback.toFixed(1)} ({mainData.femaleClientCount})</p>
+          <p className="md:text-[17px]">{t()} - {mainData.femaleClientFeedback.toFixed(1)} ({mainData.femaleClientCount})</p>
         </div>
       </div>
       <div className="mt-4">
