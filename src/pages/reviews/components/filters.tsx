@@ -19,17 +19,17 @@ const ReviewFilters: React.FC = () => {
   const { regionData } = masterStore();
   const [showMore, setShowMore] = useState(false);
   const { t } = useTranslation();
- const queryParams: string = [
-  filters.firstNameOrLastName ? `firstNameOrLastName=${filters.firstNameOrLastName}` : '',
-  filters.GENDER ? `GENDER=${filters.GENDER}` : '',
-  filters.regionId ? `regionId=${filters.regionId}` : '',
-  filters.districtId ? `districtId=${filters.districtId}` : '',
-  filters.rating ? `rating=${filters.rating}` : '',
-  filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : '',
-  filters.date ? `date=${filters.date.year()}-${filters.date.month() > 8 ? filters.date.month() + 1 : '0' + (filters.date.month() + 1)}-${filters.date.date() > 9 ? filters.date.date() : '0' + filters.date.date()}` : '',
-  datePicker(0) ? `startDate=${datePicker(0)}` : '',
-  datePicker(1) ? `endDate=${datePicker(1)}` : ''
-].filter(Boolean).join('&');
+  const queryParams: string = [
+    filters.firstNameOrLastName ? `firstNameOrLastName=${filters.firstNameOrLastName}` : '',
+    filters.GENDER ? `GENDER=${filters.GENDER}` : '',
+    filters.regionId ? `regionId=${filters.regionId}` : '',
+    filters.districtId ? `districtId=${filters.districtId}` : '',
+    filters.rating ? `rating=${filters.rating}` : '',
+    filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : '',
+    filters.date ? `date=${filters.date.year()}-${filters.date.month() > 8 ? filters.date.month() + 1 : '0' + (filters.date.month() + 1)}-${filters.date.date() > 9 ? filters.date.date() : '0' + filters.date.date()}` : '',
+    datePicker(0) ? `startDate=${datePicker(0)}` : '',
+    datePicker(1) ? `endDate=${datePicker(1)}` : ''
+  ].filter(Boolean).join('&');
 
 
   // filters urls
@@ -72,7 +72,7 @@ const ReviewFilters: React.FC = () => {
         onChange={(e) => handleInputChange('firstNameOrLastName', e.target.value)}
       />
       <Select
-        placeholder={'Region'}
+        placeholder={t('Region')}
         className="w-55"
         value={filters.regionId}
         onChange={(e) => handleInputChange('regionId', e)}
@@ -82,7 +82,7 @@ const ReviewFilters: React.FC = () => {
         ))}
       </Select>
       <Select
-        placeholder={'City'}
+        placeholder={t('City')}
         className="w-55"
         value={filters.districtId}
         onChange={(e) => handleInputChange('districtId', e)}
@@ -92,7 +92,7 @@ const ReviewFilters: React.FC = () => {
         ))}
       </Select>
       <Select
-        placeholder={'Gender'}
+        placeholder={t('Gender')}
         className="w-55"
         value={filters.GENDER}
         onChange={e => handleInputChange('GENDER', e)}
