@@ -6,6 +6,7 @@ import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
 import { fetchMasterDataList, deleteMasterDataList } from '../../../helpers/api-function/reviews/reviews';
 import DelModal from '../../../components/settings/modals/delModal';
 import { reviews_list_master_data } from '../../../helpers/api';
+import { useTranslation } from 'react-i18next';
 
 const SecondTab: React.FC = () => {
   const {
@@ -54,6 +55,7 @@ const SecondTab: React.FC = () => {
       closeDelModal();
     }
   };
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -66,7 +68,7 @@ const SecondTab: React.FC = () => {
         </div>
       ) : listMasterData.length === 0 ? (
         <div className='w-full h-[200px] flex justify-center items-center'>
-          <p className='text-xl dark:text-white'>Reviews not found</p>
+          <p className='text-xl dark:text-white'>{t("Reviews_not_found")}</p>
         </div>
       ) : (
         <div>

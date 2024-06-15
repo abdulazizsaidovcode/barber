@@ -88,7 +88,7 @@ const ReviewMastersFilters: React.FC = () => {
         onChange={(e) => handleInputChange('firstNameOrLastName', e.target.value)}
       />
       <Select
-        placeholder={'Region'}
+        placeholder={t('Region')}
         className="w-55"
         value={masterFilters.regionId}
         onChange={(e) => handleInputChange('regionId', e)}
@@ -98,7 +98,7 @@ const ReviewMastersFilters: React.FC = () => {
         ))}
       </Select>
       <Select
-        placeholder={'City'}
+        placeholder={t('City')}
         className="w-55"
         value={masterFilters.districtId}
         onChange={(e) => handleInputChange('districtId', e)}
@@ -110,7 +110,7 @@ const ReviewMastersFilters: React.FC = () => {
       <Buttons onClick={openShowMore}>
         {showMore ? <UpOutlined /> : <DownOutlined />}
       </Buttons>
-      <Buttons onClick={resetFilters}>Reset</Buttons>
+      <Buttons onClick={resetFilters}>{t("Reset")}</Buttons>
       {showMore && (
         <div className="flex flex-wrap gap-5 mt-5">
           <Select
@@ -127,7 +127,7 @@ const ReviewMastersFilters: React.FC = () => {
           </Select>
           <DatePicker
             className="w-55"
-            placeholder={'Date'}
+            placeholder={t('Date')}
             value={masterFilters.date}
             onChange={e => handleInputChange('date', e)}
           />
