@@ -103,11 +103,11 @@ const ReviewFilters: React.FC = () => {
       <Buttons onClick={openShowMore}>
         {showMore ? <UpOutlined /> : <DownOutlined />}
       </Buttons>
-      <Buttons onClick={resetFilters}>Reset</Buttons>
+      <Buttons onClick={resetFilters}>{t("Reset")}</Buttons>
       {showMore && (
         <div className="flex flex-wrap gap-5 mt-5">
           <Select
-            placeholder={'Rating'}
+            placeholder={t('Rating')}
             className="w-55"
             value={filters.rating}
             onChange={e => handleInputChange('rating', e)}
@@ -119,17 +119,17 @@ const ReviewFilters: React.FC = () => {
             <Option value={5}>5</Option>
           </Select>
           <Select
-            placeholder={'From_whom'}
+            placeholder={t('From_whom')}
             className="w-55"
             value={filters.MASTER_OR_CLIENT}
             onChange={e => handleInputChange('MASTER_OR_CLIENT', e)}
           >
-            <Option value={`MASTER`}>Master</Option>
-            <Option value={`CLIENT`}>Client</Option>
+            <Option value={`MASTER`}>{t("master")}</Option>
+            <Option value={`CLIENT`}>{t("Client")}</Option>
           </Select>
           <DatePicker
             className="w-55"
-            placeholder={'Date'}
+            placeholder={t('Date')}
             value={filters.date}
             onChange={e => handleInputChange('date', e)}
           />
