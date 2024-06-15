@@ -62,7 +62,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
                     {description}
                 </div>
                 <Button type="link" className="text-blue-500">
-                    Показать полностью
+                    {t("Show_in_full")}
                 </Button>
             </div>
         </div>
