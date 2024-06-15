@@ -19,17 +19,18 @@ const ReviewFilters: React.FC = () => {
   const { regionData } = masterStore();
   const [showMore, setShowMore] = useState(false);
   const { t } = useTranslation();
-  const queryParams: string = [
-    filters.firstNameOrLastName ? `firstNameOrLastName=${filters.firstNameOrLastName}` : '',
-    filters.GENDER ? `GENDER=${filters.GENDER}` : '',
-    filters.regionId ? `regionId=${filters.regionId}` : '',
-    filters.districtId ? `districtId=${filters.districtId}` : '',
-    filters.rating ? `rating=${filters.rating}` : '',
-    filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : '',
-    filters.date ? `date=${filters.date.year()}-${filters.date.month() > 10 ?  filters.date.month() + '0' + 1 : filters.date.month() + 1}-${filters.date.date()}` : '',
-    datePicker(0) ? `startDate=${datePicker(0)}` : '',
-    datePicker(1) ? `endDate=${datePicker(1)}` : ''
-  ].filter(Boolean).join('&');
+ const queryParams: string = [
+  filters.firstNameOrLastName ? `firstNameOrLastName=${filters.firstNameOrLastName}` : '',
+  filters.GENDER ? `GENDER=${filters.GENDER}` : '',
+  filters.regionId ? `regionId=${filters.regionId}` : '',
+  filters.districtId ? `districtId=${filters.districtId}` : '',
+  filters.rating ? `rating=${filters.rating}` : '',
+  filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : '',
+  filters.date ? `date=${filters.date.year()}-${filters.date.month() > 8 ? filters.date.month() + 1 : '0' + (filters.date.month() + 1)}-${filters.date.date() > 9 ? filters.date.date() : '0' + filters.date.date()}` : '',
+  datePicker(0) ? `startDate=${datePicker(0)}` : '',
+  datePicker(1) ? `endDate=${datePicker(1)}` : ''
+].filter(Boolean).join('&');
+
 
   // filters urls
   const url_main: string = `${reviews_main_data}${queryParams ? '?' : ''}${queryParams}`;

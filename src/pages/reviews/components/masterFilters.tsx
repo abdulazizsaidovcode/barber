@@ -14,13 +14,13 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const ReviewMastersFilters: React.FC = () => {
-  const { masterFilters, setMasterFilters, setListMasterData, currentPage, pageSize } = useReviewsStore();
+  const { masterFilters, setMasterFilters, setListMasterData, currentPage, pageSize, setMasterTotalPage } = useReviewsStore();
   const { setDistrictData, districtData } = masterStore();
   const { regionData } = masterStore();
   const [showMore, setShowMore] = useState(false);
   const { t } = useTranslation();
 
- function datePicker(num: number) {
+  function datePicker(num: number) {
     let date, month, year;
 
     if (masterFilters.startDate && masterFilters.startDate[0]) {
@@ -33,6 +33,7 @@ const ReviewMastersFilters: React.FC = () => {
 
       return `${year}-${month}-${date}`;
     }
+    return '';
   }
 
   // Construct query parameters from filters
@@ -42,7 +43,7 @@ const ReviewMastersFilters: React.FC = () => {
     masterFilters.districtId ? `districtId=${masterFilters.districtId}` : '',
     masterFilters.startRating ? `startRating=${masterFilters.startRating}` : '',
     masterFilters.endRating ? `endRating=${masterFilters.endRating}` : '',
-    masterFilters.date ? `date=${masterFilters.date.year()}-${masterFilters.date.month() + 1}-${masterFilters.date.date()}` : '',
+    masterFilters.date ? `date=${masterFilters.date.year()}-${masterFilters.date.month() > 8 ? masterFilters.date.month() + 1 : '0' + (masterFilters.date.month() + 1)}-${masterFilters.date.date() > 9 ? masterFilters.date.date() : '0' + masterFilters.date.date()}` : '',
     datePicker(0) ? `startDate=${datePicker(0)}` : '',
     datePicker(1) ? `endDate=${datePicker(1)}` : ''
   ].filter(Boolean).join('&');
@@ -50,7 +51,7 @@ const ReviewMastersFilters: React.FC = () => {
   const url_master_list: string = `${reviews_list_master_data}?${queryParams}&page=${currentPage}&size=${pageSize}`;
 
   useEffect(() => {
-    fetchMasterDataList(setListMasterData, url_master_list);
+    fetchMasterDataList(setListMasterData, url_master_list, setMasterTotalPage);
     if (masterFilters.regionId) getDistrict(setDistrictData, +masterFilters.regionId);
   }, [masterFilters]);
 
