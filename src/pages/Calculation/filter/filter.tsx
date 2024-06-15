@@ -196,7 +196,7 @@ const FilterOrder: React.FC = () => {
           </Button>
           <Button
             className={`bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white`}
-            onClick={() => downloadExcelFile(url, setIsLoading, page)}
+            onClick={() => downloadExcelFile(url, setIsLoading, t("File_downloaded_successfully"), t("There_was_an_error_fetching_the_data"), page)}
           >
             {isLoading ? t("Loading") : t("Download")}
           </Button>
