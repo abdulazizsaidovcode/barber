@@ -97,8 +97,8 @@ const ReviewFilters: React.FC = () => {
         value={filters.GENDER}
         onChange={e => handleInputChange('GENDER', e)}
       >
-        <Option value={`MALE`}>Male</Option>
-        <Option value={`FEMALE`}>Female</Option>
+        <Option value={`MALE`}>{t("Male")}</Option>
+        <Option value={`FEMALE`}>{t("female")}</Option>
       </Select>
       <Buttons onClick={openShowMore}>
         {showMore ? <UpOutlined /> : <DownOutlined />}
