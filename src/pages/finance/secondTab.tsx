@@ -9,7 +9,7 @@ import { config } from '../../helpers/token';
 import CurrentYear from '../../helpers/date';
 import { Region } from '../../types/region';
 import { Buttons } from '../../components/buttons';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { downloadExcelFile } from '../../helpers/attachment/file-download';
 import { useTranslation } from 'react-i18next';
 
@@ -144,10 +144,6 @@ const FilterComponent: React.FC = () => {
               <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.totalIncome, 0)}</td>
             </tr>}
         </MasterTable>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-        />
       </div>
     </div>
   );
