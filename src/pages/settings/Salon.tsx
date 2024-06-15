@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import useSalonStore from '../../helpers/state_managment/settings/salon';
 import { fetchData, handleAddSalon, handleEditSalon } from '../../helpers/api-function/salon/salon';
 import Modal from '../../components/modals/modal';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
-import toast from 'react-hot-toast';
+import { Skeleton } from 'antd';
 
 interface SalonCardProp {
     title: string;
@@ -20,6 +20,7 @@ const SalonCard: React.FC<SalonCardProp> = ({ title, openEditModal }) => {
 };
 
 const Salon: React.FC = () => {
+    const [loading, setLoading] = useState(true);
     const {
         data,
         isEditModal,
@@ -39,10 +40,10 @@ const Salon: React.FC = () => {
         setEditSalonId
     } = useSalonStore();
 
-    const API_KEY: string = 'AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao';
+    const API_KEY: string = 'YOUR_GOOGLE_MAPS_API_KEY';
 
     useEffect(() => {
-        fetchData(setData);
+        fetchData(setData).finally(() => setLoading(false));
     }, [setData]);
 
     const openEditModal = (id: string, name: string, lat: number, lon: number, attachment: any) => {
@@ -81,16 +82,22 @@ const Salon: React.FC = () => {
             <div>
                 <div className='flex justify-between'>
                     <p className='text-xl dark:text-white'>Salon</p>
-                    <button onClick={openAddModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>Add salon</button>
+                    <button onClick={openAddModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg text-black'>Add salon</button>
                 </div>
                 <div className='flex flex-wrap gap-3 mt-5'>
-                    {data.map((item, index) => (
-                        <SalonCard
-                            key={index}
-                            title={item.name}
-                            openEditModal={() => openEditModal(item.id, item.name, item.lat, item.lon, item.attachmentId)}
-                        />
-                    ))}
+                    {loading ? (
+                        Array.from({ length: 6 }).map((_, index) => (
+                            <Skeleton active key={index} style={{ width: 278, height: 170 }} />
+                        ))
+                    ) : (
+                        data.map((item, index) => (
+                            <SalonCard
+                                key={index}
+                                title={item.name}
+                                openEditModal={() => openEditModal(item.id, item.name, item.lat, item.lon, item.attachmentId)}
+                            />
+                        ))
+                    )}
                 </div>
             </div>
             <Modal isOpen={isEditModal} onClose={closeEditModal}>
