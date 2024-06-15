@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface SecondTabCardProp {
     category: string;
@@ -10,6 +11,7 @@ interface SecondTabCardProp {
 }
 
 const SecondTabCard: React.FC<SecondTabCardProp> = ({ category, price, duration, description, image }) => {
+    const { t } = useTranslation();
     return (
         <div className='bg-[#cccccc] dark:bg-[#60606d] px-4 flex w-full h-60 py-3'>
             <div className='w-[22%] mx-1 flex items-center'>
@@ -22,9 +24,9 @@ const SecondTabCard: React.FC<SecondTabCardProp> = ({ category, price, duration,
                 <div className='my-3'><hr /></div>
                 <div className='flex    '>
                     <div className='flex flex-col gap-7'>
-                        <p className='text-xl font-semibold'>Цена</p>
-                        <p className='text-xl font-semibold'>Длительность</p>
-                        <p className='text-xl font-semibold'>Описание</p>
+                        <p className='text-xl font-semibold'>{t("order_table_cost")}</p>
+                        <p className='text-xl font-semibold'>{t("Duration")}</p>
+                        <p className='text-xl font-semibold'>{t("Description")}</p>
                     </div>
                     <div className='flex flex-col ms-10 gap-7'>
                         <p className='text-xl'>{price}</p>
