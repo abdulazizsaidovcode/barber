@@ -139,7 +139,7 @@ const Filters: React.FC = () => {
           </Button>
           <Button
             className={`bg-[#f0f0f0]`}
-            onClick={() => downloadExcelFile(url, setIsLoading, page)}
+            onClick={() => downloadExcelFile(url, setIsLoading, page, t("File_downloaded_successfully"), t("There_was_an_error_fetching_the_data"))}
           >
             {isLoading ? t("Loading") : t('Download')}
           </Button>

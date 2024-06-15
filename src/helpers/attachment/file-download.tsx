@@ -5,10 +5,8 @@ import { config } from '../token.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
 import { UploadedFile } from '../../components/FileDowlander.tsx';
-import { useTranslation } from 'react-i18next';
 
-export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, page?: number) => {
-  const { t } = useTranslation();
+export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, page?: number, succesMessage: string, errorMessage: string) => {
   setIsLoading(true);
   axios.get(url, { ...config, responseType: 'blob' })
     .then((res) => {
@@ -20,11 +18,10 @@ export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => v
       document.body.appendChild(a);
       a.click();
       setIsLoading(false);
-      toast.success(t("File_downloaded_successfully"));
+      toast.success(`${succesMessage}`);
     })
-    .catch((err) => {
-      toast.error(t("There_was_an_error_fetching_the_data"));
-      console.log(err);
+    .catch(() => {
+      toast.error(`${errorMessage}`);
       setIsLoading(false);
     });
 };
