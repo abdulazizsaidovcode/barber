@@ -23,6 +23,7 @@ const MasterLocation: React.FC = () => {
               disableDefaultUI={false}
               scrollwheel={false}
             >
+
               {data.map((location, index) => (
                 <Marker
                   key={index}
