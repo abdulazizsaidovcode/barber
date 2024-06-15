@@ -110,7 +110,7 @@ const TariffsFunctionality: React.FC = () => {
             </DefaultLayout>
             <Modal isOpen={isOpen} onClose={closeModal}>
                 <div className="md:w-[500px] md:h-[160px] sm:w-[300px] ">
-                    <p className="sm:text-xl text-black dark:text-white text-center">{t("Add_tariff")}:</p>
+                    <p className="sm:text-xl text-black dark:text-white text-center">{t("add_tarifffe")}:</p>
                     <input
                         className="w-full border-[1px] dark:text-black border-black sm:p-2 p-1 rounded-lg mt-3"
                         type="text"
