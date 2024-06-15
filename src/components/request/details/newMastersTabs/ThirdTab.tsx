@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image } from 'antd';
 import { getFileId } from '../../../../helpers/api';
+import { useTranslation } from 'react-i18next';
 
 interface ThirdTabProps {
   galleryData: {
@@ -17,12 +18,13 @@ interface ThirdTabProps {
 }
 
 const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonModal, confirmMasters }) => {
+  const { t } = useTranslation();
   return (
     <div>
       <div className='flex flex-col gap-3'>
         {galleryData.length === 0 ?
           <div className='h-[200px]'>
-            <p className='text-xl dark:text-white'>Master gallery not found</p>
+            <p className='text-xl dark:text-white'>{t("Master_gallery_not_found")}</p>
           </div>
           : galleryData.map((album) => (
             <div key={album.id}>
@@ -48,7 +50,7 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
             openReasonModal();
           }}
         >
-          Отклонить
+          {t("Reject")}
         </button>
         <button
           className="py-2 px-7 bg-[#c2c2c2] rounded-xl text-[#000] dark:bg-danger dark:text-white"
@@ -57,7 +59,7 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
             onClose();
           }} // Call confirmMasters function
         >
-          Одобрить
+          {t("Approve")}
         </button>
       </div>
     </div>
