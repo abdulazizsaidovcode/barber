@@ -252,12 +252,12 @@ const Chatdetail: React.FC = () => {
     }
   }
 
-  window.document.addEventListener('keydown', (e) => {
-    e.preventDefault()
-    if (e.key === 'Enter') {
-      console.log("salom");
-    }
-  })
+  // window.document.addEventListener('keydown', (e) => {
+  //   e.preventDefault()
+  //   if (e.key === 'Enter') {
+  //     console.log("salom");
+  //   }
+  // })
 
 
 
