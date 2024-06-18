@@ -99,6 +99,11 @@ const ClientTables: React.FC = () => {
       key: 'ACTIVE',
       label: `${t('Active')}`,
       onClick: () => openIsModal()
+    },
+    {
+      key: '4',
+      label: `${'Send message'}`,
+      onClick: () => openIsMessageModal(),
     }
   ];
   const getItemsBlock = (id: string): MenuProps['items'] => [
@@ -110,6 +115,11 @@ const ClientTables: React.FC = () => {
       key: 'BLOCKED',
       label: `${t('Locked')}`,
       onClick: () => openIsModal()
+    },
+    {
+      key: '4',
+      label: `${'Send message'}`,
+      onClick: () => openIsMessageModal(),
     }
   ];
 
@@ -167,9 +177,11 @@ const ClientTables: React.FC = () => {
                 <Space direction="vertical">
                   <Space wrap>
                     <Dropdown
-                       overlay={<Menu onClick={(e) => handleMenuClick(e, item.id)}
+                       overlay={<Menu onClick={(e) => {
+                        handleMenuClick(e, item.id)
+                        setid(item.id)
+                       }}
                        items={item.status === 'ACTIVE' ? getItemsBlock(item.id) : getItemsActive(item.id)} />}
-       
                       placement="bottomLeft"
                       arrow
                     >
