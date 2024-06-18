@@ -4,12 +4,14 @@ import { MenuProps, Pagination, Dropdown, Space, Menu } from 'antd';
 import Filters from './filters/filters.tsx';
 import React, { useState } from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import images from '../../images/user/user-01.png';
+import images from '../../images/user.png';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/modals/modal.tsx';
 import { Buttons } from '../../components/buttons';
 import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
+import { getFileId } from '../../helpers/api.tsx';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export interface UpdateStatus {
   status: string;
@@ -142,12 +144,11 @@ const MasterTables: React.FC = () => {
               }`}
             >
               <td className={`min-w-[150px] p-5`}>
-                <img
-                  src={item.imgUrl ? item.imgUrl : images}
-                  alt="img"
-                  className={
-                    'w-10 h-10 scale-[1.4] rounded-full' + ' object-cover'
-                  }
+                <LazyLoadImage
+                  alt='img'
+                  src={item.imgId !== null ? `${getFileId}${item.imgId}` : images}
+                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+                  effect="blur"
                 />
               </td>
               <td className="min-w-[150px] p-5">
