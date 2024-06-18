@@ -24,7 +24,8 @@ const Filters: React.FC = () => {
     category,
     isLoading,
     setIsLoading,
-    page
+    page,
+    size
   } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -39,15 +40,15 @@ const Filters: React.FC = () => {
     filters.selfEmployedStatusValue === true ? `selfEmployed=true` : filters.selfEmployedStatusValue === false ? `selfEmployed=false` : '',
     filters.placeOfWorkValue ? `workPlace=${filters.placeOfWorkValue}` : ''
   ].filter(Boolean).join('&');
-  const url: string = `${master_download}?${queryParams}&page=${page}&size=10`;
+  const url: string = `${master_download}?${queryParams}${queryParams ? '&' : ''}page=${page}&size=${size}`;
 
   useEffect(() => {
     getMasters({
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       districtId: filters.cityValue ? filters.cityValue : '',
-      startDate: datePicker(0),
-      endDate: datePicker(1),
+      startDate: datePicker(0) ? datePicker(0) : '',
+      endDate: datePicker(1) ? datePicker(1) : '',
       categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
@@ -64,8 +65,8 @@ const Filters: React.FC = () => {
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       districtId: filters.cityValue ? filters.cityValue : '',
-      startDate: datePicker(0),
-      endDate: datePicker(1),
+      startDate: datePicker(0) ? datePicker(0) : '',
+      endDate: datePicker(1) ? datePicker(1) : '',
       categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
