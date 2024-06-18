@@ -26,10 +26,11 @@ const ReviewFilters: React.FC = () => {
     filters.districtId ? `districtId=${filters.districtId}` : '',
     filters.rating ? `rating=${filters.rating}` : '',
     filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : '',
-    filters.date ? `date=${filters.date.year()}-${filters.date.month() > 10 ?  filters.date.month() + '0' + 1 : filters.date.month() + 1}-${filters.date.date()}` : '',
+    filters.date ? `date=${filters.date.year()}-${filters.date.month() > 8 ? filters.date.month() + 1 : '0' + (filters.date.month() + 1)}-${filters.date.date() > 9 ? filters.date.date() : '0' + filters.date.date()}` : '',
     datePicker(0) ? `startDate=${datePicker(0)}` : '',
     datePicker(1) ? `endDate=${datePicker(1)}` : ''
   ].filter(Boolean).join('&');
+
 
   // filters urls
   const url_main: string = `${reviews_main_data}${queryParams ? '?' : ''}${queryParams}`;
@@ -71,7 +72,7 @@ const ReviewFilters: React.FC = () => {
         onChange={(e) => handleInputChange('firstNameOrLastName', e.target.value)}
       />
       <Select
-        placeholder={'Region'}
+        placeholder={t('Region')}
         className="w-55"
         value={filters.regionId}
         onChange={(e) => handleInputChange('regionId', e)}
@@ -81,7 +82,7 @@ const ReviewFilters: React.FC = () => {
         ))}
       </Select>
       <Select
-        placeholder={'City'}
+        placeholder={t('City')}
         className="w-55"
         value={filters.districtId}
         onChange={(e) => handleInputChange('districtId', e)}
@@ -91,22 +92,22 @@ const ReviewFilters: React.FC = () => {
         ))}
       </Select>
       <Select
-        placeholder={'Gender'}
+        placeholder={t('Gender')}
         className="w-55"
         value={filters.GENDER}
         onChange={e => handleInputChange('GENDER', e)}
       >
-        <Option value={`MALE`}>Male</Option>
-        <Option value={`FEMALE`}>Female</Option>
+        <Option value={`MALE`}>{t("Male")}</Option>
+        <Option value={`FEMALE`}>{t("female")}</Option>
       </Select>
       <Buttons onClick={openShowMore}>
         {showMore ? <UpOutlined /> : <DownOutlined />}
       </Buttons>
-      <Buttons onClick={resetFilters}>Reset</Buttons>
+      <Buttons onClick={resetFilters}>{t("Reset")}</Buttons>
       {showMore && (
         <div className="flex flex-wrap gap-5 mt-5">
           <Select
-            placeholder={'Rating'}
+            placeholder={t('Rating')}
             className="w-55"
             value={filters.rating}
             onChange={e => handleInputChange('rating', e)}
@@ -118,17 +119,17 @@ const ReviewFilters: React.FC = () => {
             <Option value={5}>5</Option>
           </Select>
           <Select
-            placeholder={'From_whom'}
+            placeholder={t('From_whom')}
             className="w-55"
             value={filters.MASTER_OR_CLIENT}
             onChange={e => handleInputChange('MASTER_OR_CLIENT', e)}
           >
-            <Option value={`MASTER`}>Master</Option>
-            <Option value={`CLIENT`}>Client</Option>
+            <Option value={`MASTER`}>{t("master")}</Option>
+            <Option value={`CLIENT`}>{t("Client")}</Option>
           </Select>
           <DatePicker
             className="w-55"
-            placeholder={'Date'}
+            placeholder={t('Date')}
             value={filters.date}
             onChange={e => handleInputChange('date', e)}
           />

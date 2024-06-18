@@ -18,6 +18,7 @@ import {
 import { config } from "../../../helpers/token";
 import toast from "react-hot-toast";
 import { Skeleton, Pagination } from "antd";
+import { useTranslation } from "react-i18next";
 
 interface Data {
   id: string;
@@ -91,6 +92,7 @@ const RequestNewMasters: React.FC = () => {
   const [selectedMaster, setSelectedMaster] = useState<MasterDetailData | null>(
     null
   );
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [rejectionMessage, setRejectionMessage] = useState("");
   const [totalItems, setTotalItems] = useState<number>(0);
@@ -144,7 +146,7 @@ const RequestNewMasters: React.FC = () => {
     try {
       await axios.put(`${masters_confirm_url}/${id}`, {}, config);
       callback();
-      toast.success("Master confirmed successfully");
+      toast.success(t("Master_confirmed_successfully"));
     } catch { }
   };
 
@@ -156,7 +158,7 @@ const RequestNewMasters: React.FC = () => {
     };
     try {
       await axios.post(send_message, payload, config);
-      toast.success("Мастер успешно отклонен");
+      toast.success(t("The_master_was_successfully_rejected"));
     } catch { }
   };
 
@@ -194,7 +196,7 @@ const RequestNewMasters: React.FC = () => {
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
         <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5">
           <div className="flex gap-3">
-            <p className="dark:text-[#000]">Новые мастера</p>
+            <p className="dark:text-[#000]">{t("New_masters")}</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text:white">
               <p className="text-sm">{totalItems}</p>
             </div>
@@ -215,7 +217,7 @@ const RequestNewMasters: React.FC = () => {
             ))
           ) : data.length === 0 ? (
             <div className="w-full h-[510px] flex justify-center items-center">
-              <p className="text-xl dark:text:white">New Masters Not found</p>
+              <p className="text-xl dark:text:white">{t("New_Masters_Not_found")}</p>
             </div>
           ) : (
             <div>
@@ -262,14 +264,14 @@ const RequestNewMasters: React.FC = () => {
         <div className="w-[700px] h-[320px]">
           <div>
             <p className="font-bold text-xl text-[#000] dark:text:white">
-              Причина оклонения:
+              {t("Reason_for_rejection")}:
             </p>
           </div>
           <div className="mt-4">
             <textarea
               rows={10}
               className="block p-2.5 w-full text-sm text-gray-900 dark:bg-[#30303d] rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:text:white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Write your thoughts here..."
+              placeholder={t("Write_your_thoughts_here")}
               value={rejectionMessage}
               onChange={(e) => setRejectionMessage(e.target.value)}
             />
@@ -279,7 +281,7 @@ const RequestNewMasters: React.FC = () => {
               onClick={handleReject}
               className="bg-[#2c2c2c] dark:bg-danger text-white py-2 px-10 rounded-lg"
             >
-              Удалить
+              {t("Delete")}
             </button>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { tarif_add_url, tarif_url } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
 import { Skeleton } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface Data {
     id: number;
@@ -35,19 +36,20 @@ const TariffsFunctionality: React.FC = () => {
             setLoading(false);
         }
     };
+    const { t } = useTranslation();
 
     const addData = async (name: string) => {
         if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
-            toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
+            toast(t("Please_enter"), { icon: '⚠️' });
         } else {
             setAddLoading(true);
             try {
                 await axios.post(tarif_add_url, { name }, config);
                 fetchData();
-                toast.success('Tariff added successfully');
+                toast.success(t("Tariff_added_successfully"));
                 closeModal();
             } catch {
-                toast.error('Failed to add tariff');
+                toast.error(t("Failed_to_add_tariff"));
             } finally {
                 setAddLoading(false);
             }
@@ -85,8 +87,8 @@ const TariffsFunctionality: React.FC = () => {
             <DefaultLayout>
                 <div>
                     <div className='flex justify-between'>
-                        <p className='text-xl dark:text-white'>Тарифы и функционал</p>
-                        <button onClick={openModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>Добавить Тариф</button>
+                        <p className='text-xl dark:text-white'>{t("Tariffs_and_functionality")}</p>
+                        <button onClick={openModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>{t("Add_Tariff")}</button>
                     </div>
                     <div className='flex flex-wrap gap-5 mt-5'>
                         {loading ? (
@@ -108,11 +110,11 @@ const TariffsFunctionality: React.FC = () => {
             </DefaultLayout>
             <Modal isOpen={isOpen} onClose={closeModal}>
                 <div className="md:w-[500px] md:h-[160px] sm:w-[300px] ">
-                    <p className="sm:text-xl text-black dark:text-white text-center">Название тарифа:</p>
+                    <p className="sm:text-xl text-black dark:text-white text-center">{t("add_tarifffe")}:</p>
                     <input
                         className="w-full border-[1px] dark:text-black border-black sm:p-2 p-1 rounded-lg mt-3"
                         type="text"
-                        placeholder="Оздоровительные процедуры"
+                        placeholder={t("Wellness_treatments")}
                         value={newTariffName}
                         onChange={(e) => setNewTariffName(e.target.value)}
                     />
@@ -122,7 +124,7 @@ const TariffsFunctionality: React.FC = () => {
                             onClick={() => addData(newTariffName)}
                             disabled={addLoading}
                         >
-                            {addLoading ? 'Loading...' : 'Добавить'}
+                            {addLoading ? t("Loading") : t("Add")}
                         </button>
                     </div>
                 </div>

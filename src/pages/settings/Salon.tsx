@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import useSalonStore from '../../helpers/state_managment/settings/salon';
 import { fetchData, handleAddSalon, handleEditSalon } from '../../helpers/api-function/salon/salon';
 import Modal from '../../components/modals/modal';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
-import toast from 'react-hot-toast';
+import { Skeleton } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface SalonCardProp {
     title: string;
@@ -20,6 +21,7 @@ const SalonCard: React.FC<SalonCardProp> = ({ title, openEditModal }) => {
 };
 
 const Salon: React.FC = () => {
+    const [loading, setLoading] = useState(true);
     const {
         data,
         isEditModal,
@@ -39,10 +41,10 @@ const Salon: React.FC = () => {
         setEditSalonId
     } = useSalonStore();
 
-    const API_KEY: string = 'AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao';
+    const API_KEY: string = 'YOUR_GOOGLE_MAPS_API_KEY';
 
     useEffect(() => {
-        fetchData(setData);
+        fetchData(setData).finally(() => setLoading(false));
     }, [setData]);
 
     const openEditModal = (id: string, name: string, lat: number, lon: number, attachment: any) => {
@@ -75,34 +77,41 @@ const Salon: React.FC = () => {
             setSelectedLon(event.latLng.lng());
         }
     };
+    const { t } = useTranslation()
 
     return (
         <DefaultLayout>
             <div>
                 <div className='flex justify-between'>
                     <p className='text-xl dark:text-white'>Salon</p>
-                    <button onClick={openAddModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>Add salon</button>
+                    <button onClick={openAddModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg text-black'>{t("Add_salon")}</button>
                 </div>
                 <div className='flex flex-wrap gap-3 mt-5'>
-                    {data.map((item, index) => (
-                        <SalonCard
-                            key={index}
-                            title={item.name}
-                            openEditModal={() => openEditModal(item.id, item.name, item.lat, item.lon, item.attachmentId)}
-                        />
-                    ))}
+                    {loading ? (
+                        Array.from({ length: 6 }).map((_, index) => (
+                            <Skeleton active key={index} style={{ width: 278, height: 170 }} />
+                        ))
+                    ) : (
+                        data.map((item, index) => (
+                            <SalonCard
+                                key={index}
+                                title={item.name}
+                                openEditModal={() => openEditModal(item.id, item.name, item.lat, item.lon, item.attachmentId)}
+                            />
+                        ))
+                    )}
                 </div>
             </div>
             <Modal isOpen={isEditModal} onClose={closeEditModal}>
                 <div className='w-[700px] h-[500px]'>
                     <div className='mt-5'>
-                        <label htmlFor="editInp">Salon name</label>
+                        <label htmlFor="editInp">{t("Salon_name")}</label>
                         <input
                             type="text"
                             id='editInp'
                             value={newSalonName}
                             onChange={(e) => setNewSalonName(e.target.value)}
-                            placeholder='Enter changed salon name'
+                            placeholder={t("Enter_changed_salon_name")}
                             className="dark:border-slate-700 w-full dark:text-[#000] border-black h-13 bg-[#f1f5f9] border-[1px] active:outline-none dark:bg-slate-100 dark:text-dark rounded-md px-3"
                         />
                     </div>
@@ -129,13 +138,13 @@ const Salon: React.FC = () => {
             <Modal isOpen={isAddModal} onClose={closeAddModal}>
                 <div className='w-[700px] h-[500px]'>
                     <div className='mt-5'>
-                        <label htmlFor="newSalonName">Salon name</label>
+                        <label htmlFor="newSalonName">{t("Salon_name")}</label>
                         <input
                             type="text"
                             id='newSalonName'
                             value={newSalonName}
                             onChange={(e) => setNewSalonName(e.target.value)}
-                            placeholder='Enter salon name'
+                            placeholder={t("Enter_salon_name")}
                             className="dark:border-slate-700 w-full dark:text-[#000] border-black h-13 bg-[#f1f5f9] border-[1px] active:outline-none dark:bg-slate-100 dark:text-dark rounded-md px-3"
                         />
                     </div>
@@ -155,7 +164,7 @@ const Salon: React.FC = () => {
                         </APIProvider>
                     </div>
                     <div className='mt-5'>
-                        <button onClick={() => handleAddSalon(setData, newSalonName, selectedLat, selectedLon, attachmentId, closeAddModal)} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg mb-5 text-black'>Add Salon</button>
+                        <button onClick={() => handleAddSalon(setData, newSalonName, selectedLat, selectedLon, attachmentId, closeAddModal)} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-lg mb-5 text-black'>{t("Add_salon")}</button>
                     </div>
                 </div>
             </Modal>

@@ -1,6 +1,7 @@
 import React from 'react';
 import userImg from '../../../../images/user.png';
 import { GoDotFill } from "react-icons/go";
+import { useTranslation } from 'react-i18next';
 
 interface FirstTabProp {
     phoneNumber?: string;
@@ -47,6 +48,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
 }) => {
     const displayValue = (value: string | undefined | null) => value ? value : 'не настроено';
     const displayArray = (array: string[] | undefined) => array && array.length > 0 ? array.join(', ') : 'не настроено';
+    const { t } = useTranslation();
 
     return (
         <div className='flex lg:flex-row flex-col justify-between'>
@@ -54,7 +56,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[27%]'>
                     <div className='flex justify-end p-3 items-center'>
                         <GoDotFill className={masterChatStatus === 'OFFLINE' ? 'text-red-700' : 'text-[#24FF00]'} />
-                        <p className='ml-2'>{masterChatStatus === 'OFFLINE' ? 'Не сети' : 'В сети'}</p>
+                        <p className='ml-2'>{masterChatStatus === 'OFFLINE' ? t("Not_network") : t("Online")}</p>
                     </div>
                     <div className='flex justify-center'>
                         <img className='w-45 h-45' src={masterImgPath ? masterImgPath : userImg} alt="Profile" />
@@ -62,15 +64,15 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 </div>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[71.8%] mt-3 p-4 py-5'>
                     <div>
-                        <p className='text-2xl'>Контакты:</p>
+                        <p className='text-2xl'>{t("Contacts")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex justify-between w-full'>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>Телефон</p>
-                            <p className='text-xl font-semibold'>Telegram</p>
-                            <p className='text-xl font-semibold'>Instagram</p>
-                            <p className='text-xl font-semibold'>Facebook</p>
+                            <p className='text-xl font-semibold'>{t("Phone")}</p>
+                            <p className='text-xl font-semibold'>{t("Phone")}</p>
+                            <p className='text-xl font-semibold'>{t("Instagram")}</p>
+                            <p className='text-xl font-semibold'>{t("Facebook")}</p>
                         </div>
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl'>{displayValue(phoneNumber)}</p>
@@ -84,19 +86,19 @@ const FirstTab: React.FC<FirstTabProp> = ({
             <div className='lg:w-3/4 w-full h-auto mx-1'>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] mt-3 p-4 py-5 w-full'>
                     <div>
-                        <p className='text-2xl'>Профиль:</p>
+                        <p className='text-2xl'>{t("siderbar_profile")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex justify-between lg:w-[60%]'>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>Имя</p>
-                            <p className='text-xl font-semibold'>Фамилия</p>
-                            <p className='text-xl font-semibold'>Никнейм</p>
-                            <p className='text-xl font-semibold'>Пол</p>
-                            <p className='text-xl font-semibold'>Возраст</p>
-                            <p className='text-xl font-semibold'>Регион</p>
-                            <p className='text-xl font-semibold'>Город</p>
-                            <p className='text-xl font-semibold'>Адрес</p>
+                            <p className='text-xl font-semibold'>{t("Name")}</p>
+                            <p className='text-xl font-semibold'>{t("Surname")}</p>
+                            <p className='text-xl font-semibold'>{t("Nickname")}</p>
+                            <p className='text-xl font-semibold'>{t("Gender")}</p>
+                            <p className='text-xl font-semibold'>{t("Age")}</p>
+                            <p className='text-xl font-semibold'>{t("Region")}</p>
+                            <p className='text-xl font-semibold'>{t("City")}</p>
+                            <p className='text-xl font-semibold'>{t("Address")}</p>
                         </div>
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl'>{displayValue(firstName)}</p>
@@ -112,16 +114,16 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 </div>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] p-4 py-5 w-full mt-3'>
                     <div>
-                        <p className='text-2xl'>Информация о профессии:</p>
+                        <p className='text-2xl'>{t("Profession_information")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex lg:w-[60%] justify-between '>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>Место работы</p>
-                            <p className='text-xl font-semibold'>Напраление по полу</p>
-                            <p className='text-xl font-semibold'>Категория услуг</p>
-                            <p className='text-xl font-semibold'>Специализация</p>
-                            <p className='text-xl font-semibold'>Тип расписания</p>
+                            <p className='text-xl font-semibold'>{t("Place_of_work")}</p>
+                            <p className='text-xl font-semibold'>{t("Direction_by_gender")}</p>
+                            <p className='text-xl font-semibold'>{t("Service_category")}</p>
+                            <p className='text-xl font-semibold'>{t("Specialization")}</p>
+                            <p className='text-xl font-semibold'>{t("Schedule_Type")}</p>
                         </div>
                         <div className='flex flex-col gap-10'>
                             <p className='text-xl'>{displayValue(placeOfWork)}</p>

@@ -4,10 +4,12 @@ import { DeleteOutlined } from '@ant-design/icons';
 import userImg from '../../../images/user.png'
 import { ListMasterData } from '../../../types/review';
 import { getFileId } from '../../../helpers/api';
+import { useTranslation } from 'react-i18next';
 
 
 const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void }> = ({ data, openModal }) => {
     const { clientFirstName, clientLastName, masterFirstName, masterLastName, description, masterFeedbackCount, feedbackCount, feedbackDate, clientAttachmentId, masterAttachmentId } = data;
+    const { t } = useTranslation();
     return (
         <div className="w-full p-4 reviews-shadow mt-3 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
             <div className="flex md:flex-row flex-col md:gap-0 gap-3 justify-between items-start mb-4">
@@ -15,7 +17,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
                     <img src={masterAttachmentId ? getFileId + masterAttachmentId : userImg} className='md:w-20 w-10 h-10 md:h-20' alt="" />
                     <div className="flex-1 ms-3">
                         <div className="font-bold text-lg">{clientFirstName} {clientLastName}</div>
-                        <div className="text-gray-500">Мастер</div>
+                        <div className="text-gray-500">{t("master")}</div>
                         <Rate disabled defaultValue={masterFeedbackCount} className="text-sm" />
                     </div>
                 </div>
@@ -23,7 +25,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
                     <img src={clientAttachmentId ? getFileId + clientAttachmentId : userImg} className='md:w-20 w-10 h-10 md:h-20' alt="" />
                     <div className="flex-1 ms-3">
                         <div className="font-bold text-lg">{masterFirstName} {masterLastName}</div>
-                        <div className="text-gray-500">Клиент</div>
+                        <div className="text-gray-500">{t("Client")}</div>
                     </div>
                 </div>
                 <div className="flex flex-col text-gray-700">
@@ -60,7 +62,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
                     {description}
                 </div>
                 <Button type="link" className="text-blue-500">
-                    Показать полностью
+                    {t("Show_in_full")}
                 </Button>
             </div>
         </div>
