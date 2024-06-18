@@ -100,7 +100,6 @@ const TariffDetail: React.FC = () => {
     const trimmedName = name.trim();
     return (
       trimmedName.length > 0 &&
-      trimmedName !== initialName &&
       !/^[',", ]+$/.test(trimmedName)
     );
   };
@@ -108,6 +107,11 @@ const TariffDetail: React.FC = () => {
   const updateData = async () => {
     if (!isNameValid()) {
       toast.error('Invalid name input');
+      return;
+    }
+
+    if (name.trim() === initialName.trim()) {
+      toast.error('Name is unchanged');
       return;
     }
 

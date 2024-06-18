@@ -61,7 +61,6 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
 
   const handleSave = () => {
     onSave();
-    setLocalHasChanges(false);
   };
 
   return (

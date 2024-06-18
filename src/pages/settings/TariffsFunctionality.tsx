@@ -37,7 +37,7 @@ const TariffsFunctionality: React.FC = () => {
     };
 
     const addData = async (name: string) => {
-        if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
+        if (!name.trim() || /[^a-zA-Zа-яА-Я0-9]/.test(name)) {  // Rus harflarini qo'shish uchun tekshiruvni o'zgartirdim
             toast('Please enter a valid category name without spaces or special characters', { icon: '⚠️' });
         } else {
             setAddLoading(true);
@@ -73,8 +73,8 @@ const TariffsFunctionality: React.FC = () => {
             <Link to={link}>
                 <div className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
                     <p className='font-bold text-black dark:text-white'>{title}</p>
-                    <p>{functions}</p>
-                    <p>{sum}</p>
+                    <p className={`${functions === 'не настроено' ? 'text-red-600' : ''}`}>{functions}</p>
+                    <p  className={`${sum === 'не настроено' ? 'text-red-600' : ''}`}>{sum}</p>
                 </div>
             </Link>
         );
