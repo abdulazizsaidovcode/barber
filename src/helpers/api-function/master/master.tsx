@@ -30,12 +30,26 @@ export const getMasters = ({
                              statusName,
                              selfEmployed,
                              workPlace,
-                             page = 0,
-                             size = 10,
+                             page,
+                             size,
                              setData,
                              setTotalPage
                            }: IMaster) => {
-  axios.get(`${master_url}?${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${startDate ? `startDate=${startDate}&` : ''}${endDate ? `endDate=${endDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${statusName ? `statusName=${statusName}&` : ''}${selfEmployed ? `selfEmployed=${selfEmployed}&` : ''}${workPlace ? `workPlace=${workPlace}&` : ''}page=${page}&size=${size}`, config)
+  const master_get_url = [
+    fullName ? `fullName=${fullName}` : '',
+    regionId ? `regionId=${regionId}` : '',
+    districtId ? `districtId=${districtId}` : '',
+    startDate ? `startDate=${startDate}` : '',
+    endDate ? `endDate=${endDate}` : '',
+    categoryId ? `categoryId=${categoryId}` : '',
+    statusName ? `statusName=${statusName}` : '',
+    selfEmployed ? `selfEmployed=${selfEmployed}` : '',
+    workPlace ? `workPlace=${workPlace}` : '',
+    page ? `page=${page}` : '',
+    size ? `size=${size}` : ''
+  ].filter(Boolean).join('&');
+
+  axios.get(`${master_url}${master_get_url ? `?${master_get_url}` : ''}`, config)
     .then(res => {
       if (res.data.success === true) {
         setData(res.data.body.object);

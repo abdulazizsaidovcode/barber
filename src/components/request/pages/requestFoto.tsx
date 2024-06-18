@@ -7,6 +7,7 @@ import axios from 'axios';
 import { getFileId, new_foto_url } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import { Skeleton, Pagination } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface Data {
   id: string;
@@ -45,12 +46,13 @@ const RequestFoto: React.FC = () => {
     setPageSize(pageSize);
   };
 
+  const { t } = useTranslation()
   return (
     <RequestLayout>
       <div className='bg-[#f5f6f7] dark:bg-[#21212e] h-max pb-5 w-full reviews-shadow'>
         <div className='w-full bg-[#cccccc] dark:bg-white h-12 flex justify-between items-center px-5'>
           <div className='flex gap-3'>
-            <p className='dark:text-[#000]'>Новые мастера</p>
+            <p className='dark:text-[#000]'>{t("New_masters")}</p>
             <div className='w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white'>
               <p className='text-sm'>{totalItems}</p>
             </div>
@@ -72,7 +74,7 @@ const RequestFoto: React.FC = () => {
           ) : data.length === 0 ? (
             <div className='w-full h-[510px] flex items-center justify-center'>
               <p className='text-xl dark:text-white'>
-                New fotos not found
+                {t("New_photos_not_found")}
               </p>
             </div>
           ) : (
@@ -86,7 +88,7 @@ const RequestFoto: React.FC = () => {
                     salonOwner={`${item.firstName} ${item.lastName}`}
                     phoneNumber={item.phoneNumber}
                     salonCreateDate={item.createdAt}
-                    salonDescription='Мастер добавил/изменил фото в галерею'
+                    salonDescription={t("The_master_added")}
                   />
                 ))}
               </div>

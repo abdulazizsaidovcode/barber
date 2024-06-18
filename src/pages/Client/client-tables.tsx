@@ -154,31 +154,9 @@ const ClientTables: React.FC = () => {
                   {item?.completedOrder ?? 0}
                 </p>
               </td>
-              <td className="min-w-[150px] p-5">
+              <td className="min-w-[150px] p-5 flex items-center justify-between">
                 <p className="text-black dark:text-white">
                   {item?.turnover ?? t("No_data")}
-                </p>
-              </td>
-              <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">
-                  {item?.age ? `${item.age} ${t("years")}` : t("No_data")}
-                </p>
-              </td>
-              <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">
-                  {item?.masterCount ?? 0}
-                </p>
-              </td>
-              <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">
-                  {item?.canceledOrder ?? 0}
-                </p>
-              </td>
-              <td className="min-w-[150px] p-5 flex items-center justify-between">
-                <p
-                  className={`${item.status === 'ACTIVE' ? 'bg-green-400' : item.status === 'BLOCKED' ? 'bg-red-500' : 'bg-red-700'} text-white rounded-full py-1 px-3 text-sm font-medium`}
-                >
-                  {item.status}
                 </p>
                 <Space direction="vertical">
                   <Space wrap>
@@ -199,6 +177,29 @@ const ClientTables: React.FC = () => {
                     </Dropdown>
                   </Space>
                 </Space>
+              </td>
+              <td className="min-w-[150px] p-5">
+                <p className="text-black dark:text-white">
+                  {item?.age ? `${item.age} ${t("years")}` : t("No_data")}
+                </p>
+              </td>
+              <td className="min-w-[150px] p-5">
+                <p className="text-black dark:text-white">
+                  {item?.masterCount ?? 0}
+                </p>
+              </td>
+              <td className="min-w-[150px] p-5">
+                <p className="text-black dark:text-white">
+                  {item?.canceledOrder ?? 0}
+                </p>
+              </td>
+              <td className="min-w-[150px] p-5">
+                <p
+                  className={`${item.status === 'ACTIVE' ? 'bg-green-400' : item.status === 'BLOCKED' ? 'bg-red-500' : 'bg-red-700'} text-white rounded-full py-1 px-3 text-sm font-medium`}
+                >
+                  {item.status}
+                </p>
+                
               </td>
             </tr>
           ))

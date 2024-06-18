@@ -4,12 +4,14 @@ import { MenuProps, Pagination, Dropdown, Space, Menu } from 'antd';
 import Filters from './filters/filters.tsx';
 import React, { useState } from 'react';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import images from '../../images/user/user-01.png';
+import images from '../../images/user.png';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/modals/modal.tsx';
 import { Buttons } from '../../components/buttons';
 import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
+import { getFileId } from '../../helpers/api.tsx';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export interface UpdateStatus {
   status: string;
@@ -22,84 +24,105 @@ const MasterTables: React.FC = () => {
   const thead = [
     {
       id: 1,
-      name: t("Photo"),
+      name: t('Photo')
     },
     {
       id: 2,
-      name: t("master"),
+      name: t('master')
     },
     {
       id: 3,
-      name: t("Service_category"),
+      name: t('Service_category')
     },
     {
       id: 4,
-      name: t("Started_work"),
+      name: t('Started_work')
     },
     {
       id: 5,
-      name: t("Total_sessions"),
+      name: t('Total_sessions')
     },
     {
       id: 6,
-      name: t("Rating"),
+      name: t('Rating')
     },
     {
       id: 7,
-      name: t("Status"),
+      name: t('Status')
     },
     {
       id: 8,
-      name: t("Schedule_Type"),
+      name: t('Schedule_Type')
     },
     {
       id: 9,
-      name: t("Canceled"),
+      name: t('Canceled')
     },
     {
       id: 10,
-      name: t("Specializations"),
+      name: t('Specializations')
     },
     {
       id: 11,
-      name: t("siderbar_client"),
+      name: t('siderbar_client')
     },
     {
       id: 12,
-      name: t("Phone"),
+      name: t('Phone')
     },
     {
       id: 13,
-      name: t("Place_of_work"),
+      name: t('Place_of_work')
     }
   ];
-  const { data, totalPage, isModal, setIsModal, setData, setTotalPage, isLoading, setIsLoading, setPage } = masterStore();
+  const {
+    data,
+    totalPage,
+    isModal,
+    setIsModal,
+    setData,
+    setTotalPage,
+    isLoading,
+    setIsLoading,
+    setPage,
+    setSize
+  } = masterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ status: '', masterId: '' });
 
-  const getItems = (id: string): MenuProps['items'] => [
+  const getItemsActive = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>,
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'ACTIVE',
       label: `${t('Active')}`,
-      onClick: () => openIsModal(),
+      onClick: () => openIsModal()
+    }
+  ];
+  const getItemsBlock = (id: string): MenuProps['items'] => [
+    {
+      key: '1',
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'BLOCKED',
       label: `${t('Locked')}`,
-      onClick: () => openIsModal(),
+      onClick: () => openIsModal()
     }
   ];
   const openIsModal = () => setIsModal(!isModal);
-  const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId })
-  const onChange = (page: number): void => setPage(page - 1)
+  const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId });
+  const onChange = (page: number, size: number): void => {
+    setPage(page - 1);
+    setSize(size);
+  };
 
   const itemRender = (_: any, type: string, originalElement: any) => {
     if (type === 'page') {
       return (
-        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
           {originalElement}
         </a>
       );
@@ -118,15 +141,14 @@ const MasterTables: React.FC = () => {
               className={`${key === data.length - 1
                 ? ''
                 : 'border-b border-[#eee] dark:border-strokedark'
-                }`}
+              }`}
             >
               <td className={`min-w-[150px] p-5`}>
-                <img
-                  src={item.imgUrl ? item.imgUrl : images}
-                  alt="img"
-                  className={
-                    'w-10 h-10 scale-[1.4] rounded-full' + ' object-cover'
-                  }
+                <LazyLoadImage
+                  alt='img'
+                  src={item.imgId !== null ? `${getFileId}${item.imgId}` : images}
+                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+                  effect="blur"
                 />
               </td>
               <td className="min-w-[150px] p-5">
@@ -159,7 +181,8 @@ const MasterTables: React.FC = () => {
                 <Space direction="vertical">
                   <Space wrap>
                     <Dropdown
-                      overlay={<Menu onClick={(e) => handleMenuClick(e, item.id)} items={getItems(item.id)} />}
+                      overlay={<Menu onClick={(e) => handleMenuClick(e, item.id)}
+                                     items={item.status === 'ACTIVE' ? getItemsBlock(item.id) : getItemsActive(item.id)} />}
                       placement="bottomLeft"
                       arrow
                     >
@@ -201,14 +224,14 @@ const MasterTables: React.FC = () => {
               className="min-w-full text-center py-10 text-xl font-bold"
               colSpan={5}
             >
-              {t("Information_not_available")}
+              {t('Information_not_available')}
             </td>
           </tr>
         )}
 
       </MasterTable>
       <Pagination
-        showSizeChanger={false}
+        // showSizeChanger={false}
         responsive={true}
         defaultCurrent={1}
         total={totalPage}
@@ -229,11 +252,11 @@ const MasterTables: React.FC = () => {
             <Buttons
               bWidth={`w-[200px]`}
               onClick={() => updateStatusFunc(updateStatus.masterId, updateStatus.status, setData, setTotalPage, openIsModal, setIsLoading)}
-            >{isLoading ? 'loading...' : t("Yeah")}</Buttons>
+            >{isLoading ? 'loading...' : t('Yeah')}</Buttons>
             <Buttons
               bWidth={`w-[200px]`}
               onClick={openIsModal}
-            >{t("Not")}</Buttons>
+            >{t('Not')}</Buttons>
           </div>
         </div>
       </Modal>

@@ -5,13 +5,19 @@ import { useTranslation } from "react-i18next";
 import { getChildCategory, getOrder } from "../../helpers/api-function/order/orderFunction";
 import orderStore from "../../helpers/state_managment/order/orderStore";
 import { getRegion } from "../../helpers/api-function/master/master";
+import { useLocation } from "react-router-dom";
+import FilterComponent2 from "./secondTab";
+import FilterComponent3 from "./thirdTab";
 
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
+  const location = useLocation()
 
   const { setData, setTotalPage, setStatus, setRegionData, setChildCategoy, statusO } = orderStore();
 
   useEffect(() => {
+    setStatus("UPCOMING");
+    setData([])
     localStorage.setItem("orderStatus", "UPCOMING")
     getOrder({
       status: "UPCOMING",
@@ -23,13 +29,17 @@ const MainTabs: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    setData([])
+    setStatus("UPCOMING");
+  }, [location.pathname]);
+
+  useEffect(() => {
+    setData([])
     getOrder({
       status: statusO,
       setData: setData,
       setTotalPage: setTotalPage,
     });
-    getRegion(setRegionData);
-    getChildCategory(setChildCategoy);
   }, [statusO]);
 
   const handleTabChange = (key: string) => {
@@ -74,7 +84,7 @@ const MainTabs: React.FC = () => {
           {t("SecondTab_name")}
         </span>
       ),
-      children: <FirstTab />,
+      children: <FilterComponent2 />,
     },
     {
       key: "3",
@@ -86,14 +96,13 @@ const MainTabs: React.FC = () => {
           {t("ThirdTab_name")}
         </span>
       ),
-      children: <FirstTab />,
+      children: <FilterComponent3 />,
     },
   ];
 
   return (
     <Tabs
       className="dark:bg-boxdark bg-white p-2 w-full"
-      defaultActiveKey="1"
       items={items}
       onChange={handleTabChange} // Tab change handler
     />

@@ -10,7 +10,7 @@ import MasterTables from './master-tables.tsx';
 import MasterLocation from './master-location.tsx';
 
 const Master = () => {
-  const { setData, setTotalPage, setRegionData, setCategory, page } = masterStore()
+  const { setData, setTotalPage, setRegionData, setCategory, page, size } = masterStore()
   const { t } = useTranslation();
   useEffect(() => {
     getMasters({ setData, setTotalPage })
@@ -19,7 +19,7 @@ const Master = () => {
   }, [])
 
   useEffect(() => {
-    getMasters({ setData, setTotalPage, page })
+    getMasters({ setData, setTotalPage, page, size })
   }, [page])
 
   const items: IMasterItems[] = [

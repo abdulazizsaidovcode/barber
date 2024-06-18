@@ -7,6 +7,7 @@ import "./css/satoshi.css";
 import "jsvectormap/dist/css/jsvectormap.css";
 import "flatpickr/dist/flatpickr.min.css";
 import "react-alice-carousel/lib/alice-carousel.css";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import MasterCardInfo from '../../../components/MasterCard/MasterCardR';
-import { master_full_data } from '../../../helpers/api';
+import { getFileId, master_full_data } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import userImg from '../../../images/user.png';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,6 @@ const DetailMaster: React.FC = () => {
   const { t } = useTranslation();
 
   const id = location.pathname.substring(8);
-  console.log(id);
 
   useEffect(() => {
     setIsLoading(true);
@@ -119,7 +118,7 @@ const DetailMaster: React.FC = () => {
             MasterImg={
               orderDetails.masterImgId === null
                 ? userImg
-                : orderDetails.masterImgId
+                : `${getFileId}${orderDetails.masterImgId}`
             }
             definitionType={
               orderDetails.masterPhone === undefined

@@ -13,7 +13,7 @@ const DetailMaster: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const id = location.pathname.substring(11);
-  console.log(id);
+ 
 
   useEffect(() => {
     getClient_data()
@@ -25,7 +25,6 @@ const DetailMaster: React.FC = () => {
       .get(`${client_full_data}${id}`, config)
       .then((response) => {
         const master = response.data.body;
-        console.log(master);
         setOrderDetails(master);
         setIsLoading(false);
       })

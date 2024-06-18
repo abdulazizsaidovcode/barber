@@ -28,12 +28,12 @@ const FilterOrder: React.FC = () => {
 
   const [filters, setFilters] = useState({
     fullName: "",
-    regionId: 0,
-    districtId: 0,
+    regionId: null,
+    districtId: null,
     orderDate: null,
-    categoryId: 0,
-    orderStatus: 0,
-    paymentType: 0,
+    categoryId: null,
+    orderStatus: null,
+    paymentType: null,
   });
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
@@ -59,11 +59,11 @@ const FilterOrder: React.FC = () => {
 
     // Fetch clients data
     getOrder(params);
-    
+    if (filters.regionId) getDistrict(setDistrictData, +filters.regionId);
   }, [filters]);
 
   useEffect(() => {
-    filters.districtId = 0
+    filters.districtId = null
     const params: any = {
       status: statusO,
       setData: setData,
@@ -92,12 +92,12 @@ const FilterOrder: React.FC = () => {
 
   const queryParams: string = [
     filters.fullName ? `fullName=${filters.fullName}` : "",
-    filters.regionId ? `regionId=${filters.regionId}` : 0,
-    filters.districtId ? `districtId=${filters.districtId}` : 0,
+    filters.regionId ? `regionId=${filters.regionId}` : null,
+    filters.districtId ? `districtId=${filters.districtId}` : null,
     filters.orderDate ? `orderDate=${filters.orderDate}` : null,
-    filters.paymentType ? `paymentType=${filters.paymentType}` : 0,
-    filters.orderStatus ? `orderStatus=${filters.orderStatus}` : 0,
-    filters.categoryId ? `categoryId=${filters.categoryId}` : 0,
+    filters.paymentType ? `paymentType=${filters.paymentType}` : null,
+    filters.orderStatus ? `orderStatus=${filters.orderStatus}` : null,
+    filters.categoryId ? `categoryId=${filters.categoryId}` : null,
   ]
     .filter(Boolean)
     .join("&");
@@ -118,12 +118,12 @@ const FilterOrder: React.FC = () => {
   const resetFilters = () => {
     setFilters({
       fullName: "",
-      regionId: 0,
-      districtId: 0,
+      regionId: null,
+      districtId: null,
       orderDate: null,
-      categoryId: 0,
-      orderStatus: 0,
-      paymentType: 0,
+      categoryId: null,
+      orderStatus: null,
+      paymentType: null,
     });
   };
 
@@ -144,24 +144,19 @@ const FilterOrder: React.FC = () => {
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
             placeholder="Region"
-            value={filters.regionId || 0}
+            value={filters.regionId || null}
+            allowClear
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             onChange={(value) => {
               handleInputChange("regionId", value);
-              getDistrict(setDistrictData, value);
             }}
           >
-            <Select.Option value={0} disabled>
-              {t("Select_region")}
-            </Select.Option>
-            {regionData.length !== 0 ? (
+            {regionData.length !== null && (
               regionData.map((region) => (
                 <Select.Option key={region.id} value={region.id}>
                   {region.name}
                 </Select.Option>
               ))
-            ) : (
-              <Select.Option disabled>{t("No_data")}</Select.Option>
             )}
           </Select>
         </Col>
@@ -169,21 +164,17 @@ const FilterOrder: React.FC = () => {
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
             placeholder="City"
-            value={filters.districtId || 0}
+            allowClear
+            value={filters.districtId || null}
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             onChange={(value) => handleInputChange("districtId", value)}
           >
-            <Select.Option value={0} disabled>
-              {t("City")}
-            </Select.Option>
-            {districtData.length !== 0 ? (
+            {districtData.length !== null && (
               districtData.map((district) => (
                 <Select.Option key={district.id} value={district.id}>
                   {district.name}
                 </Select.Option>
               ))
-            ) : (
-              <Select.Option disabled>{t("No_data")}</Select.Option>
             )}
           </Select>
         </Col>
@@ -215,34 +206,29 @@ const FilterOrder: React.FC = () => {
           <Col xs={24} sm={12} md={6} className="mb-4">
             <Select
               placeholder="Service Category"
+            allowClear
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
-              value={filters.categoryId || 0}
+              value={filters.categoryId || null}
               onChange={(value) => handleInputChange("categoryId", value)}
             >
-              <Select.Option value={0} disabled>
-                {t("Select_category")}
-              </Select.Option>
-              {childCategory.length !== 0 ? (
+              {childCategory.length !== null && (
                 childCategory.map((item) => (
                   <Select.Option key={item.id} value={item.id}>
                     {item.name}
                   </Select.Option>
                 ))
-              ) : (
-                <Select.Option disabled>{t("No_data")}</Select.Option>
               )}
             </Select>
           </Col>
           {/* orderStatus */}
           <Col xs={24} sm={12} md={6} className="mb-4">
             <Select
-              value={filters.orderStatus || 0}
+              placeholder="Order status"
+            allowClear
+            value={filters.orderStatus || null}
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               onChange={(value) => handleInputChange("orderStatus", value)}
             >
-              <Select.Option value={0} disabled>
-                {t("Order_status")}
-              </Select.Option>
               <Select.Option value="CONFIRMED">{t("detail_type")}</Select.Option>
               <Select.Option value="WAIT">{t("On_approval")}</Select.Option>
             </Select>
@@ -250,13 +236,12 @@ const FilterOrder: React.FC = () => {
           {/* paymentType */}
           <Col xs={24} sm={12} md={5} className="mb-4">
             <Select
-              value={filters.paymentType || 0}
+            placeholder="Payment type"
+            allowClear
+            value={filters.paymentType || null}
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               onChange={(value) => handleInputChange("paymentType", value)}
             >
-              <Select.Option value={0} disabled>
-                {t("order_table_paymentType")}
-              </Select.Option>
               <Select.Option value="CLICK">{t("Click")}</Select.Option>
               <Select.Option value="CASH">{t("Cash")}</Select.Option>
             </Select>

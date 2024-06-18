@@ -49,11 +49,15 @@ const All = () => {
         <div className={`mt-3 ${params && 'flex justify-between items-center'} text-slate-700 dark:text-slate-300`}>
           {!params && <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />}
           <div className="flex gap-3 items-center my-3">
-            <p className={`text-[.8rem] sm:text-base`}>{t("Show_in_apps")}</p>
-            <Switch
-              isOn={item.active}
-              handleToggle={() => updateIsActive(item, setDataAll, 'ALL')}
-            />
+            {item.helpStatus !== 'ABOUT_SERVICE' && (
+              <>
+                <p className={`text-[.8rem] sm:text-base`}>{t('Show_in_apps')}</p>
+                <Switch
+                  isOn={item.active}
+                  handleToggle={() => updateIsActive(item, setDataAll, 'ALL')}
+                />
+              </>
+            )}
           </div>
           {params && (
             <button
@@ -115,20 +119,24 @@ const All = () => {
               value={modalVal.text}
               onChange={e => setModalVal({ ...modalVal, text: e.target.value })}
             ></textarea>
-            <div className={`flex justify-start items-center gap-5 mt-5`}>
-              <input
-                className={`w-5 h-5 rounded-full`}
-                type="checkbox"
-                id={`helpActiveInput`}
-                checked={modalVal.active}
-                onChange={e => setModalVal({ ...modalVal, active: e.target.checked })}
-              />
-              <label htmlFor={`helpActiveInput`}
-                className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
-            </div>
+            {updateTextArea?.helpStatus !== 'ABOUT_SERVICE' && (
+              <div className={`flex justify-start items-center gap-5 mt-5`}>
+                <input
+                  className={`w-5 h-5 rounded-full`}
+                  type="checkbox"
+                  id={`helpActiveInput`}
+                  checked={modalVal.active}
+                  onChange={e => setModalVal({ ...modalVal, active: e.target.checked })}
+                />
+                <label htmlFor={`helpActiveInput`}
+                       className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
+              </div>
+            )}
             <div className={`flex justify-center items-center gap-6 mt-5`}>
-              <Buttons bWidth={`w-[150px]`}
-                onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}>
+              <Buttons
+                bWidth={`w-[150px]`}
+                onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}
+              >
                 {isLoading ? t('Loading') : t('Save')}
               </Buttons>
               <Buttons bWidth={`w-[150px]`} onClick={openIsModal}>{t('Close')}</Buttons>

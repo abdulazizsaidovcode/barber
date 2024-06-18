@@ -40,11 +40,13 @@ export interface MasterData {
   setIsLoading: (isLoading: boolean) => void;
   page: number;
   setPage: (val: number) => void;
+  size: number,
+  setSize: (val: number) => void;
 }
 
 export interface Data {
   id: string;
-  imgUrl: string;
+  imgId: string;
   fullName: string;
   serviceCategory: string[] | null;
   startedWork: string

@@ -1,5 +1,6 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
 interface MenuProp {
@@ -18,12 +19,13 @@ const RequestSidebar: React.FC<{
   toggleSidebar: () => void;
 }> = ({ newMastersCount, newFotoCount, categoryCount, serviceCount, allCount, isMobileView, toggleSidebar }) => {
   const location = useLocation();
+  const { t } = useTranslation()
 
   const menu: MenuProp[] = [
-    { name: 'Новые мастера', count: newMastersCount, link: '/request/new-masters' },
-    { name: 'Фото', count: newFotoCount, link: '/request/foto' },
-    { name: 'Специализации', count: categoryCount, link: '/request/specializations' },
-    { name: 'Процедуры', count: serviceCount, link: '/request/procedures' }
+    { name: t("New_masters"), count: newMastersCount, link: '/request/new-masters' },
+    { name: t("Photo"), count: newFotoCount, link: '/request/foto' },
+    { name: t("Specializations"), count: categoryCount, link: '/request/specializations' },
+    { name: t("Procedures"), count: serviceCount, link: '/request/procedures' }
   ];
 
   return (
@@ -34,7 +36,7 @@ const RequestSidebar: React.FC<{
         </button>
       )}
       <div className='w-full flex items-center px-4 justify-between h-14 rounded-3xl bg-white'>
-        <p className='dark:text-[#000]'>Все запросы</p>
+        <p className='dark:text-[#000]'>{t("All_requests")}</p>
         <p className='text-[#7D8FB3] font-bold'>{allCount}</p>
       </div>
       <div className='mt-5 flex flex-col gap-3'>
