@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
-import ChatusersList from '../components/user';
+import ChatusersList from '../users/user.tsx';
 import { Input, Select } from 'antd';
 import { Buttons } from '../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
 import { chat_url, messages_url, sockjs_url } from '../../../helpers/api';
-
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import NewChat from '../newChat';
@@ -88,10 +87,8 @@ const Chatdetail: React.FC = () => {
         console.log('Connected: ' + frame);
         setStompClient(stomp);
         stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
-
           const receivedMessage = JSON.parse(response.body);
           setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-
         });
       }, (error: any) => {
         console.error('Error connecting: ', error);
@@ -99,7 +96,6 @@ const Chatdetail: React.FC = () => {
     }
   };
 
-  // send message
   const sendMessage = async () => {
     let fileUrl = null;
     if (photo) {
@@ -109,8 +105,6 @@ const Chatdetail: React.FC = () => {
         setUploadResponse: (response) => (fileUrl = response.body),
       })
     }
-
-
 
     if (stompClient && recipientId) {
       const chatMessage = {
@@ -137,7 +131,7 @@ const Chatdetail: React.FC = () => {
           setMessages(res.data.body);
           console.log(res.data.body);
         }).catch(err => {
-          if (err.response.status == 404) {
+          if (err.response.status === 404) {
             setMessages([]);
             GetChatList({
               status: role,
@@ -161,20 +155,16 @@ const Chatdetail: React.FC = () => {
       });
   };
 
-  // read all messages
-
-  function readMeessage() {
+  function readMeessage(id: any) {
     if (stompClient && stompClient.connected) {
-      stompClient.send('/app/isRead', {}, JSON.stringify(chatId));
+      stompClient.send('/app/isRead', {}, JSON.stringify(id));
       fetchMessages(adminId, recipientId);
     }
   }
 
-  //reply message
   async function replyMessage() {
     let fileUrl = null;
     if (photo) {
-      console.log(photo);
       await uploadFile({
         file: photo,
         setUploadResponse: (response) => (fileUrl = response.body),
@@ -204,7 +194,6 @@ const Chatdetail: React.FC = () => {
     }
   }
 
-  // delete chat
   function deleteMessage() {
     if (chatId) {
       if (stompClient && stompClient.connected) {
@@ -217,12 +206,11 @@ const Chatdetail: React.FC = () => {
       }
     }
   }
-  // edit message
+
   async function editMessage() {
     let fileUrl = null;
 
     if (photo) {
-      console.log(photo);
       await uploadFile({
         file: photo,
         setUploadResponse: (response) => (fileUrl = response.body),
@@ -239,8 +227,7 @@ const Chatdetail: React.FC = () => {
         attachmentIds: fileUrl ? [fileUrl] : []
       }
     }
-    console.log(editMessage);
-    
+
     if ((editId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
@@ -251,16 +238,6 @@ const Chatdetail: React.FC = () => {
       toast.error(t("Enter_your_message"));
     }
   }
-
-  // window.document.addEventListener('keydown', (e) => {
-  //   e.preventDefault()
-  //   if (e.key === 'Enter') {
-  //     console.log("salom");
-  //   }
-  // })
-
-
-
 
   return (
     <div className="h-[92%]">
@@ -331,6 +308,7 @@ const Chatdetail: React.FC = () => {
               deleteMessage={deleteMessage}
               editMessage={editMessage}
               setPhoto={setPhoto}
+              markMessageAsRead={readMeessage}
             /> : <Notselected />}
         </div>
       </div>
