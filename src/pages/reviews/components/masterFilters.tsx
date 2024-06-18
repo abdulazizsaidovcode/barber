@@ -114,7 +114,7 @@ const ReviewMastersFilters: React.FC = () => {
       {showMore && (
         <div className="flex flex-wrap gap-5 mt-5">
           <Select
-            placeholder={'Rating'}
+            placeholder={t('Rating')}
             className="w-55"
             value={masterFilters.combinedRating}
             onChange={handleCombinedRatingChange}

@@ -6,6 +6,7 @@ import { config } from '../../../helpers/token';
 import { changed_procedure_url, getFileId, new_procedure_url } from '../../../helpers/api';
 import { Skeleton, Pagination } from 'antd';
 import SpecializationsCard from '../cards/specializationsCard';
+import { useTranslation } from 'react-i18next';
 
 interface ProceduresData {
   id: string;
@@ -58,13 +59,13 @@ const RequestProcedures: React.FC = () => {
     setCurrentChangedPage(page - 1);
     setChanPageSize(pageSize);
   };
-
+  const { t } = useTranslation()
   return (
     <RequestLayout>
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
         <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center px-5">
           <div className="flex gap-3">
-            <p className="dark:text-[#000]">Специализации</p>
+            <p className="dark:text-[#000]">{t("Specializations")}</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
               <p className="text-sm">{newProcedures.length + changedProcedures.length}</p>
             </div>
@@ -74,7 +75,7 @@ const RequestProcedures: React.FC = () => {
           <div className='md:w-1/2 mr-1'>
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
-                <p className="dark:text-[#000] ">Новые</p>
+                <p className="dark:text-[#000] ">{t("New")}</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
                   <p className="text-sm">{newProcedures.length}</p>
                 </div>
@@ -87,7 +88,7 @@ const RequestProcedures: React.FC = () => {
                 ))
               ) : (newProcedures.length === 0 ?
                 <div className='w-full h-[510px] flex justify-center items-center'>
-                  <p>New Procedures Not Found</p>
+                  <p>{t("New_Procedures")}</p>
                 </div> :
                 <div className='flex flex-col gap-3'>
                   {newProcedures.map(item => (
@@ -98,7 +99,7 @@ const RequestProcedures: React.FC = () => {
                       salonOwner={`${item.firstName} ${item.lastName}`}
                       phoneNumber={item.phoneNumber}
                       salonCreateDate={item.createdAt}
-                      salonDescription="Мастер добавил новую специализацию"
+                      salonDescription={t("The_master_has_added")}
                     />
                   ))
                   }
@@ -118,7 +119,7 @@ const RequestProcedures: React.FC = () => {
           <div className='md:w-1/2 ml-1'>
             <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
-                <p className="dark:text-[#000]">Изменённые</p>
+                <p className="dark:text-[#000]">{t("Changed")}</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
                   <p className="text-sm">{changedProcedures.length}</p>
                 </div>
@@ -131,7 +132,7 @@ const RequestProcedures: React.FC = () => {
                 ))
               ) : (changedProcedures.length === 0 ?
                 <div className='w-full h-[510px] flex justify-center items-center'>
-                  <p>New Procedures Not Found</p>
+                  <p>{t("New_Procedures")}</p>
                 </div> :
                 <div className='gap-3'>
                   {changedProcedures.map(item => (
@@ -142,7 +143,7 @@ const RequestProcedures: React.FC = () => {
                       salonOwner={`${item.firstName} ${item.lastName}`}
                       phoneNumber={item.phoneNumber}
                       salonCreateDate={item.createdAt}
-                      salonDescription="Мастер изменил название специализации"
+                      salonDescription={t("The_master_has_added")}
                     />
                   ))}
                   <div className='p-3 mt-5'>

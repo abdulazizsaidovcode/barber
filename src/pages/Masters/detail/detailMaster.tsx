@@ -14,7 +14,7 @@ const DetailMaster: React.FC = () => {
   const { t } = useTranslation();
 
   const id = location.pathname.substring(8);
-  console.log(id);
+ 
 
   useEffect(() => {
     setIsLoading(true);

@@ -4,7 +4,7 @@ import DarkModeSwitcher from './DarkModeSwitcher';
 import { IoMdSettings } from 'react-icons/io';
 import LanguageSelector from './LanguageSelector';
 import DropdownUser from './DropdownUser';
-import { CiSquareQuestion } from "react-icons/ci";
+import { MdOutlineQuestionMark } from "react-icons/md";
 
 const Header = (props: { sidebarOpen: boolean | undefined; setSidebarOpen: (isOpen: boolean) => void; }) => {
   const getButtonClass = (path: string) =>
@@ -64,7 +64,7 @@ const Header = (props: { sidebarOpen: boolean | undefined; setSidebarOpen: (isOp
           <div className="flex gap-3">
             <Link to="/request/new-masters">
               <div className={`${getButtonClass('/request')} rounded-full flex justify-center items-center md:w-[40px] md:h-[40px] w-[25px] h-[25px]`}>
-                <CiSquareQuestion className="md:text-2xl" />
+                <MdOutlineQuestionMark className="md:text-2xl" />
               </div>
             </Link>
             <Link to="/settings">

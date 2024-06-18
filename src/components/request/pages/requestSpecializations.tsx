@@ -6,6 +6,7 @@ import { config } from '../../../helpers/token';
 import { changed_spezalliton_url, getFileId, new_spezalliton_url } from '../../../helpers/api';
 import SpecializationsCard from '../cards/specializationsCard';
 import { Skeleton, Pagination } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface SpecializationsData {
   id: string;
@@ -29,7 +30,7 @@ const RequestSpecializations: React.FC = () => {
   const [chanPageSize, setChanPageSize] = useState<number>(10);
 
   useEffect(() => {
-    fetchData(currentNewPage, currentChangedPage, newPageSize,chanPageSize);
+    fetchData(currentNewPage, currentChangedPage, newPageSize, chanPageSize);
   }, [currentNewPage, currentChangedPage, newPageSize, chanPageSize]);
 
   const fetchData = async (newPage: number, changedPage: number, newSize: number, chanSize: number) => {
@@ -58,13 +59,13 @@ const RequestSpecializations: React.FC = () => {
     setCurrentChangedPage(page - 1);
     setChanPageSize(pageSize);
   };
-
+  const { t } = useTranslation();
   return (
     <RequestLayout>
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
         <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center px-5">
           <div className="flex gap-3">
-            <p className="dark:text-[#000]">Специализации</p>
+            <p className="dark:text-[#000]">{t("Specializations")}</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
               <p className="text-sm">{newSpecializations.length + changedSpecializations.length}</p>
             </div>
@@ -74,7 +75,7 @@ const RequestSpecializations: React.FC = () => {
           <div className='md:w-1/2 mr-1'>
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
-                <p className="dark:text-[#000]">Новые</p>
+                <p className="dark:text-[#000]">{t("New")}</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
                   <p className="text-sm">{newSpecializations.length}</p>
                 </div>
@@ -98,7 +99,7 @@ const RequestSpecializations: React.FC = () => {
                       salonOwner={`${item.firstName} ${item.lastName}`}
                       phoneNumber={item.phoneNumber}
                       salonCreateDate={item.createdAt}
-                      salonDescription="Мастер добавил новую специализацию"
+                      salonDescription={t("The_master_has_added")}
                     />
                   ))}
                   <div className='mt-5'>
@@ -117,7 +118,7 @@ const RequestSpecializations: React.FC = () => {
           <div className='md:w-1/2 ml-1'>
             <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
-                <p className="dark:text-[#000]">Изменённые</p>
+                <p className="dark:text-[#000]">{t("Changed")}</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
                   <p className="text-sm">{changedSpecializations.length}</p>
                 </div>
@@ -141,7 +142,7 @@ const RequestSpecializations: React.FC = () => {
                       salonOwner={`${item.firstName} ${item.lastName}`}
                       phoneNumber={item.phoneNumber}
                       salonCreateDate={item.createdAt}
-                      salonDescription="Мастер изменил название специализации"
+                      salonDescription={t("The_master_changed")}
                     />
                   ))}
                   <div className='mt-5'>
