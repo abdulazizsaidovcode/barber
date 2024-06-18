@@ -17,6 +17,7 @@ export async function getOrder({
     setData,
     setTotalPage
 }: Filter) {
+    setData([])
     try {
         const res = await axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryName ? `categoryName=${categoryName}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}page=${page}&size=${size}`, config);
         
@@ -26,12 +27,7 @@ export async function getOrder({
         } else {
             setData([]);
         }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error(`Error fetching orders: ${error}, Status: ${error.response?.status}`);
-        } else {
-            console.error('Unexpected error:', error);
-        }
+    } catch {
         setData([]);
     }
 }
