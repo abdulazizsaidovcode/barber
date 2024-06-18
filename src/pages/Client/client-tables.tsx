@@ -215,7 +215,7 @@ const ClientTables: React.FC = () => {
         )}
       </ClientTable>
       <Pagination
-        // showSizeChanger={false}
+        showSizeChanger
         responsive={true}
         defaultCurrent={1}
         total={totalPage}
