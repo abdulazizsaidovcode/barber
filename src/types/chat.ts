@@ -28,6 +28,7 @@ export interface ChatSentSmsType {
   deleteMessage: () => void,
   editMessage: () => void,
   setPhoto: any,
+  markMessageAsRead: (val: any) => void,
 }
 
 export interface ChatSentSmstList {
