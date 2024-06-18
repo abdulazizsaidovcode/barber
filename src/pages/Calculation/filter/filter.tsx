@@ -92,12 +92,12 @@ const FilterOrder: React.FC = () => {
 
   const queryParams: string = [
     filters.fullName ? `fullName=${filters.fullName}` : "",
-    filters.regionId ? `regionId=${filters.regionId}` : 0,
-    filters.districtId ? `districtId=${filters.districtId}` : 0,
+    filters.regionId ? `regionId=${filters.regionId}` : null,
+    filters.districtId ? `districtId=${filters.districtId}` : null,
     filters.orderDate ? `orderDate=${filters.orderDate}` : null,
-    filters.paymentType ? `paymentType=${filters.paymentType}` : 0,
-    filters.orderStatus ? `orderStatus=${filters.orderStatus}` : 0,
-    filters.categoryId ? `categoryId=${filters.categoryId}` : 0,
+    filters.paymentType ? `paymentType=${filters.paymentType}` : null,
+    filters.orderStatus ? `orderStatus=${filters.orderStatus}` : null,
+    filters.categoryId ? `categoryId=${filters.categoryId}` : null,
   ]
     .filter(Boolean)
     .join("&");

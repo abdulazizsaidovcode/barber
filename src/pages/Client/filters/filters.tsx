@@ -173,14 +173,12 @@ const Filters: React.FC = () => {
               handleInputChange("regionId", value);
             }}
           >
-            {regionData.length > 0 ? (
+            {regionData.length > 0 && (
               regionData.map((item) => (
                 <Option value={item.id} key={item.id}>
                   {item.name}
                 </Option>
               ))
-            ) : (
-              <Option disabled>{t("No_regions_available")}</Option>
             )}
           </Select>
         </Col>
@@ -192,14 +190,12 @@ const Filters: React.FC = () => {
             value={filters.districtId || null}
             onChange={(value) => handleInputChange("districtId", value)}
           >
-            {districtData.length > 0 ? (
+            {districtData.length > 0 && (
               districtData.map((item) => (
                 <Option value={item.id} key={item.id}>
                   {item.name}
                 </Option>
               ))
-            ) : (
-              <Option disabled>{t("No_districts_available")}</Option>
             )}
           </Select>
         </Col>
