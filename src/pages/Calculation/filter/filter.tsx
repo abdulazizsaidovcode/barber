@@ -35,6 +35,8 @@ const FilterOrder: React.FC = () => {
     orderStatus: null,
     paymentType: null,
   });
+  const [orderDates, setOrderDate] = useState(null);
+
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
 
@@ -104,16 +106,31 @@ const FilterOrder: React.FC = () => {
   const url: string = `${order_download}?status=${statusO}${queryParams ? "&" : ""
     }${queryParams}&page=${page}&size=10`;
 
-  const handleInputChange = (key: string, value: any) => {
-    if (key === "orderDate") {
-      value = value ? moment(value).format("YYYY-MM-DD") : null;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [key]: value,
-    }));
-  };
+    const handleInputChange = (key: string, date: any) => {
+      const formattedDate = date ? formatDate(new Date(date)) : null;
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [key]: formattedDate,
+      }));
+  
+      if (key === "orderDate") {
+        setOrderDate(date);
+        console.log(formattedDate);
+      }
+    };
+  
+    const formatDate = (date: Date | null) => {
+      if (!date) return null;
+  
+      const year = date.getFullYear();
+      const month = padNumber(date.getMonth() + 1);
+      const day = padNumber(date.getDate());
+  
+      return `${year}-${month}-${day}`;
+    };
+    const padNumber = (number: number) => {
+      return number.toString().padStart(2, '0');
+    };
 
   const resetFilters = () => {
     setFilters({
@@ -125,6 +142,7 @@ const FilterOrder: React.FC = () => {
       orderStatus: null,
       paymentType: null,
     });
+    setOrderDate(null)
   };
 
   return (
@@ -198,6 +216,7 @@ const FilterOrder: React.FC = () => {
           {/* orderDate */}
           <Col xs={14} sm={7} md={4} className="mb-4">
             <DatePicker
+              value={orderDates}
               onChange={(date) => handleInputChange("orderDate", date)}
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             />

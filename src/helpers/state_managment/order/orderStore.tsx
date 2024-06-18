@@ -29,6 +29,8 @@ export interface OrderData {
   setIsDetail: (isDetail: boolean) => void;
   message: string;
   setMessage: (isModal: string) => void;
+  size: number,
+  setSize: (val: number) => void;
 }
 
 const orderStore = create<OrderData>((set) => ({
@@ -58,6 +60,8 @@ const orderStore = create<OrderData>((set) => ({
   setIsDetail: (val: boolean) => set({ isDetail: val }),
   message: "",
   setMessage: (val: string) => set({ message: val }),
+  size: 10,
+  setSize: (val: number) => set({ size: val }),
 }));
 
 export default orderStore;

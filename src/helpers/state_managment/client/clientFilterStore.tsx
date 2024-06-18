@@ -22,6 +22,8 @@ interface ClientFilterData {
   setMessage: (isModal: string) => void;
   id: string;
   setid: (isModal: string) => void;
+  size: number,
+  setSize: (val: number) => void;
 }
 
 export interface FilterData {
@@ -67,6 +69,8 @@ const clientFilterStore = create<ClientFilterData>((set) => ({
   setMessage: (val: string) => set({ message: val }),
   id: "",
   setid: (val: string) => set({ id: val }),
+  size: 10,
+  setSize: (val: number) => set({ size: val }),
 }));
 
 export default clientFilterStore;

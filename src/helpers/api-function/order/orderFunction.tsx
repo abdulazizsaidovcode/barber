@@ -5,8 +5,8 @@ import { config } from "../../token";
 
 export async function getOrder({
     status,
-    page = 0,
-    size = 10,
+    page,
+    size,
     fullName,
     regionId,
     districtId,
@@ -19,7 +19,7 @@ export async function getOrder({
 }: Filter) {
     setData([])
     try {
-        const res = await axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryName ? `categoryName=${categoryName}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}page=${page}&size=${size}`, config);
+        const res = await axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryName ? `categoryName=${categoryName}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}${page ? `page=${page}&` : ""}${size ? `size=${size}` : ""}`, config);
         
         if (res.data.success === true) {
             setData(res.data.body.object);

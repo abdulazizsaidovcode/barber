@@ -6,13 +6,20 @@ import { useEffect } from 'react';
 import { getRegion } from '../../helpers/api-function/master/master.tsx';
 import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore.tsx';
 import { useTranslation } from 'react-i18next';
+import { getClients } from '../../helpers/api-function/client/client.tsx';
 
 const Client = () => {
   const { t } = useTranslation();
-  const { setRegionData } = clientFilterStore()
+  const { setRegionData, setClientFilterData, setClientTotalPage, page, size} = clientFilterStore()
   useEffect(() => {
+    getClients({ setData: setClientFilterData, setTotalPage: setClientTotalPage})
     getRegion(setRegionData)
   }, [])
+
+  useEffect(() => {
+    getClients({ setData: setClientFilterData, setTotalPage: setClientTotalPage, page, size })
+  }, [page])
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={t("Client")} />

@@ -4,6 +4,7 @@ import type { MenuProps } from "antd";
 import { Dropdown, Menu, Pagination, Space } from "antd";
 import Filters from "./filters/filters.tsx";
 import React, { useState } from "react";
+import images from '../../images/user.png';
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import clientFilterStore from "../../helpers/state_managment/client/clientFilterStore.tsx";
@@ -12,6 +13,7 @@ import Modal from "../../components/modals/modal.tsx";
 import { updateClientStatus } from "../../helpers/api-function/client/clientFilter.tsx";
 import { getFileId } from "../../helpers/api.tsx";
 import ClientModal from "./client-modal.tsx";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export interface UpdateStatus {
   status: string;
@@ -20,14 +22,16 @@ export interface UpdateStatus {
 
 const ClientTables: React.FC = () => {
   const { t } = useTranslation();
-  const { clientFilterData,totalPage,setPage, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid } = clientFilterStore();
+  const { clientFilterData,totalPage,setPage, setClientFilterData, setIsModal, setIsLoading, isLoading, isModal, setClientTotalPage, setIsMessageModal, isMessageModal, setid, setSize } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: "",
     id: "",
   });
 
-  const onChange = (page: number): void => setPage(page - 1)
-
+  const onChange = (page: number, size: number): void => {
+    setPage(page - 1);
+    setSize(size);
+  };
 
   const openIsModal = () => setIsModal(!isModal)
   const openIsMessageModal = () => setIsMessageModal(!isMessageModal)
@@ -86,25 +90,26 @@ const ClientTables: React.FC = () => {
     },
   ];
 
-  const getItems = (id: string): MenuProps["items"] => [
+  const getItemsActive = (id: string): MenuProps['items'] => [
     {
-      key: "1",
-      label: <Link to={`/client_id/${id}`}>{t("Open")}</Link>,
+      key: '1',
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'ACTIVE',
       label: `${t('Active')}`,
-      onClick: () => openIsModal(),
+      onClick: () => openIsModal()
+    }
+  ];
+  const getItemsBlock = (id: string): MenuProps['items'] => [
+    {
+      key: '1',
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'BLOCKED',
       label: `${t('Locked')}`,
-      onClick: () => openIsModal(),
-    },
-    {
-      key: '4',
-      label: `${'Send message'}`,
-      onClick: () => openIsMessageModal(),
+      onClick: () => openIsModal()
     }
   ];
 
@@ -128,10 +133,11 @@ const ClientTables: React.FC = () => {
                 }`}
             >
               <td className={`min-w-[150px] p-5`}>
-                <img
-                  src={item.imgId ? getFileId + item.imgId : "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg"}
-                  alt="img"
-                  className={"w-10 h-10 scale-[1.4] rounded-full object-cover"}
+              <LazyLoadImage
+                  alt='img'
+                  src={item.imgId !== null ? `${getFileId}${item.imgId}` : images}
+                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+                  effect="blur"
                 />
               </td>
               <td className="min-w-[150px] p-5">
@@ -161,15 +167,9 @@ const ClientTables: React.FC = () => {
                 <Space direction="vertical">
                   <Space wrap>
                     <Dropdown
-                      overlay={
-                        <Menu
-                          onClick={(e) => {
-                            handleMenuClick(e, item.id)
-                            setid(item.id)
-                          }}
-                          items={getItems(item.id)}
-                        />
-                      }
+                       overlay={<Menu onClick={(e) => handleMenuClick(e, item.id)}
+                       items={item.status === 'ACTIVE' ? getItemsBlock(item.id) : getItemsActive(item.id)} />}
+       
                       placement="bottomLeft"
                       arrow
                     >
@@ -215,11 +215,10 @@ const ClientTables: React.FC = () => {
         )}
       </ClientTable>
       <Pagination
-        showSizeChanger={false}
+        // showSizeChanger={false}
         responsive={true}
+        defaultCurrent={1}
         total={totalPage}
-        pageSize={5}
-        current={5}
         onChange={onChange}
         rootClassName={`mt-10 mb-5 ms-5`}
         itemRender={itemRender}
