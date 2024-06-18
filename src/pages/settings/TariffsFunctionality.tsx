@@ -114,7 +114,7 @@ const TariffsFunctionality: React.FC = () => {
                     <input
                         className="w-full border-[1px] dark:text-black border-black sm:p-2 p-1 rounded-lg mt-3"
                         type="text"
-                        placeholder={t("Wellness_treatments")}
+                        placeholder={t("Iltimos_tarif_nomini_kiriting")}
                         value={newTariffName}
                         onChange={(e) => setNewTariffName(e.target.value)}
                     />
