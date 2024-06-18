@@ -111,7 +111,7 @@ const TariffDetail: React.FC = () => {
     }
 
     if (name.trim() === initialName.trim()) {
-      toast.error('Name is unchanged');
+      toast('Name is unchanged', {icon: '⚠️'});
       return;
     }
 
