@@ -317,6 +317,8 @@
   "Not_limited": "Not limited",
   "Limit_bookings_per_month": "Limit bookings per month",
   "Ability_to_set_booking_days": "Ability to set booking days",
+  "Limit_bookings_with_monthly_prepayment": "Limit bookings with monthly prepayment",
+  "Gallery_Limitation": "Gallery Limitation",
   "Booking_duration_for_a_period": "Booking duration for a period",
   "Ability_to_set_booking_periods": "Ability to set booking periods",
   "Break_between_sessions_for_all_procedures": "Break between sessions for all procedures",

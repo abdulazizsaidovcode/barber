@@ -108,7 +108,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
               </div>
             </div>
           </Accordion>
-          <Accordion title='Ограничение бронирований с предоплатой в месяц'>
+          <Accordion title={t("Limit_bookings_with_monthly_prepayment")}>
             <div className='flex md:flex-row flex-col justify-between'>
               <div className='md:w-[66%]'>
                 <FunctionlityCard editOnClick={() => showModal('prePaymentCount')} title={`${data.prePaymentCount ?? "0"}`} />
@@ -119,14 +119,14 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                   checked={data.prePaymentCount === 0}
                   onChange={(e) => handleCheckboxChange('prePaymentCount', e.target.checked)}
                 >
-                  Не ограничено
+                  {t("Not_limited")}
                 </Checkbox>
               </div>
             </div>
           </Accordion>
         </div>
         <div className='md:w-1/2 flex flex-col gap-3'>
-          <Accordion title='Ограничение галереи'>
+          <Accordion title={t("Gallery_Limitation")}>
             <div className='flex flex-col justify-between'>
               <p className='mt-3 mb-3 dark:text-white'>Количество альбомов</p>
               <div className='flex justify-between'>

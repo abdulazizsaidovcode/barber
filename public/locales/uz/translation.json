@@ -303,6 +303,8 @@
   "Reservation_duration_limit": "Bronlash muddatini cheklash (kun)",
   "Not_limited": "Cheklanmagan",
   "Limit_bookings_per_month": "Oyiga bron qilishni cheklang",
+  "Limit_bookings_with_monthly_prepayment": "Oylik oldindan to'langan bronlarni cheklash",
+  "Gallery_Limitation": "Galereya chegarasi",
   "Topic_name": "Mavzu nomi:",
   "Create_a_newsletter": "Axborot byulleteni yarating",
   "Are_you_sure_your": "Haqiqatan ham bu xabarnomani ochmoqchimisiz?",

@@ -320,6 +320,8 @@
   "Booking_duration_for_a_period": "Длительность записи на период",
   "Reservation_duration_limit": "Ограничение длительности бронирования (день)",
   "Not_limited": "Не ограничено",
+  "Limit_bookings_with_monthly_prepayment": "Ограничение бронирований с предоплатой в месяц",
+  "Gallery_Limitation": "Ограничение галереи",
   "Limit_bookings_per_month": "Ограничение бронирований в месяц",
   "Ability_to_set_booking_periods": "Возможность устанавливать периоды длительности записи",
   "Break_between_sessions_for_all_procedures": "Перерыв между сеансами для всех процедур",
