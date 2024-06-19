@@ -93,7 +93,7 @@ const ClientTables: React.FC = () => {
   const getItemsActive = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
+      label: <Link to={`/client_id/${id}`}>{t("Open")}</Link>,
     },
     {
       key: 'ACTIVE',
@@ -109,7 +109,7 @@ const ClientTables: React.FC = () => {
   const getItemsBlock = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
+      label: <Link to={`/client_id/${id}`}>{t("Open")}</Link>,
     },
     {
       key: 'BLOCKED',
