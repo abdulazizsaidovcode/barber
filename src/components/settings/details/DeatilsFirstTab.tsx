@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from './TableSwitcher';
+import { useTranslation } from 'react-i18next';
 
 interface StoragePath {
   id: number;
@@ -7,43 +8,6 @@ interface StoragePath {
   mount: string;
   name: string;
 }
-
-const storagePaths: StoragePath[] = [
-  { id: 1, component: 'Услуги', mount: 'Фото процедуры', name: 'Возможность добавлять/изменять/удалять фото к процедуре' },
-  { id: 2, component: 'Услуги', mount: 'Дополнительная категория услуг', name: 'Возможность добавлять несколько категорий услуг и несколько специализаций' },
-  { id: 3, component: 'Онлайн бронирование', mount: 'Разрешение записывать клиентов', name: 'Возможность разрешать или запрещять клиентам записываться' },
-  { id: 4, component: 'Онлайн бронирование', mount: 'Длительность записи по дням', name: 'Возможность устанавливать дни длительности бронирования' },
-  { id: 5, component: 'Онлайн бронирование', mount: 'Длительность записи на период', name: 'Возможность устанавливать периоды длительности записи' },
-  { id: 6, component: 'Онлайн бронирование', mount: 'Перерыв между сеансами для всех процедур', name: 'Возможность устанавливать одинаковые перерывы между сеансами' },
-  { id: 7, component: 'Онлайн бронирование', mount: 'Перерыв между сеансами для каждой процедуры', name: 'Возможность устанавливать разные перерывы между сеансами' },
-  { id: 8, component: 'Онлайн бронирование', mount: 'Подтверждение записи для всех клеинтов', name: 'Возможность подтверждать записи для всех клиентов' },
-  { id: 9, component: 'Онлайн бронирование', mount: 'Подтверждение записи для новых клеинтов', name: 'Возможность подтверждать записи для новых клиентов' },
-  { id: 10, component: 'Онлайн бронирование', mount: 'Не подтвеждать записи', name: 'Возможность неподтверждать записи' },
-  { id: 11, component: 'Онлайн бронирование', mount: 'Запрос окошка для всех клиентов', name: 'Возможность записи в зал ожидания для всех клеинтов' },
-  { id: 12, component: 'Онлайн бронирование', mount: 'Запрос окошка для постоянных клиентов', name: 'Возможность записи в зал ожидания для постоянных клеинтов' },
-  { id: 13, component: 'Онлайн бронирование', mount: 'Время для VIP клинетов', name: 'Возможность планировать время для ВИП клеинтов' },
-  { id: 14, component: 'Онлайн бронирование', mount: 'Настройка приёма онлайн оплаты', name: 'Возможность подключить онлайн оплату или отключить' },
-  { id: 15, component: 'Онлайн бронирование', mount: 'Настройка предолаты процент', name: 'Возможность настраивать предоплату в процентах' },
-  { id: 16, component: 'Онлайн бронирование', mount: 'Настройка предолаты фиксированная', name: 'Возможность настраивать предоплату в фиксированную' },
-  { id: 17, component: 'Уведомления', mount: 'Напоминать о записи', name: 'Возможность настраивать шаблоны инапоминать клиенту о записи' },
-  { id: 18, component: 'Уведомления', mount: 'Отмена записи', name: 'Возможность настраивать шаблоны инапоминать клиенту об отмене записи' },
-  { id: 19, component: 'Уведомления', mount: 'Изменение записи', name: 'Возможность настраивать шаблоны и напоминать клиенту об изменении записи' },
-  { id: 20, component: 'Уведомления', mount: 'Поздравление с днём рождения', name: 'Возможность настраивать шаблон поздравления и отправлять клиентам' },
-  { id: 21, component: 'Уведомления', mount: 'Перестали посещать', name: 'Возможность напоминать клиентам которые перестали посещать' },
-  { id: 22, component: 'Уведомления', mount: 'Зал ожидания', name: 'Возможность настраивать шаблон для приглашения в зал ожидания' },
-  { id: 23, component: 'Клиенты', mount: 'Клиенты из адресной книги', name: 'Возможность добавлять клиентов из телеона' },
-  { id: 24, component: 'Клиенты', mount: 'Статус новый клиент', name: 'Возможность определять клиента что он новый' },
-  { id: 25, component: 'Клиенты', mount: 'Статус постоянный клиент', name: 'Возможность определять клиента что он постоянный' },
-  { id: 26, component: 'Клиенты', mount: 'Статус не посещал клиент', name: 'Возможность определять клиента что он не посещал мастера' },
-  { id: 27, component: 'Клиенты', mount: 'Статус перестал посещать', name: 'Возможность определять клиента что он перестал посещать' },
-  { id: 28, component: 'Способы оплаты', mount: 'Управление картами', name: 'Возможность добавления/удаления банковских карт' },
-  { id: 29, component: 'Веб страница', mount: 'Ссылка на Веб страницу', name: 'Возможность отправлять ссылку клеинтам на профиль мастера' },
-  { id: 30, component: 'Финансы', mount: 'Финансы, расходы, топ лист клиентов', name: 'Возможность создавать расходы для расчёта финансов. и получать инфомрацию о состоянии финансов' },
-  { id: 31, component: 'Расписание', mount: 'Остановить запись', name: 'Возможность остановить запись на выбранный день/дату' },
-  { id: 31, component: 'Расписание', mount: 'Записать клиента', name: 'Возможность мастеру записывать клиентов' },
-  { id: 31, component: 'Расписание', mount: 'Сделать день выходным', name: 'Возможность мастеру сделать любой день выходным' },
-  
-];
 
 interface SwitchStates {
   [key: number]: boolean;
@@ -55,6 +19,44 @@ interface DetailsFirstTabProps {
 }
 
 const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState }) => {
+  const { t } = useTranslation();
+
+  const storagePaths: StoragePath[] = [
+    { id: 1, component: t("Services"), mount: t('Photo_process'), name: t('Ability_to_add_change_delete_photo_to_the_procedure') },
+    { id: 2, component: t('Services'), mount: t('Additional_service_category'), name: t('Ability_to_add_multiple_service_categories_and_multiple_specializations') },
+    { id: 3, component: t('Online_booking'), mount: t('Permission_to_record_clients'), name: t('Ability_to_allow_or_deny_clients_to_book') },
+    { id: 4, component: t('Online_booking'), mount: t('Booking_duration_by_days'), name: t('Ability_to_set_booking_days') },
+    { id: 5, component: t('Online_booking'), mount: t('Booking_duration_for_a_period'), name: t('Ability_to_set_booking_periods') },
+    { id: 6, component: t('Online_booking'), mount: t('Break_between_sessions_for_all_procedures'), name: t('Ability_to_set_the_same_breaks_between_sessions') },
+    { id: 7, component: t('Online_booking'), mount: t('Break_between_sessions_for_each_procedure'), name: t('Ability_to_set_different_breaks_between_sessions') },
+    { id: 8, component: t('Online_booking'), mount: t('Confirmation_of_booking_for_all_clients'), name: t('Ability_to_confirm_bookings_for_all_clients') },
+    { id: 9, component: t('Online_booking'), mount: t('Confirmation_of_booking_for_new_clients'), name: t('Ability_to_confirm_bookings_for_new_clients') },
+    { id: 10, component: t('Online_booking'), mount: t('Do_not_confirm_bookings'), name: t('Ability_to_not_confirm_bookings') },
+    { id: 11, component: t('Online_booking'), mount: t('Request_a_slot_for_all_clients'), name: t('Ability_to_book_in_the_waiting_room_for_all_clients') },
+    { id: 12, component: t('Online_booking'), mount: t('Request_a_slot_for_regular_clients'), name: t('Ability_to_book_in_the_waiting_room_for_regular_clients') },
+    { id: 13, component: t('Online_booking'), mount: t('Time_for_VIP_clients'), name: t('Ability_to_plan_time_for_VIP_clients') },
+    { id: 14, component: t('Online_booking'), mount: t('Setting_up_online_payment_acceptance'), name: t('Ability_to_enable_or_disable_online_payment') },
+    { id: 15, component: t('Online_booking'), mount: t('Prepayment_setting_percentage'), name: t('Ability_to_set_prepayment_as_a_percentage') },
+    { id: 16, component: t('Online_booking'), mount: t('Prepayment_setting_fixed'), name: t('Ability_to_set_prepayment_as_fixed') },
+    { id: 17, component: t('Notifications'), mount: t('Remind_of_booking'), name: t('Ability_to_set_templates_and_remind_the_client_about_the_booking') },
+    { id: 18, component: t('Notifications'), mount: t('Booking_cancellation'), name: t('Ability_to_set_templates_and_remind_the_client_of_booking_cancellation') },
+    { id: 19, component: t('Notifications'), mount: t('Booking_change'), name: t('Ability_to_set_templates_and_remind_the_client_of_booking_change') },
+    { id: 20, component: t('Notifications'), mount: t('Birthday_greeting'), name: t('Ability_to_set_a_greeting_template_and_send_to_clients') },
+    { id: 21, component: t('Notifications'), mount: t('Stopped_visiting'), name: t('Ability_to_remind_clients_who_stopped_visiting') },
+    { id: 22, component: t('Notifications'), mount: t('Waiting_room'), name: t('Ability_to_set_a_template_for_inviting_to_the_waiting_room') },
+    { id: 23, component: t('Clients'), mount: t('Clients_from_the_address_book'), name: t('Ability_to_add_clients_from_the_phone') },
+    { id: 24, component: t('Clients'), mount: t('New_client_status'), name: t('Ability_to_identify_a_client_as_new') },
+    { id: 25, component: t('Clients'), mount: t('Regular_client_status'), name: t('Ability_to_identify_a_client_as_regular') },
+    { id: 26, component: t('Clients'), mount: t('Client_not_visited_status'), name: t('Ability_to_identify_a_client_who_has_not_visited_the_master') },
+    { id: 27, component: t('Clients'), mount: t('Stopped_visiting_status'), name: t('Ability_to_identify_a_client_who_stopped_visiting') },
+    { id: 28, component: t('Payment_methods'), mount: t('Card_management'), name: t('Ability_to_add_remove_bank_cards') },
+    { id: 29, component: t('Web_page'), mount: t('Web_page_link'), name: t('Ability_to_send_a_link_to_clients_on_the_master_profile') },
+    { id: 30, component: t('Finance'), mount: t('Finance_expenses_top_client_list'), name: t('Ability_to_create_expenses_for_financial_calculation_and_get_information_on_financial_status') },
+    { id: 31, component: t('Schedule'), mount: t('Stop_booking'), name: t('Ability_to_stop_booking_for_a_selected_day_date') },
+    { id: 32, component: t('Schedule'), mount: t('Book_a_client'), name: t('Ability_for_the_master_to_book_clients') },
+    { id: 33, component: t('Schedule'), mount: t('Make_a_day_off'), name: t('Ability_for_the_master_to_make_any_day_off') },
+  ];
+
   const toggleSwitch = (id: number) => {
     setNewState(prev => ({
       ...prev,
@@ -67,10 +69,10 @@ const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState
       <table className='w-full table-auto'>
         <thead>
           <tr className='bg-[#d0eeff] h-10'>
-            <th className='text-start px-4'>Категория функционала</th>
-            <th className='text-start px-4'>Функционал</th>
-            <th className='text-start px-4'>Описание</th>
-            <th className='text-start px-4'>Статус</th>
+            <th className='text-start px-4'>{t('Functional_Category')}</th>
+            <th className='text-start px-4'>{t('Functionality')}</th>
+            <th className='text-start px-4'>{t('Description')}</th>
+            <th className='text-start px-4'>{t('Status')}</th>
           </tr>
         </thead>
         <tbody>
@@ -87,7 +89,6 @@ const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState
         </tbody>
       </table>
     </div>
-
   );
 };
 
