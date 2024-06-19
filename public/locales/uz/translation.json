@@ -302,6 +302,8 @@
   "Mail_not_found": "Pochta topilmadi",
   "Reservation_duration_limit": "Bronlash muddatini cheklash (kun)",
   "Not_limited": "Cheklanmagan",
+  "Number__albums": "Albomlar soni",
+  "Number_of_photos_in_album": "1 albomdagi fotosuratlar soni",
   "Limit_bookings_per_month": "Oyiga bron qilishni cheklang",
   "Limit_bookings_with_monthly_prepayment": "Oylik oldindan to'langan bronlarni cheklash",
   "Gallery_Limitation": "Galereya chegarasi",

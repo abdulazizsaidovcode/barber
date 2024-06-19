@@ -128,7 +128,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
         <div className='md:w-1/2 flex flex-col gap-3'>
           <Accordion title={t("Gallery_Limitation")}>
             <div className='flex flex-col justify-between'>
-              <p className='mt-3 mb-3 dark:text-white'>Количество альбомов</p>
+              <p className='mt-3 mb-3 dark:text-white'>{t("Number__albums")}</p>
               <div className='flex justify-between'>
                 <div className='w-[66%]'>
                   <FunctionlityCard editOnClick={() => showModal('numberOfAlbums')} title={`${data.numberOfAlbums ?? "0"}`} />
@@ -139,13 +139,13 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                     checked={data.numberOfAlbums === 0}
                     onChange={(e) => handleCheckboxChange('numberOfAlbums', e.target.checked)}
                   >
-                    Не ограничено
+                    {t("Not_limited")}
                   </Checkbox>
                 </div>
               </div>
             </div>
             <div className='flex flex-col justify-between'>
-              <p className='mt-3 mb-3 dark:text-white'>Количество фото в 1 альбоме</p>
+              <p className='mt-3 mb-3 dark:text-white'>{t("Number_of_photos_in_album")}</p>
               <div className='flex justify-between'>
                 <div className='w-[66%]'>
                   <FunctionlityCard editOnClick={() => showModal('numberOfFoto')} title={`${data.numberOfFoto ?? "0"}`} />
@@ -156,7 +156,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                     checked={data.numberOfFoto === 0}
                     onChange={(e) => handleCheckboxChange('numberOfFoto', e.target.checked)}
                   >
-                    Не ограничено
+                    {t("Not_limited")}
                   </Checkbox>
                 </div>
               </div>
@@ -180,7 +180,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
       </div>
       <div className='mt-3'>
         <Buttons onClick={handleSave} disabled={!localHasChanges}>
-          Сохранить изменения
+          {t("Save_changes")}
         </Buttons>
       </div>
     </>
