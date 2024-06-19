@@ -4,6 +4,7 @@ import Accordion from '../../accordion/accordion';
 import FunctionlityCard from './FunctionlityCard';
 import { Buttons } from '../../buttons';
 import EditModal from '../modals/editModal';
+import { useTranslation } from 'react-i18next';
 
 interface SecondTabData {
   bookingDuration: number;
@@ -62,7 +63,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
   const handleSave = () => {
     onSave();
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <EditModal
@@ -75,7 +76,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
       />
       <div className='w-full gap-3 flex md:flex-row flex-col justify-between'>
         <div className='md:w-1/2  flex flex-col gap-3'>
-          <Accordion title='Ограничение длительности бронирования (день)'>
+          <Accordion title={t("Reservation_duration_limit")}>
             <div className='flex md:flex-row flex-col justify-between'>
               <div className='md:w-[66%]'>
                 <FunctionlityCard editOnClick={() => showModal('bookingDuration')} title={`${data.bookingDuration ?? "0"}`} />
@@ -86,12 +87,12 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                   checked={data.bookingDuration === 0}
                   onChange={(e) => handleCheckboxChange('bookingDuration', e.target.checked)}
                 >
-                  Не ограничено
+                  {t("Not_limited")}
                 </Checkbox>
               </div>
             </div>
           </Accordion>
-          <Accordion title='Ограничение бронирований в месяц'>
+          <Accordion title={t("Limit_bookings_per_month")}>
             <div className='flex md:flex-row flex-col justify-between'>
               <div className='md:w-[66%]'>
                 <FunctionlityCard editOnClick={() => showModal('bookingPerMonth')} title={`${data.bookingPerMonth ?? "0"}`} />
@@ -102,7 +103,7 @@ const DetailsSecondTab: React.FC<DetailsSecondTabProps> = ({ data, setData, onSa
                   checked={data.bookingPerMonth === 0}
                   onChange={(e) => handleCheckboxChange('bookingPerMonth', e.target.checked)}
                 >
-                  Не ограничено
+                  {t("Not_limited")}
                 </Checkbox>
               </div>
             </div>
