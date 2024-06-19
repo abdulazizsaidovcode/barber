@@ -69,8 +69,8 @@ const DetailsFirstTab: React.FC<DetailsFirstTabProps> = ({ newState, setNewState
       <table className='w-full table-auto'>
         <thead>
           <tr className='bg-[#d0eeff] h-10'>
-            <th className='text-start px-4'>{t('Functional_Category')}</th>
-            <th className='text-start px-4'>{t('Functionality')}</th>
+            <th className='text-start px-4'>{t('Functionality_Category')}</th>
+            <th className='text-start px-4'>{t('Functional')}</th>
             <th className='text-start px-4'>{t('Description')}</th>
             <th className='text-start px-4'>{t('Status')}</th>
           </tr>

@@ -161,7 +161,7 @@ const TariffDetail: React.FC = () => {
       key: '2',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          Ограничения
+          {t("Restrictions")}
         </span>
       ),
       children: <DetailsSecondTab onSave={updateData} data={secondTabData} setData={setSecondTabData} hasChanges={hasChanges} />,
@@ -187,7 +187,7 @@ const TariffDetail: React.FC = () => {
         </div>
       </div> :
         <div className='h-15 bg-white flex items-center px-5 rounded-lg my-2'>
-          <p>Название тарифа не настроено</p>
+          <p>{t("Tariff_name_is_not_configured")}</p>
         </div>}
       <Tabs
         className="dark:bg-boxdark bg-white p-2 w-full"
