@@ -24,7 +24,8 @@ const Filters: React.FC = () => {
     category,
     isLoading,
     setIsLoading,
-    page
+    page,
+    size
   } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -39,15 +40,15 @@ const Filters: React.FC = () => {
     filters.selfEmployedStatusValue === true ? `selfEmployed=true` : filters.selfEmployedStatusValue === false ? `selfEmployed=false` : '',
     filters.placeOfWorkValue ? `workPlace=${filters.placeOfWorkValue}` : ''
   ].filter(Boolean).join('&');
-  const url: string = `${master_download}?${queryParams}&page=${page}&size=10`;
+  const url: string = `${master_download}?${queryParams}${queryParams ? '&' : ''}page=${page}&size=${size}`;
 
   useEffect(() => {
     getMasters({
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       districtId: filters.cityValue ? filters.cityValue : '',
-      startDate: datePicker(0),
-      endDate: datePicker(1),
+      startDate: datePicker(0) ? datePicker(0) : '',
+      endDate: datePicker(1) ? datePicker(1) : '',
       categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
@@ -59,13 +60,13 @@ const Filters: React.FC = () => {
   }, [filters]);
 
   useEffect(() => {
-    filters.cityValue = null
+    filters.cityValue = null;
     getMasters({
       fullName: filters.searchValue ? filters.searchValue : '',
       regionId: filters.regionValue ? filters.regionValue : '',
       districtId: filters.cityValue ? filters.cityValue : '',
-      startDate: datePicker(0),
-      endDate: datePicker(1),
+      startDate: datePicker(0) ? datePicker(0) : '',
+      endDate: datePicker(1) ? datePicker(1) : '',
       categoryId: filters.serviceCategoryValue ? filters.serviceCategoryValue : '',
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
@@ -102,15 +103,17 @@ const Filters: React.FC = () => {
             placeholder={t('Search_by_name')}
             value={filters.searchValue}
             prefix={<IoSearchOutline />}
+            allowClear
             className={`w-full bg-white rounded-[8px]`}
             onChange={(e) => handleInputChange('searchValue', e.target.value)}
           />
         </Col>
         <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Select
-            placeholder={t("Region")}
+            placeholder={t('Region')}
             value={filters.regionValue}
             className={`w-full bg-white rounded-[8px]`}
+            allowClear
             onChange={(value) => handleInputChange('regionValue', value)}
           >
             {regionData.length > 0 && regionData.map(item => (
@@ -120,9 +123,10 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
           <Select
-            placeholder={t("City")}
+            placeholder={t('City')}
             value={filters.cityValue}
             className={`w-full bg-white rounded-[8px]`}
+            allowClear
             onChange={(value) => handleInputChange('cityValue', value)}
           >
             {districtData.length > 0 && districtData.map(item => (
@@ -139,9 +143,9 @@ const Filters: React.FC = () => {
           </Button>
           <Button
             className={`bg-[#f0f0f0]`}
-            onClick={() => downloadExcelFile(url, setIsLoading, t("File_downloaded_successfully"), t("There_was_an_error_fetching_the_data"), page)}
+            onClick={() => downloadExcelFile(url, setIsLoading, t('File_downloaded_successfully'), t('There_was_an_error_fetching_the_data'), page)}
           >
-            {isLoading ? t("Loading") : t('Download')}
+            {isLoading ? t('Loading') : t('Download')}
           </Button>
         </Col>
       </Row>
@@ -152,7 +156,7 @@ const Filters: React.FC = () => {
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Space direction="vertical" size={12}>
                 <RangePicker
-                  placeholder={[t("Select_start_date"), t("Select_end_date")]}
+                  placeholder={[t('Select_start_date'), t('Select_end_date')]}
                   value={filters.registrationPeriodValue}
                   // className={`w-full bg-white rounded-[8px]} s.filterInput}
                   onChange={(date) => handleInputChange('registrationPeriodValue', date)}
@@ -161,9 +165,10 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={t("Service_category")}
+                placeholder={t('Service_category')}
                 value={filters.serviceCategoryValue}
                 className={`w-full bg-white rounded-[8px]`}
+                allowClear
                 onChange={(value) => handleInputChange('serviceCategoryValue', value)}
               >
                 {category.length > 0 && category.map(item => (
@@ -185,45 +190,48 @@ const Filters: React.FC = () => {
             {/*</Col>*/}
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={t("Self_employed_status")}
+                placeholder={t('Self_employed_status')}
                 value={filters.selfEmployedStatusValue}
                 className={`w-full bg-white rounded-[8px]`}
+                allowClear
                 onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
               >
-                <Option value={true}>{t("Yeah")}</Option>
-                <Option value={false}>{t("Not")}</Option>
+                <Option value={true}>{t('Yeah')}</Option>
+                <Option value={false}>{t('Not')}</Option>
               </Select>
             </Col>
           </Row>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={t("Status")}
+                placeholder={t('Status')}
                 value={filters.statusValue}
                 className={`w-full bg-white rounded-[8px]`}
+                allowClear
                 onChange={(value) => handleInputChange('statusValue', value)}
               >
-                <Option value="ACTIVE">{t("Active")}</Option>
-                <Option value="BLOCKED">{t("Locked")}</Option>
+                <Option value="ACTIVE">{t('Active')}</Option>
+                <Option value="BLOCKED">{t('Locked')}</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
-                placeholder={t("Place_of_work")}
+                placeholder={t('Place_of_work')}
                 value={filters.placeOfWorkValue}
                 className={`w-full bg-white rounded-[8px]`}
+                allowClear
                 onChange={(value) => handleInputChange('placeOfWorkValue', value)}
               >
-                <Option value="SALON">{t("Salon")}</Option>
-                <Option value="TO_HOME">{t("Yes_to_home")}</Option>
-                <Option value="ON_SITE">{t("On_site")}</Option>
+                <Option value="SALON">{t('Salon')}</Option>
+                <Option value="TO_HOME">{t('Yes_to_home')}</Option>
+                <Option value="ON_SITE">{t('On_site')}</Option>
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Button
                 onClick={resetFilters}
                 className={`bg-[#f0f0f0]`}
-              >{t("Reset")}</Button>
+              >{t('Reset')}</Button>
             </Col>
           </Row>
         </>
