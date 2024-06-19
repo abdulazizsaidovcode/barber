@@ -11,6 +11,7 @@ import DetailsFirstTab from './DeatilsFirstTab';
 import EditModal from '../modals/editModal';
 import { FaArrowLeft } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface SecondTabData {
   bookingDuration: number;
@@ -103,15 +104,16 @@ const TariffDetail: React.FC = () => {
       !/^[',", ]+$/.test(trimmedName)
     );
   };
+  const { t } = useTranslation()
 
   const updateData = async () => {
     if (!isNameValid()) {
-      toast.error('Invalid name input');
+      toast.error(t("Invalid_name_input"));
       return;
     }
 
     if (name.trim() === initialName.trim()) {
-      toast('Name is unchanged', {icon: '⚠️'});
+      toast(t("Name_is_unchanged"), { icon: '⚠️' });
       return;
     }
 
@@ -169,7 +171,7 @@ const TariffDetail: React.FC = () => {
   return (
     <DefaultLayout>
       <Link to={'/settings/tariffs-functionality'}>
-        <FaArrowLeft className='text-2xl my-3'/>
+        <FaArrowLeft className='text-2xl my-3' />
       </Link>
       {name ? <div className='w-full flex justify-between items-center my-2 rounded-lg dark:text-black h-15 px-5 bg-white'>
         <div>
