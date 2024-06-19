@@ -243,6 +243,7 @@
   "date_of_payment": "Date of payment",
   "Subscription_period": "Subscription period",
   "Specialization": "Specialization",
+  "not_configured": "Not configured",
   "Client_Count": "Client Count",
   "Tarif": "Tarif",
   "Loading_order_details": "Loading order details...",

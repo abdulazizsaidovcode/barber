@@ -310,6 +310,7 @@
   "Invalid_name_input": "Nom kiritilmagan",
   "An_error_occurred_while_updating_the_tariff": "Tarifni yangilashda xatolik yuz berdi",
   "Name_is_unchanged": "Ism o'zgarmagan",
+  "not_configured": "Sozlanmagan",
   "Tariff_name_is_not_configured": "Tariff name is not configured",
   "Tariff_updated_successfully": "Tarif muvaffaqiyatli yangilandi",
   "Something_went_wrong_updating_the_tariff": "Tarifni yangilashda nimadir xato ketdi",

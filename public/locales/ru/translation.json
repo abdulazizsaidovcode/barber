@@ -332,6 +332,7 @@
   "Name_is_unchanged": "Имя не изменилось",
   "Tariff_name_is_not_configured": "Название тарифа не настроено",
   "Restrictions": "Ограничения",
+  "not_configured": "Не настроено",
   "Functional": "Функционал",
   "Invalid_name_input": "Неверный ввод имени",
   "Limit_bookings_per_month": "Ограничение бронирований в месяц",
