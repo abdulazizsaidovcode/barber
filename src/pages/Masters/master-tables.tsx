@@ -230,15 +230,18 @@ const MasterTables: React.FC = () => {
         )}
 
       </MasterTable>
-      <Pagination
-        // showSizeChanger={false}
-        responsive={true}
-        defaultCurrent={1}
-        total={totalPage}
-        onChange={onChange}
-        rootClassName={`mt-10 mb-5 ms-5`}
-        itemRender={itemRender}
-      />
+      <div className={`flex justify-start items-center`}>
+        <Pagination
+          // showSizeChanger={false}
+          responsive={true}
+          defaultCurrent={1}
+          total={totalPage}
+          onChange={onChange}
+          rootClassName={`mt-10 mb-5 ms-5`}
+          itemRender={itemRender}
+        />
+        <p className={`px-5 py-1 mt-10 mb-5 ms-5 border border-black dark:border-white rounded dark:text-white`}>{data.length}</p>
+      </div>
 
       {/*modal*/}
       <Modal isOpen={isModal} onClose={openIsModal}>
