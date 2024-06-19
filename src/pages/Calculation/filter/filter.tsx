@@ -2,17 +2,17 @@ import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import React, { useState, useEffect } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import moment from "moment";
 import orderStore from "../../../helpers/state_managment/order/orderStore";
 import { getOrder } from "../../../helpers/api-function/order/orderFunction";
 import { getDistrict } from "../../../helpers/api-function/master/master";
 import { order_download } from "../../../helpers/api";
 import { downloadExcelFile } from "../../../helpers/attachment/file-download";
 import { useTranslation } from "react-i18next";
+import { Moment } from "moment";
 
 const FilterOrder: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const {
     regionData,
     setData,
@@ -26,7 +26,18 @@ const FilterOrder: React.FC = () => {
     page,
   } = orderStore();
 
-  const [filters, setFilters] = useState({
+  interface Filters {
+    fullName: string;
+    regionId: number | null;
+    districtId: number | null;
+    orderDate: string | null;
+    categoryId: string | null;
+    orderStatus: string | null;
+    paymentType: string | null;
+    MASTER_OR_CLIENT: string | null;
+  }
+
+  const [filters, setFilters] = useState<Filters>({
     fullName: "",
     regionId: null,
     districtId: null,
@@ -34,27 +45,32 @@ const FilterOrder: React.FC = () => {
     categoryId: null,
     orderStatus: null,
     paymentType: null,
+    MASTER_OR_CLIENT: null,
   });
-  const [orderDates, setOrderDate] = useState(null);
 
+  const [orderDates, setOrderDate] = useState<Moment | null>(null);
 
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
+
+  const collectFilterValues = (): Filters => {
+    const formattedFilters = { ...filters };
+    if (orderDates) {
+      formattedFilters.orderDate = formatDate(orderDates);
+    }
+    return formattedFilters;
+  };
 
   useEffect(() => {
     const params: any = {
       status: statusO,
       setData: setData,
       setTotalPage: setTotalPage,
-      ...filters,
+      ...collectFilterValues(),
     };
+
     // Remove empty filter values
     Object.keys(params).forEach((key) => {
-      if (
-        params[key] === "" ||
-        params[key] === null ||
-        params[key] === 0 ||
-        params[key] === "0"
-      ) {
+      if (params[key] === "" || params[key] === null) {
         delete params[key];
       }
     });
@@ -62,37 +78,32 @@ const FilterOrder: React.FC = () => {
     // Fetch clients data
     getOrder(params);
     if (filters.regionId) getDistrict(setDistrictData, +filters.regionId);
-  }, [filters]);
+  }, [filters, orderDates]);
 
   useEffect(() => {
-    filters.districtId = null
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      districtId: null,
+    }));
     const params: any = {
       status: statusO,
       setData: setData,
       setTotalPage: setTotalPage,
-      ...filters,
+      ...collectFilterValues(),
     };
+
     // Remove empty filter values
     Object.keys(params).forEach((key) => {
-      if (
-        params[key] === "" ||
-        params[key] === null ||
-        params[key] === 0 ||
-        params[key] === "0"
-      ) {
+      if (params[key] === "" || params[key] === null) {
         delete params[key];
       }
     });
 
     // Fetch clients data
     getOrder(params);
-    
   }, [filters.regionId]);
 
-  
-
-
-  const queryParams: string = [
+  const queryParams = [
     filters.fullName ? `fullName=${filters.fullName}` : "",
     filters.regionId ? `regionId=${filters.regionId}` : null,
     filters.districtId ? `districtId=${filters.districtId}` : null,
@@ -100,37 +111,28 @@ const FilterOrder: React.FC = () => {
     filters.paymentType ? `paymentType=${filters.paymentType}` : null,
     filters.orderStatus ? `orderStatus=${filters.orderStatus}` : null,
     filters.categoryId ? `categoryId=${filters.categoryId}` : null,
+    filters.MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}` : null,
   ]
     .filter(Boolean)
     .join("&");
-  const url: string = `${order_download}?status=${statusO}${queryParams ? "&" : ""
-    }${queryParams}&page=${page}&size=10`;
 
-    const handleInputChange = (key: string, date: any) => {
-      const formattedDate = date ? formatDate(new Date(date)) : null;
+  const url = `${order_download}?status=${statusO}${queryParams ? "&" : ""}${queryParams}&page=${page}&size=10`;
+
+  const handleInputChange = (key: keyof Filters, value: any) => {
+    if (key === "orderDate") {
+      setOrderDate(value);
+    } else {
       setFilters((prevFilters) => ({
         ...prevFilters,
-        [key]: formattedDate,
+        [key]: value,
       }));
-  
-      if (key === "orderDate") {
-        setOrderDate(date);
-        console.log(formattedDate);
-      }
-    };
-  
-    const formatDate = (date: Date | null) => {
-      if (!date) return null;
-  
-      const year = date.getFullYear();
-      const month = padNumber(date.getMonth() + 1);
-      const day = padNumber(date.getDate());
-  
-      return `${year}-${month}-${day}`;
-    };
-    const padNumber = (number: number) => {
-      return number.toString().padStart(2, '0');
-    };
+    }
+  };
+
+  const formatDate = (date: Moment): string | null => {
+    if (!date) return null;
+    return date.format("YYYY-MM-DD");
+  };
 
   const resetFilters = () => {
     setFilters({
@@ -141,8 +143,9 @@ const FilterOrder: React.FC = () => {
       categoryId: null,
       orderStatus: null,
       paymentType: null,
+      MASTER_OR_CLIENT: null,
     });
-    setOrderDate(null)
+    setOrderDate(null);
   };
 
   return (
@@ -165,17 +168,14 @@ const FilterOrder: React.FC = () => {
             value={filters.regionId || null}
             allowClear
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
-            onChange={(value) => {
-              handleInputChange("regionId", value);
-            }}
+            onChange={(value) => handleInputChange("regionId", value)}
           >
-            {regionData.length !== null && (
+            {regionData.length !== null &&
               regionData.map((region) => (
                 <Select.Option key={region.id} value={region.id}>
                   {region.name}
                 </Select.Option>
-              ))
-            )}
+              ))}
           </Select>
         </Col>
         {/* districtId */}
@@ -187,13 +187,12 @@ const FilterOrder: React.FC = () => {
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             onChange={(value) => handleInputChange("districtId", value)}
           >
-            {districtData.length !== null && (
+            {districtData.length !== null &&
               districtData.map((district) => (
                 <Select.Option key={district.id} value={district.id}>
                   {district.name}
                 </Select.Option>
-              ))
-            )}
+              ))}
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} className="mb-4 flex gap-4">
@@ -205,7 +204,15 @@ const FilterOrder: React.FC = () => {
           </Button>
           <Button
             className={`bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white`}
-            onClick={() => downloadExcelFile(url, setIsLoading, t("File_downloaded_successfully"), t("There_was_an_error_fetching_the_data"), page)}
+            onClick={() =>
+              downloadExcelFile(
+                url,
+                setIsLoading,
+                t("File_downloaded_successfully"),
+                t("There_was_an_error_fetching_the_data"),
+                page
+              )
+            }
           >
             {isLoading ? t("Loading") : t("Download")}
           </Button>
@@ -225,39 +232,58 @@ const FilterOrder: React.FC = () => {
           <Col xs={24} sm={12} md={6} className="mb-4">
             <Select
               placeholder="Service Category"
-            allowClear
+              allowClear
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               value={filters.categoryId || null}
               onChange={(value) => handleInputChange("categoryId", value)}
             >
-              {childCategory.length !== null && (
+              {childCategory.length !== null &&
                 childCategory.map((item) => (
                   <Select.Option key={item.id} value={item.id}>
                     {item.name}
                   </Select.Option>
-                ))
-              )}
+                ))}
             </Select>
           </Col>
           {/* orderStatus */}
-          <Col xs={24} sm={12} md={6} className="mb-4">
-            <Select
-              placeholder="Order status"
-            allowClear
-            value={filters.orderStatus || null}
-              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
-              onChange={(value) => handleInputChange("orderStatus", value)}
-            >
-              <Select.Option value="CONFIRMED">{t("detail_type")}</Select.Option>
-              <Select.Option value="WAIT">{t("On_approval")}</Select.Option>
-            </Select>
-          </Col>
+          {statusO === "REJECTED" ? (
+            <Col xs={24} sm={12} md={6} className="mb-4">
+              <Select
+                placeholder="Кто отменил"
+                allowClear
+                value={filters.MASTER_OR_CLIENT}
+                className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+                onChange={(value) => handleInputChange("MASTER_OR_CLIENT", value)}
+              >
+                <Select.Option value="MASTER">
+                  {t("master")}
+                </Select.Option>
+                <Select.Option value="CLIENT">{t("Client")}</Select.Option>
+              </Select>
+            </Col>
+          ) : (
+            <Col xs={24} sm={12} md={6} className="mb-4">
+              <Select
+                placeholder="Order status"
+                allowClear
+                value={filters.orderStatus || null}
+                className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+                onChange={(value) => handleInputChange("orderStatus", value)}
+              >
+                <Select.Option value="CONFIRMED">
+                  {t("detail_type")}
+                </Select.Option>
+                <Select.Option value="WAIT">{t("On_approval")}</Select.Option>
+              </Select>
+            </Col>
+          )}
+
           {/* paymentType */}
           <Col xs={24} sm={12} md={5} className="mb-4">
             <Select
-            placeholder="Payment type"
-            allowClear
-            value={filters.paymentType || null}
+              placeholder="Payment type"
+              allowClear
+              value={filters.paymentType || null}
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               onChange={(value) => handleInputChange("paymentType", value)}
             >
