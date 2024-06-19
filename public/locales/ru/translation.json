@@ -325,6 +325,8 @@
   "Number__albums": "Количество альбомов",
   "Number_of_photos_in_album": "Количество фото в 1 альбоме",
   "Functionality_Category": "Категория функционала",
+  "Tariff_updated_successfully": "Тариф успешно обновлен",
+  "Something_went_wrong_updating_the_tariff": "Что-то пошло не так при обновлении тарифа",
   "Name_is_unchanged": "Имя не изменилось",
   "Invalid_name_input": "Неверный ввод имени",
   "Limit_bookings_per_month": "Ограничение бронирований в месяц",

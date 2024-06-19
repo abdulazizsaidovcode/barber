@@ -306,6 +306,8 @@
   "Functionality_Category": "Funktsional toifa",
   "Invalid_name_input": "Nom kiritilmagan",
   "Name_is_unchanged": "Ism o'zgarmagan",
+  "Tariff_updated_successfully": "Tarif muvaffaqiyatli yangilandi",
+  "Something_went_wrong_updating_the_tariff": "Tarifni yangilashda nimadir xato ketdi",
   "Number_of_photos_in_album": "1 albomdagi fotosuratlar soni",
   "Limit_bookings_per_month": "Oyiga bron qilishni cheklang",
   "Limit_bookings_with_monthly_prepayment": "Oylik oldindan to'langan bronlarni cheklash",

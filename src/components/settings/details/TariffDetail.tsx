@@ -132,13 +132,13 @@ const TariffDetail: React.FC = () => {
     try {
       const res = await axios.put(tarif_put_url, payload, config);
       if (res.data.success) {
-        toast.success('Tariff updated successfully');
+        toast.success(t("Tariff_updated_successfully"));
         setInitialState(newState);
         setInitialSecondTabData(secondTabData);
         setHasChanges(false);
         closeEditModal();
       } else {
-        toast.error('Something went wrong updating the tariff');
+        toast.error(t("Something_went_wrong_updating_the_tariff"));
         setHasChanges(true);
       }
     } catch (error) {

@@ -217,6 +217,8 @@
   "Functionality_Category": "Functionality category",
   "Services": "Services",
   "Photo_process": "Photo process",
+  "Tariff_updated_successfully": "Tariff updated successfully",
+  "Something_went_wrong_updating_the_tariff": "Something went wrong updating the tariff",
   "Extend": "Extend",
   "Help_message_update": "Help message update",
   "Loading": "Loading...",
