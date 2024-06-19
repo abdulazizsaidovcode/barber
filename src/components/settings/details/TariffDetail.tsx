@@ -142,7 +142,7 @@ const TariffDetail: React.FC = () => {
         setHasChanges(true);
       }
     } catch (error) {
-      toast.error('An error occurred while updating the tariff');
+      toast.error(t("An_error_occurred_while_updating_the_tariff"));
       console.error(error);
     }
   };
@@ -152,7 +152,7 @@ const TariffDetail: React.FC = () => {
       key: '1',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          Основной функционал
+          {t("Main_functionality")}
         </span>
       ),
       children: <DetailsFirstTab newState={newState} setNewState={setNewState} />,
