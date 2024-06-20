@@ -7,7 +7,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import FilterOrder from "./filter/filter";
 
 const FilterComponent3: React.FC = () => {
-  const { data, totalPage } = orderStore();
+  const { data, totalPage, setPage, setSize } = orderStore();
   const { t } = useTranslation();
 
   const tableHeaders = [
@@ -24,6 +24,22 @@ const FilterComponent3: React.FC = () => {
     { id: 11, name: t("master") },
     { id: 12, name: "" },
   ];
+
+  const onChange = (page: number, size: number): void => {
+    setPage(page - 1);
+    setSize(size);
+  };
+
+  const itemRender = (_: any, type: string, originalElement: any) => {
+    if (type === "page") {
+      return (
+        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
   return (
     <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
@@ -35,35 +51,107 @@ const FilterComponent3: React.FC = () => {
               <tr key={i} className="dark:text-white">
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
-                    <p>{data ? data.clientFullName ? data.clientFullName : t("No_data") : t("No_data")}</p>
-                    <p>{data ? data.clientPhone ? data.clientPhone : t("No_data") : t("No_data")}</p>
+                    <p>
+                      {data
+                        ? data.clientFullName
+                          ? data.clientFullName
+                          : t("No_data")
+                        : t("No_data")}
+                    </p>
+                    <p>
+                      {data
+                        ? data.clientPhone
+                          ? data.clientPhone
+                          : t("No_data")
+                        : t("No_data")}
+                    </p>
                   </div>
                 </td>
-                <td className="p-5">{data ? data.serviceName ? data.serviceName : t("No_data") : t("No_data")}</td>
-                <td className="p-5">{data ? data.orderDate ? data.orderDate : t("No_data") : t("No_data")}</td>
+                <td className="p-5">
+                  {data
+                    ? data.serviceName
+                      ? data.serviceName
+                      : t("No_data")
+                    : t("No_data")}
+                </td>
+                <td className="p-5">
+                  {data
+                    ? data.orderDate
+                      ? data.orderDate
+                      : t("No_data")
+                    : t("No_data")}
+                </td>
                 <td className="p-5">
                   <div className="bg-blue-500 rounded-md flex items-center gap-2 justify-center p-1">
-                    <p>{data ? data.orderFrom ? data.orderFrom : t("No_data") : t("No_data")}</p>
+                    <p>
+                      {data
+                        ? data.orderFrom
+                          ? data.orderFrom
+                          : t("No_data")
+                        : t("No_data")}
+                    </p>
                     <p>-</p>
-                    <p>{data ? data.orderTo ? data.orderTo : t("No_data") : t("No_data")}</p>
+                    <p>
+                      {data
+                        ? data.orderTo
+                          ? data.orderTo
+                          : t("No_data")
+                        : t("No_data")}
+                    </p>
                   </div>
                 </td>
-                <td className="p-5">{data ? data.price ? data.price : t("No_data") : t("No_data")}</td>
-                <td className="p-5">{data ? data.prePayment ? data.prePayment : t("No_data") : t("No_data")}</td>
-                <td className="p-5">{data ? data.paid ? data.paid : t("No_data") : t("No_data")}</td>
+                <td className="p-5">
+                  {data
+                    ? data.price
+                      ? data.price
+                      : t("No_data")
+                    : t("No_data")}
+                </td>
+                <td className="p-5">
+                  {data
+                    ? data.prePayment
+                      ? data.prePayment
+                      : t("No_data")
+                    : t("No_data")}
+                </td>
+                <td className="p-5">
+                  {data ? (data.paid ? data.paid : t("No_data")) : t("No_data")}
+                </td>
                 <td className="p-5">
                   {data.paymentTypes === null
                     ? t("Not_available")
-                    : data ? data.paymentTypes ? data.paymentTypes : t("No_data") : t("No_data")}
+                    : data
+                    ? data.paymentTypes
+                      ? data.paymentTypes
+                      : t("No_data")
+                    : t("No_data")}
                 </td>
-                <td className="p-5">{data ? data.toPay ? data.toPay : t("No_data") : t("No_data")}</td>
+                <td className="p-5">
+                  {data
+                    ? data.toPay
+                      ? data.toPay
+                      : t("No_data")
+                    : t("No_data")}
+                </td>
                 <td className="p-5">
                   {data && data.orderStatus === "COMPLETED" ? "true" : "false"}
                 </td>
                 <td className="p-5">
                   <div className="flex flex-col justify-start gap-1">
-                    <p>{data ? data.masterFullName ? data.masterFullName : t("No_data") : t("No_data")}</p>
-                    <p>{data ? data.masterPhone ? data.masterPhone : t("No_data") : t("No_data")}</p>
+                    <p>
+                      {data
+                        ? data.masterFullName
+                          ? data.masterFullName
+                          : t("No_data")
+                        : t("No_data")}
+                    </p>
+                    <p>
+                      {data
+                        ? data.masterPhone
+                          ? data.masterPhone
+                          : t("No_data")
+                        : t("No_data")}
+                    </p>
                   </div>
                 </td>
 
@@ -76,8 +164,10 @@ const FilterComponent3: React.FC = () => {
                             {
                               key: "1",
                               label: (
-                                <Link to={`/orders/${data.orderId}`}>{t("Open")}</Link>
-                              )
+                                <Link to={`/orders/${data.orderId}`}>
+                                  {t("Open")}
+                                </Link>
+                              ),
                             },
                           ],
                         }}
@@ -102,18 +192,17 @@ const FilterComponent3: React.FC = () => {
             </tr>
           )}
         </MasterTable>
-        {data.length !== 0 ? (
+        
           <Pagination
-            showSizeChanger={false}
+            // showSizeChanger={false}
             responsive={true}
             defaultCurrent={1}
             total={totalPage}
-            // onChange={onChange}
+            onChange={onChange}
             rootClassName={`mt-10 mb-5 ms-5`}
+            itemRender={itemRender}
           />
-        ) : (
-          ""
-        )}
+        
       </div>
     </div>
   );

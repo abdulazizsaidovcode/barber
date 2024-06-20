@@ -44,9 +44,7 @@ export const getClients = ({
         categoryId ? `categoryId=${categoryId}&` : ""
       }${status ? `status=${status}&` : ""}${
         selfEmployed ? `selfEmployed=${selfEmployed}&` : ""
-      }${workPlace ? `workPlace=${workPlace}&` : ""}
-      ${page ? `page=${page}&` : ""}
-      ${size ? `size=${size}` : ""}`,
+      }${workPlace ? `workPlace=${workPlace}&` : ""}${page ? `page=${page}&` : ""}${size ? `size=${size}` : ""}`,
       config
     )
     .then((res) => {

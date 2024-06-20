@@ -5,10 +5,22 @@ import { useTranslation } from "react-i18next";
 import orderStore from "../../helpers/state_managment/order/orderStore";
 import { CiMenuKebab } from "react-icons/ci";
 import FilterOrder from "./filter/filter";
+import { useEffect } from "react";
+import { getOrder } from "../../helpers/api-function/order/orderFunction";
 
 const FilterComponent: React.FC = () => {
-  const { data, totalPage, setPage, setSize } = orderStore();
+  const { data, totalPage, setPage, setSize, setData, setTotalPage, setStatus } = orderStore();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setStatus("UPCOMING");
+    localStorage.setItem("orderStatus", "UPCOMING")
+    getOrder({
+      status: "UPCOMING",
+      setData: setData,
+      setTotalPage: setTotalPage,
+    });
+  }, [])
 
   const tableHeaders = [
     { id: 1, name: t("order_table_client") },
@@ -119,19 +131,16 @@ const FilterComponent: React.FC = () => {
             </tr>
           )}
         </MasterTable>
-        {data.length !== 0 ? (
-           <Pagination
-           // showSizeChanger={false}
-           responsive={true}
-           defaultCurrent={1}
-           total={totalPage}
-           onChange={onChange}
-           rootClassName={`mt-10 mb-5 ms-5`}
-           itemRender={itemRender}
-         />
-        ) : (
-          ""
-        )}
+        <Pagination
+            // showSizeChanger={false}
+            responsive={true}
+            defaultCurrent={1}
+            total={totalPage}
+            onChange={onChange}
+            rootClassName={`mt-10 mb-5 ms-5`}
+            itemRender={itemRender}
+          />
+        
       </div>
     </div>
   );

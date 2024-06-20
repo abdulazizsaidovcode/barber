@@ -13,17 +13,10 @@ const MainTabs: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation()
 
-  const { setData, setTotalPage, setStatus, setRegionData, setChildCategoy, statusO } = orderStore();
+  const { setData, setTotalPage, setStatus, setRegionData, setChildCategoy, statusO, page, size } = orderStore();
 
   useEffect(() => {
-    setStatus("UPCOMING");
     setData([])
-    localStorage.setItem("orderStatus", "UPCOMING")
-    getOrder({
-      status: "UPCOMING",
-      setData: setData,
-      setTotalPage: setTotalPage,
-    });
     getRegion(setRegionData);
     getChildCategory(setChildCategoy);
   }, []);
@@ -41,6 +34,17 @@ const MainTabs: React.FC = () => {
       setTotalPage: setTotalPage,
     });
   }, [statusO]);
+  
+  useEffect(() => {
+    setData([])
+    getOrder({
+      status: statusO,
+      setData: setData,
+      setTotalPage: setTotalPage,
+      page: page,
+      size:size
+    });
+  }, [page]);
 
   const handleTabChange = (key: string) => {
     switch (key) {
