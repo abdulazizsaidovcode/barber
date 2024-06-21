@@ -41,9 +41,10 @@ export interface Filter {
   regionId?: number;
   districtId?: number;
   orderDate?: string;
-  categoryName?: string;
+  categoryId?: string;
   orderStatus?: string;
   paymentType?: string;
+  MASTER_OR_CLIENT?: string;
   setData: (val: Data[]) => void;
   setTotalPage: (val: number) => void;
 }

@@ -5,21 +5,22 @@ import { config } from "../../token";
 
 export async function getOrder({
     status,
-    page = 0,
-    size = 10,
+    page,
+    size,
     fullName,
     regionId,
     districtId,
     orderDate,
-    categoryName,
+    categoryId,
     orderStatus,
     paymentType,
     setData,
-    setTotalPage
+    setTotalPage,
+    MASTER_OR_CLIENT
 }: Filter) {
     setData([])
     try {
-        const res = await axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryName ? `categoryName=${categoryName}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}page=${page}&size=${size}`, config);
+        const res = await axios.get(`${get_orders_list}?status=${status}&${fullName ? `fullName=${fullName}&` : ''}${regionId ? `regionId=${regionId}&` : ''}${districtId ? `districtId=${districtId}&` : ''}${orderDate ? `orderDate=${orderDate}&` : ''}${categoryId ? `categoryId=${categoryId}&` : ''}${orderStatus ? `orderStatus=${orderStatus}&` : ''}${paymentType ? `paymentType=${paymentType}&` : ''}${MASTER_OR_CLIENT ? `MASTER_OR_CLIENT=${MASTER_OR_CLIENT}&` : ''}${page ? `page=${page}&` : ""}${size ? `size=${size}` : ""}`, config);
         
         if (res.data.success === true) {
             setData(res.data.body.object);

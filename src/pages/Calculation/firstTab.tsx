@@ -5,10 +5,22 @@ import { useTranslation } from "react-i18next";
 import orderStore from "../../helpers/state_managment/order/orderStore";
 import { CiMenuKebab } from "react-icons/ci";
 import FilterOrder from "./filter/filter";
+import { useEffect } from "react";
+import { getOrder } from "../../helpers/api-function/order/orderFunction";
 
 const FilterComponent: React.FC = () => {
-  const { data, totalPage } = orderStore();
+  const { data, totalPage, setPage, setSize, setData, setTotalPage, setStatus } = orderStore();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setStatus("UPCOMING");
+    localStorage.setItem("orderStatus", "UPCOMING")
+    getOrder({
+      status: "UPCOMING",
+      setData: setData,
+      setTotalPage: setTotalPage,
+    });
+  }, [])
 
   const tableHeaders = [
     { id: 1, name: t("order_table_client") },
@@ -24,6 +36,23 @@ const FilterComponent: React.FC = () => {
     { id: 11, name: t("master") },
     { id: 12, name: "" },
   ];
+
+  const onChange = (page: number, size: number): void => {
+    setPage(page - 1);
+    setSize(size);
+  };
+  
+  const itemRender = (_: any, type: string, originalElement: any) => {
+    if (type === 'page') {
+      return (
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+          {originalElement}
+        </a>
+      );
+    }
+    return originalElement;
+  };
   return (
     <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
@@ -102,18 +131,16 @@ const FilterComponent: React.FC = () => {
             </tr>
           )}
         </MasterTable>
-        {data.length !== 0 ? (
-          <Pagination
-            showSizeChanger={false}
+        <Pagination
+            // showSizeChanger={false}
             responsive={true}
             defaultCurrent={1}
             total={totalPage}
-            // onChange={onChange}
+            onChange={onChange}
             rootClassName={`mt-10 mb-5 ms-5`}
+            itemRender={itemRender}
           />
-        ) : (
-          ""
-        )}
+        
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Button, Col, DatePicker, Input, Row, Select } from "antd";
 import { IoSearchOutline } from "react-icons/io5";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import moment from "moment";
 import clientFilterStore from "../../../helpers/state_managment/client/clientFilterStore.tsx";
 import { getClients } from "../../../helpers/api-function/client/client.tsx";
 import { getDistrict } from "../../../helpers/api-function/master/master.tsx";
@@ -86,7 +85,7 @@ const Filters: React.FC = () => {
   };
 
   const handleDateChange = (key: string, date: any) => {
-    const formattedDate = date ? moment(date).format("YYYY-MM-DD") : null;
+    const formattedDate = date ? formatDate(new Date(date)) : null;
     setFilters((prevFilters) => ({
       ...prevFilters,
       [key]: formattedDate,
@@ -97,6 +96,19 @@ const Filters: React.FC = () => {
     } else if (key === "endDate") {
       setEndDate(date);
     }
+  };
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return null;
+
+    const year = date.getFullYear();
+    const month = padNumber(date.getMonth() + 1);
+    const day = padNumber(date.getDate());
+
+    return `${year}-${month}-${day}`;
+  };
+  const padNumber = (number: number) => {
+    return number.toString().padStart(2, '0');
   };
 
   const queryParams: string = [
@@ -239,7 +251,10 @@ const Filters: React.FC = () => {
                 placeholder={t("Select_start_date")}
                 style={styles.filterInput}
                 value={startDate}
-                onChange={(date) => handleDateChange("startDate", date)}
+                onChange={(date) => {
+                  handleDateChange("startDate", date)
+                  
+                }}
               />
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>

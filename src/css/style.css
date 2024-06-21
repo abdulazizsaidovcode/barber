@@ -264,7 +264,9 @@ span.flatpickr-weekday,
   white-space: nowrap;
 }
 
-.fc-event {
-  @apply text-sm; /* Event text size */
+.fc-daygrid .fc-event {
+  @apply text-sm mx-auto; /* Event text size */
   height: auto; /* Adjust event height */
+  width: 80%;
+ 
 }
