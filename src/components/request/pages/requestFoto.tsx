@@ -79,7 +79,7 @@ const RequestFoto: React.FC = () => {
             </div>
           ) : (
             <div>
-              <div className='flex gap-3'>
+              <div className='flex gap-3 flex-wrap'>
                 {data.map((item, index) => (
                   <FotoCard
                     key={index}
