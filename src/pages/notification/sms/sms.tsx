@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ChatEmptyState from '../components/emptychat';
 import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';
@@ -20,16 +20,17 @@ import { useTranslation } from 'react-i18next';
 const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage, setPhoto, markMessageAsRead }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
   const { t } = useTranslation();
-  const scrolRef = useRef<any>();
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const [prevChatsLength, setPrevChatsLength] = useState<number>(chat.length);
 
   const [selreplyId, setSelreplyId] = useState<string>('');
-  const [seleditId, setseleditId] = useState<string>('');
+  const [seleditId, setseleditId] = useState<string | null>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [attachmentIds, setAttachmentIds] = useState<any>(null);
   const [photo, setPhotos] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
   const checkReadElement = useRef<HTMLDivElement>(null);
   const [unReadMessages, setUnReadMessages] = useState<any[]>([]);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -38,7 +39,6 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
     fileInputRef.current?.click();
   };
 
-  // Oqilmagan habarlarni olish
   const getUnreadMessages = () => {
     const unread = chats.filter((item) => !item.read);
     setUnReadMessages(unread);
@@ -52,11 +52,19 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
     setChats(chat);
   }, [chat]);
 
+  const scrollToBottom = (behavior: ScrollBehavior) => {
+    bottomRef.current?.scrollIntoView({ behavior });
+  };
+
+
+  // setTimeout(() => {
+  //   ;
+  // }, 1000);
+  useEffect(() => { scrollToBottom('auto') }, [chats])
+
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [chats]);
+    setPrevChatsLength(chats.length);
+  }, [chats.length]);
 
   const handleDelete = () => {
     deleteMessage();
@@ -106,6 +114,7 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
+      handleSendMessage();
     }
   };
 
@@ -162,14 +171,8 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
     sendMessage();
     setPhotoPreview(null);
     setPhoto(null);
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
+    scrollToBottom('smooth');
   };
-
-  useEffect(() => {
-    scrolRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chats]);
 
   return (
     <div className='h-full relative pl-4'>
@@ -180,7 +183,6 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
               {chats.length > 0 ? (
                 chats.map((item, index) => (
                   <div
-                    ref={scrolRef}
                     key={index}
                     id={`message-${item.id}`}
                     className={`py-2 ${item.senderId === senderId ? 'flex items-end justify-end flex-col' : 'justify-start'}`}
@@ -194,8 +196,7 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                       <div className='font-medium'>{item.senderId === senderId ? item.senderName : item.receiverName}</div>
                     </div>
                     <div
-                      className={`p-2 rounded-md flex flex-col  ${item.replayDto ? 'dark:bg-[#9c093543] bg-[#85828343]' : ''} ${item.senderId === senderId ? 'items-end ml-20' : 'items-start mr-20'
-                        }`}
+                      className={`p-2 rounded-md flex flex-col ${item.replayDto ? 'dark:bg-[#9c093543] bg-[#85828343]' : ''} ${item.senderId === senderId ? 'items-end ml-20' : 'items-start mr-20'}`}
                     >
                       {item.replayDto && (
                         <div
@@ -205,8 +206,7 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                             <BiReply style={{ fontSize: 25 }} />
                           </div>
                           <div
-                            className={`bg-gray text-black py-1 px-3 mb-1 rounded-md  dark:border-[#9c0935] ${item.senderId === senderId ? 'border-r-2' : 'border-l-2'
-                              }`}
+                            className={`bg-gray text-black py-1 px-3 mb-1 rounded-md dark:border-[#9c0935] ${item.senderId === senderId ? 'border-r-2' : 'border-l-2'}`}
                           >
                             {item.replayDto.content ? item.replayDto.content : <img src={`${getFileId + item.attachmentIds[0]}`} alt='' className='w-10 h-10' />}
                           </div>
@@ -226,11 +226,11 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                       )}
                       {item.content && (
                         <p
-                          className={`flex items-start gap-5 ${item.senderId === senderId ? 'bg-white rounded-lg py-2 px-3 shadow max-w-sm w-max' : 'bg-lime-500 text-white rounded-lg py-2 px-3 shadow mb-2 max-w-max flex-col-reverse'}`}
+                          className={`flex items-start gap-5 ${item.senderId === senderId ? 'bg-white rounded-lg py-2 px-3 shadow max-w-sm w-max' : 'bg-lime-500 text-white rounded-lg py-2 px-3 shadow mb-2 max-w-max flex-row-reverse'}`}
                         >
                           <p className='w-[95%]'>{item.content ? item.content : '(null)'}</p>
                           <Dropdown overlay={<Menu items={items(item.id)} />} placement='bottomLeft' arrow>
-                            <PiDotsThreeOutlineVertical style={{ fontSize: 20, width: "20px" }} />
+                            <PiDotsThreeOutlineVertical style={{ fontSize: 20, width: '20px' }} />
                           </Dropdown>
                         </p>
                       )}
@@ -241,6 +241,7 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
               ) : (
                 <ChatEmptyState />
               )}
+              <div ref={bottomRef} />
             </div>
           </div>
           {selreplyId &&
@@ -262,9 +263,7 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
               </div>
             ))}
 
-          <div id='checked' ref={checkReadElement} className='bg-red-400 rounded-full absolute bottom-9 p-2'></div>
           <div className='px-4 py-2 border relative'>
-            {/*  oqilmagan habarlarni sonini chiqorish */}
             {isAtBottom && unReadMessages.length > 0 && (
               <button className='flex justify-center h-max flex-col items-center bottom-5 left-[90%] absolute -top-13'>
                 <div className='relative'>
@@ -288,7 +287,17 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                 onKeyDown={handleKeyDown}
                 autoSize
               />
+
               <div className='flex justify-end items-center text-2xl w-1/2 gap-5'>
+                {seleditId &&
+                  <button
+                    onClick={() => {
+                      setseleditId(null)
+                      content = ''
+                    }}>
+                    <GiCancel className='text-xl' />
+                  </button>
+                }
                 <div className='flex items-center'>
                   <input type='file' onChange={setAttachment} className='hidden' ref={fileInputRef} />
                   <IoMdAttach className='cursor-pointer text-3xl' onClick={handleClick} />
@@ -306,12 +315,16 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
                     </div>
                   ) : null}
                 </div>
-                {(content.trim() || photoPreview) && !selreplyId && !seleditId && <button onClick={handleSendMessage}><IoSend /></button>}
+                {(content.trim() || photoPreview) && !selreplyId && !seleditId && <button onClick={() => {
+                  handleSendMessage()
+                  scrollToBottom('smooth')
+                }}><IoSend /></button>}
                 {(content.trim() || photoPreview) && selreplyId && <button onClick={() => {
                   reply();
                   setSelreplyId('');
                   setPhotoPreview(null);
                   setPhoto(null);
+                  scrollToBottom('smooth')
                 }}><BiReplyAll /></button>}
                 {(content.trim() || photoPreview) && seleditId && <button onClick={() => {
                   editMessage();

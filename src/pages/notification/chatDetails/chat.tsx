@@ -198,7 +198,7 @@ const Chatdetail: React.FC = () => {
     if (chatId) {
       if (stompClient && stompClient.connected) {
         setTimeout(() => {
-          stompClient.send('/app/deleteMessage', {}, JSON.stringify(chatId));
+          stompClient.send('/app/deleteMessage', {}, [chatId]);
         }, 300)
         setTimeout(() => {
           fetchMessages(adminId, recipientId);
@@ -296,6 +296,7 @@ const Chatdetail: React.FC = () => {
         <div className="w-full relative ">
           {recipientId ?
             <Sms
+              recipientId={recipientId}
               editId={setEditId}
               replyId={setreplyId}
               deleteId={setChatId}

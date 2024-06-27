@@ -16,6 +16,7 @@ export interface ChatusersListType {
 }
 
 export interface ChatSentSmsType {
+  recipientId: string
   editId: any,
   replyId: any,
   deleteId: any,
