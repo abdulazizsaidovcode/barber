@@ -207,7 +207,7 @@ const ServiceCategories = () => {
                     <input
                         className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
                         type="text"
-                        placeholder={t("Health_Procedures")}
+                        // placeholder={t("Health_Procedures")}
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
                     <div className="flex mt-10 justify-center">

@@ -153,12 +153,12 @@ const Filters: React.FC = () => {
       {showExtraFilters && (
         <>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
-              <Space direction="vertical" size={12}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px] w-full`}>
+              <Space direction="vertical" size={14}>
                 <RangePicker
                   placeholder={[t('Select_start_date'), t('Select_end_date')]}
                   value={filters.registrationPeriodValue}
-                  // className={`w-full bg-white rounded-[8px]} s.filterInput}
+                  className={`w-full`}
                   onChange={(date) => handleInputChange('registrationPeriodValue', date)}
                 />
               </Space>

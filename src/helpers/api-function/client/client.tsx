@@ -50,7 +50,7 @@ export const getClients = ({
     .then((res) => {
       if (res.data.success === true) {
         setData(res.data.body.object);
-        setTotalPage(res.data.body.totalPage);
+        setTotalPage(res.data.body.totalElements);
       } else setData([]);
     })
     .catch(() => setData([]));
