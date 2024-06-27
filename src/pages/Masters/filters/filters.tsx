@@ -53,8 +53,10 @@ const Filters: React.FC = () => {
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
       workPlace: filters.placeOfWorkValue ? filters.placeOfWorkValue : '',
+      page: validateObject(filters) ? page : 0,
+      size: validateObject(filters) ? size : 0,
       setData,
-      setTotalPage
+      setTotalPage,
     });
     if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue);
   }, [filters]);
@@ -93,6 +95,15 @@ const Filters: React.FC = () => {
 
       return `${year}-${month}-${date}`;
     }
+  }
+
+  function validateObject(obj: any) {
+    for (let key in obj) {
+      if (obj[key]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   return (

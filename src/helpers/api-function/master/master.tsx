@@ -71,6 +71,7 @@ export const getMasters = ({
       } else setData([]);
     })
     .catch((err) => {
+      setTotalPage(0)
       if (err.response) {
         if (err.response.status === 404) console.error('error');
         else
