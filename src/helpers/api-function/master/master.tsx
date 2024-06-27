@@ -53,10 +53,11 @@ export const getMasters = ({
     .then(res => {
       if (res.data.success === true) {
         setData(res.data.body.object);
-        setTotalPage(res.data.body.totalPage);
+        setTotalPage(res.data.body.totalElements);
       } else setData([]);
     })
     .catch((err) => {
+      setTotalPage(0)
       if (err.response) {
         if (err.response.status === 404) console.error('error');
         else console.error(`Error: ${err.response.status} - ${err.response.statusText}`);
