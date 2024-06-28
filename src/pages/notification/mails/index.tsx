@@ -128,14 +128,13 @@ const ChatTable: React.FC = () => {
                     <div className='mb-5 flex gap-2 sm:flex-row flex-col'>
                         <Input
                             className='w-full md:w-40 lg:w-40 xl:w-40  dark:bg-gray-800 dark:text-black'
-                            defaultValue='Тема'
                             style={{ width: 163 }}
                             onChange={handleChangeTema}
                             suffix={<SearchOutlined />}
                         />
                         <DatePicker
                             style={{ width: 163 }}
-                            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 dark:text-white'
+                            className='h-8 w-full md:w-50 lg:w-50 xl:w-50 dark:bg-gray-800 '
                             placeholder={t("Date")}
                             onChange={handleChange}
                         />

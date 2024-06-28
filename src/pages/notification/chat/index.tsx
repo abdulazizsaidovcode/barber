@@ -1,4 +1,4 @@
-import Chatdetail from '../chatDetails/chat';
+import Chatdetail from './chatDetails/chat.tsx';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import ChatTable from '../mails';

@@ -1,23 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import ChatEmptyState from '../components/emptychat';
+import ChatEmptyState from '../../components/emptychat';
 import { IoMdAttach } from 'react-icons/io';
 import { FaCheck } from 'react-icons/fa6';
 import { IoSend } from 'react-icons/io5';
-import Notselected from '../components/notselected';
-import { ChatSentSmsType, ChatSentSmstList } from '../../../types/chat';
-import { getFileId } from '../../../helpers/api';
+import Notselected from '../../components/notselected';
+import { ChatSentSmsType, ChatSentSmstList } from '../../../../types/chat';
+import { getFileId } from '../../../../helpers/api';
 import { Dropdown, Menu } from 'antd';
 import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import { BiReply, BiReplyAll } from 'react-icons/bi';
 import { ImCancelCircle } from 'react-icons/im';
 import { ArrowDownOutlined, EditFilled } from '@ant-design/icons';
-import Modal from '../../../components/modals/modal';
-import { Buttons } from '../../../components/buttons';
+import Modal from '../../../../components/modals/modal';
+import { Buttons } from '../../../../components/buttons';
 import TextArea from 'antd/es/input/TextArea';
 import { GiCancel } from 'react-icons/gi';
 import { useTranslation } from 'react-i18next';
 
-const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage, setPhoto, markMessageAsRead }: ChatSentSmsType) => {
+const Sms = ({ recipientId, editId, replyId, deleteId, senderId, sendMessage, chat, setContent, content, reply, deleteMessage, editMessage, setPhoto, markMessageAsRead }: ChatSentSmsType) => {
   const [chats, setChats] = useState<ChatSentSmstList[]>(chat);
   const { t } = useTranslation();
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +31,6 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
   const [photo, setPhotos] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const checkReadElement = useRef<HTMLDivElement>(null);
   const [unReadMessages, setUnReadMessages] = useState<any[]>([]);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
@@ -45,12 +44,25 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
   };
 
   useEffect(() => {
+    isRead()
+  }, [recipientId]);
+
+  useEffect(() => {
     getUnreadMessages();
+
   }, [chats]);
 
   useEffect(() => {
     setChats(chat);
   }, [chat]);
+
+  function isRead() {
+
+    let arr = chat.filter((item) => item.read === false);
+    markMessageAsRead(arr)
+    console.log(arr);
+
+  }
 
   const scrollToBottom = (behavior: ScrollBehavior) => {
     bottomRef.current?.scrollIntoView({ behavior });
@@ -130,28 +142,12 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
     }
   };
 
-  const checkRead = () => {
-    if (checkReadElement.current) {
-      chats.forEach((item) => {
-        const messageElement = document.getElementById(`message-${item.id}`);
-        if (messageElement) {
-          const elementTop = messageElement.getBoundingClientRect().top;
-          const windowTop = window.scrollY;
-          const distanceFromTop = elementTop + windowTop;
 
-          if (distanceFromTop < checkReadElement.current.getBoundingClientRect().top && item.isRead === false) {
-            markMessageAsRead(item.id);
-          }
-        }
-      });
-    }
-  };
 
   const handleScroll = () => {
     if (chatContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
       setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 10);
-      checkRead();
     }
   };
 
@@ -265,7 +261,10 @@ const Sms = ({ editId, replyId, deleteId, senderId, sendMessage, chat, setConten
 
           <div className='px-4 py-2 border relative'>
             {isAtBottom && unReadMessages.length > 0 && (
-              <button className='flex justify-center h-max flex-col items-center bottom-5 left-[90%] absolute -top-13'>
+              <button
+                onClick={() => {
+                  isRead()
+                }} className='flex justify-center h-max flex-col items-center bottom-5 left-[90%] absolute -top-13'>
                 <div className='relative'>
                   {unReadMessages.length !== 0 && (
                     <span className='absolute -top-2 left-2 w-4 h-4 flex items-center justify-center bg-gray text-black rounded-full '>

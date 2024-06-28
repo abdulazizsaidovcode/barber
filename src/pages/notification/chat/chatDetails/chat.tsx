@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
 import ChatusersList from '../users/user.tsx';
 import { Input, Select } from 'antd';
-import { Buttons } from '../../../components/buttons';
+import { Buttons } from '../../../../components/buttons/index.tsx';
 import { IoSearchOutline } from 'react-icons/io5';
-import { chat_url, messages_url, sockjs_url } from '../../../helpers/api';
+import { chat_url, messages_url, sockjs_url } from '../../../../helpers/api.tsx';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import NewChat from '../newChat';
-import Sms from '../sms/sms';
-import Notselected from '../components/notselected';
-import chatStore from '../../../helpers/state_managment/chat/chatStore.tsx';
+import NewChat from '../newChat/index.tsx';
+import Sms from '../sms/sms.tsx';
+import Notselected from '../../components/notselected.tsx';
+import chatStore from '../../../../helpers/state_managment/chat/chatStore.tsx';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { config } from '../../../helpers/token.tsx';
-import { GetChatList } from '../../../helpers/api-function/chat/chat.tsx';
+import { config } from '../../../../helpers/token.tsx';
+import { GetChatList } from '../../../../helpers/api-function/chat/chat.tsx';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { uploadFile } from '../../../helpers/attachment/uploadFile.tsx';
+import { uploadFile } from '../../../../helpers/attachment/uploadFile.tsx';
 
 const Chatdetail: React.FC = () => {
   const { role, chatData, setChatData } = chatStore();
@@ -156,9 +156,21 @@ const Chatdetail: React.FC = () => {
   };
 
   function readMeessage(id: any) {
+    let list: any = {
+      ids: []
+    }
+    if (id && stompClient.connected) {
+      id.map((item: any) => {
+        list.ids.push(item.id)
+      })
+    }
     if (stompClient && stompClient.connected) {
-      stompClient.send('/app/isRead', {}, JSON.stringify(id));
+      stompClient.send('/app/isRead', {}, JSON.stringify(list));
       fetchMessages(adminId, recipientId);
+      GetChatList({
+        status: role,
+        setData: setChatData
+      })
     }
   }
 
@@ -195,10 +207,15 @@ const Chatdetail: React.FC = () => {
   }
 
   function deleteMessage() {
+    let list: any = {
+      ids: [chatId]
+    }
+    console.log(list);
+    
     if (chatId) {
       if (stompClient && stompClient.connected) {
         setTimeout(() => {
-          stompClient.send('/app/deleteMessage', {}, [chatId]);
+          stompClient.send('/app/deleteMessage/list', {}, JSON.stringify(list));
         }, 300)
         setTimeout(() => {
           fetchMessages(adminId, recipientId);

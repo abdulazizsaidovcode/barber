@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import admin from '../../../images/user/admin-panel.png';
+import admin from '../../../../images/user/admin-panel.png';
 import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
-import { ChatusersListType } from '../../../types/chat';
+import { ChatusersListType } from '../../../../types/chat';
 import { t } from 'i18next';
 
 const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
