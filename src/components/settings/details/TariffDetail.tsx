@@ -10,7 +10,7 @@ import { MdEdit } from 'react-icons/md';
 import DetailsFirstTab from './DeatilsFirstTab';
 import EditModal from '../modals/editModal';
 import { FaArrowLeft } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface SecondTabData {
@@ -41,17 +41,17 @@ const TariffDetail: React.FC = () => {
   const [initialSecondTabData, setInitialSecondTabData] = useState<SecondTabData>(secondTabData);
   const [hasChanges, setHasChanges] = useState(false);
 
-  const id = window.location.pathname.substring(17);
+  const { id } = useParams()
 
   useEffect(() => {
-    fetchData(id);
+    fetchData();
   }, [id]);
 
   useEffect(() => {
     checkForChanges();
   }, [newState, secondTabData]);
 
-  const fetchData = async (id: string) => {
+  const fetchData = async () => {
     try {
       const res = await axios.get(`${tarif_detail}/${id}`, config);
       const funcReqList = res.data.body.funcReqList;

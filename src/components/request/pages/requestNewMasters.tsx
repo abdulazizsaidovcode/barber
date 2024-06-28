@@ -263,7 +263,7 @@ const RequestNewMasters: React.FC = () => {
       <Modal isOpen={reasonIsOpen} onClose={closeReasonModal}>
         <div className="w-[700px] h-[320px]">
           <div>
-            <p className="font-bold text-xl text-[#000] dark:text:white">
+            <p className="font-bold text-xl text-[#000] dark:text-white">
               {t("Reason_for_rejection")}:
             </p>
           </div>
@@ -276,7 +276,7 @@ const RequestNewMasters: React.FC = () => {
               onChange={(e) => setRejectionMessage(e.target.value)}
             />
           </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-end mt-4">
             <button
               onClick={handleReject}
               className="bg-[#2c2c2c] dark:bg-danger text-white py-2 px-10 rounded-lg"
