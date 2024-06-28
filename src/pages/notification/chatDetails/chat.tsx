@@ -156,8 +156,16 @@ const Chatdetail: React.FC = () => {
   };
 
   function readMeessage(id: any) {
+    let ids: any = []
+    if (id && stompClient.connected) {
+      id.map((item: any) => {
+        ids.push(item.id)
+      })
+    }
+    console.log(ids);
+    
     if (stompClient && stompClient.connected) {
-      stompClient.send('/app/isRead', {}, JSON.stringify(id));
+      stompClient.send('/app/isRead', {}, ids);
       fetchMessages(adminId, recipientId);
     }
   }
