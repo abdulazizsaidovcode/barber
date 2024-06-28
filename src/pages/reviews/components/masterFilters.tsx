@@ -85,10 +85,12 @@ const ReviewMastersFilters: React.FC = () => {
         value={masterFilters.firstNameOrLastName}
         prefix={<IoSearchOutline />}
         className="w-55"
+        allowClear
         onChange={(e) => handleInputChange('firstNameOrLastName', e.target.value)}
       />
       <Select
         placeholder={t('Region')}
+        allowClear
         className="w-55"
         value={masterFilters.regionId}
         onChange={(e) => handleInputChange('regionId', e)}
@@ -99,6 +101,7 @@ const ReviewMastersFilters: React.FC = () => {
       </Select>
       <Select
         placeholder={t('City')}
+        allowClear
         className="w-55"
         value={masterFilters.districtId}
         onChange={(e) => handleInputChange('districtId', e)}
@@ -115,6 +118,7 @@ const ReviewMastersFilters: React.FC = () => {
         <div className="flex flex-wrap gap-5 mt-5">
           <Select
             placeholder={t('Rating')}
+            allowClear
             className="w-55"
             value={masterFilters.combinedRating}
             onChange={handleCombinedRatingChange}
@@ -128,11 +132,13 @@ const ReviewMastersFilters: React.FC = () => {
           <DatePicker
             className="w-55"
             placeholder={t('Date')}
+            allowClear
             value={masterFilters.date}
             onChange={e => handleInputChange('date', e)}
           />
           <Space direction="vertical" size={12}>
             <RangePicker
+              allowClear
               placeholder={[t('Select_start_date'), t('Select_end_date')]}
               value={masterFilters.startDate}
               className='w-90'
