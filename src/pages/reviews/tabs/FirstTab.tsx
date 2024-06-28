@@ -65,7 +65,7 @@ const FirstTab: React.FC = () => {
       </div>
       <div className="flex md:flex-row gap-3 flex-col reviews-shadow mt-5 items-center bg-white w-full h-max p-5 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
         <div className="md:w-2/6 w-full">
-          <p className="md:text-[17px]">{mainData.allAverageFeedback.toFixed(1)} ({mainData.allReviewsCount} отзывов)</p>
+          <p className="md:text-[17px]">{mainData.allAverageFeedback.toFixed(1)} ({mainData.allReviewsCount} {t('reviews')})</p>
           <p className="md:text-[17px]">{t("master")} - {mainData.masterAverageFeedback.toFixed(1)} ({mainData.masterReviewsCount})</p>
           <p className="md:text-[17px]">{t("Clients")} - {mainData.clientAverageFeedback.toFixed(1)} ({mainData.clientReviewsCount})</p>
         </div>

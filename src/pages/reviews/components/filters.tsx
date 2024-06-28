@@ -69,9 +69,11 @@ const ReviewFilters: React.FC = () => {
         value={filters.firstNameOrLastName}
         prefix={<IoSearchOutline />}
         className="w-55"
+        allowClear
         onChange={(e) => handleInputChange('firstNameOrLastName', e.target.value)}
       />
       <Select
+        allowClear
         placeholder={t('Region')}
         className="w-55"
         value={filters.regionId}
@@ -82,6 +84,7 @@ const ReviewFilters: React.FC = () => {
         ))}
       </Select>
       <Select
+        allowClear
         placeholder={t('City')}
         className="w-55"
         value={filters.districtId}
@@ -94,6 +97,7 @@ const ReviewFilters: React.FC = () => {
       <Select
         placeholder={t('Gender')}
         className="w-55"
+        allowClear
         value={filters.GENDER}
         onChange={e => handleInputChange('GENDER', e)}
       >
@@ -111,6 +115,7 @@ const ReviewFilters: React.FC = () => {
             className="w-55"
             value={filters.rating}
             onChange={e => handleInputChange('rating', e)}
+            allowClear
           >
             <Option value={1}>1</Option>
             <Option value={2}>2</Option>
@@ -123,12 +128,14 @@ const ReviewFilters: React.FC = () => {
             className="w-55"
             value={filters.MASTER_OR_CLIENT}
             onChange={e => handleInputChange('MASTER_OR_CLIENT', e)}
+            allowClear
           >
             <Option value={`MASTER`}>{t("master")}</Option>
             <Option value={`CLIENT`}>{t("Client")}</Option>
           </Select>
           <DatePicker
             className="w-55"
+            allowClear
             placeholder={t('Date')}
             value={filters.date}
             onChange={e => handleInputChange('date', e)}
@@ -136,6 +143,7 @@ const ReviewFilters: React.FC = () => {
           <Space direction="vertical" size={12}>
             <RangePicker
               placeholder={[t('Select_start_date'), t('Select_end_date')]}
+              allowClear
               value={filters.startDate}
               onChange={(date) => handleInputChange('startDate', date)}
             />
