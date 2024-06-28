@@ -65,7 +65,7 @@ const RequestProcedures: React.FC = () => {
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
         <div className="w-full bg-[#cccccc] dark:bg-white h-12 flex justify-center items-center px-5">
           <div className="flex gap-3">
-            <p className="dark:text-[#000]">{t("Specializations")}</p>
+            <p className="dark:text-[#000]">{t("Procedures")}</p>
             <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
               <p className="text-sm">{newProcedures.length + changedProcedures.length}</p>
             </div>
