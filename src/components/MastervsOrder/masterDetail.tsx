@@ -29,7 +29,6 @@ interface Props {
 
 const MasterCardInfo: React.FC<Props> = ({
   OrderData,
-  masterFeedback,
   OrderEnterTime,
   OrderEndTime,
   price,
@@ -99,9 +98,7 @@ const MasterCardInfo: React.FC<Props> = ({
           </div>
         </Skeleton>
       </div>
-      <div>
-        
-      </div>
+      <div></div>
       <Skeleton loading={isLoading} active>
         <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
           <p className="mb-2">
@@ -128,9 +125,7 @@ const MasterCardInfo: React.FC<Props> = ({
           <p className="mb-2">
             <strong>Уведомление о записи:</strong> {RecNotification}
           </p>
-          <p className="mb-2  ">
-            <strong>Master Feedback : </strong> {masterFeedback}
-          </p>
+
           <p className="mt-4 text-xl text-orange-600">
             <strong>К оплате:</strong> {ToPay}
           </p>

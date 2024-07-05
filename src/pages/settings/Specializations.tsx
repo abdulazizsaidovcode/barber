@@ -84,7 +84,7 @@ const Specializations: React.FC = () => {
   const addChildData = async (fatherId: string) => {
     const newCategoryName = newCategoryNameMap[fatherId];
 
-    if (!newCategoryName.trim() || !/[a-zA-Z0-9]/.test(newCategoryName)) {
+    if (!newCategoryName.trim() || !/[^a-zA-Zа-яА-Я0-9]/.test(newCategoryName)) {
       toast(t("Please_enter_valid_category"), { icon: '⚠️' });
       return;
     }

@@ -1,0 +1,7 @@
+.ant-pagination-item-active {
+  border: 1px solid #fff !important;
+}
+
+.ant-pagination-item a {
+  color: #fff !important;
+}

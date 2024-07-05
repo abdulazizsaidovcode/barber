@@ -10,7 +10,8 @@ import { MdEdit } from 'react-icons/md';
 import DetailsFirstTab from './DeatilsFirstTab';
 import EditModal from '../modals/editModal';
 import { FaArrowLeft } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface SecondTabData {
   bookingDuration: number;
@@ -40,17 +41,17 @@ const TariffDetail: React.FC = () => {
   const [initialSecondTabData, setInitialSecondTabData] = useState<SecondTabData>(secondTabData);
   const [hasChanges, setHasChanges] = useState(false);
 
-  const id = window.location.pathname.substring(17);
+  const { id } = useParams()
 
   useEffect(() => {
-    fetchData(id);
+    fetchData();
   }, [id]);
 
   useEffect(() => {
     checkForChanges();
   }, [newState, secondTabData]);
 
-  const fetchData = async (id: string) => {
+  const fetchData = async () => {
     try {
       const res = await axios.get(`${tarif_detail}/${id}`, config);
       const funcReqList = res.data.body.funcReqList;
@@ -100,14 +101,19 @@ const TariffDetail: React.FC = () => {
     const trimmedName = name.trim();
     return (
       trimmedName.length > 0 &&
-      trimmedName !== initialName &&
       !/^[',", ]+$/.test(trimmedName)
     );
   };
+  const { t } = useTranslation()
 
   const updateData = async () => {
     if (!isNameValid()) {
-      toast.error('Invalid name input');
+      toast.error(t("Invalid_name_input"));
+      return;
+    }
+
+    if (name.trim() === initialName.trim()) {
+      toast(t("Name_is_unchanged"), { icon: '⚠️' });
       return;
     }
 
@@ -126,17 +132,17 @@ const TariffDetail: React.FC = () => {
     try {
       const res = await axios.put(tarif_put_url, payload, config);
       if (res.data.success) {
-        toast.success('Tariff updated successfully');
+        toast.success(t("Tariff_updated_successfully"));
         setInitialState(newState);
         setInitialSecondTabData(secondTabData);
         setHasChanges(false);
         closeEditModal();
       } else {
-        toast.error('Something went wrong updating the tariff');
+        toast.error(t("Something_went_wrong_updating_the_tariff"));
         setHasChanges(true);
       }
     } catch (error) {
-      toast.error('An error occurred while updating the tariff');
+      toast.error(t("An_error_occurred_while_updating_the_tariff"));
       console.error(error);
     }
   };
@@ -146,7 +152,7 @@ const TariffDetail: React.FC = () => {
       key: '1',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          Основной функционал
+          {t("Main_functionality")}
         </span>
       ),
       children: <DetailsFirstTab newState={newState} setNewState={setNewState} />,
@@ -155,7 +161,7 @@ const TariffDetail: React.FC = () => {
       key: '2',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          Ограничения
+          {t("Restrictions")}
         </span>
       ),
       children: <DetailsSecondTab onSave={updateData} data={secondTabData} setData={setSecondTabData} hasChanges={hasChanges} />,
@@ -165,7 +171,7 @@ const TariffDetail: React.FC = () => {
   return (
     <DefaultLayout>
       <Link to={'/settings/tariffs-functionality'}>
-        <FaArrowLeft className='text-2xl my-3'/>
+        <FaArrowLeft className='text-2xl my-3' />
       </Link>
       {name ? <div className='w-full flex justify-between items-center my-2 rounded-lg dark:text-black h-15 px-5 bg-white'>
         <div>
@@ -181,7 +187,7 @@ const TariffDetail: React.FC = () => {
         </div>
       </div> :
         <div className='h-15 bg-white flex items-center px-5 rounded-lg my-2'>
-          <p>Название тарифа не настроено</p>
+          <p>{t("Tariff_name_is_not_configured")}</p>
         </div>}
       <Tabs
         className="dark:bg-boxdark bg-white p-2 w-full"

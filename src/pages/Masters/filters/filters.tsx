@@ -53,8 +53,10 @@ const Filters: React.FC = () => {
       statusName: filters.statusValue ? filters.statusValue : '',
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
       workPlace: filters.placeOfWorkValue ? filters.placeOfWorkValue : '',
+      page: validateObject(filters) ? page : 0,
+      size: validateObject(filters) ? size : 0,
       setData,
-      setTotalPage
+      setTotalPage,
     });
     if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue);
   }, [filters]);
@@ -93,6 +95,15 @@ const Filters: React.FC = () => {
 
       return `${year}-${month}-${date}`;
     }
+  }
+
+  function validateObject(obj: any) {
+    for (let key in obj) {
+      if (obj[key]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   return (
@@ -153,12 +164,12 @@ const Filters: React.FC = () => {
       {showExtraFilters && (
         <>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
-              <Space direction="vertical" size={12}>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px] w-full`}>
+              <Space direction="vertical" size={14}>
                 <RangePicker
                   placeholder={[t('Select_start_date'), t('Select_end_date')]}
                   value={filters.registrationPeriodValue}
-                  // className={`w-full bg-white rounded-[8px]} s.filterInput}
+                  className={`w-full`}
                   onChange={(date) => handleInputChange('registrationPeriodValue', date)}
                 />
               </Space>

@@ -1,40 +1,45 @@
-import React, { useEffect } from "react";
-import { Tabs } from "antd";
-import FirstTab from "./firstTab";
-import { useTranslation } from "react-i18next";
-import { getChildCategory, getOrder } from "../../helpers/api-function/order/orderFunction";
-import orderStore from "../../helpers/state_managment/order/orderStore";
-import { getRegion } from "../../helpers/api-function/master/master";
-import { useLocation } from "react-router-dom";
-import FilterComponent2 from "./secondTab";
-import FilterComponent3 from "./thirdTab";
+import React, { useEffect } from 'react';
+import { Tabs } from 'antd';
+import FirstTab from './firstTab';
+import { useTranslation } from 'react-i18next';
+import {
+  getChildCategory,
+  getOrder,
+} from '../../helpers/api-function/order/orderFunction';
+import orderStore from '../../helpers/state_managment/order/orderStore';
+import { getRegion } from '../../helpers/api-function/master/master';
+import { useLocation } from 'react-router-dom';
+import FilterComponent2 from './secondTab';
+import FilterComponent3 from './thirdTab';
 
 const MainTabs: React.FC = () => {
   const { t } = useTranslation();
-  const location = useLocation()
+  const location = useLocation();
 
-  const { setData, setTotalPage, setStatus, setRegionData, setChildCategoy, statusO } = orderStore();
+  const {
+    setData,
+    setTotalPage,
+    setStatus,
+    setRegionData,
+    setChildCategoy,
+    statusO,
+    page,
+    size,
+  } = orderStore();
 
   useEffect(() => {
-    setStatus("UPCOMING");
-    setData([])
-    localStorage.setItem("orderStatus", "UPCOMING")
-    getOrder({
-      status: "UPCOMING",
-      setData: setData,
-      setTotalPage: setTotalPage,
-    });
+    setData([]);
     getRegion(setRegionData);
     getChildCategory(setChildCategoy);
   }, []);
 
   useEffect(() => {
-    setData([])
-    setStatus("UPCOMING");
+    setData([]);
+    setStatus('UPCOMING');
   }, [location.pathname]);
 
   useEffect(() => {
-    setData([])
+    setData([]);
     getOrder({
       status: statusO,
       setData: setData,
@@ -42,19 +47,30 @@ const MainTabs: React.FC = () => {
     });
   }, [statusO]);
 
+  useEffect(() => {
+    setData([]);
+    getOrder({
+      status: statusO,
+      setData: setData,
+      setTotalPage: setTotalPage,
+      page: page,
+      size: size,
+    });
+  }, [page]);
+
   const handleTabChange = (key: string) => {
     switch (key) {
-      case "1":
-        setStatus("UPCOMING");
-        localStorage.setItem("orderStatus", "UPCOMING")
+      case '1':
+        setStatus('UPCOMING');
+        localStorage.setItem('orderStatus', 'UPCOMING');
         break;
-      case "2":
-        setStatus("COMPLETED");
-        localStorage.setItem("orderStatus", "COMPLETED")
+      case '2':
+        setStatus('COMPLETED');
+        localStorage.setItem('orderStatus', 'COMPLETED');
         break;
-      case "3":
-        setStatus("REJECTED");
-        localStorage.setItem("orderStatus", "REJECTED")
+      case '3':
+        setStatus('REJECTED');
+        localStorage.setItem('orderStatus', 'REJECTED');
         break;
       default:
         break;
@@ -63,37 +79,37 @@ const MainTabs: React.FC = () => {
 
   const items = [
     {
-      key: "1",
+      key: '1',
       label: (
         <span
-          onClick={() => handleTabChange("1")}
+          onClick={() => handleTabChange('1')}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl" // Responsive font sizes
         >
-          {t("FirstTab_name")}
+          {t('FirstTab_name')}
         </span>
       ),
       children: <FirstTab />,
     },
     {
-      key: "2",
+      key: '2',
       label: (
         <span
-          onClick={() => handleTabChange("2")}
+          onClick={() => handleTabChange('2')}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
         >
-          {t("SecondTab_name")}
+          {t('SecondTab_name')}
         </span>
       ),
       children: <FilterComponent2 />,
     },
     {
-      key: "3",
+      key: '3',
       label: (
         <span
-          onClick={() => handleTabChange("3")}
+          onClick={() => handleTabChange('3')}
           className="dark:text-white text-black text-lg md:text-xl lg:text-2xl"
         >
-          {t("ThirdTab_name")}
+          {t('ThirdTab_name')}
         </span>
       ),
       children: <FilterComponent3 />,

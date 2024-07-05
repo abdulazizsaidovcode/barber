@@ -1,16 +1,16 @@
 import { Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
-import Modal from '../../../components/modals/modal';
-import { Buttons } from '../../../components/buttons';
-import chatStore from '../../../helpers/state_managment/chat/chatStore';
-import masterStore from '../../../helpers/state_managment/master/masterStore';
-import clientStore from '../../../helpers/state_managment/client/clientstore';
+import Modal from '../../../../components/modals/modal';
+import { Buttons } from '../../../../components/buttons';
+import chatStore from '../../../../helpers/state_managment/chat/chatStore';
+import masterStore from '../../../../helpers/state_managment/master/masterStore';
+import clientStore from '../../../../helpers/state_managment/client/clientstore';
 import { Option } from 'antd/es/mentions';
 import axios from 'axios';
-import { newChat_url } from '../../../helpers/api';
-import { config } from '../../../helpers/token';
+import { newChat_url } from '../../../../helpers/api';
+import { config } from '../../../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
-import { GetChatList } from '../../../helpers/api-function/chat/chat';
+import { GetChatList } from '../../../../helpers/api-function/chat/chat';
 import { useTranslation } from 'react-i18next';
 import { LoadingOutlined } from '@ant-design/icons';
 

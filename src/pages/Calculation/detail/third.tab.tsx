@@ -32,7 +32,7 @@ const FirstDetail: React.FC = () => {
             OrderEndTime={orderDetail.orderTo}
             Prepayment={orderDetail.prePayment}
             MasterNumber={orderDetail.masterPhone}
-             MasterName={orderDetail.masterFullName}
+            MasterName={orderDetail.masterFullName}
             MasterStatus={'sd'}
             MasterImg={
               orderDetail.masterPhotoId
@@ -42,6 +42,7 @@ const FirstDetail: React.FC = () => {
             ClientName={orderDetail.clientFullName}
             ClientPhoto={getFileId + orderDetail.clientPhotoId}
             ClientNumber={orderDetail.clientPhone}
+            masterFeadbeck={orderDetail.masterFeedback}
           />
         </div>
       ) : (

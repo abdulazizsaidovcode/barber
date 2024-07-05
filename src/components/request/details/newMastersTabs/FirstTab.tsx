@@ -46,8 +46,8 @@ const FirstTab: React.FC<FirstTabProp> = ({
     districtName,
     directionByGender
 }) => {
-    const displayValue = (value: string | undefined | null) => value ? value : 'не настроено';
-    const displayArray = (array: string[] | undefined) => array && array.length > 0 ? array.join(', ') : 'не настроено';
+    const displayValue = (value: string | undefined | null) => value ? value : t('not_configured');
+    const displayArray = (array: string[] | undefined) => array && array.length > 0 ? array.join(', ') : t('not_configured');
     const { t } = useTranslation();
 
     return (

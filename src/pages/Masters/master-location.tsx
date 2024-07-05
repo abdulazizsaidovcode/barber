@@ -5,7 +5,7 @@ import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { useTranslation } from 'react-i18next';
 
 const MasterLocation: React.FC = () => {
-  const API_KEY: string = 'AIzaSyAEqTLhrZ1KJZimhOv6nEbob2yJfrdg6Og';
+  const API_KEY: string = 'AIzaSyA7hQst-XJ1zOl63vgDEfOI05ec3boIPms';
   // const API_KEY: string = 'AIzaSyDmtHK-BpQgKGdQfVY1Q_lL_aR7IIBRoRc';
   const { t } = useTranslation();
   const [selectedLocation, setSelectedLocation] = useState<any>(null);

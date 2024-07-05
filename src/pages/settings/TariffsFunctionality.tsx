@@ -39,7 +39,7 @@ const TariffsFunctionality: React.FC = () => {
     const { t } = useTranslation();
 
     const addData = async (name: string) => {
-        if (!name.trim() || /[^a-zA-Z0-9]/.test(name)) {
+        if (!name.trim() || /[^a-zA-Zа-яА-Я0-9]/.test(name)) {  // Rus harflarini qo'shish uchun tekshiruvni o'zgartirdim
             toast(t("Please_enter"), { icon: '⚠️' });
         } else {
             setAddLoading(true);
@@ -75,8 +75,8 @@ const TariffsFunctionality: React.FC = () => {
             <Link to={link}>
                 <div className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
                     <p className='font-bold text-black dark:text-white'>{title}</p>
-                    <p>{functions}</p>
-                    <p>{sum}</p>
+                    <p className={`${functions === t("not_configured") ? 'text-red-600' : ''}`}>{functions}</p>
+                    <p className={`${sum === t("not_configured") ? 'text-red-600' : ''}`}>{sum}</p>
                 </div>
             </Link>
         );
@@ -98,8 +98,8 @@ const TariffsFunctionality: React.FC = () => {
                                 <div key={index}>
                                     <TariffsFunctionalityCard
                                         title={item.name}
-                                        functions={item.functionCount === 0 ? 'не настроено' : `${item.functionCount} Функций`}
-                                        sum={item.monthPrice === 0 || item.monthPrice === null ? 'не настроено' : `${item.monthPrice} сум`}
+                                        functions={item.functionCount === 0 ? t("not_configured") : `${item.functionCount} Функций`}
+                                        sum={item.monthPrice === 0 || item.monthPrice === null ? t("not_configured") : `${item.monthPrice} сум`}
                                         link={`/settings/tariff/${item.id}`}
                                     />
                                 </div>
@@ -114,7 +114,7 @@ const TariffsFunctionality: React.FC = () => {
                     <input
                         className="w-full border-[1px] dark:text-black border-black sm:p-2 p-1 rounded-lg mt-3"
                         type="text"
-                        placeholder={t("Wellness_treatments")}
+                        placeholder={t("Iltimos_tarif_nomini_kiriting")}
                         value={newTariffName}
                         onChange={(e) => setNewTariffName(e.target.value)}
                     />

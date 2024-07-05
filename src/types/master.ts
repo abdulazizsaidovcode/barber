@@ -46,7 +46,7 @@ export interface MasterData {
 
 export interface Data {
   id: string;
-  imgUrl: string;
+  imgId: string;
   fullName: string;
   serviceCategory: string[] | null;
   startedWork: string

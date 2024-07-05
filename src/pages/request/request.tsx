@@ -44,7 +44,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
 
     return (
         <DefaultLayout padding={true}>
-            <div className="w-full md:flex gap-3 md:justify-between">
+            <div className="w-full md:flex gap-30 md:justify-between">
                 <button onClick={toggleSidebar} className="md:hidden ms-4 text-black mb-2">
                     <CgMenuLeft className="text-[1.5rem] font-bold" />
                 </button>

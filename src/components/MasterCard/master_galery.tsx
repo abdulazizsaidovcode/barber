@@ -1,5 +1,5 @@
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
-import { Skeleton, Button, Input, message } from 'antd';
+import { Skeleton, Button, Input, message, Image } from 'antd';
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
@@ -10,6 +10,8 @@ import {
 } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import Modal from '../modals/modal';
+import { Buttons } from '../buttons';
+import { useParams } from 'react-router-dom';
 
 interface ProcedureItemProps {
   imgUrl: string;
@@ -35,6 +37,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   >(null);
   const [deleteReason, setDeleteReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { id } = useParams();
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -61,10 +64,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
     setIsSubmitting(true);
     axios
       .post(
-        `${master_gallery_message}${galleryId}`,
+        `${master_gallery_message}`,
         {
           clientId: null,
-          masterId: galleryId,
+          masterId: id,
           adminId: null,
           message: deleteReason,
           messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_DELETE',
@@ -114,19 +117,8 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div
-        className="shadow-lg flex items-center justify-center rounded-lg w-full h-50 overflow-hidden object-cover cursor-pointer"
-        onClick={() => setIsModalVisible(true)}
-      >
-        {loading && <Skeleton.Image />}
-        <img
-          className={`w-full h-full object-cover ${loading ? 'hidden' : ''}`}
-          src={getFileId + imgUrl}
-          alt=""
-          onLoad={handleImageLoad}
-        />
-      </div>
+    <div className="flex flex-col items-center">
+      <Image width={200} height={200} src={getFileId + imgUrl} />
       <div
         className={`p-2 text-white ${
           status ? 'bg-red-500' : 'bg-green-500'
@@ -166,21 +158,28 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       <Modal isOpen={isModalVisible} onClose={handleCancel}>
         {modalType === 'textarea' && (
           <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
-            <h2 className="dark:text-white">Reason for Deletion</h2>
-            <Input.TextArea
+            <h2 className="dark:text-white text-lg">Reason for Deletion</h2>
+            {/* <Input.TextArea
+              className="bg-transparent hover:bg-transparent text-white"
               rows={4}
               value={deleteReason}
               onChange={(e) => setDeleteReason(e.target.value)}
               placeholder="Please enter the reason for deletion"
               required
+            /> */}
+            <textarea
+              rows={5}
+              className="block p-2.5 w-full mt-3 text-gray-900 dark:text-white dark:bg-[#30303d] rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:text:white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              value={deleteReason}
+              onChange={(e) => setDeleteReason(e.target.value)}
             />
             <div className="flex justify-end gap-2 mt-4">
-              <Button key="cancel" onClick={handleCancel}>
+              <Buttons key="cancel" onClick={handleCancel}>
                 Cancel
-              </Button>
-              <Button key="next" onClick={handleNextClick}>
+              </Buttons>
+              <Buttons key="next" onClick={handleNextClick}>
                 Next
-              </Button>
+              </Buttons>
             </div>
           </div>
         )}
@@ -191,17 +190,12 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
               Are you sure you want to delete this image?
             </p>
             <div className="flex justify-end gap-2 mt-4">
-              <Button key="cancel" onClick={handleCancel}>
+              <Buttons key="cancel" onClick={handleCancel}>
                 Cancel
-              </Button>
-              <Button
-                key="confirm"
-                type="primary"
-                onClick={handleDeleteConfirm}
-                loading={isSubmitting}
-              >
+              </Buttons>
+              <Buttons key="confirm" onClick={handleDeleteConfirm}>
                 Confirm
-              </Button>
+              </Buttons>
             </div>
           </div>
         )}

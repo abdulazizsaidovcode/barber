@@ -8,11 +8,6 @@ import Service from './service';
 import Reviews from './Reviews';
 import { useTranslation } from 'react-i18next';
 
-const onChange = (key: string) => {
-  console.log(key);
-};
-
-
 const MainTabDetail: React.FC = () => {
   const { t } = useTranslation()
   const items: TabsProps['items'] = [
@@ -56,7 +51,7 @@ const MainTabDetail: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs defaultActiveKey="1" items={items} />
     </DefaultLayout>
   );
 };

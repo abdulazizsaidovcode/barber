@@ -57,8 +57,8 @@ const ServiceCategories = () => {
             toast(t("Please_fill_in_the_line"), {
                 icon: '⚠️'
             });
-        } else if (!newCategoryName.trim() || /[^a-zA-Z0-9]/.test(newCategoryName)) {
-            toast(t("Please_enter"), { icon: '⚠️' });
+        } else if (!newCategoryName.trim() || /^[^a-zA-Zа-яА-Я0-9]/.test(newCategoryName) || /^ +$/.test(newCategoryName)) {  // Only allow names with valid starting characters
+            toast(t("Please_enter_valid_name"), { icon: '⚠️' });
         } else {
             setAddLoading(true);
             axios.post(add_service_category, newCategory, config)
@@ -100,13 +100,13 @@ const ServiceCategories = () => {
     // UPDATE DATA
     const updateData = () => {
         if (editingCategory) {
-            if (editedCategoryName.trim() === "") {
+            if (editedCategoryName.trim() === "" || /^ +$/.test(editedCategoryName)) {
                 toast(t("Please_fill_in_the_line"), {
                     icon: '⚠️'
                 });
                 return;
-            } else if (!editedCategoryName.trim() || /[^a-zA-Z0-9]/.test(editedCategoryName)) {
-                toast(t("Please_enter"), { icon: '⚠️' });
+            } else if (!editedCategoryName.trim() || /^[^a-zA-Zа-яА-Я0-9]/.test(editedCategoryName)) {  // Only allow names with valid starting characters
+                toast(t("Please_enter_valid_name"), { icon: '⚠️' });
                 return;
             }
 
@@ -207,7 +207,7 @@ const ServiceCategories = () => {
                     <input
                         className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
                         type="text"
-                        placeholder={t("Health_Procedures")}
+                        // placeholder={t("Health_Procedures")}
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
                     <div className="flex mt-10 justify-center">

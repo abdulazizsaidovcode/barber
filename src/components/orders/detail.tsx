@@ -32,6 +32,7 @@ const DetailOrder: React.FC<Props> = ({
   ClientNumber,
   ClientPhoto,
   MasterStatus,
+  masterFeadbeck,
 }) => {
   const [ratingData, setRatingData] = useState<RatingData[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ const DetailOrder: React.FC<Props> = ({
         const response = await axios.get(`${get_orders_otis}${id}`, config);
         setRatingData(response.data);
       } catch (error) {
-        setRatingData(null)
+        setRatingData(null);
       } finally {
         setLoading(false);
       }
@@ -98,23 +99,27 @@ const DetailOrder: React.FC<Props> = ({
       </div>
       <Skeleton loading={loading} active>
         <div className="bg-gray-100 dark:bg-[#ffffffdf] text-black dark:text-black p-4 shadow-4 flex flex-col justify-between pl-10 py-5 border-black rounded-xl w-full lg:w-[100%]">
-          {ratingData && ratingData.length !== 0 ? ratingData.map((item, index) => (
-            <div key={index}>
-              <div className="flex items-center justify-between px-4 p-2 rounded-lg bg-[#f6d0db]">
-                <p>Оценка (рейтинг)</p>
-                <Rate disabled value={item.rating} />
-                <p>{item.count}</p>
+          {ratingData && ratingData.length !== 0 ? (
+            ratingData.map((item, index) => (
+              <div key={index}>
+                <div className="flex items-center justify-between px-4 p-2 rounded-lg bg-[#f6d0db]">
+                  <p>Оценка (рейтинг)</p>
+                  <Rate disabled value={item.rating} />
+                  <p>{item.count}</p>
+                </div>
+                <div>
+                  <p>{item.text}</p>
+                </div>
               </div>
-              <div>
-                <p>{item.text}</p>
+            ))
+          ) : (
+            <div>
+              <div className="flex items-center justify-between px-4 p-2 rounded-lg bg-[#f6d0db]">
+                <p className="text-2xl font-medium">Оценка (рейтинг) </p>
+                <p className="text-xl font-medium">{masterFeadbeck}</p>
               </div>
             </div>
-          )) : 
-          <div>
-              <div className="flex items-center justify-between px-4 p-2 rounded-lg bg-[#f6d0db]">
-                <p>Отзывы not found</p>
-              </div>
-            </div>}
+          )}
         </div>
       </Skeleton>
     </div>

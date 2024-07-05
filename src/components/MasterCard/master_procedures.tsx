@@ -1,6 +1,6 @@
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { Button, message, Input } from 'antd';
+import { Button, message, Input, Image } from 'antd';
 import {
   master_delate_service,
   master_confirm_new_service,
@@ -57,21 +57,21 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
     }
   };
 
-  const handleDelete = async (apiEndpoint: string) => {
-    try {
-      const response = await axios.put(
-        `${apiEndpoint}${currentServiceId}`,
-        config,
-      );
-      if (response.status === 200) {
-        message.success('Procedure deleted successfully');
-      } else {
-        throw new Error('Failed to delete procedure');
-      }
-    } catch (error) {
-      message.error('An error occurred while deleting the procedure');
-    }
-  };
+  // const handleDelete = async (apiEndpoint: string) => {
+  //   try {
+  //     const response = await axios.put(
+  //       `${apiEndpoint}${currentServiceId}`,
+  //       config,
+  //     );
+  //     if (response.status === 200) {
+  //       message.success('Procedure deleted successfully');
+  //     } else {
+  //       throw new Error('Failed to delete procedure');
+  //     }
+  //   } catch (error) {
+  //     message.error('An error occurred while deleting the procedure');
+  //   }
+  // };
 
   const handleConfirm = async () => {
     try {
@@ -140,7 +140,6 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
 
       toggleModal('delete', false);
       getFunc();
-
     } catch (error) {
       message.error('An error occurred while deleting the approved procedure');
       toggleModal('delete', false);
@@ -150,10 +149,11 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
   return (
     <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-boxdark text-black dark:text-white border-gray-300 shadow-lg p-3 rounded-xl mb-4">
       <div className="w-full lg:w-1/3 mb-4 lg:mb-0 flex justify-center items-center">
-        <img
+        <Image
+          width={300}
+          height={200}
+          className="object-cover rounded"
           src={imgUrl}
-          alt="Procedure"
-          className="w-48 h-48 object-cover rounded"
         />
       </div>
       <div className="w-full lg:w-2/3 pl-4">
@@ -164,14 +164,14 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           <div className="flex items-center">
             {serviceStatus !== 'APPROVED' && (
               <div
-                className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center mr-2"
+                className="p-1 rounded-md bg-green-500 flex items-center cursor-pointer shadow-3 justify-center mr-2"
                 onClick={handleConfirm}
               >
                 <CheckOutlined />
               </div>
             )}
             <div
-              className="p-1 bg-gray rounded-md flex items-center cursor-pointer shadow-3 justify-center"
+              className="p-1 bg-danger rounded-md flex items-center cursor-pointer shadow-3 justify-center"
               onClick={
                 serviceStatus === 'APPROVED'
                   ? () => toggleModal('delete', true)
@@ -196,7 +196,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
           </div>
         </div>
         <div
-          className={`p-1 text-white px-4 rounded-xl cursor-pointer ${
+          className={`p-1 text-white text-center w-24 rounded-xl cursor-pointer ${
             serviceStatus === 'APPROVED' ? 'bg-green-500' : 'bg-red-500'
           }`}
         >
