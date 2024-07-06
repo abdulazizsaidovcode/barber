@@ -30,22 +30,35 @@ const RequestSpecializations: React.FC = () => {
   const [chanPageSize, setChanPageSize] = useState<number>(10);
 
   useEffect(() => {
-    fetchData(currentNewPage, currentChangedPage, newPageSize, chanPageSize);
-  }, [currentNewPage, currentChangedPage, newPageSize, chanPageSize]);
+    fetchNewSpecializations(currentNewPage, newPageSize);
+  }, [newPageSize, chanPageSize]);
 
-  const fetchData = async (newPage: number, changedPage: number, newSize: number, chanSize: number) => {
+  useEffect(() => {
+    fetchChangedSpecializations(currentChangedPage, chanPageSize);
+  }, [currentNewPage, currentChangedPage])
+
+  const fetchNewSpecializations = async (page: number, size: number) => {
     setLoading(true);
     try {
-      const [newRes, changedRes] = await Promise.all([
-        axios.get(`${new_spezalliton_url}?page=${newPage}&size=${newSize}`, config),
-        axios.get(`${changed_spezalliton_url}?page=${changedPage}&size=${chanSize}`, config)
-      ]);
-      setNewSpecializations(newRes.data.body.object);
-      setTotalNewSpecializations(newRes.data.body.totalElements);
-      setChangedSpecializations(changedRes.data.body.object);
-      setTotalChangedSpecializations(changedRes.data.body.totalElements);
-    } catch { }
-    finally {
+      const response = await axios.get(`${new_spezalliton_url}?page=${page}&size=${size}`, config);
+      setNewSpecializations(response.data.body.object);
+      setTotalNewSpecializations(response.data.body.totalElements);
+    } catch (error) {
+      console.error("Error fetching new specializations", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchChangedSpecializations = async (page: number, size: number) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${changed_spezalliton_url}?page=${page}&size=${size}`, config);
+      setChangedSpecializations(response.data.body.object);
+      setTotalChangedSpecializations(response.data.body.totalElements);
+    } catch (error) {
+      console.error("Error fetching changed specializations", error);
+    } finally {
       setLoading(false);
     }
   };
@@ -59,6 +72,7 @@ const RequestSpecializations: React.FC = () => {
     setCurrentChangedPage(page - 1);
     setChanPageSize(pageSize);
   };
+
   const { t } = useTranslation();
   return (
     <RequestLayout>
