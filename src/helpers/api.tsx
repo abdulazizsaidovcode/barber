@@ -19,10 +19,7 @@ export const getMe = (token?: string) => {
         : config,
     )
     .then((res) => {
-      if (res.data.success === true) {
-        sessionStorage.setItem('userInfo', JSON.stringify(res.data.body));
-        sessionStorage.setItem('userId', res.data.body.id);
-      }
+      if (res.data.success === true) sessionStorage.setItem('userId', res.data.body.id)
     })
     .catch(() => console.log('user info error'));
 };

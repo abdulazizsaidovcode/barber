@@ -8,7 +8,6 @@ import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/calendar/Calendar.tsx';
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
-import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/settings/Settings.js';
@@ -145,16 +144,6 @@ function App() {
             <>
               <PageTitle title="Profile | Barber" />
               <Profile />
-            </>
-          }
-        />
-
-        <Route
-          path="/forms/form-elements"
-          element={
-            <>
-              <PageTitle title="Form Elements | Barber" />
-              <FormElements />
             </>
           }
         />

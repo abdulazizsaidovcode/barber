@@ -1,5 +1,5 @@
 {
-  "name": "tailadmin-react-free",
+  "name": "bookers-admin",
   "private": true,
   "version": "1.3.0",
   "type": "module",
@@ -9,9 +9,7 @@
     "preview": "vite preview"
   },
   "author": {
-    "name": "TailAdmin",
-    "email": "hello@tailadmin.com",
-    "url": "https://tailadmin.com"
+    "name": "ITCA Team"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
@@ -26,16 +24,9 @@
     "antd": "^5.17.0",
     "apexcharts": "^3.41.0",
     "axios": "^1.7.2",
-    "esbuild": "^0.20.2",
-    "flatpickr": "^4.6.13",
-    "google-map-react": "^2.2.1",
-    "headlessui": "^0.0.0",
     "i18next": "^23.11.3",
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-backend": "^2.5.1",
-    "jquery": "^3.7.1",
-    "jsvectormap": "^1.5.3",
-    "match-sorter": "^6.3.1",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-alice-carousel": "^2.9.1",
@@ -48,7 +39,6 @@
     "react-lazy-load-image-component": "^1.6.0",
     "react-router-dom": "^6.14.2",
     "sockjs-client": "^1.6.1",
-    "sort-by": "^0.0.2",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -60,9 +50,6 @@
     "@types/stompjs": "2.3.5",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.14",
-    "file-loader": "^6.2.0",
-    "postcss": "^8.4.27",
-    "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "tailwindcss": "^3.4.1",
     "vite": "^5.2.11",

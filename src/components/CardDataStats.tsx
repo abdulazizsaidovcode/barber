@@ -1,6 +1,5 @@
 import React from 'react';
 import CountUp from 'react-countup';
-import { Skeleton } from 'antd';
 
 interface CardDataStatsProps {
   title: any;
