@@ -30,20 +30,31 @@ const RequestProcedures: React.FC = () => {
   const [chanPageSize, setChanPageSize] = useState<number>(10);
 
   useEffect(() => {
-    fetchData(currentNewPage, currentChangedPage, newPageSize, chanPageSize);
-  }, [currentNewPage, currentChangedPage, newPageSize, chanPageSize]);
+    fetchNewProcedures(currentNewPage, newPageSize);
+  }, [currentNewPage, newPageSize]);
 
-  const fetchData = async (newPage: number, changedPage: number, newSize: number, chanSize: number) => {
+  useEffect(() => {
+    fetchChangedProcedures(currentChangedPage, chanPageSize);
+  }, [currentChangedPage, chanPageSize]);
+
+  const fetchNewProcedures = async (page: number, size: number) => {
     setLoading(true);
     try {
-      const [newRes, changedRes] = await Promise.all([
-        axios.get(`${new_procedure_url}?page=${newPage}&size=${newSize}`, config),
-        axios.get(`${changed_procedure_url}?page=${changedPage}&size=${chanSize}`, config)
-      ]);
-      setNewProcedures(newRes.data.body.object);
-      setTotalNewProcedures(newRes.data.body.totalElements);
-      setChangedProcedures(changedRes.data.body.object);
-      setTotalChangedProcedures(changedRes.data.body.totalElements);
+      const { data } = await axios.get(`${new_procedure_url}?page=${page}&size=${size}`, config);
+      setNewProcedures(data.body.object);
+      setTotalNewProcedures(data.body.totalElements);
+    } catch { }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchChangedProcedures = async (page: number, size: number) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${changed_procedure_url}?page=${page}&size=${size}`, config);
+      setChangedProcedures(data.body.object);
+      setTotalChangedProcedures(data.body.totalElements);
     } catch { }
     finally {
       setLoading(false);
@@ -59,7 +70,9 @@ const RequestProcedures: React.FC = () => {
     setCurrentChangedPage(page - 1);
     setChanPageSize(pageSize);
   };
-  const { t } = useTranslation()
+
+  const { t } = useTranslation();
+
   return (
     <RequestLayout>
       <div className="bg-[#f5f6f7] dark:bg-[#21212e] h-max w-full reviews-shadow pb-5">
@@ -72,28 +85,29 @@ const RequestProcedures: React.FC = () => {
           </div>
         </div>
         <div className="flex md:flex-row flex-col justify-between mt-4">
-          <div className='md:w-1/2 mr-1'>
+          <div className="md:w-1/2 mr-1">
             <div className="w-full bg-[#cccccc] h-12 mr-1 flex justify-center items-center dark:bg-white p-2">
               <div className="flex gap-3">
-                <p className="dark:text-[#000] ">{t("New")}</p>
+                <p className="dark:text-[#000]">{t("New")}</p>
                 <div className="w-6 flex items-center justify-center rounded-full h-6 bg-[#f1f5f9] dark:bg-[#21212e] dark:text-white">
                   <p className="text-sm">{newProcedures.length}</p>
                 </div>
               </div>
             </div>
-            <div className='flex items-center flex-col gap-4 mt-4 px-5'>
+            <div className="flex items-center flex-col gap-4 mt-4 px-5">
               {loading ? (
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
                 ))
-              ) : (newProcedures.length === 0 ?
-                <div className='w-full h-[510px] flex justify-center items-center'>
+              ) : newProcedures.length === 0 ? (
+                <div className="w-full h-[510px] flex justify-center items-center">
                   <p>{t("New_Procedures")}</p>
-                </div> :
-                <div className='flex flex-col gap-3'>
-                  {newProcedures.map(item => (
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {newProcedures.map((item, index) => (
                     <SpecializationsCard
-                      key={item.id}
+                      key={index}
                       link={item.id}
                       ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
                       salonOwner={`${item.firstName} ${item.lastName}`}
@@ -101,9 +115,8 @@ const RequestProcedures: React.FC = () => {
                       salonCreateDate={item.createdAt}
                       salonDescription={t("The_master_has_added")}
                     />
-                  ))
-                  }
-                  <div className='mt-5'>
+                  ))}
+                  <div className="mt-5">
                     <Pagination
                       showSizeChanger
                       current={currentNewPage + 1}
@@ -116,7 +129,7 @@ const RequestProcedures: React.FC = () => {
               )}
             </div>
           </div>
-          <div className='md:w-1/2 ml-1'>
+          <div className="md:w-1/2 ml-1">
             <div className="w-full bg-[#cccccc] h-12 justify-center items-center flex dark:bg-white p-2">
               <div className="flex gap-3">
                 <p className="dark:text-[#000]">{t("Changed")}</p>
@@ -125,19 +138,20 @@ const RequestProcedures: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className='flex items-center flex-col mt-4 gap-4  px-5'>
+            <div className="flex items-center flex-col mt-4 gap-4 px-5">
               {loading ? (
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
                 ))
-              ) : (changedProcedures.length === 0 ?
-                <div className='w-full h-[510px] flex justify-center items-center'>
+              ) : changedProcedures.length === 0 ? (
+                <div className="w-full h-[510px] flex justify-center items-center">
                   <p>{t("New_Procedures")}</p>
-                </div> :
-                <div className='gap-3'>
-                  {changedProcedures.map(item => (
+                </div>
+              ) : (
+                <div className="gap-3">
+                  {changedProcedures.map((item, index) => (
                     <SpecializationsCard
-                      key={item.id}
+                      key={index}
                       link={item.id}
                       ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
                       salonOwner={`${item.firstName} ${item.lastName}`}
@@ -146,7 +160,7 @@ const RequestProcedures: React.FC = () => {
                       salonDescription={t("The_master_has_added")}
                     />
                   ))}
-                  <div className='p-3 mt-5'>
+                  <div className="p-3 mt-5">
                     <Pagination
                       showSizeChanger
                       current={currentChangedPage + 1}
@@ -161,7 +175,7 @@ const RequestProcedures: React.FC = () => {
           </div>
         </div>
       </div>
-    </RequestLayout >
+    </RequestLayout>
   );
 };
 
