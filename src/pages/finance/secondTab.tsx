@@ -138,7 +138,7 @@ const FilterComponent: React.FC = () => {
           }
           {data && data.object &&
             <tr className="dark:text-gray font-bold">
-              <td className="p-5">Итого</td>
+              <td className="p-5">{t("Total")}</td>
               <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.nonCashTurnover, 0)}</td>
               <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.turnoverTotal, 0)}</td>
               <td className="p-5">{data.object.reduce((acc: number, item: any) => acc + item.totalIncome, 0)}</td>
