@@ -31,7 +31,7 @@ const FilterComponent: React.FC = () => {
   // Inline styles for the component
   const styles = {
     mainContainer: {
-      padding: '0px',
+      padding: '15px',
       borderRadius: '8px',
       marginBottom: '20px',
     },
