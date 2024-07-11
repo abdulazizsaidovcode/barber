@@ -361,8 +361,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <div className="flex items-center justify-center">
-            <Buttons onClick={handlePostBtn}>{t('Send')}</Buttons>
+          <div className="flex items-center justify-center mt-5">
+            <Buttons onClick={handlePostBtn} bWidth={`w-40`}>{t('Send')}</Buttons>
           </div>
         </div>
       </Modal>
