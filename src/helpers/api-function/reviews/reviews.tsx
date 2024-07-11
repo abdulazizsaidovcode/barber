@@ -44,12 +44,13 @@ export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterDa
 };
 
 export const deleteListData = async (id: string | null, setDataList: (data: ListData[]) => void, setTotalPage: (totalPages: number) => void, url: string, setLoading: (val: boolean) => void, closeDelModal: () => void) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   try {
     if (id) {
       const { data } = await axios.delete(`${reviews_list_delete}/${id}`, config);
       if (data.success) {
-        toast.success(t("Review_successfully_deleted"));
+        // toast.success(t("Review_successfully_deleted"));
+        toast.success("Review_successfully_deleted");
         fetchDataList(setDataList, setTotalPage, url, setLoading);
         closeDelModal()
       }

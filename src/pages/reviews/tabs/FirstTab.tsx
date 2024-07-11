@@ -37,10 +37,19 @@ const FirstTab: React.FC = () => {
   };
 
   const handleDelete = () => {
-    if (selectedId) {
-      deleteListData(selectedId, setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`, setLoading, closeDelModal);
+    console.log('handleDelete called with selectedId:', selectedId);
+    if (selectedId !== null) {
+      deleteListData(
+        selectedId,
+        setListData,
+        setTotalPage,
+        `${reviews_list_data}?page=${currentPage}&size=${pageSize}`,
+        setLoading,
+        closeDelModal
+      );
     }
   };
+
 
   useEffect(() => {
     fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`, setLoading);

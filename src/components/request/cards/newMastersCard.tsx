@@ -1,6 +1,7 @@
 import React from 'react';
 import { getFileId } from '../../../helpers/api';
 import userImg from '../../../images/user.png';
+import { useTranslation } from 'react-i18next';
 
 interface NewMastersCardProp {
   salonName: string;
@@ -23,7 +24,9 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({
   salonOwner,
   phoneNumber
 }) => {
-  const displayArray = (array: string[] | undefined) => (array && array.length > 0 ? array.join(', ') : 'Категория салона не настроено');
+  const { t } = useTranslation();
+
+  const displayArray = (array: string[] | undefined) => (array && array.length > 0 ? array.join(', ') : t('Salon_category_is_not_configured'));
 
   return (
     <div onClick={modal} className="lg:w-[280px] md:w-[310px] sm:w-[320px] w-[320px] cursor-pointer h-[200px] rounded-xl shadow-lg p-3 bg-white">

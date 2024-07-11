@@ -226,9 +226,9 @@ const RequestNewMasters: React.FC = () => {
                 {data.map((item, index) => (
                   <div key={index}>
                     <NewMastersCard
-                      salonName={item.salonName || "Название салона не настроено"}
+                      salonName={item.salonName || t("The_salon_name_is_not_configured")}
                       salonCategory={item.categoryName}
-                      salonAddress={item.address || "Адрес салона не настроено"}
+                      salonAddress={item.address || t("The_salon_name_is_not_configured")}
                       ownerImage={item.attachmentId}
                       salonOwner={`${item.firstName} ${item.lastName}`}
                       phoneNumber={item.phoneNumber}
