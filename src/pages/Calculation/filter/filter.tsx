@@ -9,6 +9,7 @@ import { order_download } from '../../../helpers/api';
 import { downloadExcelFile } from '../../../helpers/attachment/file-download';
 import { useTranslation } from 'react-i18next';
 import { Moment } from 'moment';
+import { Buttons } from '../../../components/buttons';
 
 const FilterOrder: React.FC = () => {
   const [showExtraFilters, setShowExtraFilters] = useState(false);
@@ -206,8 +207,7 @@ const FilterOrder: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button
-            className={`bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white`}
+          <Buttons
             onClick={() =>
               downloadExcelFile(
                 url,
@@ -219,7 +219,7 @@ const FilterOrder: React.FC = () => {
             }
           >
             {isLoading ? t('Loading') : t('Download')}
-          </Button>
+          </Buttons>
         </Col>
       </Row>
       {showExtraFilters && (
@@ -284,7 +284,7 @@ const FilterOrder: React.FC = () => {
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
             <Button
-              className="bg-gray-200 dark:bg-gray-800 rounded-lg w-full text-xs dark:text-white"
+              className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
               onClick={resetFilters}
             >
               {t('Reset')}
