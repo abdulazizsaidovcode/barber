@@ -24,6 +24,7 @@ const ECommerce: React.FC = () => {
   const [localDate, setLocalDate] = useState<string | undefined>(undefined);
   const [startDate, setStartDate] = useState<string | undefined>(undefined);
   const [endDate, setEndDate] = useState<string | undefined>(undefined);
+  console.log(data);
 
   const handleYearChange = (date: any, dateString: any) => {
     setYear(dateString);
