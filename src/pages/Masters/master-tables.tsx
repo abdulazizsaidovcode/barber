@@ -25,56 +25,56 @@ const MasterTables: React.FC = () => {
   const thead = [
     {
       id: 1,
-      name: t('Photo'),
+      name: t('Photo')
     },
     {
       id: 2,
-      name: t('master'),
+      name: t('master')
     },
     {
       id: 3,
-      name: t('Service_category'),
+      name: t('Service_category')
     },
     {
       id: 4,
-      name: t('Started_work'),
+      name: t('Started_work')
     },
     {
       id: 5,
-      name: t('Total_sessions'),
+      name: t('Total_sessions')
     },
     {
       id: 6,
-      name: t('Rating'),
+      name: t('Rating')
     },
     {
       id: 7,
-      name: t('Status'),
+      name: t('Status')
     },
     {
       id: 8,
-      name: t('Schedule_Type'),
+      name: t('Schedule_Type')
     },
     {
       id: 9,
-      name: t('Canceled'),
+      name: t('Canceled')
     },
     {
       id: 10,
-      name: t('Specializations'),
+      name: t('Specializations')
     },
     {
       id: 11,
-      name: t('siderbar_client'),
+      name: t('siderbar_client')
     },
     {
       id: 12,
-      name: t('Phone'),
+      name: t('Phone')
     },
     {
       id: 13,
-      name: t('Place_of_work'),
-    },
+      name: t('Place_of_work')
+    }
   ];
   const {
     data,
@@ -86,11 +86,11 @@ const MasterTables: React.FC = () => {
     isLoading,
     setIsLoading,
     setPage,
-    setSize,
+    setSize
   } = masterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: '',
-    masterId: '',
+    masterId: ''
   });
   const [isImageModal, setIsImageModal] = useState<boolean>(false);
   const [imageID, setImageID] = useState<string>('');
@@ -98,24 +98,24 @@ const MasterTables: React.FC = () => {
   const getItemsActive = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>,
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'ACTIVE',
       label: `${t('Active')}`,
-      onClick: () => openIsModal(),
-    },
+      onClick: () => openIsModal()
+    }
   ];
   const getItemsBlock = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/master/${id}`}>{t('Open')}</Link>,
+      label: <Link to={`/master/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'BLOCKED',
       label: `${t('Locked')}`,
-      onClick: () => openIsModal(),
-    },
+      onClick: () => openIsModal()
+    }
   ];
   const openIsModal = () => setIsModal(!isModal);
   const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId });
@@ -128,7 +128,8 @@ const MasterTables: React.FC = () => {
   const itemRender = (_: any, type: string, originalElement: any) => {
     if (type === 'page') {
       return (
-        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
           {originalElement}
         </a>
       );
@@ -186,9 +187,10 @@ const MasterTables: React.FC = () => {
                   className={`${
                     item.status === 'ACTIVE'
                       ? 'bg-green-400'
-                      : item.status === 'BLOCKED'
-                      ? 'bg-red-500'
-                      : 'bg-red-700'
+                      : item.status === 'NEW'
+                        ? 'bg-green-700'
+                        : item.status === 'BLOCKED'
+                          ? 'bg-red-500' : 'bg-red-700'
                   } text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
                   {item.status}
@@ -209,7 +211,8 @@ const MasterTables: React.FC = () => {
                       placement="bottomLeft"
                       arrow
                     >
-                      <CiMenuKebab className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
+                      <CiMenuKebab
+                        className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
                     </Dropdown>
                   </Space>
                 </Space>
@@ -285,7 +288,7 @@ const MasterTables: React.FC = () => {
                   setData,
                   setTotalPage,
                   openIsModal,
-                  setIsLoading,
+                  setIsLoading
                 )
               }
             >
