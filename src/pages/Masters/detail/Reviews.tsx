@@ -50,7 +50,6 @@ const DetailMaster: React.FC = () => {
         .then((res) => {
           if (res.data.success) {
             setmasters(res.data.body);
-            console.log(res.data.body);
           } else {
             setmasters([]);
           }

@@ -36,20 +36,23 @@ const FirstTab: React.FC = () => {
     setDelModal(false);
   };
 
-  const handleDelete = async () => {
-    if (selectedId) {
-      await deleteListData(selectedId, setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`);
-      closeDelModal();
+  const handleDelete = () => {
+    console.log('handleDelete called with selectedId:', selectedId);
+    if (selectedId !== null) {
+      deleteListData(
+        selectedId,
+        setListData,
+        setTotalPage,
+        `${reviews_list_data}?page=${currentPage}&size=${pageSize}`,
+        setLoading,
+        closeDelModal
+      );
     }
   };
 
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      await fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`);
-      setLoading(false);
-    };
-    fetchData();
+    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`, setLoading);
   }, [currentPage, pageSize]);
 
   const onPageChange = (page: number, pageSize: number) => {

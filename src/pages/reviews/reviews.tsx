@@ -8,7 +8,7 @@ import useReviewsStore from '../../helpers/state_managment/reviews/reviews';
 import { fetchDataList, fetchMainData, fetchMasterDataList } from '../../helpers/api-function/reviews/reviews';
 import { getRegion } from '../../helpers/api-function/master/master';
 import masterStore from '../../helpers/state_managment/master/masterStore';
-import { reviews_list_data, reviews_list_master_data, reviews_main_data } from '../../helpers/api';
+import { reviews_list_data, reviews_list_master_data } from '../../helpers/api';
 
 const Reviews: React.FC = () => {
   const { setMainData, setListData, pageSize, currentPage, currentMasterPage, pageMasterSize, setTotalPage, setListMasterData, setMasterTotalPage } = useReviewsStore();
@@ -16,7 +16,7 @@ const Reviews: React.FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    fetchMainData(setMainData, reviews_main_data);
+    fetchMainData(setMainData);
     getRegion(setRegionData);
     fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
   }, []);

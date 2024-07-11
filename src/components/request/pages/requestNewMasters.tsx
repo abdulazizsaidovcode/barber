@@ -169,8 +169,9 @@ const RequestNewMasters: React.FC = () => {
     };
     try {
       const res = await axios.put(masters_cancel_url, payload, config);
-      console.log(res.data.body);
-      fetchData(currentPage, pageSize);
+      if (res.data.success) {
+        fetchData(currentPage, pageSize);
+      }
     } catch { }
   };
 
@@ -225,13 +226,13 @@ const RequestNewMasters: React.FC = () => {
                 {data.map((item, index) => (
                   <div key={index}>
                     <NewMastersCard
-                      salonName={item.salonName || "не настроено"}
+                      salonName={item.salonName || t("The_salon_name_is_not_configured")}
                       salonCategory={item.categoryName}
-                      salonAddress={item.address || "не настроено"}
+                      salonAddress={item.address || t("The_salon_name_is_not_configured")}
                       ownerImage={item.attachmentId}
-                      salonOwner={`${item.firstName} ${item.lastName || ""}`}
-                      phoneNumber={item.phoneNumber || "не настроено"}
-                      salonCreateDate={item.createdAt || "не настроено"}
+                      salonOwner={`${item.firstName} ${item.lastName}`}
+                      phoneNumber={item.phoneNumber}
+                      salonCreateDate={item.createdAt}
                       modal={() => fetchFullData(item.id)}
                     />
                   </div>
