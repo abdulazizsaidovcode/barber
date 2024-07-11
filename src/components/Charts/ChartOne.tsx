@@ -113,7 +113,15 @@ const ChartOne = () => {
         const { data } = response;
         if (data && data.body) {
           const newData = data.body.map((item: any) => item.incomeTotal);
+          const newCategories = data.body.map((item: any) => item.name);
           setSeries([{ name: 'Income', data: newData }]);
+          setOptions((prevOptions: any) => ({
+            ...prevOptions,
+            xaxis: {
+              ...prevOptions.xaxis,
+              categories: newCategories,
+            },
+          }));
         }
       })
       .catch(() => {
@@ -127,7 +135,7 @@ const ChartOne = () => {
         <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Income_dynamics")}</h1>
         <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
       </div>
-      <div className=" rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark ">
+      <div className="rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
         <ReactApexChart options={options} series={series} type="line" height={350} />
       </div>
     </div>
