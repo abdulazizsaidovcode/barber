@@ -67,7 +67,7 @@ const ChartTwo: React.FC = () => {
         t('july'),
         t('august'),
         t('september'),
-        t('October'),
+        t('october'),
         t('November'),
         t('December')
       ],
