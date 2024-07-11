@@ -69,7 +69,7 @@ const ChartTwo: React.FC = () => {
         t('september'),
         t('october'),
         t('november'),
-        t('December')
+        t('december')
       ],
     },
     legend: {
