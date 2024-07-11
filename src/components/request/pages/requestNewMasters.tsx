@@ -225,13 +225,13 @@ const RequestNewMasters: React.FC = () => {
                 {data.map((item, index) => (
                   <div key={index}>
                     <NewMastersCard
-                      salonName={item.salonName || "не настроено"}
+                      salonName={item.salonName || "Название салона не настроено"}
                       salonCategory={item.categoryName}
-                      salonAddress={item.address || "не настроено"}
+                      salonAddress={item.address || "Адрес салона не настроено"}
                       ownerImage={item.attachmentId}
-                      salonOwner={`${item.firstName} ${item.lastName || ""}`}
-                      phoneNumber={item.phoneNumber || "не настроено"}
-                      salonCreateDate={item.createdAt || "не настроено"}
+                      salonOwner={`${item.firstName} ${item.lastName}`}
+                      phoneNumber={item.phoneNumber}
+                      salonCreateDate={item.createdAt}
                       modal={() => fetchFullData(item.id)}
                     />
                   </div>
