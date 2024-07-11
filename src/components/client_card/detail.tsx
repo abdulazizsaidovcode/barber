@@ -287,19 +287,12 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             {Status === 'BLOCKED' ? t('Unblock Master') : t('Modal answer')}
           </p>
           <div className="flex items-center gap-2 justify-end mt-3">
-            <Button
-              className="text-black dark:text-white"
-              key="back"
-              onClick={closeModal}
-            >
+            <Buttons onClick={closeModal}>
               {t('No')}
-            </Button>
-            <Button
-              className="text-black dark:text-white"
-              onClick={confirmToggleSwitch}
-            >
+            </Buttons>
+            <Buttons onClick={confirmToggleSwitch}>
               {t('Ok')}
-            </Button>
+            </Buttons>
           </div>
         </div>
       </Modal>
