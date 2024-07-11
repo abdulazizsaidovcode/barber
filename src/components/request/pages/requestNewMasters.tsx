@@ -169,8 +169,9 @@ const RequestNewMasters: React.FC = () => {
     };
     try {
       const res = await axios.put(masters_cancel_url, payload, config);
-      console.log(res.data.body);
-      fetchData(currentPage, pageSize);
+      if (res.data.success) {
+        fetchData(currentPage, pageSize);
+      }
     } catch { }
   };
 
