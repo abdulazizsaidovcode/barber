@@ -129,17 +129,18 @@ const All = () => {
                   onChange={e => setModalVal({ ...modalVal, active: e.target.checked })}
                 />
                 <label htmlFor={`helpActiveInput`}
-                       className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
+                  className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>
               </div>
             )}
             <div className={`flex justify-center items-center gap-6 mt-5`}>
+              <Buttons bWidth={`w-[150px]`} onClick={openIsModal}>{t('Close')}</Buttons>
               <Buttons
                 bWidth={`w-[150px]`}
                 onClick={() => updateHelp(updateTextArea, setDataAll, 'ALL', modalVal, setIsLoading, openIsModal)}
               >
                 {isLoading ? t('Loading') : t('Save')}
               </Buttons>
-              <Buttons bWidth={`w-[150px]`} onClick={openIsModal}>{t('Close')}</Buttons>
+
             </div>
           </div>
         </div>
