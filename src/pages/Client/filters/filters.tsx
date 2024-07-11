@@ -8,6 +8,7 @@ import { getDistrict } from "../../../helpers/api-function/master/master.tsx";
 import { useTranslation } from "react-i18next";
 import { client_download } from "../../../helpers/api.tsx";
 import { downloadExcelFile } from "../../../helpers/attachment/file-download.tsx";
+import { Buttons } from '../../../components/buttons';
 
 const { Option } = Select;
 
@@ -224,10 +225,7 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button
-            className={
-              "bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white"
-            }
+          <Buttons
             onClick={() =>
               downloadExcelFile(
                 url,
@@ -239,7 +237,7 @@ const Filters: React.FC = () => {
             }
           >
             {isLoading ? "loading..." : "Download"}
-          </Button>
+          </Buttons>
         </Col>
       </Row>
 
@@ -280,7 +278,7 @@ const Filters: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
               <Button
-                className="bg-gray-200 dark:bg-gray-800 rounded-lg text-xs dark:text-white"
+                className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
                 onClick={resetFilters}
               >
                 {t("Reset")}

@@ -8,12 +8,13 @@ import images from '../../images/user.png';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore.tsx';
-import { Buttons } from '../../components/buttons/index.tsx';
+import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
 import { updateClientStatus } from '../../helpers/api-function/client/clientFilter.tsx';
 import { getFileId } from '../../helpers/api.tsx';
 import ClientModal from './client-modal.tsx';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 export interface UpdateStatus {
   status: string;
@@ -35,12 +36,14 @@ const ClientTables: React.FC = () => {
     setIsMessageModal,
     isMessageModal,
     setid,
-    setSize,
+    setSize
   } = clientFilterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: '',
-    id: '',
+    id: ''
   });
+  const [isImageModal, setIsImageModal] = useState<boolean>(false);
+  const [imageID, setImageID] = useState<string>('');
 
   const onChange = (page: number, size: number): void => {
     setPage(page - 1);
@@ -49,11 +52,13 @@ const ClientTables: React.FC = () => {
 
   const openIsModal = () => setIsModal(!isModal);
   const openIsMessageModal = () => setIsMessageModal(!isMessageModal);
+  const openIsImageModal = () => setIsImageModal(!isImageModal);
 
   const itemRender = (_: any, type: string, originalElement: any) => {
     if (type === 'page') {
       return (
-        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
           {originalElement}
         </a>
       );
@@ -64,77 +69,77 @@ const ClientTables: React.FC = () => {
   const thead = [
     {
       id: 1,
-      name: t('Photo'),
+      name: t('Photo')
     },
     {
       id: 2,
-      name: t('Client'),
+      name: t('Client')
     },
     {
       id: 3,
-      name: t('Registration_date'),
+      name: t('Registration_date')
     },
     {
       id: 4,
-      name: t('Phone'),
+      name: t('Phone')
     },
     {
       id: 5,
-      name: t('Total_sessions'),
+      name: t('Total_sessions')
     },
     {
       id: 6,
-      name: t('Turnover'),
+      name: t('Turnover')
     },
     {
       id: 7,
-      name: t('Age'),
+      name: t('Age')
     },
     {
       id: 8,
-      name: t('master'),
+      name: t('master')
     },
     {
       id: 9,
-      name: t('Canceled'),
+      name: t('Canceled')
     },
     {
       id: 10,
-      name: t('Status'),
-    },
+      name: t('Status')
+    }
   ];
 
   const getItemsActive = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/client_id/${id}`}>{t('Open')}</Link>,
+      label: <Link to={`/client_id/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'ACTIVE',
       label: `${t('Active')}`,
-      onClick: () => openIsModal(),
+      onClick: () => openIsModal()
     },
     {
       key: '4',
       label: `${'Send message'}`,
-      onClick: () => openIsMessageModal(),
-    },
+      onClick: () => openIsMessageModal()
+    }
   ];
   const getItemsBlock = (id: string): MenuProps['items'] => [
     {
       key: '1',
-      label: <Link to={`/client_id/${id}`}>{t('Open')}</Link>,
+      label: <Link to={`/client_id/${id}`}>{t('Open')}</Link>
     },
     {
       key: 'BLOCKED',
       label: `${t('Locked')}`,
-      onClick: () => openIsModal(),
+      onClick: () => openIsModal()
     },
     {
       key: '4',
       label: `${'Send message'}`,
-      onClick: () => openIsMessageModal(),
-    },
+      onClick: () => openIsMessageModal()
+    }
   ];
 
   const handleMenuClick = (e: any, id: string) => {
@@ -161,8 +166,12 @@ const ClientTables: React.FC = () => {
                   src={
                     item.imgId !== null ? `${getFileId}${item.imgId}` : images
                   }
-                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover hover:cursor-pointer'}
                   effect="blur"
+                  onClick={() => {
+                    openIsImageModal();
+                    setImageID(item.imgId !== null ? item.imgId : '');
+                  }}
                 />
               </td>
               <td className="min-w-[150px] p-5">
@@ -208,7 +217,8 @@ const ClientTables: React.FC = () => {
                       placement="bottomLeft"
                       arrow
                     >
-                      <CiMenuKebab className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
+                      <CiMenuKebab
+                        className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
                     </Dropdown>
                   </Space>
                 </Space>
@@ -234,8 +244,8 @@ const ClientTables: React.FC = () => {
                     item.status === 'ACTIVE'
                       ? 'bg-green-400'
                       : item.status === 'BLOCKED'
-                      ? 'bg-red-500'
-                      : 'bg-red-700'
+                        ? 'bg-red-500'
+                        : 'bg-red-700'
                   } text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
                   {item.status}
@@ -254,7 +264,7 @@ const ClientTables: React.FC = () => {
           </tr>
         )}
       </ClientTable>
-      <div className='flex justify-start items-center'>
+      <div className="flex justify-start items-center">
         <Pagination
           // showSizeChanger
           responsive={true}
@@ -289,7 +299,7 @@ const ClientTables: React.FC = () => {
                   setClientFilterData,
                   setClientTotalPage,
                   openIsModal,
-                  setIsLoading,
+                  setIsLoading
                 )
               }
             >
@@ -301,6 +311,27 @@ const ClientTables: React.FC = () => {
           </div>
         </div>
       </Modal>
+      {isImageModal && (
+        <div
+          className={`fixed inset-0 z-999 flex items-center justify-center w-full h-full bg-black-2 bg-opacity-50`}
+          onClick={openIsImageModal}
+        >
+          <p className={`absolute top-10 right-10 text-white`}>
+            <IoMdCloseCircleOutline
+              size={30}
+              className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
+              onClick={openIsImageModal} />
+          </p>
+          <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
+            <LazyLoadImage
+              alt="img"
+              src={imageID ? `${getFileId}${imageID}` : images}
+              className={'w-full h-full object-cover'}
+              effect="blur"
+            />
+          </div>
+        </div>
+      )}
       <ClientModal />
     </>
   );

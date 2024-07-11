@@ -12,6 +12,7 @@ import { Buttons } from '../../components/buttons';
 import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
 import { getFileId } from '../../helpers/api.tsx';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 export interface UpdateStatus {
   status: string;
@@ -91,6 +92,8 @@ const MasterTables: React.FC = () => {
     status: '',
     masterId: '',
   });
+  const [isImageModal, setIsImageModal] = useState<boolean>(false);
+  const [imageID, setImageID] = useState<string>('');
 
   const getItemsActive = (id: string): MenuProps['items'] => [
     {
@@ -115,8 +118,8 @@ const MasterTables: React.FC = () => {
     },
   ];
   const openIsModal = () => setIsModal(!isModal);
-  const handleMenuClick = (e: any, masterId: string) =>
-    setUpdateStatus({ status: e.key, masterId });
+  const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId });
+  const openIsImageModal = () => setIsImageModal(!isImageModal);
   const onChange = (page: number, size: number): void => {
     setPage(page - 1);
     setSize(size);
@@ -150,11 +153,13 @@ const MasterTables: React.FC = () => {
               <td className={`min-w-[150px] p-5`}>
                 <LazyLoadImage
                   alt="img"
-                  src={
-                    item.imgId !== null ? `${getFileId}${item.imgId}` : images
-                  }
-                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover'}
+                  src={item.imgId !== null ? `${getFileId}${item.imgId}` : images}
+                  className={'w-10 h-10 scale-[1.4] rounded-full object-cover hover:cursor-pointer'}
                   effect="blur"
+                  onClick={() => {
+                    openIsImageModal();
+                    setImageID(item.imgId !== null ? item.imgId : '');
+                  }}
                 />
               </td>
               <td className="min-w-[150px] p-5">
@@ -292,6 +297,27 @@ const MasterTables: React.FC = () => {
           </div>
         </div>
       </Modal>
+      {isImageModal && (
+        <div
+          className={`fixed inset-0 z-999 flex items-center justify-center w-full h-full bg-black-2 bg-opacity-50`}
+          onClick={openIsImageModal}
+        >
+          <p className={`absolute top-10 right-10 text-white`}>
+            <IoMdCloseCircleOutline
+              size={30}
+              className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
+              onClick={openIsImageModal} />
+          </p>
+          <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
+            <LazyLoadImage
+              alt="img"
+              src={imageID ? `${getFileId}${imageID}` : images}
+              className={'w-full h-full object-cover'}
+              effect="blur"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };

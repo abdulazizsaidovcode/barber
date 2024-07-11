@@ -7,6 +7,7 @@ import masterStore from '../../../helpers/state_managment/master/masterStore.tsx
 import { useTranslation } from 'react-i18next';
 import { downloadExcelFile } from '../../../helpers/attachment/file-download.tsx';
 import { master_download } from '../../../helpers/api.tsx';
+import { Buttons } from '../../../components/buttons';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -56,7 +57,7 @@ const Filters: React.FC = () => {
       page: validateObject(filters) ? page : 0,
       size: validateObject(filters) ? size : 0,
       setData,
-      setTotalPage,
+      setTotalPage
     });
     if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue);
   }, [filters]);
@@ -152,12 +153,10 @@ const Filters: React.FC = () => {
           >
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
           </Button>
-          <Button
-            className={`bg-[#f0f0f0]`}
-            onClick={() => downloadExcelFile(url, setIsLoading, t('File_downloaded_successfully'), t('There_was_an_error_fetching_the_data'), page)}
-          >
+          <Buttons
+            onClick={() => downloadExcelFile(url, setIsLoading, t('File_downloaded_successfully'), t('There_was_an_error_fetching_the_data'), page)}>
             {isLoading ? t('Loading') : t('Download')}
-          </Button>
+          </Buttons>
         </Col>
       </Row>
 
