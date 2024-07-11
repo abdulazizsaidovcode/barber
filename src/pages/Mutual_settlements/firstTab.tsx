@@ -28,7 +28,6 @@ const FilterComponent: React.FC = () => {
     setActiveMenu(activeMenu === id ? null : id);
   };
 
-  // Inline styles for the component
   const styles = {
     mainContainer: {
       padding: '15px',
