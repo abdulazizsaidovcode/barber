@@ -43,7 +43,7 @@ const FilterComponent: React.FC = () => {
     },
     filterInput: {
       width: '100%',
-      backgroundColor: '#f0f0f0', // Light gray
+      backgroundColor: '#f0f0f0', 
     },
     toggleButton: {
       width: '13%',
