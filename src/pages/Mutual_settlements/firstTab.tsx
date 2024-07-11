@@ -51,7 +51,10 @@ const FilterComponent: React.FC = () => {
       backgroundColor: '#f0f0f0',
     },
     extraButton: {
-      backgroundColor: '#f0f0f0',
+      backgroundColor: '#9C0936',
+      color: '#fff',
+      border: 'none',
+      fontWeight: '500',
     },
   };
 
