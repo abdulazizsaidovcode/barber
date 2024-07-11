@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { Skeleton, Button, Rate, Input } from 'antd';
+import { Skeleton, Rate, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import {
   master_block_put,
-  master_send_message_master,
+  master_send_message_master
 } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import Switch from './../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { Buttons } from '../buttons';
 
 const { TextArea } = Input;
 
@@ -45,34 +48,34 @@ type MasterCardInfoProps = {
 };
 
 const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
-  getFunc,
-  MasterName,
-  MasterImg,
-  definitionType,
-  Status,
-  isLoading,
-  SurName,
-  Location,
-  UserName,
-  Gender,
-  Age,
-  Region,
-  City,
-  Number,
-  Telegram,
-  Instagram,
-  CompOrders,
-  rejectedOrderCount,
-  Clients,
-  Level,
-  StartData,
-  PlaceOfWork,
-  GenderType,
-  ServiceCategory,
-  Specialization,
-  scheduleType,
-  StatusNow,
-}) => {
+                                                         getFunc,
+                                                         MasterName,
+                                                         MasterImg,
+                                                         definitionType,
+                                                         Status,
+                                                         isLoading,
+                                                         SurName,
+                                                         Location,
+                                                         UserName,
+                                                         Gender,
+                                                         Age,
+                                                         Region,
+                                                         City,
+                                                         Number,
+                                                         Telegram,
+                                                         Instagram,
+                                                         CompOrders,
+                                                         rejectedOrderCount,
+                                                         Clients,
+                                                         Level,
+                                                         StartData,
+                                                         PlaceOfWork,
+                                                         GenderType,
+                                                         ServiceCategory,
+                                                         Specialization,
+                                                         scheduleType,
+                                                         StatusNow
+                                                       }) => {
   const { t } = useTranslation();
   const location = useLocation();
   const idMaster = location.pathname.substring(8);
@@ -82,10 +85,13 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const [SendOpen, setSendOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [pendingSwitchState, setPendingSwitchState] = useState(true);
+  const [isImageModal, setIsImageModal] = useState<boolean>(false);
+  const [imageID, setImageID] = useState<string>('');
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   const closeSendModal = () => setSendOpen(false);
+  const openIsImageModal = () => setIsImageModal(!isImageModal);
 
   const handleSwitchClick = () => {
     setPendingSwitchState(!isSwitchOn);
@@ -119,9 +125,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           adminId: null,
           message,
           messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_WRITE',
-          read: true,
+          read: true
         },
-        config,
+        config
       );
       toast.success(t('Message_sent_successfully'));
       closeSendModal();
@@ -147,7 +153,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
     <div className="flex flex-col lg:flex-row-reverse gap-4 mt-4">
       <div className="w-full flex flex-col items-center justify-center gap-4">
         <Skeleton loading={isLoading} active>
-          <div className="bg-gray-100 dark:bg-boxdark text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-full">
+          <div
+            className="bg-gray-100 dark:bg-boxdark text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-full">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">{t('Profile')}:</p>
               <div
@@ -185,7 +192,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="bg-gray-100 dark:bg-boxdark text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-full">
+          <div
+            className="bg-gray-100 dark:bg-boxdark text-black dark:text-white p-4 shadow-4 flex flex-col justify-between pl-10 py-10 border-black rounded-xl w-full lg:w-full">
             <div className="flex items-center">
               <p className="text-xl font-bold">
                 {t('Profession_information')}:
@@ -212,7 +220,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
       </div>
       <div className="flex flex-col h-full justify-between gap-4">
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div
+            className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center gap-4">
               <div
                 className={`rounded-full w-2 h-2 font-bold ${
@@ -222,10 +231,15 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <p>{StatusNow}</p>
             </div>
             <div className="flex items-center justify-center border-black p-1 rounded-full">
-              <img
+              <LazyLoadImage
+                alt="img"
                 src={MasterImg}
-                alt="Master"
-                className="w-40 border h-40 rounded-full"
+                className={'w-40 border h-40 rounded-full object-cover hover:cursor-pointer'}
+                effect="blur"
+                onClick={() => {
+                  openIsImageModal();
+                  setImageID(MasterImg);
+                }}
               />
             </div>
             <div className="flex items-center mt-3 justify-between">
@@ -235,7 +249,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div
+            className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black dark:text-white font-bold">
                 {t('Status')}:
@@ -251,13 +266,15 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <div className="flex items-center justify-between mt-4">
               <p>{Status == 'BLOCKED' ? 'Blokdan Chiqarish' : t('Block')}</p>
               <div onClick={handleSwitchClick}>
-                <Switch isOn={isSwitchOn} handleToggle={() => {}} />
+                <Switch isOn={isSwitchOn} handleToggle={() => {
+                }} />
               </div>
             </div>
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div
+            className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black dark:text-white font-bold mb-2 mt-2">
                 {t('Contacts')}:
@@ -282,7 +299,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           </div>
         </Skeleton>
         <Skeleton loading={isLoading} active>
-          <div className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
+          <div
+            className="flex flex-col dark:bg-boxdark text-black dark:text-white border-black w-full lg:w-[300px] shadow-3 p-3 rounded-xl">
             <div className="flex items-center justify-between">
               <p className="text-black dark:text-white font-bold mb-2 mt-2">
                 {t('Indicators')}:
@@ -323,12 +341,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               : t('Modal_answer')}
           </p>
           <div className="flex items-center gap-2 justify-end mt-3">
-            <Button key="back" className="dark:text-white" onClick={closeModal}>
+            <Buttons onClick={closeModal}>
               {t('No')}
-            </Button>
-            <Button className="dark:text-white" onClick={confirmToggleSwitch}>
-              {t('Ok')}
-            </Button>
+            </Buttons>
+            <Buttons onClick={confirmToggleSwitch}>{t('Ok')}</Buttons>
           </div>
         </div>
       </Modal>
@@ -346,16 +362,32 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             onChange={(e) => setMessage(e.target.value)}
           />
           <div className="flex items-center justify-center">
-            <Button
-              onClick={handlePostBtn}
-              className="text-black mt-4 w-[40%] dark:text-white"
-              size="large"
-            >
-              {t('Send')}
-            </Button>
+            <Buttons onClick={handlePostBtn}>{t('Send')}</Buttons>
           </div>
         </div>
       </Modal>
+
+      {isImageModal && (
+        <div
+          className={`fixed inset-0 z-999 flex items-center justify-center w-full h-full bg-black-2 bg-opacity-50`}
+          onClick={openIsImageModal}
+        >
+          <p className={`absolute top-10 right-10 text-white`}>
+            <IoMdCloseCircleOutline
+              size={30}
+              className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
+              onClick={openIsImageModal} />
+          </p>
+          <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
+            <LazyLoadImage
+              alt="img"
+              src={imageID}
+              className={'w-full h-full object-cover'}
+              effect="blur"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

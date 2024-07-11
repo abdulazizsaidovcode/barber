@@ -34,8 +34,6 @@ const DetailMaster: React.FC = () => {
       });
   };
 
-  console.log(orderDetails);
-
   return (
     <DefaultLayout>
       <div>

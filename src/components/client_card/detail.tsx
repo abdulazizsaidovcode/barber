@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Skeleton, Button, Input } from 'antd';
+import { Skeleton, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -11,7 +11,6 @@ import Modal from '../modals/modal';
 import { Buttons } from '../buttons';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import images from '../../images/user.png';
 
 const { TextArea } = Input;
 
@@ -331,7 +330,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
           <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
             <LazyLoadImage
               alt="img"
-              src={imageID ? imageID : images}
+              src={imageID}
               className={'w-full h-full object-cover'}
               effect="blur"
             />
