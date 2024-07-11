@@ -322,11 +322,11 @@ const ClientTables: React.FC = () => {
               className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
               onClick={openIsImageModal} />
           </p>
-          <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
+          <div className={`w-[90vw] h-[85vh] flex justify-center items-center`}>
             <LazyLoadImage
               alt="img"
               src={imageID ? `${getFileId}${imageID}` : images}
-              className={'w-full h-full object-cover'}
+              className={'w-[90%] h-[80%] object-contain'}
               effect="blur"
             />
           </div>

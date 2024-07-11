@@ -331,7 +331,7 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             <LazyLoadImage
               alt="img"
               src={imageID}
-              className={'w-full h-full object-cover'}
+              className={'w-full h-full object-contain'}
               effect="blur"
             />
           </div>
