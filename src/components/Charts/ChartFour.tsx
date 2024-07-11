@@ -130,11 +130,11 @@ const ChartFour: React.FC = () => {
         if (response.data.body && response.data.body.length > 0) {
           setChart(response.data.body);
         } else {
-          setError('No data available');
+          setError(t("No_data_available"));
         }
       })
       .catch(() => {
-        setError('There was an error fetching the data!');
+        setError(t("There_was_an_error_fetching_the_data"));
       })
       .finally(() => {
         setLoading(false);
