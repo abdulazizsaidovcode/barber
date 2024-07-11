@@ -16,7 +16,7 @@ const FilterComponent: React.FC = () => {
     setSize,
     setData,
     setTotalPage,
-    setStatus,
+    setStatus
   } = orderStore();
   const { t } = useTranslation();
 
@@ -26,7 +26,7 @@ const FilterComponent: React.FC = () => {
     getOrder({
       status: 'UPCOMING',
       setData: setData,
-      setTotalPage: setTotalPage,
+      setTotalPage: setTotalPage
     });
   }, []);
 
@@ -42,7 +42,7 @@ const FilterComponent: React.FC = () => {
     { id: 9, name: t('order_table_pay') },
     { id: 10, name: t('order_table_status') },
     { id: 11, name: t('master') },
-    { id: 12, name: '' },
+    { id: 12, name: '' }
   ];
 
   const onChange = (page: number, size: number): void => {
@@ -53,7 +53,8 @@ const FilterComponent: React.FC = () => {
   const itemRender = (_: any, type: string, originalElement: any) => {
     if (type === 'page') {
       return (
-        <a className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
+        <a
+          className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
           {originalElement}
         </a>
       );
@@ -61,9 +62,11 @@ const FilterComponent: React.FC = () => {
     return originalElement;
   };
   return (
-    <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
+    <div className="rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
-      <FilterOrder />
+      <div className={`px-7 mt-5`}>
+        <FilterOrder />
+      </div>
       <div>
         <MasterTable thead={tableHeaders}>
           {data.length !== 0 ? (
@@ -141,10 +144,10 @@ const FilterComponent: React.FC = () => {
                   {data.paymentTypes === null
                     ? t('Not_available')
                     : data
-                    ? data.paymentTypes
                       ? data.paymentTypes
-                      : t('No_data')
-                    : t('No_data')}
+                        ? data.paymentTypes
+                        : t('No_data')
+                      : t('No_data')}
                 </td>
                 <td className="p-5">
                   {data
@@ -187,14 +190,15 @@ const FilterComponent: React.FC = () => {
                                 <Link to={`/orders/${data.orderId}`}>
                                   {t('Open')}
                                 </Link>
-                              ),
-                            },
-                          ],
+                              )
+                            }
+                          ]
                         }}
                         placement="bottomLeft"
                         arrow
                       >
-                        <CiMenuKebab className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
+                        <CiMenuKebab
+                          className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
                       </Dropdown>
                     </Space>
                   </Space>

@@ -39,9 +39,11 @@ const FilterComponent2: React.FC = () => {
     return originalElement;
   };
   return (
-    <div className="p-5 rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
+    <div className="rounded-lg shadow-md mb-5 dark:bg-boxdark bg-white">
       {/* Top filters row */}
-      <FilterOrder />
+      <div className={`px-7 mt-5`}>
+        <FilterOrder />
+      </div>
       <div>
         <MasterTable thead={tableHeaders}>
           {data.length !== 0 ? (
@@ -124,7 +126,8 @@ const FilterComponent2: React.FC = () => {
                         placement="bottomLeft"
                         arrow
                       >
-                        <CiMenuKebab className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
+                        <CiMenuKebab
+                          className="text-black dark:text-white text-[1.5rem] ms-4 hover:cursor-pointer hover:opacity-60 duration-200" />
                       </Dropdown>
                     </Space>
                   </Space>
@@ -143,10 +146,10 @@ const FilterComponent2: React.FC = () => {
                   {data.paymentTypes === null
                     ? t('Not_available')
                     : data
-                    ? data.paymentTypes
                       ? data.paymentTypes
-                      : t('No_data')
-                    : t('No_data')}
+                        ? data.paymentTypes
+                        : t('No_data')
+                      : t('No_data')}
                 </td>
                 <td className="p-5">
                   {data
