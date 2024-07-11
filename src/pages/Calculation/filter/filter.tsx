@@ -1,5 +1,5 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Input, Row, Select } from 'antd';
+import { Col, DatePicker, Input, Row, Select } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import orderStore from '../../../helpers/state_managment/order/orderStore';
@@ -24,7 +24,7 @@ const FilterOrder: React.FC = () => {
     childCategory,
     setIsLoading,
     isLoading,
-    page,
+    page
   } = orderStore();
 
   interface Filters {
@@ -46,7 +46,7 @@ const FilterOrder: React.FC = () => {
     categoryId: null,
     orderStatus: null,
     paymentType: null,
-    MASTER_OR_CLIENT: null,
+    MASTER_OR_CLIENT: null
   });
 
   const [orderDates, setOrderDate] = useState<Moment | null>(null);
@@ -66,7 +66,7 @@ const FilterOrder: React.FC = () => {
       status: statusO,
       setData: setData,
       setTotalPage: setTotalPage,
-      ...collectFilterValues(),
+      ...collectFilterValues()
     };
 
     // Remove empty filter values
@@ -84,13 +84,13 @@ const FilterOrder: React.FC = () => {
   useEffect(() => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      districtId: null,
+      districtId: null
     }));
     const params: any = {
       status: statusO,
       setData: setData,
       setTotalPage: setTotalPage,
-      ...collectFilterValues(),
+      ...collectFilterValues()
     };
 
     // Remove empty filter values
@@ -114,7 +114,7 @@ const FilterOrder: React.FC = () => {
     filters.categoryId ? `categoryId=${filters.categoryId}` : null,
     filters.MASTER_OR_CLIENT
       ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}`
-      : null,
+      : null
   ]
     .filter(Boolean)
     .join('&');
@@ -129,7 +129,7 @@ const FilterOrder: React.FC = () => {
     } else {
       setFilters((prevFilters) => ({
         ...prevFilters,
-        [key]: value,
+        [key]: value
       }));
     }
   };
@@ -148,7 +148,7 @@ const FilterOrder: React.FC = () => {
       categoryId: null,
       orderStatus: null,
       paymentType: null,
-      MASTER_OR_CLIENT: null,
+      MASTER_OR_CLIENT: null
     });
     setOrderDate(null);
   };
@@ -201,12 +201,9 @@ const FilterOrder: React.FC = () => {
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} className="mb-4 flex gap-4">
-          <Button
-            className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
-            onClick={toggleExtraFilters}
-          >
+          <Buttons onClick={toggleExtraFilters}>
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
-          </Button>
+          </Buttons>
           <Buttons
             onClick={() =>
               downloadExcelFile(
@@ -214,7 +211,7 @@ const FilterOrder: React.FC = () => {
                 setIsLoading,
                 t('File_downloaded_successfully'),
                 t('There_was_an_error_fetching_the_data'),
-                page,
+                page
               )
             }
           >
@@ -283,12 +280,9 @@ const FilterOrder: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} sm={12} md={3} className="mb-4">
-            <Button
-              className="flex items-center justify-center bg-white px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
-              onClick={resetFilters}
-            >
+            <Buttons onClick={resetFilters}>
               {t('Reset')}
-            </Button>
+            </Buttons>
           </Col>
         </Row>
       )}

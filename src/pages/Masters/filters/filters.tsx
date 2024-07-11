@@ -1,4 +1,4 @@
-import { Button, Col, DatePicker, Input, Row, Select, Space } from 'antd';
+import { Col, DatePicker, Input, Row, Select, Space } from 'antd';
 import { IoSearchOutline } from 'react-icons/io5';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
@@ -147,12 +147,9 @@ const Filters: React.FC = () => {
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6} className="flex gap-4 mb-[16px]">
-          <Button
-            className="flex items-center justify-center bg-[#f0f0f0] w-[13%]"
-            onClick={toggleExtraFilters}
-          >
+          <Buttons onClick={toggleExtraFilters}>
             {showExtraFilters ? <UpOutlined /> : <DownOutlined />}
-          </Button>
+          </Buttons>
           <Buttons
             onClick={() => downloadExcelFile(url, setIsLoading, t('File_downloaded_successfully'), t('There_was_an_error_fetching_the_data'), page)}>
             {isLoading ? t('Loading') : t('Download')}
@@ -238,10 +235,7 @@ const Filters: React.FC = () => {
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
-              <Button
-                onClick={resetFilters}
-                className={`bg-[#f0f0f0]`}
-              >{t('Reset')}</Button>
+              <Buttons onClick={resetFilters}>{t('Reset')}</Buttons>
             </Col>
           </Row>
         </>

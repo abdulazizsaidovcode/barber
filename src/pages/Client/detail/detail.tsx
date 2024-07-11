@@ -13,10 +13,10 @@ const DetailMaster: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const id = location.pathname.substring(11);
- 
+
 
   useEffect(() => {
-    getClient_data()
+    getClient_data();
   }, []);
   const getClient_data = () => {
     setIsLoading(true);
@@ -34,6 +34,8 @@ const DetailMaster: React.FC = () => {
       });
   };
 
+  console.log(orderDetails);
+
   return (
     <DefaultLayout>
       <div>
@@ -42,12 +44,9 @@ const DetailMaster: React.FC = () => {
         ) : orderDetails ? (
           <div>
             <DetailClient
-            getFunc={getClient_data}
-              
+              getFunc={getClient_data}
               StatusNow={orderDetails.chatStatus}
-              ClientImg={
-                orderDetails.image ? getFileId + orderDetails.image : userImg
-              }
+              ClientImg={orderDetails.imgId ? getFileId + orderDetails.imgId : userImg}
               StartData={orderDetails.registrationDate ?? 'Mavjud emas'}
               Telegram={orderDetails.telegram ?? 'Mavjud emas'}
               Clients={orderDetails.masterCount ?? 'Mavjud emas'}
@@ -70,7 +69,8 @@ const DetailMaster: React.FC = () => {
         ) : (
           <p className="dark:text-white">No order details found.</p>
         )}
-      </div>{' '}
+      </div>
+      {' '}
     </DefaultLayout>
   );
 };

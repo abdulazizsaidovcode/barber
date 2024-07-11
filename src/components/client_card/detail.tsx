@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Skeleton, Button, Rate, Input } from 'antd';
+import React, { useState, useCallback } from 'react';
+import { Skeleton, Button, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -8,17 +8,19 @@ import { client_block_put, client_send_message } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import Switch from '../settings/details/TableSwitcher';
 import Modal from '../modals/modal';
+import { Buttons } from '../buttons';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import images from '../../images/user.png';
 
 const { TextArea } = Input;
 
 type MasterCardInfoProps = {
   ClientName: string;
   ClientImg: string;
-
   isLoading: any;
   SurName: string;
   Location: string;
-
   Gender: string;
   Age: string;
   Region: string;
@@ -30,12 +32,9 @@ type MasterCardInfoProps = {
   CompOrders: string;
   rejectedOrderCount: string;
   Clients: string;
-
   StartData: string;
   Status: string;
-
   ServiceCategory: string[];
-
   StatusNow: string;
    getFunc: () => void;
 };
@@ -48,7 +47,6 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   isLoading,
   SurName,
   Location,
-
   Gender,
   Age,
   Region,
@@ -59,11 +57,9 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   CompOrders,
   rejectedOrderCount,
   Clients,
-
   StartData,
   Status,
   StatusNow,
-
 }) => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -74,6 +70,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
   const [sendOpen, setSendOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [pendingSwitchState, setPendingSwitchState] = useState(false);
+  const [isImageModal, setIsImageModal] = useState<boolean>(false);
+  const [imageID, setImageID] = useState<string>('');
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -136,6 +134,8 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
     }
   };
 
+  const openIsImageModal = () => setIsImageModal(!isImageModal);
+
   return (
     <div className="flex flex-col lg:flex-row-reverse gap-4 mt-4">
       <div className="w-full flex h-full flex-col items-center justify-center gap-4">
@@ -191,10 +191,15 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <p>{StatusNow}</p>
             </div>
             <div className="flex items-center justify-center border-black p-1 rounded-full">
-              <img
+              <LazyLoadImage
+                alt="img"
                 src={ClientImg}
-                alt="Master"
-                className="w-40 border h-40 rounded-full"
+                className={'w-40 border h-40 rounded-full object-cover hover:cursor-pointer'}
+                effect="blur"
+                onClick={() => {
+                  openIsImageModal();
+                  setImageID(ClientImg);
+                }}
               />
             </div>
             <div className="flex items-center mt-3 justify-between">
@@ -311,17 +316,35 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <div className="flex items-center justify-center">
-            <Button
-              onClick={handlePostBtn}
-              className="text-black mt-4 w-[40%] dark:text-white"
-              size="large"
-            >
+          <div className="flex items-center justify-center mt-5">
+            <Buttons onClick={handlePostBtn} bWidth={`w-40`}>
               {t('Send')}
-            </Button>
+            </Buttons>
           </div>
         </div>
       </Modal>
+
+      {isImageModal && (
+        <div
+          className={`fixed inset-0 z-999 flex items-center justify-center w-full h-full bg-black-2 bg-opacity-50`}
+          onClick={openIsImageModal}
+        >
+          <p className={`absolute top-10 right-10 text-white`}>
+            <IoMdCloseCircleOutline
+              size={30}
+              className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
+              onClick={openIsImageModal} />
+          </p>
+          <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
+            <LazyLoadImage
+              alt="img"
+              src={imageID ? imageID : images}
+              className={'w-full h-full object-cover'}
+              effect="blur"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
