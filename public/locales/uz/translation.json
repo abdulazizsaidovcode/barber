@@ -164,7 +164,14 @@
   "Profession_information": "Kasb ma'lumotlari",
   "User_Name": "Foydalanuvchi ismi",
   "Regions": "Viloyat",
+  "region":"Mintaqa",
+  "city":"Shahar",
+  "Кто отменил":"Kim bekor qilgani",
+  "payment":"To'lov turi",
+  "tarif":"Tariflar",
   "SecondTab_name": "Bajarildi",
+  "no_info":"Malumot mavjud emas!",
+  "no_region": "Hudud tanlanmagan yoki mavjud emas!",
   "Direction_by_gender": "Jins bo'yicha yo'nalish",
   "Turnover_Total": "Jami aylanma  ",
   "Downloading": "Yuklanmoqda...",
@@ -401,6 +408,8 @@
   "Book_a_client": "Mijozni ro'yxatga olish",
   "Ability_for_the_master_to_book_clients": "Usta uchun mijozlarni ro'yxatga olish imkoniyati",
   "Make_a_day_off": "Dam olish kuni qilish",
+  "attachments": "Qo'shimchalar",
+  "file_delete": " Bu fileni uchirishga ishonchingiz komilmi?",
   "info_notfound": "Malumot mavjud emas!",
   "Ability_for_the_master_to_make_any_day_off": "Usta uchun har qanday kunni dam olish kuni qilish imkoniyati",
   "today": "Bugun",
@@ -425,6 +434,6 @@
   "september": "Sentabr",
   "october": "Oktyabr",
   "november": "Noyabr",
-  "december": "Dekabr",
+  "december": "Dekabr"
   
 }

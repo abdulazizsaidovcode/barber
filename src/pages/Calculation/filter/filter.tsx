@@ -169,7 +169,7 @@ const FilterOrder: React.FC = () => {
         {/* regionId */}
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
-            placeholder="Region"
+            placeholder={t('region')}
             value={filters.regionId || null}
             allowClear
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
@@ -186,7 +186,7 @@ const FilterOrder: React.FC = () => {
         {/* districtId */}
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
-            placeholder="City"
+            placeholder={t('city')}
             allowClear
             value={filters.districtId || null}
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
@@ -232,7 +232,7 @@ const FilterOrder: React.FC = () => {
           {/* categoryId */}
           <Col xs={24} sm={12} md={6} className="mb-4">
             <Select
-              placeholder="Service Category"
+              placeholder={t('Service_category')}
               allowClear
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
               value={filters.categoryId || null}
@@ -250,7 +250,7 @@ const FilterOrder: React.FC = () => {
           {statusO === 'REJECTED' ? (
             <Col xs={24} sm={12} md={6} className="mb-4">
               <Select
-                placeholder="Кто отменил"
+                placeholder={t('Кто отменил')}
                 allowClear
                 value={filters.MASTER_OR_CLIENT}
                 className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
@@ -269,7 +269,7 @@ const FilterOrder: React.FC = () => {
           {/* paymentType */}
           <Col xs={24} sm={12} md={5} className="mb-4">
             <Select
-              placeholder="Payment type"
+              placeholder={t('payment')}
               allowClear
               value={filters.paymentType || null}
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"

@@ -24,7 +24,7 @@ const MainTabs: React.FC = () => {
       key: 'master',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t('Master')}
+          {t('master')}
         </span>
       ),
       children: <MasterDocument />

@@ -151,7 +151,7 @@ const All = () => {
         <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
           <div className={`flex flex-col justify-center`}>
             <p className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}>
-              Bu fileni uchirishga ishonchingiz komilmi?
+             t{('file_delete')}
             </p>
           </div>
           <div className={`mt-5`}>
