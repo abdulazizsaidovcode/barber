@@ -162,7 +162,7 @@ const FirstTab: React.FC = () => {
                 className="min-w-full text-center py-10 text-xl font-bold dark:text-white"
                 colSpan={5}
               >
-                Malumot mavjud emas!
+                {t("info_notfound")}
               </td>
             </tr>
           }
