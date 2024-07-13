@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Accordion from '../../components/accordion/accordion';
 import { FaPlus } from 'react-icons/fa';
+import { FaMinus } from "react-icons/fa6";
 import axios from 'axios';
 import { add_service_category, service_category_list, del_service_category, edit_service_category } from '../../helpers/api';
 import { config } from '../../helpers/token';
@@ -84,10 +85,12 @@ const Specializations: React.FC = () => {
   const addChildData = async (fatherId: string) => {
     const newCategoryName = newCategoryNameMap[fatherId];
 
-    if (!newCategoryName.trim() || !/[^a-zA-Zа-яА-Я0-9]/.test(newCategoryName)) {
+    if (!newCategoryName.trim() || /^[^a-zA-Zа-яА-Я0-9]/.test(newCategoryName)) {
       toast(t("Please_enter_valid_category"), { icon: '⚠️' });
       return;
     }
+
+
 
     setAddLoading((prev) => ({ ...prev, [fatherId]: true }));
 
@@ -126,7 +129,7 @@ const Specializations: React.FC = () => {
 
   // UPDATE CHILD DATA
   const updateData = async (name: string, categoryFatherId: string, id: string) => {
-    if (!name.trim() || !/[a-zA-Z0-9]/.test(name)) {
+    if (!name.trim() || !/^[^a-zA-Zа-яА-Я0-9]/.test(name)) {
       toast(t("Please_enter_valid_category"), { icon: '⚠️' });
       return;
     }
@@ -178,6 +181,9 @@ const Specializations: React.FC = () => {
     setIsDelModalOpen(false);
   };
 
+  console.log(isInputOpen);
+
+
   const handleDelete = () => {
     if (categoryToDelete && selectedFatherId) {
       deleteChildData(categoryToDelete, selectedFatherId);
@@ -210,8 +216,8 @@ const Specializations: React.FC = () => {
                       <Skeleton active paragraph={{ rows: 4 }} />
                     ) : (
                       childDataMap[fatherItem.id] && childDataMap[fatherItem.id].length > 0 ? (
-                        childDataMap[fatherItem.id]?.map((childItem) => (
-                          <div key={childItem.id}>
+                        childDataMap[fatherItem.id]?.map((childItem, index) => (
+                          <div key={index}>
                             <ServiceCategoriesCard
                               title={childItem.name}
                               editOnClick={() => openEditModal(childItem.name, childItem.id, fatherItem.id)}
@@ -234,7 +240,7 @@ const Specializations: React.FC = () => {
                       aria-label="Add new child category"
                       disabled={addLoading[fatherItem.id]}
                     >
-                      {addLoading[fatherItem.id] ? t("Loading") : <FaPlus size={25} />}
+                      {addLoading[fatherItem.id] ? t("Loading") : isInputOpen[fatherItem.id] ? <FaMinus size={25} /> : <FaPlus size={25} />}
                     </button>
                   </div>
                 </div>

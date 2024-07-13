@@ -9,6 +9,7 @@ import { addPercent, deletePercent, editPercent, fetchData } from '../../helpers
 import DelModal from '../../components/settings/modals/delModal.tsx';
 import EditModal from '../../components/settings/modals/editModal.tsx';
 import { useTranslation } from 'react-i18next';
+import { FaMinus } from 'react-icons/fa';
 
 const DirectoriesOnlineBooking: React.FC = () => {
   const { t } = useTranslation()
@@ -75,7 +76,7 @@ const DirectoriesOnlineBooking: React.FC = () => {
                     className="bg-[#eaeaea] text-black dark:text-white dark:bg-[#9C0A35] rounded-lg py-2 px-10"
                     onClick={toggleInputOpen}
                   >
-                    <FaPlus size={25} />
+                    {isInputOpen ? <FaMinus size={25} /> : <FaPlus size={25} />}
                   </button>
                 </div>
               </div>

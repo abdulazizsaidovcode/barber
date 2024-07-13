@@ -94,7 +94,7 @@ const RequestProcedures: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center flex-col gap-4 mt-4 px-5">
+            <div className="flex items-center flex-col mt-4 gap-4 px-5">
               {loading ? (
                 Array.from({ length: 2 }).map((_, index) => (
                   <Skeleton key={index} active avatar paragraph={{ rows: 2 }} />
@@ -104,20 +104,23 @@ const RequestProcedures: React.FC = () => {
                   <p>{t("New_Procedures")}</p>
                 </div>
               ) : (
-                <div className="flex flex-col gap-3">
-                  {newProcedures.map((item, index) => (
-                    <SpecializationsCard
-                      key={index}
-                      link={item.id}
-                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                      salonOwner={`${item.firstName} ${item.lastName}`}
-                      phoneNumber={item.phoneNumber}
-                      salonCreateDate={item.createdAt}
-                      salonDescription={t("The_master_has_added")}
-                    />
-                  ))}
+                <div>
+                  <div className="flex flex-col items-center gap-3">
+                    {newProcedures.map((item, index) => (
+                      <SpecializationsCard
+                        key={index}
+                        link={item.id}
+                        ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                        salonOwner={`${item.firstName} ${item.lastName}`}
+                        phoneNumber={item.phoneNumber}
+                        salonCreateDate={item.createdAt}
+                        salonDescription={t("The_master_has_added")}
+                      />
+                    ))}
+                  </div>
                   <div className="mt-5">
                     <Pagination
+                      style={{ flexWrap: 'wrap' }}
                       showSizeChanger
                       current={currentNewPage + 1}
                       pageSize={newPageSize}
@@ -148,21 +151,24 @@ const RequestProcedures: React.FC = () => {
                   <p>{t("New_Procedures")}</p>
                 </div>
               ) : (
-                <div className="gap-3">
-                  {changedProcedures.map((item, index) => (
-                    <SpecializationsCard
-                      key={index}
-                      link={item.id}
-                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                      salonOwner={`${item.firstName} ${item.lastName}`}
-                      phoneNumber={item.phoneNumber}
-                      salonCreateDate={item.createdAt}
-                      salonDescription={t("The_master_has_added")}
-                    />
-                  ))}
+                <div>
+                  <div className="flex flex-col items-center gap-3">
+                    {changedProcedures.map((item, index) => (
+                      <SpecializationsCard
+                        key={index}
+                        link={item.id}
+                        ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                        salonOwner={`${item.firstName} ${item.lastName}`}
+                        phoneNumber={item.phoneNumber}
+                        salonCreateDate={item.createdAt}
+                        salonDescription={t("The_master_has_added")}
+                      />
+                    ))}
+                  </div>
                   <div className="p-3 mt-5">
                     <Pagination
                       showSizeChanger
+                      style={{ flexWrap: 'wrap' }}
                       current={currentChangedPage + 1}
                       pageSize={chanPageSize}
                       total={totalChangedProcedures}

@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { reviews_list_delete, reviews_main_data } from '../../api';
+import { reviews_list_delete } from '../../api';
 import { config } from '../../token';
 import { ListData, ListMasterData, MainData } from '../../../types/review';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 
-export const fetchMainData = async (setMainData: (data: MainData) => void) => {
+export const fetchMainData = async (setMainData: (data: MainData) => void, uri: string) => {
   try {
-    const res = await axios.get(reviews_main_data, config);
+    const res = await axios.get(uri, config);
     if (res.data.success) {
       setMainData(res.data.body);
     }

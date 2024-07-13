@@ -104,21 +104,24 @@ const RequestSpecializations: React.FC = () => {
                 <div className='w-full h-[510px] flex justify-center items-center'>
                   <p>New Specializations Not Found</p>
                 </div> :
-                <div className='flex flex-col gap-3'>
-                  {newSpecializations.map(item => (
-                    <SpecializationsCard
-                      key={item.id}
-                      link={item.id}
-                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                      salonOwner={`${item.firstName} ${item.lastName}`}
-                      phoneNumber={item.phoneNumber}
-                      salonCreateDate={item.createdAt}
-                      salonDescription={t("The_master_has_added")}
-                    />
-                  ))}
+                <div>
+                  <div className="flex flex-col items-center gap-3">
+                    {newSpecializations.map(item => (
+                      <SpecializationsCard
+                        key={item.id}
+                        link={item.id}
+                        ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                        salonOwner={`${item.firstName} ${item.lastName}`}
+                        phoneNumber={item.phoneNumber}
+                        salonCreateDate={item.createdAt}
+                        salonDescription={t("The_master_has_added")}
+                      />
+                    ))}
+                  </div>
                   <div className='mt-5'>
                     <Pagination
                       showSizeChanger
+                      style={{ flexWrap: 'wrap' }}
                       current={currentNewPage + 1}
                       pageSize={newPageSize}
                       total={totalNewSpecializations}
@@ -147,21 +150,24 @@ const RequestSpecializations: React.FC = () => {
                 <div className='w-full h-[510px] flex justify-center items-center'>
                   <p>Changed Specializations Not Found</p>
                 </div> :
-                <div className='flex flex-col gap-3'>
-                  {changedSpecializations.map(item => (
-                    <SpecializationsCard
-                      key={item.id}
-                      link={item.id}
-                      ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
-                      salonOwner={`${item.firstName} ${item.lastName}`}
-                      phoneNumber={item.phoneNumber}
-                      salonCreateDate={item.createdAt}
-                      salonDescription={t("The_master_changed")}
-                    />
-                  ))}
+                <div>
+                  <div className="flex flex-col items-center gap-3">
+                    {changedSpecializations.map(item => (
+                      <SpecializationsCard
+                        key={item.id}
+                        link={item.id}
+                        ownerImage={item.attachmentId ? getFileId + item.attachmentId : userImg}
+                        salonOwner={`${item.firstName} ${item.lastName}`}
+                        phoneNumber={item.phoneNumber}
+                        salonCreateDate={item.createdAt}
+                        salonDescription={t("The_master_changed")}
+                      />
+                    ))}
+                  </div>
                   <div className='mt-5'>
                     <Pagination
                       showSizeChanger
+                      style={{ flexWrap: 'wrap' }}
                       current={currentChangedPage + 1}
                       pageSize={chanPageSize}
                       total={totalChangedSpecializations}
