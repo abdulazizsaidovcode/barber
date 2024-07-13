@@ -192,7 +192,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
             </p>
             <div className="flex justify-end gap-2 mt-4">
               <Buttons key="cancel" onClick={handleCancel}>
-                Cancel
+                {t('cancel')}
               </Buttons>
               <Buttons key="confirm" onClick={handleDeleteConfirm}>
                 Confirm
