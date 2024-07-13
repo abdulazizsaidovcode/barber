@@ -35,11 +35,11 @@ const ReviewFilters: React.FC = () => {
   // filters urls
   const url_main: string = `${reviews_main_data}${queryParams ? '?' : ''}${queryParams}`;
   const url_list: string = `${reviews_list_data}?${queryParams}&page=${currentPage}&size=${pageSize}`;
-
+  const loading = (val: boolean) => { console.log(val) }
 
   useEffect(() => {
     fetchMainData(setMainData, url_main);
-    fetchDataList(setListData, setTotalPage, url_list);
+    fetchDataList(setListData, setTotalPage, url_list, loading);
     if (filters.regionId) getDistrict(setDistrictData, +filters.regionId);
   }, [filters]);
 
@@ -68,14 +68,14 @@ const ReviewFilters: React.FC = () => {
         placeholder={t('Search_by_name')}
         value={filters.firstNameOrLastName}
         prefix={<IoSearchOutline />}
-        className="w-55"
+        className="w-[18%]"
         allowClear
         onChange={(e) => handleInputChange('firstNameOrLastName', e.target.value)}
       />
       <Select
         allowClear
         placeholder={t('Region')}
-        className="w-55"
+        className="w-[18%]"
         value={filters.regionId}
         onChange={(e) => handleInputChange('regionId', e)}
       >
@@ -86,7 +86,7 @@ const ReviewFilters: React.FC = () => {
       <Select
         allowClear
         placeholder={t('City')}
-        className="w-55"
+        className="w-[18%]"
         value={filters.districtId}
         onChange={(e) => handleInputChange('districtId', e)}
       >
@@ -96,7 +96,7 @@ const ReviewFilters: React.FC = () => {
       </Select>
       <Select
         placeholder={t('Gender')}
-        className="w-55"
+        className="w-[18%]"
         allowClear
         value={filters.GENDER}
         onChange={e => handleInputChange('GENDER', e)}
@@ -112,7 +112,7 @@ const ReviewFilters: React.FC = () => {
         <div className="flex flex-wrap gap-5 mt-5">
           <Select
             placeholder={t('Rating')}
-            className="w-55"
+            className="w-[12.6rem]"
             value={filters.rating}
             onChange={e => handleInputChange('rating', e)}
             allowClear
@@ -125,7 +125,7 @@ const ReviewFilters: React.FC = () => {
           </Select>
           <Select
             placeholder={t('From_whom')}
-            className="w-55"
+            className="w-[13rem]"
             value={filters.MASTER_OR_CLIENT}
             onChange={e => handleInputChange('MASTER_OR_CLIENT', e)}
             allowClear
@@ -134,7 +134,7 @@ const ReviewFilters: React.FC = () => {
             <Option value={`CLIENT`}>{t("Client")}</Option>
           </Select>
           <DatePicker
-            className="w-55"
+            className="w-[12.6rem]"
             allowClear
             placeholder={t('Date')}
             value={filters.date}
