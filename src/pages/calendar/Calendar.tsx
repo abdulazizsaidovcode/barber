@@ -148,6 +148,13 @@ const Calendar: React.FC = () => {
           color: '#F97316',
         });
       }
+      if (item.completedOrders !== null && item.completedOrders !== undefined) {
+        acc.push({
+          title: `${item.completedOrders}`,
+          start: dateTime,
+          color: '#22C55E',
+        });
+      }
 
       if (
         item.toBeConfirmedOrders !== null &&
@@ -167,13 +174,7 @@ const Calendar: React.FC = () => {
           color: '#EF4444',
         });
       }
-      if (item.completedOrders !== null && item.completedOrders !== undefined) {
-        acc.push({
-          title: `${item.completedOrders}`,
-          start: dateTime,
-          color: '#22C55E',
-        });
-      }
+     
       return acc;
     },
     [] as { title: string; start: string; color: string }[],
@@ -185,7 +186,7 @@ const Calendar: React.FC = () => {
       onClick={() => {
         handleButtonClick('All', '');
       }}
-      className={`w-[97%] rounded-lg border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${
+      className={`${category.length !== 0 ? "w-[97%]" : ""}  rounded-lg border-2 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out focus:ring-0 motion-reduce:transition-none ${
         activeButton === 'All'
           ? 'bg-[#2C3E50] text-white'
           : 'border-[#2C3E50] text-[#2C3E50] bg-emerald-200 dark:bg-slate-400 hover:shadow-xl hover:bg-[#DDDDDD] dark:border-[#DDDDDD] dark:hover:border-[#2C3E50] dark:hover:text-[#2C3E50] dark:text-[#DDDDDD]'
