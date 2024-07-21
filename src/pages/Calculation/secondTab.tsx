@@ -187,7 +187,7 @@ const FilterComponent2: React.FC = () => {
                 className="min-w-full dark:text-white text-center py-10 text-xl font-bold"
                 colSpan={7}
               >
-                Malumot mavjud emas!
+                {t('no_info')}
               </td>
             </tr>
           )}

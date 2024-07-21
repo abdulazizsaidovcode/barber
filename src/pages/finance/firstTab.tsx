@@ -146,7 +146,7 @@ const FirstTab: React.FC = () => {
       <div>
         <div className='flex justify-around dark:text-white bg-white px-5 pb-2.5 dark:border-strokedark dark:bg-[#303d4a] mx-7.5 pt-3'>
           <p>{yearVal ? yearVal : <CurrentYear />}</p>
-          <p>Тарифы</p>
+          <p>{t('tarif')}</p>
         </div>
         <MasterTable thead={tableHeaders}>
           {data.object ? data.object.map((data: FinanceData, index: number) => (

@@ -102,7 +102,7 @@ const RequestSpecializations: React.FC = () => {
                 ))
               ) : (newSpecializations.length === 0 ?
                 <div className='w-full h-[510px] flex justify-center items-center'>
-                  <p>New Specializations Not Found</p>
+                  <p>{t('specialist')}</p>
                 </div> :
                 <div>
                   <div className="flex flex-col items-center gap-3">
@@ -148,7 +148,7 @@ const RequestSpecializations: React.FC = () => {
                 ))
               ) : (changedSpecializations.length === 0 ?
                 <div className='w-full h-[510px] flex justify-center items-center'>
-                  <p>Changed Specializations Not Found</p>
+                  <p>{t('specialist')}</p>
                 </div> :
                 <div>
                   <div className="flex flex-col items-center gap-3">

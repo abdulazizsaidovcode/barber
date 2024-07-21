@@ -3,9 +3,11 @@ import { Attachments } from '../types/help.ts';
 import { getFileId } from '../helpers/api.tsx';
 import { Link } from 'react-router-dom';
 import helpStore from '../helpers/state_managment/help/helpStore.tsx';
+import { useTranslation } from 'react-i18next';
 
 const FileGetUploader = ({ getList, openModal, idIn }: { getList: Attachments[], openModal: () => void, idIn: number }) => {
   const { setDeleteFileId } = helpStore();
+  const { t } = useTranslation();
   const getFileType = (fileName: string) => {
     const parts = fileName.split('.');
     return parts.length > 1 ? parts[parts.length - 1] : 'unknown';
@@ -13,7 +15,7 @@ const FileGetUploader = ({ getList, openModal, idIn }: { getList: Attachments[],
 
   return (
     <div className="flex w-[100%] flex-col flex-wrap">
-      <h2 className="my-3 text-[.8rem] sm:text-base text-black dark:text-white text-center sm:text-start">Вложения</h2>
+      <h2 className="my-3 text-[.8rem] sm:text-base text-black dark:text-white text-center sm:text-start">{t('attachments')}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-3">
         {getList.length > 0 && (
           getList.map((item, idx) => (

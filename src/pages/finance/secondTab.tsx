@@ -116,7 +116,7 @@ const FilterComponent: React.FC = () => {
       <div>
         <div className='flex justify-around dark:text-white bg-white px-5 pb-2.5 dark:border-strokedark dark:bg-[#303d4a] mx-7.5 pt-3'>
           <p>{yearVal ? yearVal : <CurrentYear />}</p>
-          <p>Тарифы</p>
+          <p>{t('tarif')}</p>
         </div>
         <MasterTable thead={tableHeaders}>
           {data && data.object ? data.object.map((data: any, index: number) => (
@@ -132,7 +132,7 @@ const FilterComponent: React.FC = () => {
                 className="min-w-full text-center py-10 text-xl font-bold dark:text-white"
                 colSpan={5}
               >
-                Регион не выбран или недоступен!
+                {t('no_region')}
               </td>
             </tr>
           }

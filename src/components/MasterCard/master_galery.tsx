@@ -12,6 +12,7 @@ import { config } from '../../helpers/token';
 import Modal from '../modals/modal';
 import { Buttons } from '../buttons';
 import { useParams } from 'react-router-dom';
+import { t } from 'i18next';
 
 interface ProcedureItemProps {
   imgUrl: string;
@@ -124,7 +125,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
           status ? 'bg-red-500' : 'bg-green-500'
         } mt-2 w-1/2 flex items-center justify-center rounded-md`}
       >
-        {status ? 'Новая' : 'Одобрена'}
+        {status ? `${t('new')}` : `${t('odobrone')}`}
       </div>
       <div className="flex flex-col items-center mt-2">
         {status ? (
@@ -158,7 +159,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       <Modal isOpen={isModalVisible} onClose={handleCancel}>
         {modalType === 'textarea' && (
           <div className="w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]">
-            <h2 className="dark:text-white text-lg">Reason for Deletion</h2>
+            <h2 className="dark:text-white text-lg">{t('delete_info')}</h2>
             {/* <Input.TextArea
               className="bg-transparent hover:bg-transparent text-white"
               rows={4}
@@ -174,11 +175,11 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
               onChange={(e) => setDeleteReason(e.target.value)}
             />
             <div className="flex justify-end gap-2 mt-4">
-              <Buttons key="cancel" onClick={handleCancel}>
-                Cancel
+              <Buttons key="cancel" onClick={handleCancel} >
+                {t('cancel')}
               </Buttons>
               <Buttons key="next" onClick={handleNextClick}>
-                Next
+                {t('next')}
               </Buttons>
             </div>
           </div>
@@ -191,7 +192,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
             </p>
             <div className="flex justify-end gap-2 mt-4">
               <Buttons key="cancel" onClick={handleCancel}>
-                Cancel
+                {t('cancel')}
               </Buttons>
               <Buttons key="confirm" onClick={handleDeleteConfirm}>
                 Confirm
