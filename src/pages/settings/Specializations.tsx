@@ -129,7 +129,7 @@ const Specializations: React.FC = () => {
 
   // UPDATE CHILD DATA
   const updateData = async (name: string, categoryFatherId: string, id: string) => {
-    if (!name.trim() || !/^[^a-zA-Zа-яА-Я0-9]/.test(name)) {
+    if (!name.trim() || /^[^a-zA-Zа-яА-Я0-9]/.test(name)) {
       toast(t("Please_enter_valid_category"), { icon: '⚠️' });
       return;
     }
