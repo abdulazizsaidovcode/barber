@@ -12,10 +12,10 @@ export const getMe = (token?: string) => {
       `${base_url}user/me`,
       token
         ? {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
         : config,
     )
     .then((res) => {
@@ -26,7 +26,7 @@ export const getMe = (token?: string) => {
 
 // swagger url
 // export const base_url: string = 'http://45.67.35.86:8080/';
-export const base_url: string = 'http://134.122.77.107:8080/' ;
+export const base_url: string = 'http://134.122.77.107:8080/';
 
 export const master_download: string = `${base_url}user/web/masters/download`;
 export const client_download: string = `${base_url}client/web/clients/download`;
@@ -79,6 +79,7 @@ export const get_orders_otis: string = `${base_url}feedback/web/one/feedback/`;
 export const service_category_list: string = `${base_url}category`;
 export const add_service_category: string = `${base_url}category/web`;
 export const del_service_category: string = `${base_url}category/web`;
+export const attachment_upload: string = `${base_url}attachment/upload`;
 export const edit_service_category: string = `${base_url}category/web`;
 export const precent_list: string = `${base_url}percent`;
 export const master_service_id: string = `${base_url}service/web/`;

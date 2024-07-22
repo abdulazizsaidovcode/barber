@@ -4,16 +4,19 @@ import DefaultLayout from "../../layout/DefaultLayout";
 import Modal from "../../components/modals/modal";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { add_service_category, del_service_category, edit_service_category, service_category_list } from "../../helpers/api";
+import { add_service_category, attachment_upload, del_service_category, edit_service_category, service_category_list } from "../../helpers/api";
 import { config } from "../../helpers/token";
 import DelModal from "../../components/settings/modals/delModal";
 import EditModal from "../../components/settings/modals/editModal";
 import { Skeleton } from 'antd';
 import { useTranslation } from "react-i18next";
+import { Buttons } from "../../components/buttons";
+import defaultImage from '../../images/default.png'
 
 interface Data {
     id: string;
     name: string;
+    attachmentId: string;
 }
 
 const ServiceCategories = () => {
@@ -24,10 +27,13 @@ const ServiceCategories = () => {
     const [newCategoryName, setNewCategoryName] = useState('');
     const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
     const [editingCategory, setEditingCategory] = useState<string | null>(null);
+    const [editedAttachmentId, setEditedAttachmentId] = useState('');
     const [editedCategoryName, setEditedCategoryName] = useState('');
+    const [attachmentId, setAttachmentId] = useState('');
     const [loading, setLoading] = useState(true);
     const [addLoading, setAddLoading] = useState(false);
     const [editLoading, setEditLoading] = useState(false);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -46,19 +52,37 @@ const ServiceCategories = () => {
             });
     };
 
+    // UPLOAD IMAGE
+    const uploadImage = async (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const { data } = await axios.post(attachment_upload, formData, config);
+            if (data.success) {
+                setAttachmentId(data.body)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // ADD DATA
     const addData = () => {
         const newCategory = {
             name: newCategoryName,
             categoryFatherId: null,
+            attachmentId: attachmentId,
             new: true
         };
+
         if (newCategoryName.length === 0) {
             toast(t("Please_fill_in_the_line"), {
                 icon: '⚠️'
             });
         } else if (!newCategoryName.trim() || /^[^a-zA-Zа-яА-Я0-9]/.test(newCategoryName) || /^ +$/.test(newCategoryName)) {  // Only allow names with valid starting characters
             toast(t("Please_enter_valid_name"), { icon: '⚠️' });
+        } else if (!attachmentId) {
+            toast(t("Please_upload_an_image"), { icon: '⚠️' });
         } else {
             setAddLoading(true);
             axios.post(add_service_category, newCategory, config)
@@ -66,6 +90,7 @@ const ServiceCategories = () => {
                     if (res.data.success) {
                         toast.success(t("Category_added_successfully"));
                         fetchData();
+                        setAddLoading(false)
                         addCloseModal();
                     } else {
                         toast(t('This_category_already_exists'), {
@@ -74,13 +99,14 @@ const ServiceCategories = () => {
                     }
                 })
                 .catch(() => {
-                    setLoading(false);
+                    setAddLoading(false);
                 })
                 .finally(() => {
                     setAddLoading(false);
                 });
         }
     };
+
 
     // DELETE DATA
     const deleteData = () => {
@@ -111,17 +137,18 @@ const ServiceCategories = () => {
             }
 
             const updatedCategory = {
-                name: editedCategoryName
+                name: editedCategoryName,
+                attachmentId: attachmentId
             };
 
-            if (data.some(item => item.name === editedCategoryName)) {
-                toast(t("This_category_already_exists"), {
-                    icon: '⚠️'
-                });
-                return;
-            }
+            // if (!attachmentId && data.some(item => item.name === editedCategoryName)) {
+            //     toast(t("This_category_already_exists"), {
+            //         icon: '⚠️'
+            //     });
+            //     return;
+            // }
 
-            if (data.find(item => item.id === editingCategory)?.name === editedCategoryName) {
+            if (!attachmentId && data.find(item => item.id === editingCategory)?.name === editedCategoryName) {
                 toast(t("Please_change_something"), {
                     icon: '⚠️'
                 });
@@ -151,6 +178,22 @@ const ServiceCategories = () => {
         }
     };
 
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            uploadImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreviewUrl(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleUploadClick = () => {
+        document.getElementById('imageUploadInput')?.click();
+    };
+
     const delOpenModal = (id: string) => {
         setCategoryToDelete(id);
         setDelIsOpen(true);
@@ -162,17 +205,23 @@ const ServiceCategories = () => {
     };
 
     const addOpenModal = () => setAddIsOpen(true);
-    const addCloseModal = () => setAddIsOpen(false);
+    const addCloseModal = () => {
+        setAddIsOpen(false)
+        setImagePreviewUrl(null)
+        setAttachmentId('')
+    };
 
-    const editOpenModal = (id: string, name: string) => {
+    const editOpenModal = (id: string, name: string, attachmentId: string) => {
         setEditingCategory(id);
         setEditedCategoryName(name);
+        setEditedAttachmentId(attachmentId)
         setEditIsOpen(true);
     };
 
     const editCloseModal = () => {
         setEditingCategory(null);
         setEditedCategoryName('');
+        setImagePreviewUrl('')
         setEditIsOpen(false);
     };
 
@@ -192,8 +241,10 @@ const ServiceCategories = () => {
                         data.map(item => (
                             <div key={item.id}>
                                 <ServiceCategoriesCard
+                                    attchmentStyle={true}
+                                    attachmentId={item.attachmentId}
                                     title={item.name}
-                                    editOnClick={() => editOpenModal(item.id, item.name)}
+                                    editOnClick={() => editOpenModal(item.id, item.name, item.attachmentId)}
                                     deleteOnClick={() => delOpenModal(item.id)}
                                 />
                             </div>
@@ -202,14 +253,27 @@ const ServiceCategories = () => {
                 </div>
             </div>
             <Modal isOpen={addIsOpen} onClose={addCloseModal}>
-                <div className="md:w-[500px] h-[160px] sm:w-[400px] w-[250px]">
+                <div className="md:w-[500px] h-[200px] sm:w-[400px] w-[250px]">
                     <p className="sm:text-xl text-black dark:text-white">{t("Category_Name")}</p>
-                    <input
-                        className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
-                        type="text"
-                        // placeholder={t("Health_Procedures")}
-                        onChange={(e) => setNewCategoryName(e.target.value)}
-                    />
+                    <div>
+                        <input
+                            className="w-full dark:text-[#000] border-[1px] border-black p-2 rounded-lg mt-3"
+                            type="text"
+                            // placeholder={t("Health_Procedures")}
+                            onChange={(e) => setNewCategoryName(e.target.value)}
+                        />
+                        <div className="mt-3 flex items-center gap-3">
+                            <Buttons onClick={handleUploadClick}>Upload</Buttons>
+                            <input
+                                id="imageUploadInput"
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={handleImageChange}
+                            />
+                            <img className="w-8 h-8 object-cover" src={imagePreviewUrl ? imagePreviewUrl : defaultImage} alt="" />
+                        </div>
+                    </div>
                     <div className="flex mt-10 justify-center">
                         <button
                             onClick={addData}
@@ -228,6 +292,10 @@ const ServiceCategories = () => {
             <DelModal isOpen={delIsOpen} onClose={delCloseModal} onDelete={deleteData} />
             <EditModal
                 isOpen={editIsOpen}
+                attachmentStyle={true}
+                handleImageChange={handleImageChange}
+                handleUploadClick={handleUploadClick}
+                attchmentId={editedAttachmentId ? editedAttachmentId : imagePreviewUrl ? imagePreviewUrl : defaultImage}
                 onClose={editCloseModal}
                 value={editedCategoryName}
                 onChange={(e) => setEditedCategoryName(e.target.value)}
@@ -243,3 +311,4 @@ const ServiceCategories = () => {
 };
 
 export default ServiceCategories;
+
