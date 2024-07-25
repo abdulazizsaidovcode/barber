@@ -145,11 +145,10 @@ const MasterTables: React.FC = () => {
           data.map((item, key) => (
             <tr
               key={item.id}
-              className={`${
-                key === data.length - 1
+              className={`${key === data.length - 1
                   ? ''
                   : 'border-b border-[#eee] dark:border-strokedark'
-              }`}
+                }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <LazyLoadImage
@@ -184,14 +183,13 @@ const MasterTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5 pt-7 flex items-center justify-between">
                 <p
-                  className={`${
-                    item.status === 'ACTIVE'
+                  className={`${item.status === 'ACTIVE'
                       ? 'bg-green-400'
                       : item.status === 'NEW'
                         ? 'bg-green-700'
                         : item.status === 'BLOCKED'
                           ? 'bg-red-500' : 'bg-red-700'
-                  } text-white rounded-full py-1 px-3 text-sm font-medium`}
+                    } text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
                   {item.status}
                 </p>
@@ -311,12 +309,13 @@ const MasterTables: React.FC = () => {
               className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
               onClick={openIsImageModal} />
           </p>
-          <div className={`w-[85vw] h-[90vh] flex justify-center items-center`}>
+          <div className="flex justify-center items-center">
             <LazyLoadImage
               alt="img"
               src={imageID ? `${getFileId}${imageID}` : images}
-              className={'w-full h-full object-contain'}
+              className="object-contain"
               effect="blur"
+              style={{ maxWidth: '700px', maxHeight: '500px' }}
             />
           </div>
         </div>
