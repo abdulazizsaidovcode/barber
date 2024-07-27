@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { IMasterItems } from '../../types/master.ts';
 import MasterTables from './master-tables.tsx';
 import MasterLocation from './master-location.tsx';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 const Master = () => {
   const { setData, setTotalPage, setRegionData, setCategory, page, size } = masterStore()
@@ -16,6 +17,7 @@ const Master = () => {
     getMasters({ setData, setTotalPage })
     getRegion(setRegionData)
     getCategory(setCategory)
+    clearFunction()
   }, [])
 
   useEffect(() => {

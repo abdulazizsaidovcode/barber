@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { DGeneralIndecators } from '../../helpers/api-function/dashboard/Generalindicators';
 import dashboardStore from '../../helpers/state_managment/dashboard/dashboardStore';
 import ChartMasterRate from '../../components/Charts/ChartSex';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 const ECommerce: React.FC = () => {
   const { t } = useTranslation();
@@ -24,7 +25,6 @@ const ECommerce: React.FC = () => {
   const [localDate, setLocalDate] = useState<string | undefined>(undefined);
   const [startDate, setStartDate] = useState<string | undefined>(undefined);
   const [endDate, setEndDate] = useState<string | undefined>(undefined);
-  console.log(data);
 
   const handleYearChange = (date: any, dateString: any) => {
     setYear(dateString);
@@ -40,6 +40,10 @@ const ECommerce: React.FC = () => {
   };
 
   useEffect(() => {
+    clearFunction()
+  }, []);
+
+  useEffect(() => {
     DGeneralIndecators({
       year,
       localDate,
@@ -47,6 +51,7 @@ const ECommerce: React.FC = () => {
       endDate,
       setDashdata: setData,
     });
+    clearFunction()
   }, [year, localDate, startDate, endDate]);
 
   return (

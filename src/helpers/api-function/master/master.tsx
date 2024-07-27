@@ -14,6 +14,7 @@ import {
   RegionData,
 } from '../../../types/master.ts';
 import toast from 'react-hot-toast';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 interface IMaster {
   fullName?: string;
@@ -68,7 +69,10 @@ export const getMasters = ({
       if (res.data.success === true) {
         setData(res.data.body.object);
         setTotalPage(res.data.body.totalElements);
-      } else setData([]);
+      } else {
+        setData([]);
+        clearFunction()
+      }
     })
     .catch((err) => {
       setTotalPage(0)
@@ -81,6 +85,7 @@ export const getMasters = ({
       } else if (err.request) console.error('No response received');
       else console.error('Request setup error');
       setData([]);
+      clearFunction()
     });
 };
 
@@ -89,9 +94,15 @@ export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
     .get(region_url, config)
     .then((res) => {
       if (res.data.success === true) setRegionData(res.data.body);
-      else setRegionData([]);
+      else {
+        setRegionData([]);
+        clearFunction()
+      }
     })
-    .catch(() => setRegionData([]));
+    .catch(() => {
+      setRegionData([])
+      clearFunction()
+    });
 };
 
 export const getDistrict = (
@@ -102,10 +113,16 @@ export const getDistrict = (
     axios
       .get(`${district_url}?regionId=${districtId}`, config)
       .then((res) => {
-        if (res.data.success === true) setDistrictData(res.data.body);
-        else setDistrictData([]);
+        if (res.data.success) setDistrictData(res.data.body);
+        else {
+          setDistrictData([]);
+          clearFunction()
+        }
       })
-      .catch(() => setDistrictData([]));
+      .catch(() => {
+        setDistrictData([])
+        clearFunction()
+      });
   }
 };
 
@@ -115,10 +132,16 @@ export const getCategory = (
   axios
     .get(child_category_list, config)
     .then((res) => {
-      if (res.data.success === true) setCategoryChild(res.data.body);
-      else setCategoryChild([]);
+      if (res.data.success) setCategoryChild(res.data.body);
+      else {
+        setCategoryChild([]);
+        clearFunction()
+      }
     })
-    .catch(() => setCategoryChild([]));
+    .catch(() => {
+      setCategoryChild([])
+      clearFunction()
+    });
 };
 
 export const updateStatusFunc = (
@@ -136,22 +159,25 @@ export const updateStatusFunc = (
       .put(update_master_status, data, config)
       .then((res) => {
         setIsLoading(false);
-        if (res.data.success === true) {
+        if (res.data.success) {
           getMasters({ setData, setTotalPage });
           toast.success('Successfully update status');
           openIsModal();
         } else {
           toast.error('Serverda xatolik yuz berdi');
           openIsModal();
+          clearFunction()
         }
       })
       .catch(() => {
         setIsLoading(false);
         toast.error('Error updating status!');
         openIsModal();
+        clearFunction()
       });
   } else {
     toast.error('Error updating status');
     openIsModal();
+    clearFunction()
   }
 };
