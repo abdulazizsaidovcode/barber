@@ -6,6 +6,7 @@ import { config } from '../../../helpers/token';
 import DetailClient from '../../../components/client_card/detail';
 import DefaultLayout from '../../../layout/DefaultLayout';
 import userImg from '../../../images/user.png';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const DetailMaster: React.FC = () => {
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
         setIsLoading(false);
+        clearFunction()
       });
   };
 

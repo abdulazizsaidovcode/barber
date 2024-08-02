@@ -10,6 +10,7 @@ import { config } from '../../helpers/token.tsx';
 import { Buttons } from '../../components/buttons/index.tsx';
 import { downloadExcelFile } from '../../helpers/attachment/file-download.tsx';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 // const { Option } = Select;
 
@@ -51,7 +52,10 @@ const FirstTab: React.FC = () => {
       axios.get(`${base_url}finance/web/year?year=${yearVal}`, config)
         .then((res) => {
           setYear(res.data.body);
-        }).catch(() => console.log('error'));
+        }).catch(() => {
+          console.log('error')
+          clearFunction()
+      });
     }
   }, [yearVal]);
 

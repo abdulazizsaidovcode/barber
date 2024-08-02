@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { client_send_message, client_update_status } from '../../api';
 import { config } from '../../token';
 import { FilterData } from '../../state_managment/client/clientFilterStore';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 export const updateClientStatus = (
   id: string,
@@ -28,16 +29,19 @@ export const updateClientStatus = (
         } else {
           toast.error('Serverda xatolik yuz berdi');
           // openIsModal()
+          clearFunction()
         }
       })
       .catch(() => {
         setIsLoading(false);
         toast.error('Error updating status!');
         //   openIsModal()
+        clearFunction()
       });
   } else {
     toast.error('Error updating status');
     //   openIsModal()
+    clearFunction()
   }
 };
 
@@ -74,5 +78,6 @@ export const handleSendMessage = async (
     closeSendModal();
   } catch (error) {
     toast.error('Failed to send message');
+    clearFunction()
   }
 };

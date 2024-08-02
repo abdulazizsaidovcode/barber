@@ -2,6 +2,7 @@ import axios from "axios";
 import { CategoryChild, Filter } from "../../../types/order";
 import { Category_Child, get_orders_list } from "../../api";
 import { config } from "../../token";
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 export async function getOrder({
     status,
@@ -27,9 +28,11 @@ export async function getOrder({
             setTotalPage(res.data.body.totalPage);
         } else {
             setData([]);
+            clearFunction()
         }
     } catch {
         setData([]);
+        clearFunction()
     }
 }
 
@@ -41,6 +44,7 @@ export async function getChildCategory(setData: (val: CategoryChild[]) => void) 
             setData(res.data.body);
         } else {
             setData([]);
+            clearFunction()
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -49,6 +53,7 @@ export async function getChildCategory(setData: (val: CategoryChild[]) => void) 
             console.error('Unexpected error:', error);
         }
         setData([]);
+        clearFunction()
     }
 }
 
@@ -65,5 +70,6 @@ export const getDetail = (id: string, setOrderDetails: (val: any) => void) => {
     })
     .catch(() => {
       setOrderDetails(null)
+        clearFunction()
     });
 }

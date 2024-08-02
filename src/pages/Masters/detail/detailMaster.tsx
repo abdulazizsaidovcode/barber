@@ -6,6 +6,7 @@ import { getFileId, master_full_data } from '../../../helpers/api';
 import { config } from '../../../helpers/token';
 import userImg from '../../../images/user.png';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
@@ -28,10 +29,12 @@ const DetailMaster: React.FC = () => {
         const master = response.data.body;
         setOrderDetails(master);
         setIsLoading(false); // Set loading to false when data is fetched
+        clearFunction()
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
         setIsLoading(false); // Set loading to false in case of error
+        clearFunction()
       });
   };
 

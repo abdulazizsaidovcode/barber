@@ -6,7 +6,6 @@ import { Buttons } from '../../../components/buttons';
 import Breadcrumbs from '../../../components/Breadcrumbs/Breadcrumb';
 import { getFileId } from '../../../helpers/api';
 import { Image } from 'antd';
-import { truncateText } from '../../../helpers/splitText';
 import { useTranslation } from 'react-i18next';
 
 const MailDetail: React.FC = () => {

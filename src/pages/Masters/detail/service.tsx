@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getFileId, master_service_id } from '../../../helpers/api';
 import axios from 'axios';
 import { config } from '../../../helpers/token';
 import MasterProcedures from '../../../components/MasterCard/master_procedures';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const Service: React.FC = () => {
   const [orderDetails, setOrderDetails] = useState<any[]>([]);
@@ -15,11 +16,11 @@ const Service: React.FC = () => {
       .get(`${master_service_id}${id}`, config)
       .then((response) => {
         const masterArray = response.data.body;
-        console.log(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =>`, masterArray);
         setOrderDetails(masterArray);
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
+        clearFunction()
       });
   };
 

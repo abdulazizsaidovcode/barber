@@ -6,6 +6,7 @@ import userImg from '../../../images/user.png';
 import { get_orders_list, getFileId } from '../../../helpers/api';
 import { config } from '../../../helpers/token'; // Correct import for config
 import MasterCardInfo from '../../../components/MastervsOrder/masterDetail';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const Rejacted: React.FC<{ status: string }> = ({ status }) => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const Rejacted: React.FC<{ status: string }> = ({ status }) => {
       })
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
+        clearFunction()
       });
   }, [id]);
 

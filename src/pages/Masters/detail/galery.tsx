@@ -6,6 +6,7 @@ import { config } from '../../../helpers/token';
 import ProcedureItem from '../../../components/MasterCard/master_galery';
 import { useTranslation } from 'react-i18next';
 import empaty from '../../../images/empty.png';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const Gallery: React.FC = () => {
   const location = useLocation();
@@ -27,8 +28,10 @@ const Gallery: React.FC = () => {
     } catch (error) {
       console.error('Gallery data not found', error);
       setIsLoading(false);
+      clearFunction()
     } finally {
       setIsLoading(false);
+      clearFunction()
     }
   };
 

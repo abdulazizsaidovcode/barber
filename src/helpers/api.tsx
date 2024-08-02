@@ -5,6 +5,7 @@
 // get me
 import axios from 'axios';
 import { config } from './token.tsx';
+import { clearFunction } from '../common/clear-function/clear-function.tsx';
 
 export const getMe = (token?: string) => {
   axios
@@ -21,7 +22,10 @@ export const getMe = (token?: string) => {
     .then((res) => {
       if (res.data.success === true) sessionStorage.setItem('userId', res.data.body.id)
     })
-    .catch(() => console.log('user info error'));
+    .catch(() => {
+      console.log('user info error')
+      clearFunction()
+    });
 };
 
 // swagger url
@@ -105,7 +109,6 @@ export const finance_Destrictlist_Url = (
   month: string | null,
   year: number | null,
 ) => {
-  console.log(destrict, month, year);
 
   if (destrict && month !== null && year !== null)
     return `${base_url}finance/web/${destrict}?month=${month}&year=${year}`;

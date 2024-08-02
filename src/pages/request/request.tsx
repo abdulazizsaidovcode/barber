@@ -6,6 +6,7 @@ import { CgMenuLeft } from 'react-icons/cg';
 import { Toaster } from 'react-hot-toast';
 import { requestes_count } from '../../helpers/api';
 import { config } from '../../helpers/token';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 const RequestLayout = ({ children }: { children: ReactNode }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,7 +36,9 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
         try {
             const res = await axios.get(requestes_count, config);
             setCounts(res.data.body);
-        } catch { }
+        } catch {
+            clearFunction()
+        }
     };
 
     const toggleSidebar = () => {

@@ -12,6 +12,7 @@ import { Skeleton } from 'antd';
 import { useTranslation } from "react-i18next";
 import { Buttons } from "../../components/buttons";
 import defaultImage from '../../images/default.png'
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 interface Data {
     id: string;
@@ -46,9 +47,11 @@ const ServiceCategories = () => {
             .then(res => {
                 setData(res.data.body);
                 setLoading(false);
+                clearFunction()
             })
             .catch(() => {
                 setLoading(false);
+                clearFunction()
             });
     };
 
@@ -63,6 +66,7 @@ const ServiceCategories = () => {
             }
         } catch (error) {
             console.log(error);
+            clearFunction()
         }
     }
 
@@ -96,13 +100,16 @@ const ServiceCategories = () => {
                         toast(t('This_category_already_exists'), {
                             icon: '⚠️'
                         });
+                        clearFunction()
                     }
                 })
                 .catch(() => {
                     setAddLoading(false);
+                    clearFunction()
                 })
                 .finally(() => {
                     setAddLoading(false);
+                    clearFunction()
                 });
         }
     };
@@ -119,6 +126,7 @@ const ServiceCategories = () => {
                 })
                 .catch(() => {
                     setLoading(false);
+                    clearFunction()
                 });
         }
     };
@@ -167,13 +175,16 @@ const ServiceCategories = () => {
                         toast(t("This_category_already_exists"), {
                             icon: '⚠️'
                         });
+                        clearFunction()
                     }
                 })
                 .catch(() => {
                     setLoading(false);
+                    clearFunction()
                 })
                 .finally(() => {
                     setEditLoading(false);
+                    clearFunction()
                 });
         }
     };

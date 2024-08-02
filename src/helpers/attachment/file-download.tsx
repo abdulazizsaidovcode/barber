@@ -5,6 +5,7 @@ import { config } from '../token.tsx';
 import toast from 'react-hot-toast';
 import React from 'react';
 import { UploadedFile } from '../../components/FileDowlander.tsx';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => void, successMessage: string, errorMessage: string, page?: number) => {
   setIsLoading(true);
@@ -23,6 +24,7 @@ export const downloadExcelFile = (url: string, setIsLoading: (val: boolean) => v
     .catch(() => {
       toast.error(`${errorMessage}`);
       setIsLoading(false);
+      clearFunction()
     });
 };
 
@@ -56,10 +58,12 @@ export const handleFileChange = async (
       } else {
         console.error('Invalid response from the server');
         setIsLoading(false)
+        clearFunction()
       }
     } catch (error) {
       console.error('Error uploading file:', error);
       setIsLoading(false)
+      clearFunction()
     }
   }
 };

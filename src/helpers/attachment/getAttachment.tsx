@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getFileId } from "../api";
 import { config } from "../token";
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 interface Data {
     id: string;
@@ -14,5 +15,6 @@ export const getAttachment = async ({ id, setData }: Data) => {
     } catch (error) {
         console.error("Error fetching attachment:", error);
         // Xatolikni qayta ishlash mumkin
+        clearFunction()
     }
 };

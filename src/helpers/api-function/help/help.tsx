@@ -3,17 +3,22 @@ import { config } from '../../token.tsx';
 import { Attachments, HelpList } from '../../../types/help.ts';
 import { deleteFile, help_url } from '../../api.tsx';
 import toast from 'react-hot-toast';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 // get help lists all
 export const getHelp = async (setData: (val: HelpList[]) => void, status: string) => {
   await axios.get(`${help_url}/type?HELP_TYPE=${status}`, config)
     .then(res => {
       if (res.data.success === true) setData(res.data.body);
-      else setData([]);
+      else {
+        setData([]);
+        clearFunction()
+      }
     })
     .catch((err) => {
       if (err?.response?.data?.success === false) console.log(err.response.data.message);
       setData([]);
+      clearFunction()
     });
 };
 
@@ -41,8 +46,14 @@ export const updateIsActive = (data: HelpList, setDataAll: (val: HelpList[]) => 
         toast.success('Status updated is successfully!');
         getHelp(setDataAll, statusHelp);
       })
-      .catch(() => toast.error('Error updating help status!'));
-  } else console.log('error updating help status');
+      .catch(() => {
+        toast.error('Error updating help status!')
+        clearFunction()
+      });
+  } else {
+    console.log('error updating help status');
+    clearFunction()
+  }
 };
 
 // update help
@@ -70,10 +81,12 @@ export const updateHelp = (data: HelpList, setDataAll: (val: HelpList[]) => void
         toast.error('Error updating help!');
         setIsLoading(false);
         openIsModal();
+        clearFunction()
       });
   } else {
     toast.error('Xatolik yuz berdi...');
     openIsModal();
+    clearFunction()
   }
 };
 
@@ -92,10 +105,19 @@ export const updateSaveButtons = (filesList: string[], uploadFileID: number | st
           getHelp(setData, status);
           setSelectedFilesDef([]);
           toast.success('Saved saved help files!');
-        } else toast.error('Error updating help files!');
+        } else {
+          toast.error('Error updating help files!');
+          clearFunction()
+        }
       })
-      .catch(() => toast.error('Error updating help files!'));
-  } else toast.error('Biron bir uzgarish qilinmagan!');
+      .catch(() => {
+        toast.error('Error updating help files!')
+        clearFunction()
+      });
+  } else {
+    toast.error('Biron bir uzgarish qilinmagan!');
+    clearFunction()
+  }
 };
 
 // delete file help
@@ -109,12 +131,19 @@ export const deleteHelpFile = (id: (string | number)[], setIsLoading: (val: bool
           openModal();
           getHelp(setData, status);
           toast.success('File deleted successfully!');
-        } else toast.error('Error deleting help status!');
+        } else {
+          toast.error('Error deleting help status!');
+          clearFunction()
+        }
       })
       .catch(() => {
         openModal();
         setIsLoading(false);
         toast.error('Error deleting the help file!');
+        clearFunction()
       });
-  } else toast.error('Error deleting the help file!');
+  } else {
+    toast.error('Error deleting the help file!');
+    clearFunction()
+  }
 };

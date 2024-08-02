@@ -12,6 +12,7 @@ import DelModal from '../../components/settings/modals/delModal';
 import EditModal from '../../components/settings/modals/editModal';
 import { Skeleton } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 interface FatherData {
   id: string;
@@ -57,10 +58,12 @@ const Specializations: React.FC = () => {
         setFatherData(res.data.body);
       } else {
         console.log('Failed to fetch categories.');
+        clearFunction()
       }
       setLoading(false);
     } catch {
       setLoading(false);
+      clearFunction()
     }
   };
 
@@ -78,6 +81,7 @@ const Specializations: React.FC = () => {
       setChildLoading((prev) => ({ ...prev, [categoryId]: false }));
     } catch {
       setChildLoading((prev) => ({ ...prev, [categoryId]: false }));
+      clearFunction()
     }
   };
 
@@ -108,10 +112,14 @@ const Specializations: React.FC = () => {
         toggleInput(fatherId);
       } else {
         toast(t("This_category_already_exists"), { icon: '⚠️' });
+        clearFunction()
       }
-    } catch { }
+    } catch {
+      clearFunction()
+    }
     finally {
       setAddLoading((prev) => ({ ...prev, [fatherId]: false }));
+      clearFunction()
     }
   };
 
@@ -124,7 +132,9 @@ const Specializations: React.FC = () => {
       setTimeout(() => {
         fetchChildData(fatherId);
       }, 150);
-    } catch { }
+    } catch {
+      clearFunction()
+    }
   };
 
   // UPDATE CHILD DATA
@@ -146,10 +156,14 @@ const Specializations: React.FC = () => {
         setIsEditModalOpen(false);
       } else {
         toast(t("This_category_already_exists"), { icon: '⚠️' });
+        clearFunction()
       }
-    } catch { }
+    } catch {
+      clearFunction()
+    }
     finally {
       setEditLoading(false);
+      clearFunction()
     }
   };
 
@@ -180,9 +194,6 @@ const Specializations: React.FC = () => {
     setCategoryToDelete(null);
     setIsDelModalOpen(false);
   };
-
-  console.log(isInputOpen);
-
 
   const handleDelete = () => {
     if (categoryToDelete && selectedFatherId) {

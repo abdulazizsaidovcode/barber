@@ -2,6 +2,7 @@ import axios from 'axios';
 import { config } from '../../token';
 import { calendar_url, child_category_list } from '../../api';
 import { CalendarData } from '../../state_managment/calendar/calendarStore';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 interface Category {
   categoryFatherId: any;
@@ -34,10 +35,12 @@ export const getCategoryId = (setCategory: (data: Category[]) => void) => {
         setCategory(res.data.body);
       } else {
         console.log('Failed to fetch categories.');
+        clearFunction()
       }
     })
     .catch((err) => {
       console.error('Error fetching categories:', err);
+      clearFunction()
     });
 };
 
@@ -77,5 +80,6 @@ export const getCalendar = ({
     })
     .catch(() => {
       setData([])
+      clearFunction()
     });
   }

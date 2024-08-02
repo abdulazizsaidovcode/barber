@@ -4,7 +4,7 @@ import { config } from '../../token';
 import { ListData, ListMasterData, MainData } from '../../../types/review';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 export const fetchMainData = async (setMainData: (data: MainData) => void, uri: string) => {
   try {
@@ -12,22 +12,26 @@ export const fetchMainData = async (setMainData: (data: MainData) => void, uri: 
     if (res.data.success) {
       setMainData(res.data.body);
     }
-  } catch { }
+  } catch {
+    clearFunction();
+  }
 };
 export const fetchDataList = async (setDataList: (data: ListData[]) => void, setTotalPage: (data: number) => void, url: string, setLoading: (val: boolean) => void) => {
-  setLoading(true)
+  setLoading(true);
   try {
     const res = await axios.get(url, config);
     if (res.data.success) {
       setDataList(res.data.body.object);
       setTotalPage(res.data.body.totalElements);
-      setLoading(false)
+      setLoading(false);
     } else {
       setDataList([]);
+      clearFunction();
     }
   } catch {
     setDataList([]);
-    setLoading(false)
+    setLoading(false);
+    clearFunction();
   }
 };
 
@@ -39,8 +43,11 @@ export const fetchMasterDataList = async (setMasterDataList: (data: ListMasterDa
       setTotalMasterPage(res.data.body.totalElements);
     } else {
       setMasterDataList([]);
+      clearFunction();
     }
-  } catch { }
+  } catch {
+    clearFunction();
+  }
 };
 
 export const deleteListData = async (id: string | null, setDataList: (data: ListData[]) => void, setTotalPage: (totalPages: number) => void, url: string, setLoading: (val: boolean) => void, closeDelModal: () => void) => {
@@ -50,19 +57,23 @@ export const deleteListData = async (id: string | null, setDataList: (data: List
       const { data } = await axios.delete(`${reviews_list_delete}/${id}`, config);
       if (data.success) {
         // toast.success(t("Review_successfully_deleted"));
-        toast.success("Review_successfully_deleted");
+        toast.success('Review_successfully_deleted');
         fetchDataList(setDataList, setTotalPage, url, setLoading);
-        closeDelModal()
+        closeDelModal();
       }
     }
-  } catch { }
+  } catch {
+    clearFunction();
+  }
 };
 
 export const deleteMasterDataList = async (id: string, setMasterDataList: (data: ListMasterData[]) => void, url: string, setTotalMasterPage: (data: number) => void) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   try {
     await axios.delete(`${reviews_list_delete}/${id}`, config);
-    toast.success(t("Review_successfully_deleted"));
+    toast.success(t('Review_successfully_deleted'));
     await fetchMasterDataList(setMasterDataList, url, setTotalMasterPage);
-  } catch { }
+  } catch {
+    clearFunction();
+  }
 };

@@ -37,7 +37,6 @@ const FirstTab: React.FC = () => {
   };
 
   const handleDelete = () => {
-    console.log('handleDelete called with selectedId:', selectedId);
     if (selectedId !== null) {
       deleteListData(
         selectedId,

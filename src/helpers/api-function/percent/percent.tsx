@@ -2,6 +2,7 @@ import axios from 'axios';
 import { add_precent_list, precent_list } from '../../api.tsx';
 import toast from 'react-hot-toast';
 import { config } from '../../token.tsx';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 interface Data {
   id: number;
@@ -11,11 +12,8 @@ interface Data {
 // Fetch data
 export const fetchData = (setData: (data: Data[]) => void) => {
   axios.get(precent_list, config)
-    .then((res) => {
-      setData(res.data.body);
-    })
-
-    .catch(() => { });
+    .then((res) => setData(res.data.body))
+    .catch(() => clearFunction());
 };
 
 // Add percent
@@ -35,9 +33,10 @@ export const addPercent = (percent: string, setData: (data: Data[]) => void, tog
           toast.success('Successfully added');
           fetchData(setData);
           toggleInput();
+          clearFunction()
         }
       })
-      .catch(() => { });
+      .catch(() => clearFunction());
   }
 };
 
@@ -56,12 +55,14 @@ export const editPercent = (changedTitle: string, editItemId: number | null, set
           toast('This percent already exists', {
             icon: '⚠️'
           });
+          clearFunction()
         }
       })
       .catch(() => {
         toast('Failed to edit percent', {
           icon: '⚠️'
         });
+        clearFunction()
       });
   }
 };
@@ -75,6 +76,6 @@ export const deletePercent = (id: number | null, setData: (data: Data[]) => void
         toast.success('Successfully deleted!');
         fetchData(setData);
       })
-      .catch(() => { });
+      .catch(() => clearFunction());
   }
 };

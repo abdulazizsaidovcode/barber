@@ -12,6 +12,7 @@ import { Buttons } from '../../components/buttons';
 import toast from 'react-hot-toast';
 import { downloadExcelFile } from '../../helpers/attachment/file-download';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 const { Option } = Select;
 
@@ -29,6 +30,7 @@ const FilterComponent: React.FC = () => {
       })
       .catch(error => {
         console.error('Error fetching regions:', error);
+        clearFunction()
       });
   }, []);
 

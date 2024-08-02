@@ -3,6 +3,7 @@ import { config } from "../../token";
 import { SalonData } from "../../../types/salon";
 import { salon_list } from "../../api";
 import toast from "react-hot-toast";
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 export const fetchData = async (setData: (data: SalonData[]) => void) => {
     try {
@@ -10,6 +11,7 @@ export const fetchData = async (setData: (data: SalonData[]) => void) => {
         setData(res.data.body);
     } catch (error) {
         console.error(error);
+        clearFunction()
     }
 };
 
@@ -30,14 +32,17 @@ export const handleAddSalon = async (
                 closeAddModal();
             } else {
                 toast("Something went wrong while adding the salon", { icon: '⚠️' });
+                clearFunction()
             }
         } catch (error) {
             console.error(error);
+            clearFunction()
         }
     } else {
         toast("Please enter the salon name and select a location on the map.", {
             icon: '⚠️'
         });
+        clearFunction()
     }
 };
 
@@ -60,13 +65,16 @@ export const handleEditSalon = async (
                 closeEditModal();
             } else {
                 toast("Something went wrong while editing the salon");
+                clearFunction()
             }
         } catch (error) {
             console.error(error);
+            clearFunction()
         }
     } else {
         toast("Please enter the salon name and select a location on the map.", {
             icon: '⚠️'
         });
+        clearFunction()
     }
 };

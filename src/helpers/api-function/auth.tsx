@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getMe, login_url } from '../api.tsx';
 import toast from 'react-hot-toast';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 export const handleSubmit = (
   event: React.FormEvent<HTMLFormElement>,
@@ -25,14 +26,17 @@ export const handleSubmit = (
           res.data.status === "ACCEPTED" ? setGoPage('/') : setGoPage('/auth/signin')
           sessionStorage.setItem('token', `Bearer ${res.data.body}`)
           if (res.data.body) getMe(res.data.body)
+          clearFunction()
         }
       })
       .catch(() => {
         setLoading(false)
         toast.error('Serverda xatolik yuz berdi!!!')
+        clearFunction()
       });
   } else {
     setLoading(false)
     toast.error('Telefon raqam yoki parol kirgizilmagan!!!')
+    clearFunction()
   }
 };

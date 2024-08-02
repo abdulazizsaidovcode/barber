@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { config } from '../token';
 import { postFileId, postFilelist } from '../api';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 interface UploadFileResponse {
   body: string;
@@ -36,6 +37,7 @@ export const uploadFile = async ({ file, setUploadResponse }: UploadFileParams) 
   } catch (error) {
     console.error('Error uploading file:', error);
     // Handle the error appropriately
+    clearFunction()
   }
 };
 
@@ -65,6 +67,7 @@ export const uploadFiles = async ({ files, setUploadResponse }: UploadFilesParam
     if (setUploadResponse) {
       setUploadResponse('Error uploading files');
     }
+    clearFunction()
     // Handle the error appropriately
   }
 };

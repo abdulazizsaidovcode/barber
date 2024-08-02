@@ -2,6 +2,7 @@ import axios from "axios";
 import { client_url } from "../../api.tsx";
 import { config } from "../../token.tsx";
 import { FilterData } from "../../state_managment/client/clientFilterStore.tsx";
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 interface IClient {
   fullName?: string;
@@ -51,7 +52,13 @@ export const getClients = ({
       if (res.data.success === true) {
         setData(res.data.body.object);
         setTotalPage(res.data.body.totalElements);
-      } else setData([]);
+      } else {
+        setData([]);
+        clearFunction()
+      }
     })
-    .catch(() => setData([]));
+    .catch(() => {
+      setData([])
+      clearFunction()
+    });
 };

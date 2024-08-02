@@ -18,6 +18,7 @@ import { MdOutlineSpeakerNotesOff } from 'react-icons/md';
 import { SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const ChatTable: React.FC = () => {
     const { chatData, setLetterData } = MailStore();
@@ -95,6 +96,7 @@ const ChatTable: React.FC = () => {
                     toast.success(t("Successfully_done"));
                 }).catch(err => {
                     console.error(err.data);
+                    clearFunction()
                 })
         }
     }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { newsletters_url } from '../../api';
 import { config } from '../../token';
 import { Data } from '../../state_managment/chat/mailStore';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 interface IChatLetters {
     subject?: string;
@@ -18,7 +19,11 @@ export const GetChatLetters = ({ subject, date, page, size, setLetterData }: ICh
                 setLetterData(res.data.body);
             } else {
                 setLetterData([]);
+              clearFunction()
             }
         })
-        .catch(() => setLetterData([]));
+        .catch(() => {
+          setLetterData([])
+          clearFunction()
+        });
 };

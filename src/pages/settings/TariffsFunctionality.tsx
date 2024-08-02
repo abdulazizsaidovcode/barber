@@ -8,6 +8,7 @@ import { config } from '../../helpers/token';
 import toast, { Toaster } from 'react-hot-toast';
 import { Skeleton } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 interface Data {
     id: number;
@@ -34,6 +35,7 @@ const TariffsFunctionality: React.FC = () => {
             setLoading(false);
         } catch {
             setLoading(false);
+            clearFunction()
         }
     };
     const { t } = useTranslation();
@@ -50,8 +52,10 @@ const TariffsFunctionality: React.FC = () => {
                 closeModal();
             } catch {
                 toast.error(t("Failed_to_add_tariff"));
+                clearFunction()
             } finally {
                 setAddLoading(false);
+                clearFunction()
             }
         }
     };

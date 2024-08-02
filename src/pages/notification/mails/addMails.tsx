@@ -12,6 +12,7 @@ import MailStore from '../../../helpers/state_managment/chat/mailStore';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 function AddMails() {
   const { t } = useTranslation();
@@ -125,9 +126,11 @@ function AddMails() {
       .catch((err) => {
         console.log(err);
         toast.error(t('Error_creating_mailing_list'));
+        clearFunction()
       })
       .finally(() => {
         setLoading(false);
+        clearFunction()
       });
   };
 

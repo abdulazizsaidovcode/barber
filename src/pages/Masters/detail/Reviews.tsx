@@ -15,6 +15,7 @@ import empaty from '../../../images/empty.png';
 import { MdDelete } from 'react-icons/md';
 import DelModal from '../../../components/settings/modals/delModal';
 import toast from 'react-hot-toast';
+import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
 const DetailMaster: React.FC = () => {
   const location = useLocation();
@@ -32,7 +33,6 @@ const DetailMaster: React.FC = () => {
       .get(`${master_default_values}${id}`, config)
       .then((response) => {
         const master = response.data.body;
-        console.log(master);
         setOrderDetails(master);
         setmasters(master.feedback);
         setIsLoading(false);
@@ -40,6 +40,7 @@ const DetailMaster: React.FC = () => {
       .catch((error) => {
         console.error('There was an error fetching the data!', error);
         setIsLoading(false);
+        clearFunction()
       });
   }, [id, toggle]);
 
@@ -52,9 +53,13 @@ const DetailMaster: React.FC = () => {
             setmasters(res.data.body);
           } else {
             setmasters([]);
+            clearFunction()
           }
         })
-        .catch(() => setmasters([]));
+        .catch(() => {
+          setmasters([])
+          clearFunction()
+        });
     } else {
       setmasters([]);
     }
@@ -68,6 +73,7 @@ const DetailMaster: React.FC = () => {
       setToggle(false);
     } catch (error) {
       console.log(error);
+      clearFunction()
     }
   };
 
