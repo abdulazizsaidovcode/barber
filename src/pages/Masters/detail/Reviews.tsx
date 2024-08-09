@@ -34,7 +34,7 @@ const DetailMaster: React.FC = () => {
       .then((response) => {
         const master = response.data.body;
         setOrderDetails(master);
-        setmasters(master.feedback);
+        setmasters(master.feedback.object);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -64,6 +64,7 @@ const DetailMaster: React.FC = () => {
       setmasters([]);
     }
   };
+  
   const { t } = useTranslation();
 
   const handleDelete = async (id: string) => {
@@ -98,8 +99,8 @@ const DetailMaster: React.FC = () => {
           ''
         )}
       </div>
-      {masters.length !== 0 ? (
-        masters.map((item: any, i: any) => (
+      {masters && masters.length ? (
+         masters.map((item: any, i: any) => (
           <>
             <div
               key={i}
