@@ -1,2 +1,1 @@
-// export const clearFunction = () => console.clear()
-export const clearFunction = () => {}
+export const clearFunction = () => console.clear()
