@@ -21,7 +21,7 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobileView(window.innerWidth < 768);
+            setIsMobileView(window.innerWidth < 600);
         };
 
         window.addEventListener('resize', handleResize);
