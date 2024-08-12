@@ -4,7 +4,7 @@ import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 import { ChatusersListType } from '../../../../types/chat';
 import { t } from 'i18next';
 
-const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
+const ChatusersList = ({ user, role, userIds, stomp }: ChatusersListType) => {
     let i = 0
     const [userId, setUserId] = useState('');
     const [chatData, setChatData] = useState<any>([]);
@@ -19,9 +19,16 @@ const ChatusersList = ({ user, role, userIds }: ChatusersListType) => {
     return (
         <div className='h-full overflow-y-auto'>
             <ul>
-                {chatData.length > 0 ?
+                {chatData && chatData.length > 0 ?
                     chatData.map((item: any) =>
-                        <li key={i++} onClick={() => setUserId(item.userId)} className={`${item.userId == userId ? "dark:bg-[#9c0936] bg-gray" : ""} flex gap-2 items-center  md:my-1 border p-3 my-2  cursor-pointer dark:hover:bg-slate-800 hover:bg-slate-50`}>
+                        <li key={i++} onClick={() => {
+                            if (stomp && stomp.connected) {
+                                setUserId(item.userId)
+                            } else {
+                                alert(t("Stomp_client_not_connected"));
+                            }
+                        }
+                        } className={`${item.userId == userId ? "dark:bg-[#9c0936] bg-gray" : ""} flex gap-2 items-center  md:my-1 border p-3 my-2  cursor-pointer dark:hover:bg-slate-800 hover:bg-slate-50`}>
                             <img src={item.attachmentId ? item.attachmentId : admin} alt="user img" className='w-10 h-10 rounded-full bg-slate-300 p-1' />
                             <div className={`flex gap-1 flex-col w-full relative`}>
                                 <div className='flex gap-3 justify-between w-full'>

@@ -172,11 +172,11 @@ const Sms = ({ recipientId, editId, replyId, deleteId, senderId, sendMessage, ch
 
   return (
     <div className='h-full relative pl-4'>
-      {chat.length > 0 ? (
+      {chat && chat.length > 0 ? (
         <div className='w-full h-full flex flex-col'>
           <div className='bg-gray-200 flex-1 h-full overflow-hidden' ref={chatContainerRef}>
             <div className='w-full h-full overflow-y-auto'>
-              {chats.length > 0 ? (
+              {chats && chats.length > 0 ? (
                 chats.map((item, index) => (
                   <div
                     key={index}

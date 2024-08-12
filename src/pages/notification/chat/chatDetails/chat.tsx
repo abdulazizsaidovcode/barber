@@ -47,7 +47,11 @@ const Chatdetail: React.FC = () => {
 
   useEffect(() => {
     if (recipientId) {
-      fetchMessages(adminId, recipientId);
+      if (stompClient && stompClient.connected) {
+        fetchMessages(adminId, recipientId);
+      } else {
+        alert('Stomp client not connected');
+      }
     }
   }, [recipientId]);
 
@@ -87,14 +91,21 @@ const Chatdetail: React.FC = () => {
         console.log('Connected: ' + frame);
         setStompClient(stomp);
         stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
-          const receivedMessage = JSON.parse(response.body);
-          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+          const receivedMessage = response && response.body ? JSON.parse(response.body) : null;
+          if (receivedMessage) {
+            setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+          } else {
+            alert('Received message is null or undefined');
+          }
         });
       }, (error: any) => {
         console.error('Error connecting: ', error);
       });
     }
   };
+  if (stompClient && stompClient.connected) {
+    alert('Stomp client connected');
+  }
 
   const sendMessage = async () => {
     let fileUrl = null;
@@ -116,9 +127,15 @@ const Chatdetail: React.FC = () => {
       };
       console.log(JSON.stringify(chatMessage));
 
-      stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+      if (stompClient && stompClient.connected) {
+        stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
+      } else {
+        alert('Stomp client not connected or is null');
+      }
       setTimeout(() => {
-        fetchMessages(adminId, recipientId);
+        if (stompClient && stompClient.connected) {
+          fetchMessages(adminId, recipientId);
+        }
       }, 500)
       setContent('');
     }
@@ -128,8 +145,15 @@ const Chatdetail: React.FC = () => {
     if (adminId && recipientId) {
       axios.get(`${messages_url}/${adminId}/${recipientId}`, config)
         .then(res => {
-          setMessages(res.data.body);
-          console.log(res.data.body);
+          if (res.data.success) {
+            setMessages(res.data.body);
+          } else {
+            setMessages([]);
+            GetChatList({
+              status: role,
+              setData: setChatData
+            });
+          }
         }).catch(err => {
           if (err.response.status === 404) {
             setMessages([]);
@@ -210,8 +234,7 @@ const Chatdetail: React.FC = () => {
     let list: any = {
       ids: [chatId]
     }
-    console.log(list);
-    
+
     if (chatId) {
       if (stompClient && stompClient.connected) {
         setTimeout(() => {
@@ -308,7 +331,7 @@ const Chatdetail: React.FC = () => {
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
             </button>
           </div>
-          <ChatusersList user={chatData} role={role} userIds={setRecipientId} />
+          <ChatusersList user={chatData} role={role} userIds={setRecipientId} stomp={stompClient} />
         </div>
         <div className="w-full relative ">
           {recipientId ?

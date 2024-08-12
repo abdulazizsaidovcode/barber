@@ -426,6 +426,7 @@
   "week": "Неделя",
   "attachments": "Вложения",
   "info_notfound": "Информация недоступна!",
+  "Stomp_client_not_connected": "Stomp client not connected",
   "day": "День",
       "sun": "Вос",
       "mon": "Пон",
