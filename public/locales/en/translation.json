@@ -420,7 +420,7 @@
   "attachments": "Attachments",
   "file_delete": "Are you sure you want to launch this file?",
   "Ability_for_the_master_to_make_any_day_off": "Ability for the master to make any day off",
-  "Stomp_client_not_connected": "Произошла ошибка при подключении к серверу чата.",
+  "Stomp_client_not_connected": "There was an error connecting to the chat server",
   "today": "Today",
   "month": "Month",
   "week": "Week",

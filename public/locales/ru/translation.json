@@ -426,7 +426,7 @@
   "week": "Неделя",
   "attachments": "Вложения",
   "info_notfound": "Информация недоступна!",
-  "Stomp_client_not_connected": "Stomp client not connected",
+  "Stomp_client_not_connected": "Произошла ошибка при подключении к серверу чата.",
   "day": "День",
       "sun": "Вос",
       "mon": "Пон",
