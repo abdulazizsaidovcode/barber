@@ -5,6 +5,8 @@ import axios from 'axios';
 import { config } from '../../../helpers/token';
 import MasterProcedures from '../../../components/MasterCard/master_procedures';
 import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
+import defaultImg from '../../../images/default.png'
+
 
 const Service: React.FC = () => {
   const [orderDetails, setOrderDetails] = useState<any[]>([]);
@@ -37,7 +39,7 @@ const Service: React.FC = () => {
             key={index}
             servicesId={orderDetail.id}
             title={orderDetail.name}
-            imgUrl={`${getFileId}${orderDetail.attachmentId}`}
+            imgUrl={orderDetail.attachmentId ? getFileId + orderDetail.attachmentId : defaultImg}
             price={orderDetail.price}
             duration={orderDetail.serviceTime}
             description={orderDetail.description}

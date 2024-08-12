@@ -1,16 +1,40 @@
 import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/logo.jpeg';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { IoMdSettings } from 'react-icons/io';
+import { IoMdSettings, IoMdNotifications } from 'react-icons/io';
 import LanguageSelector from './LanguageSelector';
 import DropdownUser from './DropdownUser';
-import { MdOutlineQuestionMark } from "react-icons/md";
+import { useEffect, useState } from 'react';
+import { clearFunction } from '../../common/clear-function/clear-function';
+import { requestes_count } from '../../helpers/api';
+import axios from 'axios';
+import { config } from '../../helpers/token';
 
 const Header = (props: { sidebarOpen: boolean | undefined; setSidebarOpen: (isOpen: boolean) => void; }) => {
+  const [counts, setCounts] = useState({
+    allCount: 0,
+    categoryCount: 0,
+    galleryCount: 0,
+    masterCount: 0,
+    serviceCount: 0,
+  });
   const getButtonClass = (path: string) =>
     location.pathname.startsWith(path)
       ? 'dark:bg-danger bg-[#c2c2c2] text-black dark:text-white'
       : 'dark:bg-white bg-[#f1f5f9] dark:text-black';
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const res = await axios.get(requestes_count, config);
+        setCounts(res.data.body);
+      } catch {
+        clearFunction()
+      }
+    };
+
+    fetchCounts();
+  }, []);
 
   return (
     <header className="sticky top-0 z-999 flex w-full bg-graymedium drop-shadow-1 dark:bg-[#30303d] dark:drop-shadow-none">
@@ -63,8 +87,9 @@ const Header = (props: { sidebarOpen: boolean | undefined; setSidebarOpen: (isOp
         <div className="flex items-center gap-3 2xsm:gap-7">
           <div className="flex gap-3">
             <Link to="/request/new-masters">
-              <div className={`${getButtonClass('/request')} rounded-full flex justify-center items-center md:w-[40px] md:h-[40px] w-[25px] h-[25px]`}>
-                <MdOutlineQuestionMark className="md:text-2xl" />
+              <div className={`${getButtonClass('/request')} rounded-full relative flex justify-center items-center md:w-[40px] md:h-[40px] w-[25px] h-[25px]`}>
+                <IoMdNotifications className="md:text-2xl" />
+                {counts.allCount !== 0 && <div className={location.pathname.startsWith('/request') ? '' : 'w-3 h-3 bg-danger rounded-full absolute bottom-8 right-0'}></div>}
               </div>
             </Link>
             <Link to="/settings">

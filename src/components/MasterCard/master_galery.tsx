@@ -1,22 +1,17 @@
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
-import { Skeleton, Button, Input, message, Image } from 'antd';
+import { Button, message, Image } from 'antd';
 import React, { useState } from 'react';
 import axios from 'axios';
-import {
-  getFileId,
-  master_gallery_delate,
-  master_gallery_message,
-  master_gallery_message_conform,
-} from '../../helpers/api';
+import defaultImg from '../../images/default.png';
+import { getFileId, master_gallery_delate, master_gallery_message_conform, } from '../../helpers/api';
 import { config } from '../../helpers/token';
 import Modal from '../modals/modal';
 import { Buttons } from '../buttons';
-import { useParams } from 'react-router-dom';
 import { t } from 'i18next';
 
 interface ProcedureItemProps {
   imgUrl: string;
-  status: boolean;
+  status: string;
   onDelete: (attachmentId: string) => void;
   galleryId: string;
   attachmentId: string;
@@ -31,26 +26,22 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
   galleryId,
   attachmentId,
 }) => {
-  const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState<
     'textarea' | 'confirmation' | 'check' | null
   >(null);
   const [deleteReason, setDeleteReason] = useState('');
+  const [imageId, setImageId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { id } = useParams();
-
-  const handleImageLoad = () => {
-    setLoading(false);
-  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
     setModalType(null);
   };
 
-  const handleDeleteIconClick = () => {
+  const handleDeleteIconClick = (imageId: string) => {
     setModalType('textarea');
+    setImageId(imageId)
     setIsModalVisible(true);
   };
 
@@ -61,40 +52,35 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
     setModalType('confirmation');
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     setIsSubmitting(true);
-    axios
-      .post(
-        `${master_gallery_message}`,
-        {
-          clientId: null,
-          masterId: id,
-          adminId: null,
-          message: deleteReason,
-          messageStatus: 'ADMIN_MASTER_MESSAGE_FOR_DELETE',
-          read: true,
+    const payload = { id: imageId, message: deleteReason }
+    try {
+      const response = await fetch(master_gallery_delate, {  // Ensure master_gallery_delete is a valid URL string
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          ...config.headers,
         },
-        config,
-      )
-      .then(() => {
-        return axios.delete(
-          `${master_gallery_delate}${galleryId}/${attachmentId}`,
-          config,
-        );
-      })
-      .then(() => {
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+
+      if (data.success) {
         onDelete(attachmentId);
         getFunc();
-        message.success('Procedure deleted successfully');
-      })
-      .catch((error) => {
-        console.error('Error deleting the image', error);
-        message.error('An error occurred while deleting the procedure');
-      })
-      .finally(() => {
         setIsSubmitting(false);
-        handleCancel();
-      });
+        message.success('Procedure deleted successfully');
+      } else {
+        setIsSubmitting(false);
+      }
+    } catch (error: any) {
+      message.error(error.message || 'An error occurred while deleting the procedure');
+      setIsSubmitting(false);
+    } finally {
+      setIsSubmitting(false);
+      handleCancel();
+    }
   };
 
   const handleCheckConfirm = () => {
@@ -117,18 +103,21 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
       });
   };
 
+  console.log(deleteReason);
+  console.log(imageId);
+
+
   return (
     <div className="flex flex-col items-center">
-      <Image width={200} height={200} src={getFileId + imgUrl} />
+      <Image className='object-cover' width={200} height={200} src={imgUrl ? getFileId + imgUrl : defaultImg} />
       <div
-        className={`p-2 text-white ${
-          status ? 'bg-red-500' : 'bg-green-500'
-        } mt-2 w-1/2 flex items-center justify-center rounded-md`}
+        className={`p-2 text-white ${status === 'NEW' ? 'bg-yellow-500' : status === 'CANCELED' ? 'bg-red-600' : 'bg-green-500'
+          } mt-2 w-auto flex items-center justify-center rounded-md`}
       >
-        {status ? `${t('new')}` : `${t('odobrone')}`}
+        {status === 'NEW' ? `${t('new')}` : status === 'CANCELED' ? `${t('canceled')}` : `${t('odobrone')}`}
       </div>
       <div className="flex flex-col items-center mt-2">
-        {status ? (
+        {status === 'NEW' ? (
           <div className="flex space-x-2">
             <div
               className="p-1 bg-green-200 dark:bg-green-700 flex items-center justify-center rounded-full cursor-pointer"
@@ -141,19 +130,19 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
             </div>
             <div
               className="p-1 bg-red-200 dark:bg-red-700 flex items-center justify-center rounded-full cursor-pointer"
-              onClick={handleDeleteIconClick}
+              onClick={() => handleDeleteIconClick(imgUrl)}
             >
               <DeleteOutlined className="text-red-600 dark:text-red-300" />
             </div>
           </div>
-        ) : (
-          <div className="p-1 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-md cursor-pointer">
-            <DeleteOutlined
-              className="text-gray-600 dark:text-gray-300"
-              onClick={handleDeleteIconClick}
-            />
-          </div>
-        )}
+        ) : status === 'CANCELED' ? (
+          null
+        ) : <div className="p-1 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-md cursor-pointer">
+          <DeleteOutlined
+            className="text-gray-600 dark:text-gray-300"
+            onClick={() => handleDeleteIconClick(imgUrl)}
+          />
+        </div>}
       </div>
 
       <Modal isOpen={isModalVisible} onClose={handleCancel}>
@@ -221,7 +210,7 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
           </div>
         )}
       </Modal>
-    </div>
+    </div >
   );
 };
 

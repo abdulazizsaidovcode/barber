@@ -56,7 +56,7 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[27%]'>
                     <div className='flex justify-end p-3 items-center'>
                         <GoDotFill className={masterChatStatus === 'OFFLINE' ? 'text-red-700' : 'text-[#24FF00]'} />
-                        <p className='ml-2'>{masterChatStatus === 'OFFLINE' ? t("Not_network") : t("Online")}</p>
+                        <p className='ml-2 dark:text-white'>{masterChatStatus === 'OFFLINE' ? t("Not_network") : t("Online")}</p>
                     </div>
                     <div className='flex justify-center'>
                         <img className='w-45 h-45' src={masterImgPath ? masterImgPath : userImg} alt="Profile" />
@@ -64,21 +64,21 @@ const FirstTab: React.FC<FirstTabProp> = ({
                 </div>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[71.8%] mt-3 p-4 py-5'>
                     <div>
-                        <p className='text-2xl'>{t("Contacts")}:</p>
+                        <p className='text-2xl dark:text-white'>{t("Contacts")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex justify-between w-full'>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>{t("Phone")}</p>
-                            <p className='text-xl font-semibold'>{t("Phone")}</p>
-                            <p className='text-xl font-semibold'>{t("Instagram")}</p>
-                            <p className='text-xl font-semibold'>{t("Facebook")}</p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Phone")}: </p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Phone")}: </p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Instagram")}: </p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Facebook")}: </p>
                         </div>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl'>{displayValue(phoneNumber)}</p>
-                            <p className='text-xl'>{displayValue(telegramLink)}</p>
-                            <p className='text-xl'>{displayValue(instagramLink)}</p>
-                            <p className='text-xl'>{displayValue(facebookLink)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(phoneNumber)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(telegramLink)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(instagramLink)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(facebookLink)}</p>
                         </div>
                     </div>
                 </div>
@@ -86,51 +86,51 @@ const FirstTab: React.FC<FirstTabProp> = ({
             <div className='lg:w-3/4 w-full h-auto mx-1'>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] mt-3 p-4 py-5 w-full'>
                     <div>
-                        <p className='text-2xl'>{t("siderbar_profile")}:</p>
+                        <p className='text-2xl dark:text-white'>{t("siderbar_profile")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex justify-between lg:w-[60%]'>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>{t("Name")}</p>
-                            <p className='text-xl font-semibold'>{t("Surname")}</p>
-                            <p className='text-xl font-semibold'>{t("Nickname")}</p>
-                            <p className='text-xl font-semibold'>{t("Gender")}</p>
-                            <p className='text-xl font-semibold'>{t("Age")}</p>
-                            <p className='text-xl font-semibold'>{t("Region")}</p>
-                            <p className='text-xl font-semibold'>{t("City")}</p>
-                            <p className='text-xl font-semibold'>{t("Address")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Name")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Surname")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Nickname")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Gender")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Age")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Region")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("City")}</p>
+                            <p className='text-xl font-semibold dark:text-white'>{t("Address")}</p>
                         </div>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl'>{displayValue(firstName)}</p>
-                            <p className='text-xl'>{displayValue(lastName)}</p>
-                            <p className='text-xl'>{displayValue(nickname)}</p>
-                            <p className='text-xl'>{displayValue(gender)}</p>
-                            <p className='text-xl'>{displayValue(age)}</p>
-                            <p className='text-xl'>{displayValue(regionName)}</p>
-                            <p className='text-xl'>{displayValue(districtName)}</p>
-                            <p className='text-xl'>{displayValue(address)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(firstName)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(lastName)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(nickname)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(gender)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(age)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(regionName)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(districtName)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(address)}</p>
                         </div>
                     </div>
                 </div>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] p-4 py-5 w-full mt-3'>
                     <div>
-                        <p className='text-2xl'>{t("Profession_information")}:</p>
+                        <p className='text-2xl dark:text-white'>{t("Profession_information")}:</p>
                     </div>
                     <div className='my-3'><hr /></div>
                     <div className='flex lg:w-[60%] justify-between '>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl font-semibold'>{t("Place_of_work")}</p>
-                            <p className='text-xl font-semibold'>{t("Direction_by_gender")}</p>
-                            <p className='text-xl font-semibold'>{t("Service_category")}</p>
-                            <p className='text-xl font-semibold'>{t("Specialization")}</p>
-                            <p className='text-xl font-semibold'>{t("Schedule_Type")}</p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Place_of_work")}</p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Direction_by_gender")}</p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Service_category")}</p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Specialization")}</p>
+                            <p className='text-xl dark:text-white font-semibold'>{t("Schedule_Type")}</p>
                         </div>
                         <div className='flex flex-col gap-10'>
-                            <p className='text-xl'>{displayValue(placeOfWork)}</p>
-                            <p className='text-xl'>{displayArray(directionByGender)}</p>
-                            <p className='text-xl'>{displayArray(masterServiceCategory)}</p>
-                            <p className='text-xl'>{displayArray(masterSpecialization)}</p>
-                            <p className='text-xl'>{displayValue(scheduleType)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(placeOfWork)}</p>
+                            <p className='text-xl dark:text-white'>{displayArray(directionByGender)}</p>
+                            <p className='text-xl dark:text-white'>{displayArray(masterServiceCategory)}</p>
+                            <p className='text-xl dark:text-white'>{displayArray(masterSpecialization)}</p>
+                            <p className='text-xl dark:text-white'>{displayValue(scheduleType)}</p>
                         </div>
                     </div>
                 </div>

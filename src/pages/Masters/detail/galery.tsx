@@ -31,9 +31,12 @@ const Gallery: React.FC = () => {
       clearFunction()
     } finally {
       setIsLoading(false);
-      clearFunction()
+      clearFunction();
     }
   };
+
+  console.log(orderDetails);
+  
 
   const handleDelete = (attachmentId: string) => {
     setOrderDetails((prevDetails) =>
@@ -72,7 +75,7 @@ const Gallery: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="w-full shadow-lg rounded-xl flex gap-10 p-3">
+            <div className="w-full shadow-lg rounded-xl flex flex-wrap gap-10 p-3">
               {orderDetail.resGalleryAttachments.length !== 0 ? (
                 orderDetail.resGalleryAttachments.map(
                   (attachment: any, subIndex: number) => (
@@ -80,7 +83,7 @@ const Gallery: React.FC = () => {
                       getFunc={getMasterGalleryDetails}
                       galleryId={orderDetail.id}
                       key={subIndex}
-                      status={attachment.newStatus}
+                      status={attachment.attachmentStatus}
                       imgUrl={attachment.attachmentId}
                       attachmentId={attachment.attachmentId}
                       onDelete={handleDelete}

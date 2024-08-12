@@ -29,17 +29,19 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
     }, []);
 
     useEffect(() => {
+        const fetchCounts = async () => {
+            try {
+                const res = await axios.get(requestes_count, config);
+                setCounts(res.data.body);
+            } catch {
+                clearFunction()
+            }
+        };
+
         fetchCounts();
     }, []);
 
-    const fetchCounts = async () => {
-        try {
-            const res = await axios.get(requestes_count, config);
-            setCounts(res.data.body);
-        } catch {
-            clearFunction()
-        }
-    };
+
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -52,10 +54,9 @@ const RequestLayout = ({ children }: { children: ReactNode }) => {
                     <CgMenuLeft className="text-[1.5rem] font-bold" />
                 </button>
                 <div
-                    className={`fixed z-5 h-full transition-transform transform ${
-                        isSidebarOpen ? 'translate-x-0 top-9' : '-translate-x-full'
-                    } md:translate-x-0 lg:w-1/5 md:w-[240px] sm:w-2/5 w-4/5 dark:bg-gray-800`}>
-                   
+                    className={`fixed z-5 h-full transition-transform transform ${isSidebarOpen ? 'translate-x-0 top-9' : '-translate-x-full'
+                        } md:translate-x-0 lg:w-1/5 md:w-[240px] sm:w-2/5 w-4/5 dark:bg-gray-800`}>
+
                     <RequestSidebar
                         newMastersCount={counts.masterCount}
                         toggleSidebar={toggleSidebar}

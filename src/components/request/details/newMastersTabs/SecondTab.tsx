@@ -2,6 +2,7 @@ import React from 'react';
 import SecondTabCard from './cards/SecondTabCard';
 import { getFileId } from '../../../../helpers/api';
 import { useTranslation } from 'react-i18next';
+import userImage from '../../../../images/default.png'
 
 interface ServiceData {
   category: {
@@ -31,7 +32,7 @@ const SecondTab: React.FC<SecondTabProps> = ({ serviceData }) => {
             description={service.description}
             price={service.price}
             duration={service.serviceTime}
-            image={getFileId + service.attachmentId}
+            image={service.attachmentId ? getFileId + service.attachmentId : userImage}
           />
         ))}
     </div>

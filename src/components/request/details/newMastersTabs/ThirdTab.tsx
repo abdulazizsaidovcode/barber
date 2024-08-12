@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'antd';
 import { getFileId } from '../../../../helpers/api';
 import { useTranslation } from 'react-i18next';
+import userImage from '../../../../images/default.png'
 
 interface ThirdTabProps {
   galleryData: {
@@ -17,8 +18,12 @@ interface ThirdTabProps {
   confirmMasters: () => void; // Add confirmMasters prop
 }
 
+
+
 const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonModal, confirmMasters }) => {
   const { t } = useTranslation();
+console.log(galleryData);
+
   return (
     <div>
       <div className='flex flex-col gap-3'>
@@ -29,13 +34,13 @@ const ThirdTab: React.FC<ThirdTabProps> = ({ galleryData, onClose, openReasonMod
           : galleryData.map((album) => (
             <div key={album.id}>
               <div className="bg-[#cccccc] dark:bg-[#60606d] h-15 flex justify-between items-center px-5">
-                <p className="text-xl font-bold">{album.albumName}</p>
-                <p className="text-xl">{album.date}</p>
+                <p className="text-xl dark:text-white font-bold">{album.albumName}</p>
+                <p className="text-xl dark:text-white">{album.date}</p>
               </div>
               <div className="bg-[#cccccc] dark:bg-[#60606d] mt-3 h-max py-8 flex flex-wrap gap-4 items-center px-5">
                 {album.resGalleryAttachments.map((attachment, index) => (
                   <div key={index} className="bg-white p-1 rounded-md cursor-pointer">
-                    <Image width={185} height={150} src={getFileId + attachment} />
+                    <Image className='object-cover' width={185} height={150} src={attachment.attachmentId ? getFileId + attachment.attachmentId : userImage} />
                   </div>
                 ))}
               </div>

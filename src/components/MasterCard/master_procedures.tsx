@@ -144,7 +144,7 @@ const MasterProcedures: React.FC<ProceduresProps> = ({
       message.error('An error occurred while deleting the approved procedure');
       toggleModal('delete', false);
     }
-  };
+  };  
 
   return (
     <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-boxdark text-black dark:text-white border-gray-300 shadow-lg p-3 rounded-xl mb-4">

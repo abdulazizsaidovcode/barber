@@ -18,8 +18,8 @@ const DelModal: React.FC<DelModalProps> = ({ isOpen, onClose, onDelete }) => {
                         <p className="text-xl text-[#000] dark:text-white text-center">{t("Are_you_sure_you_want_to_delete_the_procedure")}</p>
                     </div>
                     <div className="flex justify-around mt-10">
-                        <button onClick={onDelete} className="text-white rounded-lg dark:bg-danger bg-[#000] md:py-2 py-1 px-4 md:px-10">{t("Delete")}</button>
                         <button onClick={onClose} className="text-white rounded-lg dark:bg-white dark:text-[#000]  bg-gray md:py-2 py-1 px-4 md:px-10">{t("Not")}</button>
+                        <button onClick={onDelete} className="text-white rounded-lg dark:bg-danger bg-[#000] md:py-2 py-1 px-4 md:px-10">{t("Delete")}</button>
                     </div>
                 </div>
             </Modal>
