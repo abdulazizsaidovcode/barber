@@ -44,6 +44,7 @@ import { FirstTab } from './pages/Calculation/detail/firstTab.tsx';
 import MailDetail from './pages/notification/mails/mailDetail.tsx';
 import Salon from './pages/settings/Salon.tsx';
 import { clearFunction } from './common/clear-function/clear-function.tsx';
+import RequestSalons from './components/request/pages/requestSalons.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -102,6 +103,15 @@ function App() {
             <>
               <PageTitle title="Request | Barber" />
               <RequestNewMasters />
+            </>
+          }
+        />
+        <Route
+          path="/request/salons"
+          element={
+            <>
+              <PageTitle title="Request | Barber" />
+              <RequestSalons />
             </>
           }
         />

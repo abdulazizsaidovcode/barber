@@ -33,7 +33,7 @@ const FotoCard: React.FC<FotoCardProp> = ({ ownerImage, salonDescription, salonC
             <p className='text-[15px]'>{salonDescription}</p>
           </div>
           <div className='w-1/4 flex items-end'>
-            <p className='text-[12px] dark:text-[#000]'>{salonCreateDate}</p>
+            <p className='text-[11px] dark:text-[#000]'>{salonCreateDate}</p>
           </div>
         </div>
       </div>
