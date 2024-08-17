@@ -13,6 +13,7 @@ export interface ChatusersListType {
   user: Data[];
   role: string;
   userIds: any;
+  stomp: any
 }
 
 export interface ChatSentSmsType {

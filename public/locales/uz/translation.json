@@ -424,6 +424,7 @@
   "file_delete": " Bu fileni uchirishga ishonchingiz komilmi?",
   "info_notfound": "Malumot mavjud emas!",
   "Ability_for_the_master_to_make_any_day_off": "Usta uchun har qanday kunni dam olish kuni qilish imkoniyati",
+  "Stomp_client_not_connected": "chatda server bilan bog'lanishda hatolikbor",
   "today": "Bugun",
   "month": "Oylik",
   "week": "Haftalik",
