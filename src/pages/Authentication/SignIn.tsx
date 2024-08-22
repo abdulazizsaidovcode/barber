@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BiSolidShow } from 'react-icons/bi';
 import { BiSolidHide } from 'react-icons/bi';
-import logo from '../../images/logo/logo.jpeg';
+import logo from '../../images/logo/bookers.jpg';
 import authStore from '../../helpers/state_managment/auth/authStore.tsx';
 import { handleSubmit } from '../../helpers/api-function/auth.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +47,7 @@ export const Login: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={`flex justify-center items-center`}>
-          <img src={logo} alt={`bookers logo`} className={`w-24 h-24 rounded-full`} />
+          <img src={logo} alt={`bookers logo`} className={`w-28 h-28 rounded-full`} />
         </div>
         <h2 className={styles.title + ' tracking-wide'}>Bookers Beauty</h2>
         <form
