@@ -9,10 +9,10 @@ const Settings = () => {
       <div>
         <div className='flex gap-5 flex-wrap lg:flex-row flex-col w-[100%] mb-7'>
           <MainCard text={t("Specialization_service_categories")} link='/settings/service-categories' />
-          <MainCard text={t("Online_booking")} link='/settings/online-booking' />
+          {/* <MainCard text={t("Online_booking")} link='/settings/online-booking' /> */}
           <MainCard text={t("Specializations")} link='/settings/specializations' />
           <MainCard text={t("Tariffs_functionality")} link='/settings/tariffs-functionality' />
-          <MainCard text={t("Salon")} link='/settings/salon' />
+          {/* <MainCard text={t("Salon")} link='/settings/salon' /> */}
         </div>
       </div>
     </DefaultLayout>

@@ -22,7 +22,7 @@ const Reviews: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`);
+    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`, false);
   }, [currentPage, pageSize]);
 
   const items = [
@@ -30,19 +30,18 @@ const Reviews: React.FC = () => {
       key: '1',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t("About_the_service")}
-        </span>
-      ),
-      children: <FirstTab />,
-    },
-    {
-      key: '2',
-      label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
           {t("About_the_masters")}
         </span>
       ),
       children: <SecondTab />,
+    },
+    {
+      label: (
+        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+          {t("About_the_service")}
+        </span>
+      ),
+
     },
   ];
 

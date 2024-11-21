@@ -26,7 +26,7 @@ const RequestSidebar: React.FC<{
     { name: t("Photo"), count: newFotoCount, link: '/request/foto' },
     { name: t("Specializations"), count: categoryCount, link: '/request/specializations' },
     { name: t("Procedures"), count: serviceCount, link: '/request/procedures' },
-    { name: t("Salons"), count: serviceCount, link: '/request/salons' }
+    // { name: t("Salons"), count: serviceCount, link: '/request/salons' }
   ];
 
   return (
