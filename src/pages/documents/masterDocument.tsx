@@ -4,12 +4,16 @@ import Accordion from '../../components/accordion/accordion';
 import { MdEdit } from 'react-icons/md';
 import FileUploader from '../../components/FileDowlander';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
-import { deleteHelpFile, updateHelp, updateSaveButtons } from '../../helpers/api-function/help/help.tsx';
+import {
+  // deleteHelpFile,
+  updateHelp,
+  updateSaveButtons
+} from '../../helpers/api-function/help/help.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
 import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
 import { useTranslation } from 'react-i18next';
-import FileGetUploader from '../../components/FileDowlanderGet.tsx';
+// import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 
 const MasterDocument = () => {
   const {
@@ -21,12 +25,12 @@ const MasterDocument = () => {
     setSelectedFilesDef,
     uploadFileID,
     filesList,
-    deleteFileId,
+    // deleteFileId,
     helpRole
   } = helpStore();
   const { isModal, setIsModal, isLoading, setIsLoading } = masterStore();
   const [modalVal, setModalVal] = useState<{ text: string; active: boolean }>({ text: '', active: false });
-  const [deleteFile, setDeleteFile] = useState(false);
+  // const [deleteFile, setDeleteFile] = useState(false);
 
   useEffect(() => {
     setSelectedFilesDef([]);
@@ -34,7 +38,7 @@ const MasterDocument = () => {
 
   const trueFalse = (status: string) => status !== 'SERVICE_SPECIFICATION';
   const openModal = () => setIsModal(!isModal);
-  const openDeleteModal = () => setDeleteFile(!deleteFile);
+  // const openDeleteModal = () => setDeleteFile(!deleteFile);
   const { t } = useTranslation();
 
   return (
@@ -50,9 +54,9 @@ const MasterDocument = () => {
             )}
             <div
               className={`mt-3 ${trueFalse(item.helpStatus) && 'flex justify-end items-center'} text-slate-700 dark:text-slate-300`}>
-              {!trueFalse(item.helpStatus) && (
-                <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />
-              )}
+              {/*{!trueFalse(item.helpStatus) && (*/}
+              {/*  <FileGetUploader getList={item.attachments} openModal={openDeleteModal} idIn={item.id} />*/}
+              {/*)}*/}
               {/*<div className="flex gap-3 items-center my-4">*/}
               {/*  <p className={`text-[.8rem] sm:text-base`}>{t('Show_in_apps')}</p>*/}
               {/*  <Switch*/}
@@ -126,24 +130,24 @@ const MasterDocument = () => {
       </Modal>
 
       {/*  file delete modal*/}
-      <Modal isOpen={deleteFile} onClose={openDeleteModal}>
-        <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>
-          <div className={`flex flex-col justify-center`}>
-            <p className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}>
-              Bu fileni uchirishga ishonchingiz komilmi?
-            </p>
-          </div>
-          <div className={`mt-5`}>
-          </div>
-          <div className={`flex justify-center items-center gap-6 mt-5`}>
-            <Buttons bWidth={`w-[150px]`}
-                     onClick={() => deleteHelpFile(deleteFileId, setIsLoading, setDataMaster, 'FOR_MASTER', openDeleteModal)}>
-              {isLoading ? 'loading...' : 'O\'chirish'}
-            </Buttons>
-            <Buttons bWidth={`w-[150px]`} onClick={openDeleteModal}>{t('Close')}</Buttons>
-          </div>
-        </div>
-      </Modal>
+      {/*<Modal isOpen={deleteFile} onClose={openDeleteModal}>*/}
+      {/*  <div className={`w-[12rem] sm:w-[18rem] md:w-[25rem] lg:w-[30rem]`}>*/}
+      {/*    <div className={`flex flex-col justify-center`}>*/}
+      {/*      <p className={`font-bold text-xl text-black dark:text-white opacity-80 text-center`}>*/}
+      {/*        Bu fileni uchirishga ishonchingiz komilmi?*/}
+      {/*      </p>*/}
+      {/*    </div>*/}
+      {/*    <div className={`mt-5`}>*/}
+      {/*    </div>*/}
+      {/*    <div className={`flex justify-center items-center gap-6 mt-5`}>*/}
+      {/*      <Buttons bWidth={`w-[150px]`}*/}
+      {/*               onClick={() => deleteHelpFile(deleteFileId, setIsLoading, setDataMaster, 'FOR_MASTER', openDeleteModal)}>*/}
+      {/*        {isLoading ? 'loading...' : 'O\'chirish'}*/}
+      {/*      </Buttons>*/}
+      {/*      <Buttons bWidth={`w-[150px]`} onClick={openDeleteModal}>{t('Close')}</Buttons>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</Modal>*/}
     </div>
   );
 };

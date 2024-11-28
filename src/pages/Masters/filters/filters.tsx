@@ -100,9 +100,7 @@ const Filters: React.FC = () => {
 
   function validateObject(obj: any) {
     for (let key in obj) {
-      if (obj[key]) {
-        return false;
-      }
+      if (obj[key]) return false;
     }
     return true;
   }
@@ -195,20 +193,18 @@ const Filters: React.FC = () => {
             {/*    <Option value="2023">2023</Option>*/}
             {/*  </Select>*/}
             {/*</Col>*/}
-            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
-              <Select
-                placeholder={t('Self_employed_status')}
-                value={filters.selfEmployedStatusValue}
-                className={`w-full bg-white rounded-[8px]`}
-                allowClear
-                onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}
-              >
-                <Option value={true}>{t('Yeah')}</Option>
-                <Option value={false}>{t('Not')}</Option>
-              </Select>
-            </Col>
-          </Row>
-          <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
+            {/*<Col xs={24} sm={12} md={6} className={`mb-[16px]`}>*/}
+            {/*  <Select*/}
+            {/*    placeholder={t('Self_employed_status')}*/}
+            {/*    value={filters.selfEmployedStatusValue}*/}
+            {/*    className={`w-full bg-white rounded-[8px]`}*/}
+            {/*    allowClear*/}
+            {/*    onChange={(value) => handleInputChange('selfEmployedStatusValue', value)}*/}
+            {/*  >*/}
+            {/*    <Option value={true}>{t('Yeah')}</Option>*/}
+            {/*    <Option value={false}>{t('Not')}</Option>*/}
+            {/*  </Select>*/}
+            {/*</Col>*/}
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
                 placeholder={t('Status')}
@@ -222,21 +218,23 @@ const Filters: React.FC = () => {
               </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
-              <Select
-                placeholder={t('Place_of_work')}
-                value={filters.placeOfWorkValue}
-                className={`w-full bg-white rounded-[8px]`}
-                allowClear
-                onChange={(value) => handleInputChange('placeOfWorkValue', value)}
-              >
-                <Option value="SALON">{t('Salon')}</Option>
-                <Option value="TO_HOME">{t('Yes_to_home')}</Option>
-                <Option value="ON_SITE">{t('On_site')}</Option>
-              </Select>
-            </Col>
-            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Buttons onClick={resetFilters}>{t('Reset')}</Buttons>
             </Col>
+          </Row>
+          <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
+            {/*<Col xs={24} sm={12} md={6} className={`mb-[16px]`}>*/}
+            {/*  <Select*/}
+            {/*    placeholder={t('Place_of_work')}*/}
+            {/*    value={filters.placeOfWorkValue}*/}
+            {/*    className={`w-full bg-white rounded-[8px]`}*/}
+            {/*    allowClear*/}
+            {/*    onChange={(value) => handleInputChange('placeOfWorkValue', value)}*/}
+            {/*  >*/}
+            {/*    <Option value="SALON">{t('Salon')}</Option>*/}
+            {/*    <Option value="TO_HOME">{t('Yes_to_home')}</Option>*/}
+            {/*    <Option value="ON_SITE">{t('On_site')}</Option>*/}
+            {/*  </Select>*/}
+            {/*</Col>*/}
           </Row>
         </>
       )}

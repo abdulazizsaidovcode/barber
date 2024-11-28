@@ -51,10 +51,10 @@ const MasterTables: React.FC = () => {
       id: 7,
       name: t('Status')
     },
-    {
-      id: 8,
-      name: t('Schedule_Type')
-    },
+    // {
+    //   id: 8,
+    //   name: t('Schedule_Type')
+    // },
     {
       id: 9,
       name: t('Canceled')
@@ -71,10 +71,10 @@ const MasterTables: React.FC = () => {
       id: 12,
       name: t('Phone')
     },
-    {
-      id: 13,
-      name: t('Place_of_work')
-    }
+    // {
+    //   id: 13,
+    //   name: t('Place_of_work')
+    // }
   ];
   const {
     data,
@@ -215,9 +215,9 @@ const MasterTables: React.FC = () => {
                   </Space>
                 </Space>
               </td>
-              <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">{item.schedule}</p>
-              </td>
+              {/*<td className="min-w-[150px] p-5">*/}
+              {/*  <p className="text-black dark:text-white">{item.schedule}</p>*/}
+              {/*</td>*/}
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">{item.canceled}</p>
               </td>
@@ -232,16 +232,16 @@ const MasterTables: React.FC = () => {
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">{item.phoneNumber}</p>
               </td>
-              <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">{item.workPlace}</p>
-              </td>
+              {/*<td className="min-w-[150px] p-5">*/}
+              {/*  <p className="text-black dark:text-white">{item.workPlace}</p>*/}
+              {/*</td>*/}
             </tr>
           ))
         ) : (
           <tr className={`border-b border-[#eee] dark:border-strokedark`}>
             <td
               className="min-w-full text-center py-10 text-xl font-bold"
-              colSpan={5}
+              colSpan={thead.length}
             >
               {t('Information_not_available')}
             </td>
