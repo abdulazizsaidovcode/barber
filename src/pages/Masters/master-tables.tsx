@@ -13,6 +13,7 @@ import { updateStatusFunc } from '../../helpers/api-function/master/master.tsx';
 import { getFileId } from '../../helpers/api.tsx';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import moment from 'moment';
 
 export interface UpdateStatus {
   status: string;
@@ -70,7 +71,7 @@ const MasterTables: React.FC = () => {
     {
       id: 12,
       name: t('Phone')
-    },
+    }
     // {
     //   id: 13,
     //   name: t('Place_of_work')
@@ -106,6 +107,7 @@ const MasterTables: React.FC = () => {
       onClick: () => openIsModal()
     }
   ];
+
   const getItemsBlock = (id: string): MenuProps['items'] => [
     {
       key: '1',
@@ -117,6 +119,7 @@ const MasterTables: React.FC = () => {
       onClick: () => openIsModal()
     }
   ];
+
   const openIsModal = () => setIsModal(!isModal);
   const handleMenuClick = (e: any, masterId: string) => setUpdateStatus({ status: e.key, masterId });
   const openIsImageModal = () => setIsImageModal(!isImageModal);
@@ -137,6 +140,14 @@ const MasterTables: React.FC = () => {
     return originalElement;
   };
 
+  const masterStatusGenerate = (status: string) => {
+    if (status === 'NEW') return ['Новый', 'bg-green-700'];
+    else if (status === 'ACTIVE') return ['Активный', 'bg-green-400'];
+    else if (status === 'BLOCKED') return ['Заблокированный', 'bg-red-500'];
+    else if (status === 'DELETED') return ['Удалённый', 'bg-red-700'];
+    else return ['Неизвестный', 'bg-gray-500'];
+  };
+
   return (
     <>
       <Filters />
@@ -146,9 +157,9 @@ const MasterTables: React.FC = () => {
             <tr
               key={item.id}
               className={`${key === data.length - 1
-                  ? ''
-                  : 'border-b border-[#eee] dark:border-strokedark'
-                }`}
+                ? ''
+                : 'border-b border-[#eee] dark:border-strokedark'
+              }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <LazyLoadImage
@@ -171,7 +182,8 @@ const MasterTables: React.FC = () => {
                 </p>
               </td>
               <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">{item.startedWork}</p>
+                <p
+                  className="text-black dark:text-white">{item.startedWork ? moment(item.startedWork).format('DD.MM.YYYY') : item.startedWork}</p>
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">{item.orderCount}</p>
@@ -183,15 +195,9 @@ const MasterTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5 pt-7 flex items-center justify-between">
                 <p
-                  className={`${item.status === 'ACTIVE'
-                      ? 'bg-green-400'
-                      : item.status === 'NEW'
-                        ? 'bg-green-700'
-                        : item.status === 'BLOCKED'
-                          ? 'bg-red-500' : 'bg-red-700'
-                    } text-white rounded-full py-1 px-3 text-sm font-medium`}
+                  className={`${item.status && masterStatusGenerate(item.status)[1]} text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
-                  {item.status}
+                  {item.status  ? masterStatusGenerate(item.status)[0] : item.status}
                 </p>
                 <Space direction="vertical">
                   <Space wrap>
@@ -277,6 +283,9 @@ const MasterTables: React.FC = () => {
             </p>
           </div>
           <div className={`flex justify-center items-center gap-10 mt-8`}>
+            <Buttons bWidth={`w-[200px]`} onClick={openIsModal}>
+              {t('Not')}
+            </Buttons>
             <Buttons
               bWidth={`w-[200px]`}
               onClick={() =>
@@ -292,12 +301,10 @@ const MasterTables: React.FC = () => {
             >
               {isLoading ? 'loading...' : t('Yeah')}
             </Buttons>
-            <Buttons bWidth={`w-[200px]`} onClick={openIsModal}>
-              {t('Not')}
-            </Buttons>
           </div>
         </div>
       </Modal>
+
       {isImageModal && (
         <div
           className={`fixed inset-0 z-999 flex items-center justify-center w-full h-full bg-black-2 bg-opacity-50`}
@@ -306,7 +313,7 @@ const MasterTables: React.FC = () => {
           <p className={`absolute top-10 right-10 text-white`}>
             <IoMdCloseCircleOutline
               size={30}
-              className="dark:text-white text-black hover:cursor-pointer opacity-80 duration-200"
+              className="text-white hover:cursor-pointer opacity-80 duration-200"
               onClick={openIsImageModal} />
           </p>
           <div className="flex justify-center items-center">
