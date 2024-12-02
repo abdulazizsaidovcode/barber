@@ -1,6 +1,5 @@
 
 import MasterCard from '../../components/MasterCard/masterCard'
-import PricesCard from '../../components/PricesCard/pricesCard'
 import DefaultLayout from '../../layout/DefaultLayout'
 const MasterDatail = () => {
   return (

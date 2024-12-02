@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Switch from "../settings/details/TableSwitcher";
+import React from "react";
+
 
 interface IData {
     name: string;
@@ -16,11 +16,11 @@ interface MasterCardProps {
 
 const MasterCard: React.FC<MasterCardProps> = ({ masterName, specialistTitle, phoneNumber, imageUrl, masterData }) => {
 
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
+    // const [isSwitchOn, setIsSwitchOn] = useState(false);
 
-    const toggleSwitch = () => {
-        setIsSwitchOn(!isSwitchOn);
-    };
+    // const toggleSwitch = () => {
+    //     setIsSwitchOn(!isSwitchOn);
+    // };
     return (
         <div className="w-full max-h-screen mb-4 flex flex-col gap-4">
             <div className="p-4 w-full bg-white dark:bg-black rounded-lg shadow-md">

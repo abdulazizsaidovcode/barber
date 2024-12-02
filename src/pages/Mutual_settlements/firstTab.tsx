@@ -16,9 +16,6 @@ const { RangePicker } = DatePicker;
 
 const FilterComponent: React.FC = () => {
   const {
-    setData,
-    setTotalPage,
-    setDistrictData,
     setFilters,
     regionData,
     districtData,
@@ -43,12 +40,12 @@ const FilterComponent: React.FC = () => {
   ].filter(Boolean).join('&');
   const url: string = `${master_download}?${queryParams}${queryParams ? '&' : ''}page=${page}&size=${size}`;
   const [showExtraFilters, setShowExtraFilters] = useState(false);
-  const [activeMenu, setActiveMenu] = useState<number | null>(null);
+  // const [activeMenu, setActiveMenu] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation()
-  const hide = () => {
-    setOpen(false);
-  };
+  // const hide = () => {
+  //   setOpen(false);
+  // };
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
@@ -57,9 +54,9 @@ const FilterComponent: React.FC = () => {
   const toggleExtraFilters = () => setShowExtraFilters(!showExtraFilters);
   const resetFilters = (): void => setFilters(filterObj);
   const handleInputChange = (key: string, value: any) => setFilters({ ...filters, [key]: value });
-  const toggleContextMenu = (id: number) => {
-    setActiveMenu(activeMenu === id ? null : id);
-  };
+  // const toggleContextMenu = (id: number) => {
+  //   setActiveMenu(activeMenu === id ? null : id);
+  // };
 
   const styles = {
     mainContainer: {
