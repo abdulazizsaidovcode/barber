@@ -26,7 +26,8 @@ const Filters: React.FC = () => {
     isLoading,
     setIsLoading,
     page,
-    size
+    size,
+    setMasterLoading
   } = masterStore();
   const [showExtraFilters, setShowExtraFilters] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -57,8 +58,9 @@ const Filters: React.FC = () => {
       page: validateObject(filters) ? page : 0,
       size: validateObject(filters) ? size : 0,
       setData,
-      setTotalPage
-    });
+      setTotalPage,
+      setLoading: setMasterLoading
+    }).then(() => '');
     if (filters.regionValue) getDistrict(setDistrictData, +filters.regionValue);
   }, [filters]);
 
@@ -75,8 +77,9 @@ const Filters: React.FC = () => {
       selfEmployed: filters.selfEmployedStatusValue === true ? true : filters.selfEmployedStatusValue === false ? false : '',
       workPlace: filters.placeOfWorkValue ? filters.placeOfWorkValue : '',
       setData,
-      setTotalPage
-    });
+      setTotalPage,
+      setLoading: setMasterLoading
+    }).then(() => '');
   }, [filters.regionValue]);
 
   const toggleExtraFilters = (): void => setShowExtraFilters(!showExtraFilters);

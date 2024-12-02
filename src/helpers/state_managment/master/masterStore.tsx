@@ -47,6 +47,8 @@ const masterStore = create<MasterData>((set) => ({
   setPage: (val: number) => set({ page: val }),
   size: 10,
   setSize: (val: number) => set({ size: val }),
+  masterLoading: false,
+  setMasterLoading: masterLoading => set({ masterLoading })
 }));
 
 export default masterStore;

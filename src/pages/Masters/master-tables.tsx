@@ -87,7 +87,8 @@ const MasterTables: React.FC = () => {
     isLoading,
     setIsLoading,
     setPage,
-    setSize
+    setSize,
+    masterLoading
   } = masterStore();
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: '',
@@ -152,7 +153,13 @@ const MasterTables: React.FC = () => {
     <>
       <Filters />
       <MasterTable thead={thead}>
-        {data.length > 0 ? (
+        {masterLoading ? <tr className={`border-b border-[#eee] dark:text-white dark:border-strokedark`}>
+          <td
+            className="min-w-full text-start py-3 pl-2 text-xl font-bold"
+          >
+            {t('Loading')}...
+          </td>
+        </tr> : data.length > 0 ? (
           data.map((item, key) => (
             <tr
               key={item.id}
@@ -197,7 +204,7 @@ const MasterTables: React.FC = () => {
                 <p
                   className={`${item.status && masterStatusGenerate(item.status)[1]} text-white rounded-full py-1 px-3 text-sm font-medium`}
                 >
-                  {item.status  ? masterStatusGenerate(item.status)[0] : item.status}
+                  {item.status ? masterStatusGenerate(item.status)[0] : item.status}
                 </p>
                 <Space direction="vertical">
                   <Space wrap>
@@ -244,7 +251,7 @@ const MasterTables: React.FC = () => {
             </tr>
           ))
         ) : (
-          <tr className={`border-b border-[#eee] dark:border-strokedark`}>
+          <tr className={`border-b border-[#eee] dark:text-white dark:border-strokedark`}>
             <td
               className="min-w-full text-center py-10 text-xl font-bold"
               colSpan={thead.length}
