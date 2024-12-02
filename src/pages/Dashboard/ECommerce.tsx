@@ -137,6 +137,7 @@ const ECommerce: React.FC = () => {
           ) : (
             <Skeleton.Input active />
           )}
+          
           {data.masterAverageClient !== undefined ? (
             <CardDataStats
               title={t('Clients_per_1_specialist_on_average')}
@@ -145,7 +146,7 @@ const ECommerce: React.FC = () => {
           ) : (
             <Skeleton.Input active />
           )}
-          {data.positiveFeedbackInService !== undefined &&
+          {/* {data.positiveFeedbackInService !== undefined &&
           data.negativeFeedbackInService !== undefined ? (
             <CardDataCharts
               title={t('Clients_per_1_specialist_on_average')}
@@ -154,7 +155,7 @@ const ECommerce: React.FC = () => {
             />
           ) : (
             <Skeleton.Input active />
-          )}
+          )} */}
         </div>
       </section>
 
@@ -175,15 +176,15 @@ const ECommerce: React.FC = () => {
         <div className="md:w-1/2 w-full">
           <ChartOne />
         </div>
-        <div className="md:w-1/2 w-full">
+        {/* <div className="md:w-1/2 w-full">
           <ChartFour />
-        </div>
+        </div> */}
       </div>
       {/* Income dynamics */}
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartMasterRate />
-        <ChartSeven />
+        {/* <ChartSeven /> */}
         <ChartEight />
       </div>
 
