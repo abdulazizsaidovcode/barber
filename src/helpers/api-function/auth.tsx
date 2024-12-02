@@ -20,6 +20,7 @@ export const handleSubmit = (
     setLoading(true);
     axios.post(login_url, data)
       .then(res => {
+        console.log(data);
         setLoading(false);
         if (res.data.success === false) toast.error('Nimadur xato ketti qaytadan urinib ko\'ring');
         else {

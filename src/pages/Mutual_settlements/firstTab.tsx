@@ -43,7 +43,7 @@ const FilterComponent: React.FC = () => {
     },
     filterInput: {
       width: '100%',
-      backgroundColor: '#f0f0f0', 
+      backgroundColor: '#f0f0f0',
     },
     toggleButton: {
       width: '13%',
@@ -62,13 +62,13 @@ const FilterComponent: React.FC = () => {
       img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYxuazQ7_RGUp4WrKx41JwXBlZ0Xr818VVPQuqcHgzWQ&s',
       master: "Имя, Фамилия 99893 258 36 52",
       Спеиализация: 'Парихмахер, барбер',
-      Тариф: 'Premiup',
-      Цена: 'Цена',
-      Оплачено: 'Оплачено',
+      Тариф: '3 месяца',
+      Цена: '2 100 000',
+      // Оплачено: 'Оплачено',
       Способоплаты: 'Способ оплаты',
-      Датаоплаты: 'Дата оплаты',
-      Срокподписки: 'Срок подписки',
-      Датаначала: 'Дата начала',
+      // Датаоплаты: 'Дата оплаты',
+      // Срокподписки: 'Срок подписки',
+      Датаначала: '25.04.2024',
       Статус: 'Статус',
       Датаокончания: 'Дата окончания',
       icon: ':'
@@ -79,14 +79,15 @@ const FilterComponent: React.FC = () => {
   const tableHeaders = [
     { id: 1, name: t("Photo") },
     { id: 2, name: t("master") },
-    { id: 3, name: t("Specialization") },
-    { id: 4, name: t("Tarif") },
-    { id: 5, name: t("order_table_cost") },
-    { id: 6, name: t("order_table_paid") },
+    { id: 3, name: t("Категория") },
+    { id: 4, name: t("Срок подписки") },
+    // { id: 4, name: t("Tarif") },
+    { id: 4, name: t("order_table_cost") },
+    // { id: 6, name: t("Дата начала") },
     { id: 7, name: t("Reasonably_priced") },
-    { id: 8, name: t("date_of_payment") },
-    { id: 9, name: t("Subscription_period") },
-    { id: 10, name: t("Select_start_date") },
+    // { id: 8, name: t("date_of_payment") },
+    // { id: 9, name: t("Subscription_period") },
+    // { id: 10, name: t("Select_start_date") },
     { id: 11, name: t("Status") },
     { id: 13, name: t("Select_end_date") },
     { id: 13, name: '' },
@@ -192,12 +193,16 @@ const FilterComponent: React.FC = () => {
               <td className="p-2">{data.Спеиализация}</td>
               <td className="p-2">{data.Тариф}</td>
               <td className="p-2">{data.Цена}</td>
-              <td className="p-2">{data.Оплачено}</td>
-              <td className="p-2">{data.Способоплаты}</td>
-              <td className="p-2">{data.Датаоплаты}</td>
-              <td className="p-2">{data.Срокподписки}</td>
+              {/* <td className="p-2">{data.Оплачено}</td> */}
+              {/* <td className="p-2">{data.Способоплаты}</td> */}
+              {/* <td className="p-2">{data.Датаоплаты}</td> */}
+              {/* <td className="p-2">{data.Срокподписки}</td> */}
               <td className="p-2">{data.Датаначала}</td>
-              <td className="p-2">{data.Статус}</td>
+              <td className="p-2">
+                <button className="bg-blue-500 text-white px-8 py-1 rounded-lg hover:bg-blue-600">
+                  {data.Статус}
+                </button>
+              </td>
               <td className="p-2">{data.Датаокончания}</td>
               <td className="p-2">
                 <Popover

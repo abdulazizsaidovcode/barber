@@ -1,8 +1,8 @@
 // hamma qushimcha yullar xam uzi api url lar shu joyga yozamiz(mi) shunday qilib?
 // +998886700770 123
 // http://45.67.35.86:8080/swagger-ui/index.html#/
-
 // get me
+
 import axios from 'axios';
 import { config } from './token.tsx';
 import { clearFunction } from '../common/clear-function/clear-function.tsx';
@@ -30,8 +30,8 @@ export const getMe = (token?: string) => {
 
 // swagger url
 // export const base_url: string = 'http://45.67.35.86:8080/';
-export const base_url: string = 'http://134.122.77.107:8080/';
-// export const base_url: string = 'http://192.168.0.109/';
+// export const base_url: string = 'http://134.122.77.107:8080/';
+export const base_url: string = 'http://192.168.0.110/api/';
 
 export const master_download: string = `${base_url}user/web/masters/download`;
 export const client_download: string = `${base_url}client/web/clients/download`;

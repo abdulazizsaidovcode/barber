@@ -9,8 +9,8 @@ const MasterDatail = () => {
         <div className='bg-white w-full p-3 min-h-screen'>
           <div className='mb-30'>
           <MasterCard
-                masterName="John Doe"
-                specialistTitle="Web Developer"
+                masterName="Малика Махмудова"
+                specialistTitle="Специалист по наращиванию ресниц"
                 phoneNumber="123-456-7890"
                 imageUrl="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png"
                 masterData={[
@@ -19,27 +19,25 @@ const MasterDatail = () => {
                         price: 10000
                     },
                     {
-                        name: 'Оплачено',
-                        price: 6000000
+                        name: 'Дата оплаты',
+                        price: '25.02 .2024'
                     },
                     {
                         name: 'Дата оплаты',
                         price: '25.02 .2024'
                     },
                     {
-                        name: 'Срок подписки',
-                        price: '3 месяца'
+                        name: 'Дата окончания',
+                        price: '25.05.2024'
                     },
-                    {
-                        name: 'Способ оплаты',
-                        price: 'Карта'
-                    }
+                    // {
+                    //     name: 'Способ оплаты',
+                    //     price: 'Карта'
+                    // }
                 ]}
             />
           </div>
-          <PricesCard />
-
-
+          {/* <PricesCard /> */}
         </div>
 
 
