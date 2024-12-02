@@ -4,14 +4,14 @@ import {
   district_url,
   master_url,
   region_url,
-  update_master_status,
+  update_master_status
 } from '../../api.tsx';
 import { config } from '../../token.tsx';
 import {
   CategoryChild,
   Data,
   DistrictData,
-  RegionData,
+  RegionData
 } from '../../../types/master.ts';
 import toast from 'react-hot-toast';
 import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
@@ -30,23 +30,15 @@ interface IMaster {
   size?: number;
   setData: (val: Data[]) => void;
   setTotalPage: (val: number) => void;
+  setLoading?: (isLoading: boolean) => void;
 }
 
-export const getMasters = ({
-  fullName,
-  regionId,
-  districtId,
-  startDate,
-  endDate,
-  categoryId,
-  statusName,
-  selfEmployed,
-  workPlace,
-  page,
-  size,
-  setData,
-  setTotalPage,
-}: IMaster) => {
+export const getMasters = async (
+  {
+    fullName, regionId, districtId, startDate, endDate, categoryId,
+    statusName, selfEmployed, workPlace, page, size, setData, setTotalPage,
+    setLoading
+  }: IMaster) => {
   const master_get_url = [
     fullName ? `fullName=${fullName}` : '',
     regionId ? `regionId=${regionId}` : '',
@@ -58,35 +50,51 @@ export const getMasters = ({
     selfEmployed ? `selfEmployed=${selfEmployed}` : '',
     workPlace ? `workPlace=${workPlace}` : '',
     page ? `page=${page}` : '',
-    size ? `size=${size}` : '',
-  ]
-    .filter(Boolean)
-    .join('&');
+    size ? `size=${size}` : ''
+  ].filter(Boolean).join('&');
 
-  axios
-    .get(`${master_url}${master_get_url ? `?${master_get_url}` : ''}`, config)
-    .then((res) => {
-      if (res.data.success === true) {
-        setData(res.data.body.object);
-        setTotalPage(res.data.body.totalElements);
-      } else {
-        setData([]);
-        clearFunction()
-      }
-    })
-    .catch((err) => {
-      setTotalPage(0)
-      if (err.response) {
-        if (err.response.status === 404) console.error('error');
-        else
-          console.error(
-            `Error: ${err.response.status} - ${err.response.statusText}`,
-          );
-      } else if (err.request) console.error('No response received');
-      else console.error('Request setup error');
+  setLoading && setLoading(true);
+
+  try {
+    const { data } = await axios.get(`${master_url}${master_get_url ? `?${master_get_url}` : ''}`, config);
+
+    if (data.success === true) {
+      setData(data.body.object);
+      setTotalPage(data.body.totalElements);
+    } else {
       setData([]);
-      clearFunction()
-    });
+      clearFunction();
+    }
+  } catch (err) {
+    setData([]);
+    clearFunction();
+  } finally {
+    setTotalPage(0);
+    setLoading && setLoading(false);
+    clearFunction();
+  }
+
+  // axios.get(`${master_url}${master_get_url ? `?${master_get_url}` : ''}`, config).then((res) => {
+  //   if (res.data.success === true) {
+  //     setData(res.data.body.object);
+  //     setTotalPage(res.data.body.totalElements);
+  //   } else {
+  //     setData([]);
+  //     clearFunction();
+  //   }
+  // }).catch((err) => {
+  //   setTotalPage(0);
+  //   if (err.response) {
+  //     if (err.response.status === 404) console.error('error');
+  //     else
+  //       console.error(
+  //         `Error: ${err.response.status} - ${err.response.statusText}`
+  //       );
+  //   } else if (err.request) console.error('No response received');
+  //   else console.error('Request setup error');
+  //   setData([]);
+  //   clearFunction();
+  // });
 };
 
 export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
@@ -96,18 +104,18 @@ export const getRegion = (setRegionData: (data: RegionData[]) => void) => {
       if (res.data.success === true) setRegionData(res.data.body);
       else {
         setRegionData([]);
-        clearFunction()
+        clearFunction();
       }
     })
     .catch(() => {
-      setRegionData([])
-      clearFunction()
+      setRegionData([]);
+      clearFunction();
     });
 };
 
 export const getDistrict = (
   setDistrictData: (data: DistrictData[]) => void,
-  districtId: number | string,
+  districtId: number | string
 ) => {
   if (districtId) {
     axios
@@ -116,18 +124,18 @@ export const getDistrict = (
         if (res.data.success) setDistrictData(res.data.body);
         else {
           setDistrictData([]);
-          clearFunction()
+          clearFunction();
         }
       })
       .catch(() => {
-        setDistrictData([])
-        clearFunction()
+        setDistrictData([]);
+        clearFunction();
       });
   }
 };
 
 export const getCategory = (
-  setCategoryChild: (data: CategoryChild[]) => void,
+  setCategoryChild: (data: CategoryChild[]) => void
 ) => {
   axios
     .get(child_category_list, config)
@@ -135,12 +143,12 @@ export const getCategory = (
       if (res.data.success) setCategoryChild(res.data.body);
       else {
         setCategoryChild([]);
-        clearFunction()
+        clearFunction();
       }
     })
     .catch(() => {
-      setCategoryChild([])
-      clearFunction()
+      setCategoryChild([]);
+      clearFunction();
     });
 };
 
@@ -150,7 +158,7 @@ export const updateStatusFunc = (
   setData: (val: Data[]) => void,
   setTotalPage: (val: number) => void,
   openIsModal: () => void,
-  setIsLoading: (val: boolean) => void,
+  setIsLoading: (val: boolean) => void
 ) => {
   let data = { id: masterId, status };
   if (data.id && data.status) {
@@ -166,18 +174,18 @@ export const updateStatusFunc = (
         } else {
           toast.error('Serverda xatolik yuz berdi');
           openIsModal();
-          clearFunction()
+          clearFunction();
         }
       })
       .catch(() => {
         setIsLoading(false);
         toast.error('Error updating status!');
         openIsModal();
-        clearFunction()
+        clearFunction();
       });
   } else {
     toast.error('Error updating status');
     openIsModal();
-    clearFunction()
+    clearFunction();
   }
 };

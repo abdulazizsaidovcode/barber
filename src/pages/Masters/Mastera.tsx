@@ -11,38 +11,38 @@ import MasterLocation from './master-location.tsx';
 import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 const Master = () => {
-  const { setData, setTotalPage, setRegionData, setCategory, page, size } = masterStore()
+  const { setData, setTotalPage, setRegionData, setCategory, page, size, setMasterLoading } = masterStore();
   const { t } = useTranslation();
   useEffect(() => {
-    getMasters({ setData, setTotalPage })
-    getRegion(setRegionData)
-    getCategory(setCategory)
-    clearFunction()
-  }, [])
+    getMasters({ setData, setTotalPage, setLoading: setMasterLoading }).then(() => '');
+    getRegion(setRegionData);
+    getCategory(setCategory);
+    clearFunction();
+  }, []);
 
   useEffect(() => {
-    getMasters({ setData, setTotalPage, page, size })
-  }, [page])
+    getMasters({ setData, setTotalPage, page, size, setLoading: setMasterLoading }).then(() => '');
+  }, [page]);
 
   const items: IMasterItems[] = [
     {
       key: '1',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t("List_of_masters")}
+          {t('List_of_masters')}
         </span>
       ),
-      children: <MasterTables />,
+      children: <MasterTables />
     },
     {
       key: '2',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t("The_location_of_the_master")}
+          {t('The_location_of_the_master')}
         </span>
       ),
-      children: <MasterLocation />,
-    },
+      children: <MasterLocation />
+    }
   ];
 
   return (

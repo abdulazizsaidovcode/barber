@@ -42,6 +42,8 @@ export interface MasterData {
   setPage: (val: number) => void;
   size: number,
   setSize: (val: number) => void;
+  masterLoading: boolean;
+  setMasterLoading: (val: boolean) => void;
 }
 
 export interface Data {
