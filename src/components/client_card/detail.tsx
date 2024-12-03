@@ -161,20 +161,20 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <strong>{t('Gender')}:</strong> {Gender}
             </p>
             <p className="mb-10">
-              <strong>{t('turnover')}:</strong> {turnover}
+              <strong>{t('date_of_birth')}:</strong> {turnover}
             </p>
-            <p className="mb-10">
+            {/* <p className="mb-10">
               <strong>{t('Age')}:</strong> {Age}
-            </p>
+            </p> */}
             <p className="mb-10">
               <strong>{t('Region')}:</strong> {Region}
             </p>
             <p className="mb-10">
               <strong>{t('City')}:</strong> {City}
             </p>
-            <p className="mb-10">
+            {/* <p className="mb-10">
               <strong>{t('Location')}:</strong> {Location}
-            </p>
+            </p> */}
           </div>
         </Skeleton>
       </div>
@@ -268,10 +268,10 @@ const MasterCardInfo: React.FC<MasterCardInfoProps> = ({
               <strong>{t('Cancelled Orders')}:</strong>
               <p>{rejectedOrderCount}</p>
             </div>
-            <div className="flex items-center justify-between mt-4">
+            {/* <div className="flex items-center justify-between mt-4">
               <strong>{t('Clients')}:</strong>
               <p>{Clients}</p>
-            </div>
+            </div> */}
 
             <div className="flex items-center justify-between mt-4">
               <strong>{t('Start Work')}:</strong>

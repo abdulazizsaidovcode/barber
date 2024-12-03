@@ -16,13 +16,13 @@ const Reviews: React.FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    fetchMainData(setMainData);
+    fetchMainData(setMainData, '');
     getRegion(setRegionData);
     fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
   }, []);
 
   useEffect(() => {
-    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`, false);
+    fetchDataList(setListData, setTotalPage, `${reviews_list_data}?page=${currentPage}&size=${pageSize}`, () => false);
   }, [currentPage, pageSize]);
 
   const items = [

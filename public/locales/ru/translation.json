@@ -156,6 +156,7 @@
   "order_table_prepayment": "Предоплата",
   "payment": "Способ оплаты",
   "Кто отменил":"Кто отменил",
+  "date_of_birth":"Дата рождения",
   "tarif":"Тарифы",
   "new": "Новая",
   "odobrone": "Одобрена",
@@ -173,7 +174,7 @@
   "Status": "Статус",
   "Open": "Открыть",
   "Extend": "Продлить",
-
+  "app_settings_masters": "Настройки приложения мастера",
   "Stop_subscription": "Остановить подписку",
   "Orders": "Заказы",
   "Service_category": "Категория услуг",

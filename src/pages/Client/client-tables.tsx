@@ -95,16 +95,16 @@ const ClientTables: React.FC = () => {
       id: 7,
       name: t('Age')
     },
+    // {
+    //   id: 8,
+    //   name: t('master')
+    // },
     {
       id: 8,
-      name: t('master')
-    },
-    {
-      id: 9,
       name: t('Canceled')
     },
     {
-      id: 10,
+      id: 9,
       name: t('Status')
     }
   ];
@@ -228,11 +228,11 @@ const ClientTables: React.FC = () => {
                   {item?.age ? `${item.age} ${t('years')}` : t('No_data')}
                 </p>
               </td>
-              <td className="min-w-[150px] p-5">
+              {/* <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
                   {item?.masterCount ?? 0}
                 </p>
-              </td>
+              </td> */}
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
                   {item?.canceledOrder ?? 0}
@@ -257,7 +257,7 @@ const ClientTables: React.FC = () => {
           <tr className={`border-b border-[#eee] dark:border-strokedark`}>
             <td
               className="min-w-full text-center py-10 text-xl dark:text-white font-bold"
-              colSpan={5}
+              colSpan={10}
             >
               {t('No_data_available')}
             </td>

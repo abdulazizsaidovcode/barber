@@ -114,7 +114,7 @@ const FilterComponent: React.FC = () => {
     // { id: 4, name: t("Tarif") },
     { id: 4, name: t("order_table_cost") },
     // { id: 6, name: t("Дата начала") },
-    { id: 7, name: t("Reasonably_priced") },
+    { id: 7, name: t("Select_start_date") },
     // { id: 8, name: t("date_of_payment") },
     // { id: 9, name: t("Subscription_period") },
     // { id: 10, name: t("Select_start_date") },

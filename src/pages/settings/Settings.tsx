@@ -11,12 +11,12 @@ const Settings = () => {
           <MainCard text={t("Specialization_service_categories")} link='/settings/service-categories' />
           {/* <MainCard text={t("Online_booking")} link='/settings/online-booking' /> */}
           <MainCard text={t("Specializations")} link='/settings/specializations' />
-          <MainCard text={t("Tariffs_functionality")} link='/settings/tariffs-functionality' />
+          <MainCard text={t("app_settings_masters")} link='/settings/tariffs-functionality' />
           {/* <MainCard text={t("Salon")} link='/settings/salon' /> */}
         </div>
       </div>
     </DefaultLayout>
   );
-};
+};  
 
 export default Settings;

@@ -76,7 +76,7 @@ const MasterDocument = () => {
                   <MdEdit size={20} className="dark:text-white" />
                 </button>
               )}
-              {!trueFalse(item.helpStatus) && <FileUploader id={`${item.id}`} item={item.attachments} />}
+              {/* {!trueFalse(item.helpStatus) && <FileUploader id={`${item.id}`} item={item.attachments} />} */}
             </div>
           </Accordion>
         ))}
