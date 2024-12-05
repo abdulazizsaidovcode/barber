@@ -31,7 +31,7 @@ export const getMe = (token?: string) => {
 // swagger url
 // export const base_url: string = 'http://45.67.35.86:8080/';
 // export const base_url: string = 'http://134.122.77.107:8080/';
-export const base_url: string = 'http://192.168.0.110/api/';
+export const base_url: string = 'http://207.154.246.120:8080/api/';
 
 export const master_download: string = `${base_url}user/web/masters/download`;
 export const client_download: string = `${base_url}client/web/clients/download`;
@@ -170,3 +170,4 @@ export const reviews_list_delete = `${base_url}feedback/delete`;
 
 // salon url
 export const salon_list = `${base_url}salon`
+export const subs_list = `${base_url}tariff/web/subscription`

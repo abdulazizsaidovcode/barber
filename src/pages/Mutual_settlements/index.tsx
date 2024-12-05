@@ -14,7 +14,7 @@ const Mortal: React.FC = () => {
     <div>
       <DefaultLayout>
         <div className=' w-full p-3 max-h-screen'>
-          <Breadcrumb pageName={t("Mutual_settlements")} />
+          <Breadcrumb pageName={t("subscription")} />
           <MainTabs />
         </div>
 

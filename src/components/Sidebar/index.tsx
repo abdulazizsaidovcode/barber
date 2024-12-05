@@ -167,7 +167,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <PiHandshakeBold />
-                  {t('Mutual_settlements')}
+                  {t('subscription')}
                 </NavLink>
               </li>
               <li>
