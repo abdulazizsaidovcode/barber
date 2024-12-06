@@ -96,7 +96,7 @@ export interface FilterTypes {
   serviceCategoryValue: string | null;
   // reels two
   // scheduleTypeValue: string | null;
-  selfEmployedStatusValue: boolean | null | string;
+  tariffStatus: boolean | null | string;
   statusValue: string | null;
   placeOfWorkValue: string | null;
 }

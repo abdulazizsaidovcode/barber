@@ -16,15 +16,15 @@ const MainTabs: React.FC = () => {
       ),
       children: <FirstTab />,
     },
-    {
-      key: '2',
-      label: (
-        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
-          {t("By_city")}
-        </span>
-      ),
-      children: <SecondTab />,
-    },
+    // {
+    //   key: '2',
+    //   label: (
+    //     <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+    //       {t("By_city")}
+    //     </span>
+    //   ),
+    //   children: <SecondTab />,
+    // },
   ];
 
   return (

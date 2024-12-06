@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 
 interface IData {
@@ -11,24 +12,21 @@ interface MasterCardProps {
     specialistTitle: string;
     phoneNumber: string;
     imageUrl: string;
+    day: string;
+    status: 'ACTIVE' | 'BLOCKED' | string;
     masterData: IData[];
 }
 
-const MasterCard: React.FC<MasterCardProps> = ({ masterName, specialistTitle, phoneNumber, imageUrl, masterData }) => {
-
-    // const [isSwitchOn, setIsSwitchOn] = useState(false);
-
-    // const toggleSwitch = () => {
-    //     setIsSwitchOn(!isSwitchOn);
-    // };
+const MasterCard: React.FC<MasterCardProps> = ({ masterName, specialistTitle, phoneNumber, imageUrl, masterData, day, status }) => {
+    const { t } = useTranslation()
     return (
         <div className="w-full max-h-screen mb-4 flex flex-col gap-4">
             <div className="p-4 w-full bg-white dark:bg-black rounded-lg shadow-md">
-                <h1 className="font-bold">История подписки</h1>
+                <h1 className="font-bold">{t('tarrif_history')}</h1>
             </div>
             <div className="bg-white dark:bg-black flex justify-between items-center p-4 w-full rounded-lg shadow-md">
-                <h1 className="font-bold text-xl text-slate-700 dark:text-slate-300">Premium</h1>
-                <button className="bg-[#58CA64] px-6 py-2 rounded-full text-white">Активный</button>
+                <h1 className="font-bold text-xl text-slate-700 dark:text-slate-300">{day}</h1>
+                <button className={status === 'BLOCKED' ? 'bg-red-600 px-6 py-2 rounded-full text-white' : `bg-[#58CA64] px-6 py-2 rounded-full text-white`}>{status === 'BLOCKED' ? t('Locked') : t('Active')}</button>
             </div>
             <div className="w-full flex flex-col lg:flex-row gap-4">
                 <div className="w-full lg:w-1/3 flex flex-col gap-4">

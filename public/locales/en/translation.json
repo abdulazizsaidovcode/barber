@@ -55,6 +55,8 @@
   "Male": "Male",
   "female": "Female",
   "Age": "Age",
+  "year": "Year",
+  "tarrif_history": "Subscription history",
   "SecondTab_name": "Completed",
   "ThirdTab_name": "Rejected",
   "siderbar_settings": "Settings",

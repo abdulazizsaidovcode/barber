@@ -3,7 +3,6 @@ import { DatePicker } from 'antd';
 import MasterTable from '../../components/Tables/MasterTable';
 import financeStore from '../../helpers/state_managment/finance/financeStore.tsx';
 import { getFinance } from '../../helpers/api-function/finance/finance.tsx';
-import CurrentYear from '../../helpers/date.tsx';
 import axios from 'axios';
 import { base_url } from '../../helpers/api.tsx';
 import { config } from '../../helpers/token.tsx';
@@ -11,8 +10,7 @@ import { Buttons } from '../../components/buttons/index.tsx';
 import { downloadExcelFile } from '../../helpers/attachment/file-download.tsx';
 import { useTranslation } from 'react-i18next';
 import { clearFunction } from '../../common/clear-function/clear-function.tsx';
-
-// const { Option } = Select;
+import moment from 'moment';
 
 interface Year {
   benefit: number;
@@ -25,13 +23,16 @@ const FirstTab: React.FC = () => {
   const [year, setYear] = useState<Year | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const currentYear = moment().format('YYYY');
+  const currentMonth = moment()
+
   useEffect(() => {
     if (monthVal && yearVal) {
       getFinance(monthVal, yearVal, setData);
     }
   }, [monthVal, yearVal, setData]);
-
-  const handleMonthChange = (value: any, dateString: any) => {
+  
+  const handleMonthChange = (value: any) => {
     const month = value ? value.format('MM') : null;
     setMonthVal(month);
     if (month && yearVal) {
@@ -39,7 +40,7 @@ const FirstTab: React.FC = () => {
     }
   };
 
-  const handleYearChange = (value: any, dateString: any) => {
+  const handleYearChange = (value: any) => {
     const year = value ? value.format('YYYY') : null;
     setYearVal(year);
     if (monthVal && year) {
@@ -55,7 +56,7 @@ const FirstTab: React.FC = () => {
         }).catch(() => {
           console.log('error')
           clearFunction()
-      });
+        });
     }
   }, [yearVal]);
 
@@ -148,10 +149,6 @@ const FirstTab: React.FC = () => {
       {/* Top Section */}
       {/* Table */}
       <div>
-        <div className='flex justify-around dark:text-white bg-white px-5 pb-2.5 dark:border-strokedark dark:bg-[#303d4a] mx-7.5 pt-3'>
-          <p>{yearVal ? yearVal : <CurrentYear />}</p>
-          <p>{t('tarif')}</p>
-        </div>
         <MasterTable thead={tableHeaders}>
           {data.object ? data.object.map((data: FinanceData, index: number) => (
             <tr key={index} className="dark:text-white">

@@ -89,7 +89,7 @@ function App() {
           }
         />
         <Route
-          path="/MasterDatail"
+          path="/master-detail/:id"
           element={
             <>
               <PageTitle title="Взаиморасчёты | Barber" />

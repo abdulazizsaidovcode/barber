@@ -1,6 +1,6 @@
 // FilterComponent.tsx
 import React, { useEffect, useState } from 'react';
-import { Select, Input, Button, Row, Col, Popover, Space, DatePicker, Pagination } from 'antd';
+import { Select, Input, Row, Col, Popover, Pagination } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { IoSearchOutline } from 'react-icons/io5';
 import MasterTable from '../../components/Tables/MasterTable';
@@ -9,15 +9,16 @@ import { useTranslation } from 'react-i18next';
 import masterStore from '../../helpers/state_managment/master/masterStore';
 import { Buttons } from '../../components/buttons';
 import { downloadExcelFile } from '../../helpers/attachment/file-download';
-import { getFileId, subs_list } from '../../helpers/api';
+import { getFileId, service_category_list, subs_list } from '../../helpers/api';
 import { getDistrict, getRegion } from '../../helpers/api-function/master/master';
 import defaultImg from '../../images/user.png'
 import { getMutuals } from '../../helpers/api-function/mutual_set/mutual_set';
 import { IoMdMore } from 'react-icons/io';
+import axios from 'axios';
+import { config } from '../../helpers/token';
+import { clearFunction } from '../../common/clear-function/clear-function';
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
-
 interface Data {
   masterId: string,
   attachmentId: string | null,
@@ -52,6 +53,7 @@ const FilterComponent: React.FC = () => {
     setDistrictData,
     setPage,
     setSize,
+    setCategory
   } = masterStore();
 
   const queryParams: string = [
@@ -59,9 +61,8 @@ const FilterComponent: React.FC = () => {
     filters.regionValue ? `regionId=${filters.regionValue}` : '',
     filters.cityValue ? `districtId=${filters.cityValue}` : '',
     filters.serviceCategoryValue ? `categoryId=${filters.serviceCategoryValue}` : '',
-    filters.statusValue ? `statusName=${filters.statusValue}` : '',
-    // filters.selfEmployedStatusValue === true ? `selfEmployed=true` : filters.selfEmployedStatusValue === false ? `selfEmployed=false` : '',
-    // filters.placeOfWorkValue ? `workPlace=${filters.placeOfWorkValue}` : ''
+    filters.statusValue ? `status=${filters.statusValue}` : '',
+    filters.tariffStatus ? `tariffStatus=${filters.tariffStatus}` : ''
   ].filter(Boolean).join('&');
 
   const url: string = `${subs_list}?${queryParams}${queryParams ? '&' : ''}page=${page}&size=${size}`;
@@ -79,6 +80,17 @@ const FilterComponent: React.FC = () => {
 
   useEffect(() => {
     getRegion(setRegionData);
+    const getCategory = async () => {
+      try {
+        const { data } = await axios.get(service_category_list, config)
+        if (data.success === true) setCategory(data.body)
+      } catch { }
+      finally {
+        clearFunction()
+      }
+    }
+
+    getCategory()
   }, [])
 
   useEffect(() => {
@@ -184,15 +196,18 @@ const FilterComponent: React.FC = () => {
       {showExtraFilters && (
         <>
           <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-            <Col xs={24} sm={12} md={6} className={`mb-[16px] w-full`}>
-              <Space direction="vertical" size={14}>
-                <RangePicker
-                  placeholder={[t('Select_start_date'), t('Select_end_date')]}
-                  value={filters.registrationPeriodValue}
-                  className={`w-full`}
-                  onChange={(date) => handleInputChange('registrationPeriodValue', date)}
-                />
-              </Space>
+            <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
+              <Select
+                placeholder={t('Date')}
+                value={filters.tariffStatus}
+                className={`w-full bg-white rounded-[8px]`}
+                allowClear
+                onChange={(value) => handleInputChange('tariffStatus', value)}
+              >
+                <Option value="STANDARD">10 {t('day')}</Option>
+                <Option value="MONTH">1 {t('month')}</Option>
+                <Option value="YEAR">{t('year')}</Option>
+              </Select>
             </Col>
             <Col xs={24} sm={12} md={6} className={`mb-[16px]`}>
               <Select
@@ -245,7 +260,7 @@ const FilterComponent: React.FC = () => {
               <Popover
                 content={
                   <>
-                    <Link to={'/MasterDatail'} className='block '>{t("Open")}</Link>
+                    <Link to={`/master-detail/${data.masterId}`} className='block '>{t("Open")}</Link>
                   </>
                 }
               >

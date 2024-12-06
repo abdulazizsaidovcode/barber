@@ -76,7 +76,6 @@ const ServiceCategories = () => {
             name: newCategoryName,
             categoryFatherId: null,
             attachmentId: attachmentId,
-            new: true
         };
 
         if (newCategoryName.length === 0) {

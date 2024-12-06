@@ -355,6 +355,8 @@
   "Functionality_Category": "Категория функционала",
   "Tariff_updated_successfully": "Тариф успешно обновлен",
   "Main_functionality": "Основной функционал",
+  "year": "Год",
+  "tarrif_history": "История подписки",
   "An_error_occurred_while_updating_the_tariff": "Произошла ошибка при обновлении тарифа",
   "Something_went_wrong_updating_the_tariff": "Что-то пошло не так при обновлении тарифа",
   "Name_is_unchanged": "Имя не изменилось",
