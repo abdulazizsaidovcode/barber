@@ -34,6 +34,7 @@ const FilterOrder: React.FC = () => {
     orderDate: string | null;
     categoryId: string | null;
     orderStatus: string | null;
+    recordStatus: string | null;
     paymentType: string | null;
     MASTER_OR_CLIENT: string | null;
   }
@@ -43,6 +44,7 @@ const FilterOrder: React.FC = () => {
     regionId: null,
     districtId: null,
     orderDate: null,
+    recordStatus: null,
     categoryId: null,
     orderStatus: null,
     paymentType: null,
@@ -112,6 +114,7 @@ const FilterOrder: React.FC = () => {
     filters.paymentType ? `paymentType=${filters.paymentType}` : null,
     filters.orderStatus ? `orderStatus=${filters.orderStatus}` : null,
     filters.categoryId ? `categoryId=${filters.categoryId}` : null,
+    filters.recordStatus ? `recordStatus=${filters.recordStatus}` : null,
     filters.MASTER_OR_CLIENT
       ? `MASTER_OR_CLIENT=${filters.MASTER_OR_CLIENT}`
       : null
@@ -119,9 +122,8 @@ const FilterOrder: React.FC = () => {
     .filter(Boolean)
     .join('&');
 
-  const url = `${order_download}?status=${statusO}${
-    queryParams ? '&' : ''
-  }${queryParams}&page=${page}&size=10`;
+  const url = `${order_download}?status=${statusO}${queryParams ? '&' : ''
+    }${queryParams}&page=${page}&size=10`;
 
   const handleInputChange = (key: keyof Filters, value: any) => {
     if (key === 'orderDate') {
@@ -146,6 +148,7 @@ const FilterOrder: React.FC = () => {
       districtId: null,
       orderDate: null,
       categoryId: null,
+      recordStatus: null,
       orderStatus: null,
       paymentType: null,
       MASTER_OR_CLIENT: null
@@ -169,7 +172,7 @@ const FilterOrder: React.FC = () => {
         {/* regionId */}
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
-            placeholder={t('region')}
+            placeholder={t('Select_region')}
             value={filters.regionId || null}
             allowClear
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
@@ -186,7 +189,7 @@ const FilterOrder: React.FC = () => {
         {/* districtId */}
         <Col xs={24} sm={12} md={6} className="mb-4">
           <Select
-            placeholder={t('city')}
+            placeholder={t('Select_district')}
             allowClear
             value={filters.districtId || null}
             className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
@@ -220,11 +223,12 @@ const FilterOrder: React.FC = () => {
         </Col>
       </Row>
       {showExtraFilters && (
-        <Row gutter={[29, 16]} className="mb-2">
+        <Row className="mb-2 gap-5">
           {/* orderDate */}
-          <Col xs={14} sm={7} md={4} className="mb-4">
+          <Col md={6} className="mb-4">
             <DatePicker
               value={orderDates}
+              placeholder={t('Select_date')}
               onChange={(date) => handleInputChange('orderDate', date)}
               className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
             />
@@ -246,6 +250,25 @@ const FilterOrder: React.FC = () => {
                 ))}
             </Select>
           </Col>
+          {/* status */}
+          {statusO !== 'REJECTED' && <Col xs={24} sm={12} md={6} className="mb-4">
+            <Select
+              placeholder={t('order_table_status')}
+              allowClear
+              className="w-full rounded-lg bg-gray-200 dark:bg-gray-800"
+              value={filters.recordStatus || null}
+              onChange={(value) => handleInputChange('recordStatus', value)}
+            >
+
+              <Select.Option value='APPROVED'>
+                {t('detail_type')}
+              </Select.Option>
+              <Select.Option value='ON_APPROVAL'>
+                {t('On_approval')}
+              </Select.Option>
+            </Select>
+          </Col>}
+
           {/* orderStatus */}
           {statusO === 'REJECTED' ? (
             <Col xs={24} sm={12} md={6} className="mb-4">

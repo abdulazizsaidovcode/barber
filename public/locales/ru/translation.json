@@ -100,7 +100,7 @@
   "siderbar_cards": "Карты",
   "Consumption": "Расход",
   "Downloading": "Загрузка",
-
+  "Setting_program_updated_successfully": "Настройка программы успешно обновлена",
   "siderbar_chat": "Чат",
   "orders_name": "Записи",
   "Rejected": "Отклонён",
@@ -356,6 +356,7 @@
   "Tariff_updated_successfully": "Тариф успешно обновлен",
   "Main_functionality": "Основной функционал",
   "year": "Год",
+  "Select_date": "Выберите дату",
   "tarrif_history": "История подписки",
   "An_error_occurred_while_updating_the_tariff": "Произошла ошибка при обновлении тарифа",
   "Something_went_wrong_updating_the_tariff": "Что-то пошло не так при обновлении тарифа",

@@ -178,7 +178,7 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            placeholder="Region"
+            placeholder={t('Select_region')}
             allowClear
             style={styles.filterInput}
             value={filters.regionId}
@@ -197,7 +197,7 @@ const Filters: React.FC = () => {
         </Col>
         <Col xs={24} sm={12} md={6} style={styles.filterGroup}>
           <Select
-            placeholder="District"
+            placeholder={t('Select_district')}
             allowClear
             style={styles.filterInput}
             value={filters.districtId || null}
@@ -233,7 +233,7 @@ const Filters: React.FC = () => {
               )
             }
           >
-            {isLoading ? 'loading...' : 'Download'}
+            {isLoading ? t('Loading') : t('Download')}
           </Buttons>
         </Col>
       </Row>

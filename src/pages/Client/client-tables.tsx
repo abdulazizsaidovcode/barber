@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import images from '../../images/user.png';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore.tsx';
+import clientFilterStore, { FilterData } from '../../helpers/state_managment/client/clientFilterStore.tsx';
 import { Buttons } from '../../components/buttons';
 import Modal from '../../components/modals/modal.tsx';
 import { updateClientStatus } from '../../helpers/api-function/client/clientFilter.tsx';
@@ -15,6 +15,7 @@ import { getFileId } from '../../helpers/api.tsx';
 import ClientModal from './client-modal.tsx';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { MenuInfo } from 'rc-menu/lib/interface';
 
 export interface UpdateStatus {
   status: string;
@@ -54,16 +55,16 @@ const ClientTables: React.FC = () => {
   const openIsMessageModal = () => setIsMessageModal(!isMessageModal);
   const openIsImageModal = () => setIsImageModal(!isImageModal);
 
-  const itemRender = (_: any, type: string, originalElement: any) => {
+  const itemRender = (_: number, type: "page" | "prev" | "next" | "jump-prev" | "jump-next", element: React.ReactNode) => {
     if (type === 'page') {
       return (
         <a
           className="shadow-none dark:bg-[#9c0a36] dark:text-white border dark:border-[#9c0a36] border-black rounded no-underline">
-          {originalElement}
+          {element}
         </a>
       );
     }
-    return originalElement;
+    return element;
   };
 
   const thead = [
@@ -89,22 +90,14 @@ const ClientTables: React.FC = () => {
     },
     {
       id: 6,
-      name: t('Turnover')
+      name: t('Age')
     },
     {
       id: 7,
-      name: t('Age')
-    },
-    // {
-    //   id: 8,
-    //   name: t('master')
-    // },
-    {
-      id: 8,
       name: t('Canceled')
     },
     {
-      id: 9,
+      id: 8,
       name: t('Status')
     }
   ];
@@ -121,7 +114,7 @@ const ClientTables: React.FC = () => {
     },
     {
       key: '4',
-      label: `${'Send message'}`,
+      label: `${t('Send_Message')}`,
       onClick: () => openIsMessageModal()
     }
   ];
@@ -137,12 +130,12 @@ const ClientTables: React.FC = () => {
     },
     {
       key: '4',
-      label: `${'Send message'}`,
+      label: `${t('Send_Message')}`,
       onClick: () => openIsMessageModal()
     }
   ];
 
-  const handleMenuClick = (e: any, id: string) => {
+  const handleMenuClick = (e: MenuInfo, id: string) => {
     setUpdateStatus({ status: e.key, id });
   };
 
@@ -151,26 +144,25 @@ const ClientTables: React.FC = () => {
       <Filters />
       <ClientTable thead={thead}>
         {clientFilterData.length > 0 ? (
-          clientFilterData.map((item: any, key: any) => (
+          clientFilterData.map((item: FilterData, key: number) => (
             <tr
               key={key}
-              className={`${
-                key === clientFilterData.length - 1
-                  ? ''
-                  : 'border-b border-[#eee] dark:border-strokedark'
-              }`}
+              className={`${key === clientFilterData.length - 1
+                ? ''
+                : 'border-b border-[#eee] dark:border-strokedark'
+                }`}
             >
               <td className={`min-w-[150px] p-5`}>
                 <LazyLoadImage
                   alt="img"
                   src={
-                    item.imgId !== null ? `${getFileId}${item.imgId}` : images
+                    item.imgUrl && item.imgUrl !== null ? `${getFileId}${item.imgUrl}` : images
                   }
                   className={'w-10 h-10 scale-[1.4] rounded-full object-cover hover:cursor-pointer'}
                   effect="blur"
                   onClick={() => {
                     openIsImageModal();
-                    setImageID(item.imgId !== null ? item.imgId : '');
+                    setImageID(item.imgUrl !== null ? item.imgUrl : '');
                   }}
                 />
               </td>
@@ -230,25 +222,19 @@ const ClientTables: React.FC = () => {
               </td>
               {/* <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.masterCount ?? 0}
+                  {item?.canceledOrder ?? 0}
                 </p>
               </td> */}
               <td className="min-w-[150px] p-5">
-                <p className="text-black dark:text-white">
-                  {item?.canceledOrder ?? 0}
-                </p>
-              </td>
-              <td className="min-w-[150px] p-5">
                 <p
-                  className={`${
-                    item.status === 'ACTIVE'
-                      ? 'bg-green-400'
-                      : item.status === 'BLOCKED'
-                        ? 'bg-red-500'
-                        : 'bg-red-700'
-                  } text-white rounded-full py-1 px-3 text-sm font-medium`}
+                  className={`${item.status === 'ACTIVE'
+                    ? 'bg-green-400'
+                    : item.status === 'BLOCKED'
+                      ? 'bg-red-500'
+                      : 'bg-red-700'
+                    } text-white text-center rounded-full py-1 px-3 text-sm font-medium`}
                 >
-                  {item.status}
+                  {item.status === 'ACTIVE' ? t('Active') : t('Locked')}
                 </p>
               </td>
             </tr>

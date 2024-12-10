@@ -6,41 +6,37 @@ import { handleSendMessage } from '../../helpers/api-function/client/clientFilte
 import { Buttons } from '../../components/buttons';
 import clientFilterStore from '../../helpers/state_managment/client/clientFilterStore';
 
-
-
 const ClientModal: React.FC = () => {
-
-  const {isMessageModal, setMessage, message, setIsMessageModal, id} = clientFilterStore()
+  const { t } = useTranslation()
+  const { isMessageModal, setMessage, message, setIsMessageModal, id } = clientFilterStore()
   const closeModal = () => setIsMessageModal(!isMessageModal)
 
-
-  const {t} = useTranslation()
   return (
     <Modal isOpen={isMessageModal} onClose={closeModal}>
-        <div className="w-[45rem]">
-          <p className="text-2xl text-black dark:text-white">
-            {t('Send message')}:
-          </p>
-          <TextArea
-            className="mt-4"
-            rows={4}
-            placeholder={t('Enter your message')}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <div className="flex justify-center mt-2">
-            <Buttons
-              key="submit"
-              onClick={() => {
-                handleSendMessage(id, message, closeModal)
-                setMessage("")
-              }}
-            >
-              {t('Send')}
-            </Buttons>
-          </div>
+      <div className="w-[45rem]">
+        <p className="text-2xl text-black dark:text-white">
+          {t('Send_Message')}:
+        </p>
+        <TextArea
+          className="mt-4"
+          rows={4}
+          placeholder={t('Enter_your_message')}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <div className="flex justify-center mt-2">
+          <Buttons
+            key="submit"
+            onClick={() => {
+              handleSendMessage(id, message, closeModal)
+              setMessage("")
+            }}
+          >
+            {t('Send')}
+          </Buttons>
         </div>
-      </Modal>
+      </div>
+    </Modal>
   );
 };
 

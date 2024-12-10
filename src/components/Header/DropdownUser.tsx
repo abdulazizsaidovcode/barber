@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting, AiFillFileText } from 'react-icons/ai';
-
 import UserOne from '../../images/user/user-01.png';
 
 const DropdownUser = () => {
@@ -11,7 +10,6 @@ const DropdownUser = () => {
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
-  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;

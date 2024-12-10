@@ -6,21 +6,11 @@ import { useTranslation } from 'react-i18next';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { config } from '../../helpers/token';
-import { base_url, subs_list, tarif_put_url } from '../../helpers/api';
+import { base_url } from '../../helpers/api';
 import { clearFunction } from '../../common/clear-function/clear-function';
 import { Buttons } from '../../components/buttons';
 import EditModal from '../../components/settings/modals/editModal';
 import toast from 'react-hot-toast';
-// import DefaultLayout from '../../layout/DefaultLayout';
-// import Modal from '../../components/modals/modal';
-// import { Link } from 'react-router-dom';
-// import axios from 'axios';
-// import { tarif_add_url, tarif_url } from '../../helpers/api';
-// import { config } from '../../helpers/token';
-// import toast, { Toaster } from 'react-hot-toast';
-// import { Skeleton } from 'antd';
-// import { useTranslation } from 'react-i18next';
-// import { clearFunction } from '../../common/clear-function/clear-function.tsx';
 
 interface Data {
     limitBookingsUnlimited: boolean;
@@ -29,128 +19,10 @@ interface Data {
     limitBookingsCount: string | number;
     numberOfAlbumsCount: string | number;
     numberOfPhotosInOneAlbumCount: string | number;
+    day: number;
+    month: number;
+    year: number;
 }
-
-// const TariffsFunctionality: React.FC = () => {
-//     const [data, setData] = useState<Data[]>([]);
-//     const [isOpen, setIsOpen] = useState(false);
-//     const [newTariffName, setNewTariffName] = useState('');
-//     const [loading, setLoading] = useState(true);
-//     const [addLoading, setAddLoading] = useState(false);
-
-//     useEffect(() => {
-//         fetchData();
-//     }, []);
-
-//     const fetchData = async () => {
-//         try {
-//             const res = await axios.get(tarif_url, config);
-//             setData(res.data.body);
-//             setLoading(false);
-//         } catch {
-//             setLoading(false);
-//             clearFunction()
-//         }
-//     };
-//     const { t } = useTranslation();
-
-//     const addData = async (name: string) => {
-//         if (!name.trim() || /[^a-zA-Zа-яА-Я0-9]/.test(name)) {  // Rus harflarini qo'shish uchun tekshiruvni o'zgartirdim
-//             toast(t("Please_enter"), { icon: '⚠️' });
-//         } else {
-//             setAddLoading(true);
-//             try {
-//                 await axios.post(tarif_add_url, { name }, config);
-//                 fetchData();
-//                 toast.success(t("Tariff_added_successfully"));
-//                 closeModal();
-//             } catch {
-//                 toast.error(t("Failed_to_add_tariff"));
-//                 clearFunction()
-//             } finally {
-//                 setAddLoading(false);
-//                 clearFunction()
-//             }
-//         }
-//     };
-
-//     const closeModal = () => {
-//         setIsOpen(false);
-//         setNewTariffName('');
-//     };
-
-//     const openModal = () => setIsOpen(true);
-
-//     interface TariffsFunctionalityCardProp {
-//         title: string;
-//         functions: string;
-//         sum: string;
-//         link: string;
-//     }
-
-//     const TariffsFunctionalityCard: React.FC<TariffsFunctionalityCardProp> = ({ title, link, functions, sum }) => {
-//         return (
-//             <Link to={link}>
-//                 <div className='w-[160px] dark:bg-[#30303d] cursor-pointer gap-5 rounded-3xl shadow-3 flex flex-col justify-center items-center shadow-black bg-white h-[170px]'>
-//                     <p className='font-bold text-black dark:text-white'>{title}</p>
-//                     <p className={`${functions === t("not_configured") ? 'text-red-600' : ''}`}>{functions}</p>
-//                     <p className={`${sum === t("not_configured") ? 'text-red-600' : ''}`}>{sum}</p>
-//                 </div>
-//             </Link>
-//         );
-//     };
-
-//     return (
-//         <>
-//             <DefaultLayout>
-//                 <div>
-//                     <div className='flex justify-between'>
-//                         <p className='text-xl dark:text-white'>{t("Tariffs_and_functionality")}</p>
-//                         <button onClick={openModal} className='py-2 px-10 dark:text-white dark:bg-[#9C0A35] bg-[#eaeaea] rounded-2xl text-black'>{t("Add_Tariff")}</button>
-//                     </div>
-//                     <div className='flex flex-wrap gap-5 mt-5'>
-//                         {loading ? (
-//                             <Skeleton active paragraph={{ rows: 4 }} />
-//                         ) : (
-//                             data.map((item, index) => (
-//                                 <div key={index}>
-//                                     <TariffsFunctionalityCard
-//                                         title={item.name}
-//                                         functions={item.functionCount === 0 ? t("not_configured") : `${item.functionCount} Функций`}
-//                                         sum={item.monthPrice === 0 || item.monthPrice === null ? t("not_configured") : `${item.monthPrice} сум`}
-//                                         link={`/settings/tariff/${item.id}`}
-//                                     />
-//                                 </div>
-//                             ))
-//                         )}
-//                     </div>
-//                 </div>
-//             </DefaultLayout>
-//             <Modal isOpen={isOpen} onClose={closeModal}>
-//                 <div className="md:w-[500px] md:h-[160px] sm:w-[300px] ">
-//                     <p className="sm:text-xl text-black dark:text-white text-center">{t("add_tarifffe")}:</p>
-//                     <input
-//                         className="w-full border-[1px] dark:text-black border-black sm:p-2 p-1 rounded-lg mt-3"
-//                         type="text"
-//                         placeholder={t("Iltimos_tarif_nomini_kiriting")}
-//                         value={newTariffName}
-//                         onChange={(e) => setNewTariffName(e.target.value)}
-//                     />
-//                     <div className="flex mt-10 justify-center">
-//                         <button
-//                             className="sm:py-2 sm:px-10 px-5 py-1 rounded-lg dark:bg-danger bg-slate-800 text-white"
-//                             onClick={() => addData(newTariffName)}
-//                             disabled={addLoading}
-//                         >
-//                             {addLoading ? t("Loading") : t("Add")}
-//                         </button>
-//                     </div>
-//                 </div>
-//             </Modal>
-//             <Toaster position='top-center' reverseOrder={false} />
-//         </>
-//     );
-// }
 
 const TariffsFunctionality: React.FC = () => {
     const { t } = useTranslation();
@@ -182,12 +54,15 @@ const TariffsFunctionality: React.FC = () => {
             numberOfPhotosInOneAlbumUnlimited: data.numberOfPhotosInOneAlbumUnlimited ?? false,
             limitBookingsCount: data.limitBookingsCount ?? 0,
             numberOfAlbumsCount: data.numberOfAlbumsCount ?? 0,
-            numberOfPhotosInOneAlbumCount: data.numberOfPhotosInOneAlbumCount ?? 0
+            numberOfPhotosInOneAlbumCount: data.numberOfPhotosInOneAlbumCount ?? 0,
+            day: data.day ?? 0,
+            month: data.month ?? 0,
+            year: data.year ?? 0
         };
         try {
             const { data } = await axios.post(`${base_url}setting-program`, payload, config);
             if (data.success) {
-                toast.success(t("Tariff_updated_successfully"));
+                toast.success(t("Setting_program_updated_successfully"));
             } else {
                 toast.error(t("Something_went_wrong_updating_the_tariff"));
             }
@@ -195,7 +70,7 @@ const TariffsFunctionality: React.FC = () => {
             toast.error(t("An_error_occurred_while_updating_the_tariff"));
         }
         finally {
-            clearFunction()
+            clearFunction();
         }
     };
 
@@ -210,7 +85,7 @@ const TariffsFunctionality: React.FC = () => {
     };
 
     const handleCheckboxChange = (field: keyof Data, isChecked: boolean) => {
-        setData((prevData: any) => ({ ...prevData, [field]: isChecked ? true : prevData[field] }));
+        setData((prevData: any) => ({ ...prevData, [field]: isChecked }));
         setLocalHasChanges(true);
     };
 
@@ -225,9 +100,6 @@ const TariffsFunctionality: React.FC = () => {
     const handleCancel = () => {
         setIsOpen(false);
     };
-
-    console.log(data);
-
 
     return (
         <DefaultLayout>
@@ -244,46 +116,47 @@ const TariffsFunctionality: React.FC = () => {
                             <div className='md:w-[30%] flex items-center justify-between'>
                                 <Checkbox
                                     className='dark:text-white'
-                                    value={data && data.limitBookingsUnlimited}
+                                    checked={data?.limitBookingsUnlimited}
                                     onChange={(e) => handleCheckboxChange('limitBookingsUnlimited', e.target.checked)}
                                 >
                                     {t("Not_limited")}
                                 </Checkbox>
+
                             </div>
                         </div>
                     </Accordion>
                     <Accordion title={t("subscription_cost")}>
                         <div className='flex flex-col'>
                             <div className='flex flex-col justify-between'>
-                                <p className='mt-3 mb-3 dark:text-white'>{t("Number__albums")}</p>
+                                <p className='mt-3 mb-3 dark:text-white'>10 {t("day")}</p>
                                 <div className='flex justify-between'>
                                     <div className='w-[66%]'>
                                         <FunctionlityCard
-                                            editOnClick={() => showModal('limitBookingsCount')}
-                                            title={data ? `${data.limitBookingsUnlimited}` || '0' : '0'}
+                                            editOnClick={() => showModal('day')}
+                                            title={data ? `${data.day}` || '0' : '0'}
                                         />
                                     </div>
                                 </div>
                             </div>
                             <div className='flex flex-col justify-between'>
-                                <p className='mt-3 mb-3 dark:text-white'>{t("Number__albums")}</p>
+                                <p className='mt-3 mb-3 dark:text-white'>{t("Month")}</p>
                                 <div className='flex justify-between'>
                                     <div className='w-[66%]'>
                                         <FunctionlityCard
-                                            editOnClick={() => ''}
-                                            title={data ? `${data.limitBookingsCount}` || '0' : '0'}
+                                            editOnClick={() => showModal('month')}
+                                            title={data ? `${data.month}` || '0' : '0'}
                                         />
                                     </div>
 
                                 </div>
                             </div>
                             <div className='flex flex-col justify-between'>
-                                <p className='mt-3 mb-3 dark:text-white'>{t("Number__albums")}</p>
+                                <p className='mt-3 mb-3 dark:text-white'>{t("Year")}</p>
                                 <div className='flex justify-between'>
                                     <div className='w-[66%]'>
                                         <FunctionlityCard
-                                            editOnClick={() => ''}
-                                            title={data ? `${data.limitBookingsCount}` || '0' : '0'}
+                                            editOnClick={() => showModal('year')}
+                                            title={data ? `${data.year}` || '0' : '0'}
                                         />
                                     </div>
                                 </div>
@@ -305,7 +178,7 @@ const TariffsFunctionality: React.FC = () => {
                                 <div className='w-[30%] flex items-center justify-between'>
                                     <Checkbox
                                         className='dark:text-white'
-                                        value={data && data.numberOfAlbumsUnlimited}
+                                        checked={data?.numberOfAlbumsUnlimited}
                                         onChange={(e) => handleCheckboxChange('numberOfAlbumsUnlimited', e.target.checked)}
                                     >
                                         {t("Not_limited")}
@@ -325,7 +198,7 @@ const TariffsFunctionality: React.FC = () => {
                                 <div className='w-[30%] flex items-center justify-between'>
                                     <Checkbox
                                         className='dark:text-white'
-                                        value={data && data.numberOfPhotosInOneAlbumUnlimited}
+                                        checked={data?.numberOfPhotosInOneAlbumUnlimited}
                                         onChange={(e) => handleCheckboxChange('numberOfPhotosInOneAlbumUnlimited', e.target.checked)}
                                     >
                                         {t("Not_limited")}
