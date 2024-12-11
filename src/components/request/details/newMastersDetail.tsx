@@ -36,7 +36,7 @@ interface NewMastersDetailProps {
   phoneNumber?: string;
   age?: string;
   address?: string;
-  masterImgPath?: string;
+  masterImgId?: string;
   districtName?: string;
   regionName?: string;
   instagramLink?: string;
@@ -64,7 +64,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
   phoneNumber,
   age,
   address,
-  masterImgPath,
+  masterImgId,
   districtName,
   regionName,
   instagramLink,
@@ -93,7 +93,7 @@ const NewMastersDetail: React.FC<NewMastersDetailProps> = ({
         <FirstTab
           phoneNumber={phoneNumber}
           nickname={nickname}
-          masterImgPath={masterImgPath}
+          masterImgId={masterImgId}
           firstName={firstName}
           lastName={lastName}
           age={age}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import FirstTab from './firstTab';
-import SecondTab from './secondTab';
 import { useTranslation } from 'react-i18next';
 
 const MainTabs: React.FC = () => {

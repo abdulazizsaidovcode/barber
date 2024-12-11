@@ -102,13 +102,13 @@ const ClientDocument = () => {
             {/*         className={`text-lg text-black dark:text-white font-semibold`}>{t('Active')}</label>*/}
             {/*</div>*/}
             <div className={`flex justify-center items-center gap-6 mt-5`}>
+              <Buttons bWidth={`w-[150px]`} onClick={openModal}>{t('Close')}</Buttons>
               <Buttons
                 bWidth={`w-[150px]`}
                 onClick={() => updateHelp(updateTextArea, setDataClient, 'FOR_CLIENT', modalVal, setIsLoading, openModal)}
               >
                 {isLoading ? t('Loading') : t('Save')}
               </Buttons>
-              <Buttons bWidth={`w-[150px]`} onClick={openModal}>{t('Close')}</Buttons>
             </div>
           </div>
         </div>

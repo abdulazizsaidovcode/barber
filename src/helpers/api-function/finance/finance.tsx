@@ -4,7 +4,7 @@ import { finance_list } from '../../api.tsx';
 import { Data } from '../../state_managment/finance/financeStore.tsx';
 import { clearFunction } from '../../../common/clear-function/clear-function.tsx';
 
-export const getFinance = (month: string | null, year: number | null, setData: (data: Data[]) => void) => {
+export const getFinance = (month: string | null, year: string | null, setData: (data: Data | null) => void) => {
   axios.get(finance_list(month, year), config)
     .then(res => {
       setData(res.data.body);

@@ -142,11 +142,11 @@ const MasterTables: React.FC = () => {
   };
 
   const masterStatusGenerate = (status: string) => {
-    if (status === 'NEW') return ['Новый', 'bg-green-700'];
-    else if (status === 'ACTIVE') return ['Активный', 'bg-green-400'];
-    else if (status === 'BLOCKED') return ['Заблокированный', 'bg-red-500'];
-    else if (status === 'DELETED') return ['Удалённый', 'bg-red-700'];
-    else return ['Неизвестный', 'bg-gray-500'];
+    if (status === 'NEW') return [t('New'), 'bg-blue-700'];
+    else if (status === 'ACTIVE') return [t('Active'), 'bg-green-500'];
+    else if (status === 'BLOCKED') return [t('Locked'), 'bg-red-500'];
+    else if (status === 'DELETED') return [t('Deleted'), 'bg-red-700'];
+    else return [t('unknown'), 'bg-gray-500'];
   };
 
   return (

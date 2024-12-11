@@ -1,29 +1,36 @@
 import { create } from 'zustand';
 
 interface FinanceStore {
-  data: Data[];
-  setData(data: Data[]): void;
+  data: Data | null;
+  setData(data: Data | null): void;
   monthVal: string | null;
   setMonthVal(monthVal: string | null): void;
-  yearVal: number | null;
-  setYearVal(yearVal: number | null): void;
+  yearVal: string | null;
+  setYearVal(yearVal: string | null): void;
 }
 
 export interface Data {
-  // object: any;
+  object: FinanceData[];
   addressName: string;
   nonCashTurnover: number;
   turnoverTotal: number;
   totalIncome: number;
 }
 
+export interface FinanceData {
+  addressName: string,
+  nonCashTurnover: number,
+  turnoverTotal: number,
+  totalIncome: number
+}
+
 const financeStore = create<FinanceStore>((set) => ({
-  data: [],
-  setData: (val: Data[]) => set({ data: val }),
+  data: null,
+  setData: (val: Data) => set({ data: val }),
   monthVal: null,
   setMonthVal: (val: string) => set({ monthVal: val }),
   yearVal: null,
-  setYearVal: (val: number) => set({ yearVal: val }),
+  setYearVal: (val: string) => set({ yearVal: val }),
 }));
 
 export default financeStore;

@@ -2,12 +2,14 @@ import React from 'react';
 import userImg from '../../../../images/user.png';
 import { GoDotFill } from "react-icons/go";
 import { useTranslation } from 'react-i18next';
+import { getFileId } from '../../../../helpers/api';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface FirstTabProp {
     phoneNumber?: string;
     telegramLink?: string;
     facebookLink?: string;
-    masterImgPath?: string;
+    masterImgId?: string;
     nickname?: string;
     instagramLink?: string;
     firstName?: string;
@@ -28,7 +30,7 @@ interface FirstTabProp {
 const FirstTab: React.FC<FirstTabProp> = ({
     phoneNumber,
     nickname,
-    masterImgPath,
+    masterImgId,
     masterServiceCategory,
     scheduleType,
     masterSpecialization,
@@ -50,6 +52,9 @@ const FirstTab: React.FC<FirstTabProp> = ({
     const displayArray = (array: string[] | undefined) => array && array.length > 0 ? array.join(', ') : t('not_configured');
     const { t } = useTranslation();
 
+    console.log("masterImgPath", masterImgId);
+
+
     return (
         <div className='flex lg:flex-row flex-col justify-between'>
             <div className='lg:w-1/4 w-full mx-1 mt-3'>
@@ -59,7 +64,13 @@ const FirstTab: React.FC<FirstTabProp> = ({
                         <p className='ml-2 dark:text-white'>{masterChatStatus === 'OFFLINE' ? t("Not_network") : t("Online")}</p>
                     </div>
                     <div className='flex justify-center'>
-                        <img className='w-45 h-45' src={masterImgPath ? masterImgPath : userImg} alt="Profile" />
+                        <LazyLoadImage
+                            className="w-45 h-45 rounded-full"
+                            src={masterImgId ? `${getFileId}${masterImgId}` : userImg}
+                            alt="User Profile Picture"
+                            effect="blur"
+                        />
+
                     </div>
                 </div>
                 <div className='bg-[#cccccc] dark:bg-[#60606d] w-full h-[71.8%] mt-3 p-4 py-5'>

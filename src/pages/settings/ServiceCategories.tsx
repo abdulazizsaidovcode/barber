@@ -4,7 +4,7 @@ import DefaultLayout from "../../layout/DefaultLayout";
 import Modal from "../../components/modals/modal";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { add_service_category, attachment_upload, del_service_category, edit_service_category, service_category_list } from "../../helpers/api";
+import { add_service_category, attachment_upload, del_service_category, edit_service_category, getFileId, service_category_list } from "../../helpers/api";
 import { config } from "../../helpers/token";
 import DelModal from "../../components/settings/modals/delModal";
 import EditModal from "../../components/settings/modals/editModal";
@@ -148,13 +148,6 @@ const ServiceCategories = () => {
                 attachmentId: attachmentId
             };
 
-            // if (!attachmentId && data.some(item => item.name === editedCategoryName)) {
-            //     toast(t("This_category_already_exists"), {
-            //         icon: '⚠️'
-            //     });
-            //     return;
-            // }
-
             if (!attachmentId && data.find(item => item.id === editingCategory)?.name === editedCategoryName) {
                 toast(t("Please_change_something"), {
                     icon: '⚠️'
@@ -174,7 +167,7 @@ const ServiceCategories = () => {
                         toast(t("This_category_already_exists"), {
                             icon: '⚠️'
                         });
-                        clearFunction()
+                        clearFunction();
                     }
                 })
                 .catch(() => {
@@ -305,7 +298,7 @@ const ServiceCategories = () => {
                 attachmentStyle={true}
                 handleImageChange={handleImageChange}
                 handleUploadClick={handleUploadClick}
-                attchmentId={editedAttachmentId ? editedAttachmentId : imagePreviewUrl ? imagePreviewUrl : defaultImage}
+                attchmentId={editedAttachmentId ? getFileId + editedAttachmentId : imagePreviewUrl ? imagePreviewUrl : defaultImage}
                 onClose={editCloseModal}
                 value={editedCategoryName}
                 onChange={(e) => setEditedCategoryName(e.target.value)}

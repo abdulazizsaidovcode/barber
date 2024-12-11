@@ -95,7 +95,7 @@ export const client_block_put = `${base_url}user/web/client-edit-status`;
 export const client_send_message = `${base_url}message/for/client/by/admin`;
 
 //finance client_send_message
-export const finance_list = (month: string | null, year: number | null) => {
+export const finance_list = (month: string | null, year: string | null) => {
   if (month !== null && year !== null)
     return `${base_url}finance/web?month=${month}&year=${year}`;
   else if (month !== null && year === null)

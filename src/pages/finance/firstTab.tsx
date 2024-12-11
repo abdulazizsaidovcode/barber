@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DatePicker } from 'antd';
 import MasterTable from '../../components/Tables/MasterTable';
-import financeStore from '../../helpers/state_managment/finance/financeStore.tsx';
+import financeStore, { FinanceData } from '../../helpers/state_managment/finance/financeStore.tsx';
 import { getFinance } from '../../helpers/api-function/finance/finance.tsx';
 import axios from 'axios';
 import { base_url } from '../../helpers/api.tsx';
@@ -24,14 +24,27 @@ const FirstTab: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const currentYear = moment().format('YYYY');
-  const currentMonth = moment()
+  const currentMonth = moment().format('MM');
+
+  useEffect(() => {
+    // Default joriy yil va oyni o‘rnatish
+    if (!yearVal) {
+      setYearVal(currentYear);
+    }
+    if (!monthVal) {
+      setMonthVal(currentMonth);
+    }
+  }, [yearVal, monthVal, setYearVal, setMonthVal]);
+
+  console.log(yearVal, monthVal);
+
 
   useEffect(() => {
     if (monthVal && yearVal) {
       getFinance(monthVal, yearVal, setData);
     }
   }, [monthVal, yearVal, setData]);
-  
+
   const handleMonthChange = (value: any) => {
     const month = value ? value.format('MM') : null;
     setMonthVal(month);
@@ -72,13 +85,11 @@ const FirstTab: React.FC = () => {
   };
   const { t } = useTranslation()
   // Create an array for summary data
-  const summaryData = data.object ? [
-    { label: t("Turnover"), value: data.object.reduce((acc: number, item: FinanceData) => acc + item.nonCashTurnover, 0) },
-    {
-      label: t("Income"), value: data.object.reduce((acc: number, item: FinanceData) => acc + item.turnoverTotal, 0)
-    },
-    { label: t("Consumption"), value: data.object.reduce((acc: number, item: FinanceData) => acc + item.totalIncome, 0) },
-  ] : [];
+  const summaryData = [
+    { label: t("Turnover"), value: data?.object?.reduce((acc: number, item: FinanceData) => acc + item.nonCashTurnover, 0) || 0 },
+    { label: t("Income"), value: data?.object?.reduce((acc: number, item: FinanceData) => acc + item.turnoverTotal, 0) || 0 },
+    { label: t("Consumption"), value: data?.object?.reduce((acc: number, item: FinanceData) => acc + item.totalIncome, 0) || 0 },
+  ];
 
   const tableHeaders = [
     { id: 1, name: t("Region") },
@@ -94,9 +105,15 @@ const FirstTab: React.FC = () => {
           {/* Left Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <DatePicker onChange={handleMonthChange} picker="month" placeholder={t("Select_month")} style={{ height: 35 }} />
+              <DatePicker
+                allowClear
+                onChange={handleMonthChange}
+                picker="month"
+                placeholder={t("Select_month")}
+                style={{ height: 35 }}
+              />
             </div>
-            <div className="">
+            <div>
               {summaryData && summaryData.map((item) => (
                 <div key={item.label} className="flex items-center mb-[10px]">
                   <p className="mr-[10px] w-[100px] dark:text-white">
@@ -112,7 +129,13 @@ const FirstTab: React.FC = () => {
           {/* Right Section */}
           <div>
             <div className="mb-[10px] flex justify-center">
-              <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
+              <DatePicker
+                onChange={handleYearChange}
+                allowClear
+                picker="year"
+                placeholder={t("Select_year")}
+                style={{ height: 35 }}
+              />
             </div>
             <div>
               <div className="flex items-center mb-[10px]">
@@ -150,7 +173,7 @@ const FirstTab: React.FC = () => {
       {/* Table */}
       <div>
         <MasterTable thead={tableHeaders}>
-          {data.object ? data.object.map((data: FinanceData, index: number) => (
+          {data?.object ? data.object.map((data: FinanceData, index: number) => (
             <tr key={index} className="dark:text-white">
               <td className="p-5">{data.addressName}</td>
               <td className="p-5">{data.nonCashTurnover}</td>

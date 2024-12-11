@@ -139,6 +139,17 @@ const ClientTables: React.FC = () => {
     setUpdateStatus({ status: e.key, id });
   };
 
+  const clientStatusGenerate = (status: string) => {
+    if (status === 'NEW') return [t('New'), 'bg-blue-700'];
+    else if (status === 'ACTIVE') return [t('Active'), 'bg-green-500'];
+    else if (status === 'BLOCKED') return [t('Locked'), 'bg-red-500'];
+    else if (status === 'DELETED') return [t('Deleted'), 'bg-red-700'];
+    else return [t('unknown'), 'bg-gray-500'];
+  };
+
+  console.log('status',clientStatusGenerate('DELETED')[0]);
+  
+
   return (
     <>
       <Filters />
@@ -227,14 +238,9 @@ const ClientTables: React.FC = () => {
               </td> */}
               <td className="min-w-[150px] p-5">
                 <p
-                  className={`${item.status === 'ACTIVE'
-                    ? 'bg-green-400'
-                    : item.status === 'BLOCKED'
-                      ? 'bg-red-500'
-                      : 'bg-red-700'
-                    } text-white text-center rounded-full py-1 px-3 text-sm font-medium`}
+                  className={`${clientStatusGenerate(item.status)[1]} text-white text-center rounded-full py-1 px-3 text-sm font-medium`}
                 >
-                  {item.status === 'ACTIVE' ? t('Active') : t('Locked')}
+                 {clientStatusGenerate(item.status)[0]}
                 </p>
               </td>
             </tr>

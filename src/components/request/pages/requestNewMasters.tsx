@@ -41,7 +41,7 @@ interface MasterDetailData {
   age: string;
   gender: string;
   address: string;
-  masterImgPath: string;
+  masterImgId: string;
   startDate: string;
   districtName: string;
   placeOfWork: string;
@@ -255,6 +255,7 @@ const RequestNewMasters: React.FC = () => {
         isOpen={detailIsOpen}
         onClose={closeDetailModal}
         openReasonModal={openReasonModal}
+        masterImgId={selectedMaster?.masterImgId}
         {...selectedMaster}
         serviceData={serviceData || []}
         galleryData={galleryData || []}
