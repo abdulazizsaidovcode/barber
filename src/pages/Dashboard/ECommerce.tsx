@@ -4,10 +4,7 @@ import ChartThree from '../../components/Charts/ChartThree';
 import ChartTwo from '../../components/Charts/Connectingmastersandclients';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { DatePicker, Skeleton } from 'antd';
-import CardDataCharts from '../../components/CardDataCharts';
 import ChartOne from '../../components/Charts/ChartOne';
-import ChartFour from '../../components/Charts/ChartFour';
-import ChartSeven from '../../components/Charts/ChartSeven';
 import ChartEight from '../../components/Charts/ChartEight';
 import ChartNine from '../../components/Charts/ChartNine';
 import { useTranslation } from 'react-i18next';
@@ -26,15 +23,15 @@ const ECommerce: React.FC = () => {
   const [startDate, setStartDate] = useState<string | undefined>(undefined);
   const [endDate, setEndDate] = useState<string | undefined>(undefined);
 
-  const handleYearChange = (date: any, dateString: any) => {
+  const handleYearChange = (dateString: any) => {
     setYear(dateString);
   };
 
-  const handleLocalDateChange = (date: any, dateString: any) => {
+  const handleLocalDateChange = (dateString: any) => {
     setLocalDate(dateString);
   };
 
-  const handleRangeChange = (dates: any, dateStrings: [string, string]) => {
+  const handleRangeChange = ( dateStrings: [string, string]) => {
     setStartDate(dateStrings[0]);
     setEndDate(dateStrings[1]);
   };
@@ -74,27 +71,28 @@ const ECommerce: React.FC = () => {
               onChange={handleLocalDateChange}
             />
             <RangePicker
-              onChange={handleRangeChange}
+
+              onChange={() => handleRangeChange}
               placeholder={[t('Select_start_date'), t('Select_end_date')]}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 flex-wrap xl:grid-cols-4 2xl:gap-7.5">
-          {data.masterCount !== undefined ? (
+          {data?.masterCount !== undefined ? (
             <CardDataStats title={t('master')} total={data.masterCount} />
           ) : (
             <Skeleton.Input active />
           )}
-          {data.clientCount !== undefined ? (
+          {data?.clientCount !== undefined ? (
             <CardDataStats
               title={t('siderbar_client')}
-              total={data.clientCount}
+              total={data?.clientCount}
             />
           ) : (
             <Skeleton.Input active />
           )}
-          {data.orderCount !== undefined ? (
+          {data?.orderCount !== undefined ? (
             <CardDataStats title={t('Orders')} total={data.orderCount} />
           ) : (
             <Skeleton.Input active />

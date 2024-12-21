@@ -28,7 +28,7 @@ function AddMails() {
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { setLetterData } = MailStore();
+  const { setLetterData, page, size } = MailStore();
 
   const handleFileChange = (info: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = info.target.files ? info.target.files[0] : null;
@@ -121,6 +121,8 @@ function AddMails() {
         clearFields();
         GetChatLetters({
           setLetterData: setLetterData,
+          page: page,
+          size: size,
         });
       })
       .catch((err) => {

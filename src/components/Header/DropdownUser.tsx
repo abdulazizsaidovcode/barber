@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting, AiFillFileText } from 'react-icons/ai';
 import UserOne from '../../images/user/user-01.png';
+import { useTranslation } from 'react-i18next';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { t } = useTranslation()
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -56,7 +59,7 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             Abdulxamid Usarov
           </span>
-          <span className="block text-xs">Admin of the bookers</span>
+          <span className="block text-xs">{t("adminOfBookers")}</span>
         </span>
       </Link>
 
@@ -74,7 +77,7 @@ const DropdownUser = () => {
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <AiFillFileText className="text-xl" />
-              Documents
+              {t("documents")}
             </Link>
           </li>
           <li>
@@ -83,7 +86,7 @@ const DropdownUser = () => {
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <AiFillSetting className="text-xl" />
-              Settings
+              {t("settings")}
             </Link>
           </li>
         </ul>
@@ -92,7 +95,7 @@ const DropdownUser = () => {
           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         >
           <FiLogOut className="text-xl" />
-          Log Out
+          {t("logout")}
         </button>
       </div>
       {/* <!-- Dropdown End --> */}

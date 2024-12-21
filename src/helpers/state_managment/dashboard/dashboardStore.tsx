@@ -1,30 +1,24 @@
 import { create } from 'zustand';
 
-interface DashboardStore {
-    data: Data[];
-    setData: (data: Data[]) => void;
+interface Data {
+  masterCount?: number;
+  clientCount?: number;
+  orderCount?: number;
+  clientCanselOrder?: number;
+  masterCanselOrder?: number;
+  totalTurnover?: number;
+  income?: number;
+  customerDissatisfaction?: number;
+  masterDissatisfaction?: number;
+  masterAverageClient?: number;
 }
 
-export interface Data {
-    masterCount: number;
-    clientCount: number;
-    orderCount: number;
-    clientCanselOrder: number;
-    masterCanselOrder: number;
-    totalTurnover: number;
-    income: number;
-    customerDissatisfaction: number;
-    masterDissatisfaction: number;
-    masterAverageClient: number;
-    theOutgoingMaster: number;
-    theOutgoingClient: number;
-    positiveFeedbackInService: number;
-    negativeFeedbackInService: number;
-}
-
-const dashboardStore = create<DashboardStore>((set) => ({
-    data: [],
-    setData: (val: Data[]) => set({ data: val })
+const dashboardStore = create<{
+  data: Data;
+  setData: (val: Data[] | Data) => void;
+}>((set) => ({
+  data: {},
+  setData: (val) => set({ data: Array.isArray(val) ? val[0] : val }),
 }));
 
 export default dashboardStore;

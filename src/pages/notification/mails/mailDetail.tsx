@@ -15,7 +15,7 @@ const MailDetail: React.FC = () => {
     const { chatData } = MailStore();
 
     useEffect(() => {
-        const selectedMail = chatData.find((item: any) => item.id === Number(id));
+        const selectedMail = chatData?.object?.find((item: any) => item.id === Number(id));
         setMail(selectedMail);
         console.log(selectedMail);
 

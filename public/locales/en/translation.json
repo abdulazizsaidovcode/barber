@@ -457,5 +457,10 @@
   "september": "September",
   "october": "October",
   "november": "November",
-  "december": "December"
+  "december": "December",
+
+  "adminOfBookers": "Admin of the bookers",
+  "documents": "Documents",
+  "settings": "Settings",
+  "logout": "Log out"
 }

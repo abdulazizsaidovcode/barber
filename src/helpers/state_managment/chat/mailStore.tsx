@@ -1,35 +1,35 @@
 import { create } from 'zustand';
 
-interface ChatLetters {
-  subject: string;
-  chatData: Data[];
-  date: string;
-  page: string;
-  size: string;
-  setSubject: (val: string) => void;
-  setLetterData: (val: Data[]) => void;
-}
-
-
-export interface Data {
+export interface MailItem {
   attachmentId: string | null;
   content: string;
   date: string;
   fileId: string;
   fileName: string | null;
   id: number;
-  subject: null | string;
+  subject: string | null;
   toWhom: string;
 }
 
-const MailStore = create<ChatLetters>((set) => ({
-  subject: '',
-  chatData: [],
-  date: '',
-  page: '',
-  size: '',
-  setSubject: (val: string) => set({ subject: val }),
-  setLetterData: (val: Data[]) => set({ chatData: val }),
+interface MailData {
+  object: MailItem[];
+  totalElements: number;
+}
+
+const MailStore = create<{
+  chatData: any;
+  setLetterData: (val: any) => void;
+  page: number;
+  setPage: (val: number) => void;
+  size: number;
+  setSize: (val: number) => void;
+}>((set) => ({
+  chatData: null,
+  setLetterData: (val) => set({ chatData: val }),
+  page: 0,
+  setPage: (val) => set({ page: val }),
+  size: 10,
+  setSize: (val) => set({ size: val }),
 }));
 
 export default MailStore;

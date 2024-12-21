@@ -7,6 +7,8 @@ const MasterDatail = () => {
         <DefaultLayout>
            <div className='bg-white w-full p-3 max-h-screen'>
                <MasterCard
+               day=''
+               status=''
                masterData={
                 []
                }

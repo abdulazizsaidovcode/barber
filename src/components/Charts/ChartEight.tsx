@@ -54,7 +54,7 @@ const initialOptions: ApexOptions = {
 };
 
 const ChartEight: React.FC = () => {
-    const { t } = useTranslation();
+    const {  t} = useTranslation();
     const [state, setState] = useState<ChartThreeState>({
         series: [],
         labels: [],
@@ -79,11 +79,11 @@ const ChartEight: React.FC = () => {
                 if (allZero) {
                     setState({
                         series: [1],
-                        labels: ['No Data'],
+                        labels: [t("no_info")],
                     });
                     setOptions({
                         ...initialOptions,
-                        labels: ['No Data'],
+                        labels: [t("no_info")],
                         colors: ['#E4E8EF'],
                     });
                 } else {

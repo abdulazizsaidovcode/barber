@@ -458,5 +458,10 @@
   "september": "Sentabr",
   "october": "Oktyabr",
   "november": "Noyabr",
-  "december": "Dekabr"
+  "december": "Dekabr",
+
+  "adminOfBookers": "Bookers administratori",
+  "documents": "Xujjatlar",
+  "settings": "Sozlamalar",
+  "logout": "Chiqish"
 }

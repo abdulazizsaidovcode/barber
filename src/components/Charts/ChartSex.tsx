@@ -79,11 +79,11 @@ const ChartMasterRate: React.FC = () => {
                 if (allZero) {
                     setState({
                         series: [1],
-                        labels: ['No Data'],
+                        labels: [t("no_info")],
                     });
                     setOptions({
                         ...defaultOptions,
-                        labels: ['No Data'],
+                        labels: [t("no_info")],
                         colors: ['#E4E8EF'],
                     });
                 } else {

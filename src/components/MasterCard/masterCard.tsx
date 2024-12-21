@@ -12,7 +12,7 @@ interface MasterCardProps {
     specialistTitle: string;
     phoneNumber: string;
     imageUrl: string;
-    day: string;
+    day?: string;
     status: 'ACTIVE' | 'BLOCKED' | string;
     masterData: IData[];
 }
@@ -25,7 +25,7 @@ const MasterCard: React.FC<MasterCardProps> = ({ masterName, specialistTitle, ph
                 <h1 className="font-bold">{t('tarrif_history')}</h1>
             </div>
             <div className="bg-white dark:bg-black flex justify-between items-center p-4 w-full rounded-lg shadow-md">
-                <h1 className="font-bold text-xl text-slate-700 dark:text-slate-300">{day}</h1>
+                <h1 className="font-bold text-xl text-slate-700 dark:text-slate-300">{day || ""}</h1>
                 <button className={status === 'BLOCKED' ? 'bg-red-600 px-6 py-2 rounded-full text-white' : `bg-[#58CA64] px-6 py-2 rounded-full text-white`}>{status === 'BLOCKED' ? t('Locked') : t('Active')}</button>
             </div>
             <div className="w-full flex flex-col lg:flex-row gap-4">

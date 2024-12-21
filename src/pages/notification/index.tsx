@@ -12,7 +12,7 @@ import MailStore from '../../helpers/state_managment/chat/mailStore.tsx';
 import { GetChatLetters } from '../../helpers/api-function/chat/mail.tsx';
 
 const Natification = () => {
-  const { setData, setTotalPage } = masterStore();
+  const { setData, setTotalPage, page, size } = masterStore();
   const { setClientData, setClientTotalPage } = clientStore();
   const { role, setChatData } = chatStore();
 
@@ -20,7 +20,9 @@ const Natification = () => {
 
   useEffect(() => {
     GetChatLetters({
-      setLetterData: setLetterData
+      setLetterData: setLetterData,
+      page: page,
+      size: size
     });
   }, [setLetterData]); 
 
