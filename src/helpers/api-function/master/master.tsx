@@ -69,7 +69,6 @@ export const getMasters = async (
     setData([]);
     clearFunction();
   } finally {
-    setTotalPage(0);
     setLoading && setLoading(false);
     clearFunction();
   }

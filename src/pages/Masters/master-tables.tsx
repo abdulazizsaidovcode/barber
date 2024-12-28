@@ -90,6 +90,7 @@ const MasterTables: React.FC = () => {
     setSize,
     masterLoading
   } = masterStore();
+
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({
     status: '',
     masterId: ''
@@ -148,7 +149,9 @@ const MasterTables: React.FC = () => {
     else if (status === 'DELETED') return [t('Deleted'), 'bg-red-700'];
     else return [t('unknown'), 'bg-gray-500'];
   };
-
+   console.log("data",totalPage);
+   
+  
   return (
     <>
       <Filters />

@@ -145,10 +145,7 @@ const ClientTables: React.FC = () => {
     else if (status === 'BLOCKED') return [t('Locked'), 'bg-red-500'];
     else if (status === 'DELETED') return [t('Deleted'), 'bg-red-700'];
     else return [t('unknown'), 'bg-gray-500'];
-  };
-
-  console.log('status',clientStatusGenerate('DELETED')[0]);
-  
+  };  
 
   return (
     <>
