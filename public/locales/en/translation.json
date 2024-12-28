@@ -462,5 +462,7 @@
   "adminOfBookers": "Admin of the bookers",
   "documents": "Documents",
   "settings": "Settings",
-  "logout": "Log out"
+  "logout": "Log out",
+  "faollashtirish":"active",
+  "years":"year"
 }

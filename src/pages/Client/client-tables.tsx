@@ -146,7 +146,8 @@ const ClientTables: React.FC = () => {
     else if (status === 'DELETED') return [t('Deleted'), 'bg-red-700'];
     else return [t('unknown'), 'bg-gray-500'];
   };  
-
+  console.log("1234567654",clientFilterData);
+  
   return (
     <>
       <Filters />
@@ -196,7 +197,7 @@ const ClientTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5 flex items-center justify-between">
                 <p className="text-black dark:text-white">
-                  {item?.turnover ?? t('No_data')}
+                {item?.age ? `${item.age} ${t('years')}` : t('0')}
                 </p>
                 <Space direction="vertical">
                   <Space wrap>
@@ -225,7 +226,7 @@ const ClientTables: React.FC = () => {
               </td>
               <td className="min-w-[150px] p-5">
                 <p className="text-black dark:text-white">
-                  {item?.age ? `${item.age} ${t('years')}` : t('No_data')}
+                {item?.canceledOrder ?? t('No_data')}
                 </p>
               </td>
               {/* <td className="min-w-[150px] p-5">

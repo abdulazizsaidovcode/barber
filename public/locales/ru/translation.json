@@ -463,5 +463,7 @@
   "adminOfBookers": "Администратор Bookers",
   "documents": "Документы",
   "settings": "Настройки",
-  "logout": "Выйти"
+  "logout": "Выйти",
+  "faollashtirish":"активный",
+  "years":"возраст"
 }

@@ -105,7 +105,7 @@ const MasterTables: React.FC = () => {
     },
     {
       key: 'ACTIVE',
-      label: `${t('Active')}`,
+      label: `${t('faollashtirish')}`,
       onClick: () => openIsModal()
     }
   ];
@@ -149,8 +149,7 @@ const MasterTables: React.FC = () => {
     else if (status === 'DELETED') return [t('Deleted'), 'bg-red-700'];
     else return [t('unknown'), 'bg-gray-500'];
   };
-   console.log("data",totalPage);
-   
+ 
   
   return (
     <>

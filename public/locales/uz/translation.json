@@ -73,7 +73,7 @@
   "Schedule_Type": "Jadval turi",
   "Date": "Sana",
   "Rate": "Ta'rif",
-  "Open": "Ochiq",
+  "Open": "Ochish",
   "Extend": "Uzatmoq",
   "Online_booking": "Onlayn bron qilish",
   "Contacts": "Kontaktlar",
@@ -245,7 +245,7 @@
   "Not_available": "Mavjud emas!",
   "Order_status": "Buyurtma holati",
   "Search_by_fullname": "Ism sharifi bo'yicha qidirish",
-  "Locked": "Bloklangan",
+  "Locked": "Bloklash",
   "Select_category": "Kategoriyani tanlang",
   "Place_of_work": "Ish joyi",
   "Salon": "Salon",
@@ -463,5 +463,7 @@
   "adminOfBookers": "Bookers administratori",
   "documents": "Xujjatlar",
   "settings": "Sozlamalar",
-  "logout": "Chiqish"
+  "logout": "Chiqish",
+  "faollashtirish":"Faollashtirish",
+  "years":"yosh"
 }
