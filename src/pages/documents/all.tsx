@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import Accordion from '../../components/accordion/accordion';
-import Switch from '../../components/settings/details/TableSwitcher';
-import FileUploader from '../../components/FileDowlander';
+import Accordion from '../../components/accordion/accordion.tsx';
+import Switch from '../../components/settings/details/TableSwitcher.tsx';
+import FileUploader from '../../components/FileDowlander.tsx';
 import { MdEdit } from 'react-icons/md';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
 import { HelpList } from '../../types/help.ts';
 import { deleteHelpFile, updateHelp, updateIsActive, updateSaveButtons } from '../../helpers/api-function/help/help.tsx';
 import Modal from '../../components/modals/modal.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import { Buttons } from '../../components/buttons';
+import { Buttons } from '../../components/buttons/index.tsx';
 import { useTranslation } from 'react-i18next';
 import FileGetUploader from '../../components/FileDowlanderGet.tsx';
 

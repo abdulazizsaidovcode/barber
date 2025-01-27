@@ -1,10 +1,11 @@
 import React from 'react';
 import { Tabs } from 'antd';
-import All from './all';
-import MasterDocument from './masterDocument';
-import ClientDocument from './clientTab';
+import All from './all.tsx';
+import MasterDocument from './masterDocument.tsx';
+import ClientDocument from './clientTab.tsx';
 import { useTranslation } from 'react-i18next';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';
+import WebTab from './WebTab.tsx';
 
 const MainTabs: React.FC = () => {
   const { setHelpRole } = helpStore();
@@ -37,6 +38,15 @@ const MainTabs: React.FC = () => {
         </span>
       ),
       children: <ClientDocument />
+    },
+    {
+      key: 'web',
+      label: (
+        <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
+          {t('WEB')}
+        </span>
+      ),
+      children: <WebTab />
     }
   ];
 

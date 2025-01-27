@@ -10,7 +10,7 @@ import { getDetail } from "../../../helpers/api-function/order/orderFunction";
 const OrderDetail: React.FC = () => {
   const { isDetail, setOrderDetail } = orderStore();
   const location = useLocation();
-  
+
   const id = location.pathname.substring(8);
 
   useEffect(() => {

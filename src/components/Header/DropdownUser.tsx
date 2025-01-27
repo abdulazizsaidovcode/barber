@@ -51,9 +51,9 @@ const DropdownUser = () => {
         className="flex items-center gap-4"
         to="#"
       >
-        <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
-        </span>
+        {/* <span className="h-12 w-12 rounded-full">
+           <img src={UserOne} alt="User" />
+        </span> */}
 
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">

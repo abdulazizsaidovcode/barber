@@ -1,5 +1,5 @@
-import DefaultLayout from '../../layout/DefaultLayout';
-import MainTabs from './mainTabs';
+import DefaultLayout from '../../layout/DefaultLayout.tsx';
+import MainTabs from './mainTabs.tsx';
 import { useEffect } from 'react';
 import { getHelp } from '../../helpers/api-function/help/help.tsx';
 import helpStore from '../../helpers/state_managment/help/helpStore.tsx';

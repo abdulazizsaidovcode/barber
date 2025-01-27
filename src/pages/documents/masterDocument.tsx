@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Accordion from '../../components/accordion/accordion';
+import Accordion from '../../components/accordion/accordion.tsx';
 // import Switch from '../../components/settings/details/TableSwitcher';
 import { MdEdit } from 'react-icons/md';
 // import FileUploader from '../../components/FileDowlander';
@@ -10,7 +10,7 @@ import {
   updateSaveButtons
 } from '../../helpers/api-function/help/help.tsx';
 import masterStore from '../../helpers/state_managment/master/masterStore.tsx';
-import { Buttons } from '../../components/buttons';
+import { Buttons } from '../../components/buttons/index.tsx';
 import Modal from '../../components/modals/modal.tsx';
 import { useTranslation } from 'react-i18next';
 // import FileGetUploader from '../../components/FileDowlanderGet.tsx';

@@ -7,7 +7,9 @@ export interface HelpTypes {
   setDataMaster: (val: HelpList[]) => void;
   dataClient: HelpList[];
   setDataClient: (val: HelpList[]) => void;
-  updateTextArea: HelpList;
+  dataWeb: HelpList[];
+  setDataWeb: (val: HelpList[]) => void;
+  updateTextArea: HelpList | null;
   setUpdateTextArea: (val: HelpList) => void;
   deleteFileId: (string | number)[];
   setDeleteFileId: (val: (string | number)[]) => void;
