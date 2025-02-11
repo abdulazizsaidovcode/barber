@@ -39,6 +39,8 @@ interface ReviewsStore {
   filters: FiltersReview;
   masterFilters: MasterFiltersReview;
   filterObj: FiltersReview;
+  isConfirmModal: boolean,
+  setIsConfirmModal: (val: boolean) => void,
   setMainData: (data: MainData) => void;
   setDelModal: (isDel: boolean) => void;
   setListData: (data: ListData[]) => void;
@@ -129,6 +131,8 @@ const useReviewsStore = create<ReviewsStore>((set) => ({
   setMasterTotalPage: (page: number) => set({ totalMasterPage: page }),
   setMasterPageSize: (size: number) => set({ pageMasterSize: size }),
   setMasterCurrentPage: (current: number) => set({ currentMasterPage: current }),
+  isConfirmModal: false,
+  setIsConfirmModal: (val: boolean) => set({ isConfirmModal: val }),
 }));
 
 export default useReviewsStore;

@@ -7,9 +7,10 @@ import { getFileId } from '../../../helpers/api';
 import { useTranslation } from 'react-i18next';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { MdDone } from 'react-icons/md';
 
 
-const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void }> = ({ data, openModal }) => {
+const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void, openConfirmModal: () => void }> = ({ data, openModal, openConfirmModal }) => {
   const {
     clientFirstName,
     clientLastName,
@@ -30,19 +31,11 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
     <>
       <div className="w-full p-4 reviews-shadow mt-3 rounded-xl dark:bg-[#60606D] text-black dark:text-white mb-4">
         <div className="flex md:flex-row flex-col md:gap-0 gap-3 justify-between items-start mb-4">
-          <div className="flex">
-            <img src={masterAttachmentId ? getFileId + masterAttachmentId : userImg} className="md:w-20 w-10 h-10 md:h-20"
-                 alt="" />
-            <div className="flex-1 ms-3">
-              <div className="font-bold text-lg">{clientFirstName} {clientLastName}</div>
-              <div className="text-gray-500">{t('master')}</div>
-              <Rate disabled defaultValue={masterFeedbackCount} className="text-sm" />
-            </div>
-          </div>
+
           <div className="flex ">
             <img
               src={clientAttachmentId ? getFileId + clientAttachmentId : userImg}
-              className="md:w-20 w-10 h-10 md:h-20"
+              className="md:w-20 w-10 h-10 rounded-full object-cover md:h-20"
               alt=""
               onClick={() => {
                 openIsImageModal()
@@ -54,43 +47,41 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void 
               <div className="text-gray-500">{t('Client')}</div>
             </div>
           </div>
+          <div className="flex">
+            <img src={masterAttachmentId ? getFileId + masterAttachmentId : userImg} className="md:w-20 w-10 rounded-full object-cover h-10 md:h-20"
+              alt="" />
+            <div className="flex-1 ms-3">
+              <div className="font-bold text-lg">{clientFirstName} {clientLastName}</div>
+              <div className="text-gray-500">{t('master')}</div>
+              <Rate disabled defaultValue={masterFeedbackCount} className="text-sm" />
+            </div>
+          </div>
           <div className="flex flex-col text-gray-700">
-            {/* <div className="flex items-center">
-                        <Rate disabled defaultValue={4} className="text-sm mr-2" />
-                        Антураж заведения
-                    </div>
-                    <div className="flex items-center">
-                        <Rate disabled defaultValue={4} className="text-sm mr-2" />
-                        Профессионализм мастера
-                    </div>
-                    <div className="flex items-center">
-                        <Rate disabled defaultValue={3} className="text-sm mr-2" />
-                        Чистота заведения
-                    </div>
-                    <div className="flex items-center">
-                        <Rate disabled defaultValue={2} className="text-sm mr-2" />
-                        Отношение мастера
-                    </div> */}
             <div className="flex items-center">
-              <Rate disabled defaultValue={feedbackCount} className="text-sm mr-2" />
+              {/* <Rate disabled defaultValue={feedbackCount} className="text-sm mr-2" /> */}
               {/* Что то еще ... */}
             </div>
           </div>
-          <div className="text-gray-500 flex flex-col items-center">
-            <div onClick={openModal}
-                 className="w-10 h-10 border-[1px] border-red-500 flex items-center justify-center rounded-full">
-              <DeleteOutlined className="text-red-500 text-xl cursor-pointer" />
+          <div className="text-gray-500 flex items-start">
+            <div className="flex flex-col items-center justify-center">
+            <div onClick={openConfirmModal}
+                className="w-10 h-10 border-[1px] border-green-500 flex items-center justify-center rounded-full">
+                <MdDone className="text-green-500 text-xl cursor-pointer" />
+              </div>
             </div>
-            <p>{feedbackDate}</p>
+            <div className="flex flex-col items-center justify-center">
+              <div onClick={openModal}
+                className="w-10 h-10 border-[1px] border-red-500 flex items-center justify-center rounded-full">
+                <DeleteOutlined className="text-red-500 text-xl cursor-pointer" />
+              </div>
+              <p>{feedbackDate}</p>
+            </div>
           </div>
         </div>
         <div className="flex md:flex-row flex-col justify-between">
           <div className="text-gray-700 mb-2">
             {description}
           </div>
-          <Button type="link" className="text-blue-500">
-            {t('Show_in_full')}
-          </Button>
         </div>
       </div>
 

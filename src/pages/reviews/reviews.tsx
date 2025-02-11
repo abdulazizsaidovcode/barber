@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
-import FirstTab from './tabs/FirstTab';
+// import FirstTab from './tabs/FirstTab';
 import SecondTab from './tabs/SecondTab';
 import { Tabs } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -36,12 +36,13 @@ const Reviews: React.FC = () => {
       children: <SecondTab />,
     },
     {
+      key: '2',
       label: (
         <span className="dark:text-white text-black text-lg md:text-xl lg:text-2xl">
           {t("About_the_service")}
         </span>
       ),
-
+      children: <></>,
     },
   ];
 

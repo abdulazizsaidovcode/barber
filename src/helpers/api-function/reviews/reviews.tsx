@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { reviews_list_delete } from '../../api';
+import { reviews_Confirm, reviews_list_delete } from '../../api';
 import { config } from '../../token';
 import { ListData, ListMasterData, MainData } from '../../../types/review';
 import toast from 'react-hot-toast';

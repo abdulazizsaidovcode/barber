@@ -5,8 +5,11 @@ import ReviewMastersFilters from '../components/masterFilters';
 import useReviewsStore from '../../../helpers/state_managment/reviews/reviews';
 import { fetchMasterDataList, deleteMasterDataList } from '../../../helpers/api-function/reviews/reviews';
 import DelModal from '../../../components/settings/modals/delModal';
-import { reviews_list_master_data } from '../../../helpers/api';
+import { reviews_Confirm, reviews_list_master_data } from '../../../helpers/api';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { config, setConfig } from '../../../helpers/token';
+import Modal from '../../../components/modals/modal';
 
 const SecondTab: React.FC = () => {
   const {
@@ -19,12 +22,21 @@ const SecondTab: React.FC = () => {
     setListMasterData,
     isDelModal,
     setDelModal,
-    setMasterTotalPage
+    setMasterTotalPage,
+    isConfirmModal,
+    setIsConfirmModal
   } = useReviewsStore();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
+  useEffect(() => {
+    setConfig()
+  }, []);
+  const fetchData = async () => {
+    setLoading(true);
+    await fetchMasterDataList(setListMasterData, `${reviews_list_master_data}?page=${currentMasterPage}&size=${pageMasterSize}`, setMasterTotalPage);
+    setLoading(false);
+  };
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -43,6 +55,10 @@ const SecondTab: React.FC = () => {
     setSelectedId(id);
     setDelModal(true);
   };
+  const openConfirModal = (id: string) => {
+    setSelectedId(id);
+    setIsConfirmModal(true);
+  };
 
   const closeDelModal = () => {
     setSelectedId(null);
@@ -55,6 +71,19 @@ const SecondTab: React.FC = () => {
       closeDelModal();
     }
   };
+  // console.log(config);
+
+  const handleConfirm = async () => {
+    if (selectedId && config) {
+      console.log("config 31", config);
+      const { data } = await axios.put(`${reviews_Confirm}${selectedId}`, {}, config);
+      if (data.success) {
+        fetchData()
+        setIsConfirmModal(false);
+      }
+    }
+  };
+
   const { t } = useTranslation()
 
   return (
@@ -73,7 +102,12 @@ const SecondTab: React.FC = () => {
       ) : (
         <div>
           {listMasterData.map((item, index) => (
-            <ReviewsMasersCard key={index} data={item} openModal={() => openDelModal(item.id)} />
+            <ReviewsMasersCard
+              key={index}
+              data={item}
+              openModal={() => openDelModal(item.id)}
+              openConfirmModal={() => openConfirModal(item.id)}
+            />
           ))}
           <Pagination
             showSizeChanger
@@ -85,6 +119,29 @@ const SecondTab: React.FC = () => {
         </div>
       )}
       <DelModal isOpen={isDelModal} onDelete={handleDelete} onClose={closeDelModal} />
+      <Modal
+        isOpen={isConfirmModal}
+        onClose={() => setIsConfirmModal(false)}
+        mt="centered"
+      >
+        <p className='text-white mx-10 my-3'>{t("Are you sure you want to confirm this review?")}</p>
+        <div className="flex justify-center gap-10 mt-8">
+          <button
+            onClick={handleConfirm}
+            className="bg-black text-white px-4 py-2 rounded"
+          >
+            {t("Yes, Confirm")}
+          </button>
+          <button
+            onClick={() => setIsConfirmModal(false)}
+            className="bg-gray-300 text-white px-4 py-2 rounded"
+          >
+            {t("Cancel")}
+          </button>
+        </div>
+      </Modal>
+
+
     </div>
   );
 };
