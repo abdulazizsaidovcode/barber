@@ -53,7 +53,7 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void,
             <div className="flex-1 ms-3">
               <div className="font-bold text-lg">{clientFirstName} {clientLastName}</div>
               <div className="text-gray-500">{t('master')}</div>
-              <Rate disabled defaultValue={masterFeedbackCount} className="text-sm" />
+              <Rate disabled defaultValue={feedbackCount} value={feedbackCount} className="text-sm" /> ({feedbackCount})
             </div>
           </div>
           <div className="flex flex-col text-gray-700">
