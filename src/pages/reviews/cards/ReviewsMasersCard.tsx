@@ -58,8 +58,6 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void,
           </div>
           <div className="flex flex-col text-gray-700">
             <div className="flex items-center">
-              {/* <Rate disabled defaultValue={feedbackCount} className="text-sm mr-2" /> */}
-              {/* Что то еще ... */} 
             </div> 
           </div>
           <div className="text-gray-500 flex items-start">
