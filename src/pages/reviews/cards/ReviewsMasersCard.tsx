@@ -11,13 +11,16 @@ import { MdDone } from 'react-icons/md';
 
 
 const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void, openConfirmModal: () => void }> = ({ data, openModal, openConfirmModal }) => {
+  // I checked
   const {
     clientFirstName,
     clientLastName,
     masterFirstName,
     masterLastName,
     description,
-    masterFeedbackCount,
+    clientEmail,
+    clientPhoneNumber,
+    leaveFeedback,
     feedbackCount,
     feedbackDate,
     clientAttachmentId,
@@ -45,6 +48,14 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void,
             <div className="flex-1 ms-3">
               <div className="font-bold text-lg">{masterFirstName} {masterLastName}</div>
               <div className="text-gray-500">{t('Client')}</div>
+              {leaveFeedback && <>
+                <div className="">
+                  {clientPhoneNumber || ''}
+                </div>
+                <div className="">
+                  {clientEmail || ''}
+                </div>
+              </>}
             </div>
           </div>
           <div className="flex">
@@ -53,16 +64,16 @@ const ReviewsMasersCard: React.FC<{ data: ListMasterData, openModal: () => void,
             <div className="flex-1 ms-3">
               <div className="font-bold text-lg">{clientFirstName} {clientLastName}</div>
               <div className="text-gray-500">{t('master')}</div>
-              <Rate disabled defaultValue={feedbackCount} value={feedbackCount} className="text-sm" /> ({feedbackCount})
+              {leaveFeedback || <><Rate disabled defaultValue={feedbackCount} value={feedbackCount} className="text-sm" /> ({feedbackCount})</>}
             </div>
           </div>
           <div className="flex flex-col text-gray-700">
             <div className="flex items-center">
-            </div> 
+            </div>
           </div>
           <div className="text-gray-500 flex items-start">
             <div className="flex flex-col items-center justify-center">
-            <div onClick={openConfirmModal}
+              <div onClick={openConfirmModal}
                 className="w-10 h-10 border-[1px] border-green-500 flex items-center justify-center rounded-full">
                 <MdDone className="text-green-500 text-xl cursor-pointer" />
               </div>

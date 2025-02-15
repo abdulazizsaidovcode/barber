@@ -50,7 +50,10 @@ export interface ListMasterData {
     clientAttachmentId: string,
     feedbackCount: number,
     feedbackDate: string,
-    description: string
+    description: string,
+    clientPhoneNumber: string,
+    clientEmail: string,
+    leaveFeedback: boolean
 }
 
 export interface ReviewsClient {

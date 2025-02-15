@@ -56,7 +56,6 @@ function App() {
     setConfig();
     window.scrollTo(0, 0);
     if (!isToken) {
-      // if (pathname === '/') window.location.reload();
       navigate(`/auth/signin`);
       sessionStorage.clear();
     }
@@ -444,5 +443,4 @@ function App() {
   );
 }
 
-// Rejected
 export default App;
