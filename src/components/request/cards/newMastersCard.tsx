@@ -29,7 +29,7 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({
   const displayArray = (array: string[] | undefined) => (array && array.length > 0 ? array.join(', ') : t('Salon_category_is_not_configured'));
 
   return (
-    <div onClick={modal} className="lg:w-[280px] md:w-[310px] sm:w-[320px] w-[320px] cursor-pointer h-[200px] rounded-xl shadow-lg p-3 bg-white">
+    <div onClick={modal} className="lg:w-[280px] md:w-[310px] sm:w-[320px] w-[320px] cursor-pointer rounded-xl shadow-lg p-3 bg-white">
       <div>
         <p className="text-xl font-bold text-black">{salonName}</p>
         <p className="text-md font-bold text-black">{displayArray(salonCategory)}</p>

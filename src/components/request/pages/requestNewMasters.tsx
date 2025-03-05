@@ -110,8 +110,8 @@ const RequestNewMasters: React.FC = () => {
         `${new_masters_url}?page=${page}&size=${size}`,
         config
       );
-      setData(res.data.body.object); // Assuming 'object' contains the list of data items
-      setTotalItems(res.data.body.totalElements); // Assuming 'totalElements' contains the total number of items
+      setData(res?.data?.body?.object); 
+      setTotalItems(res?.data?.body?.totalElements); 
     } catch {
     } finally {
       setLoading(false);
@@ -121,7 +121,7 @@ const RequestNewMasters: React.FC = () => {
   const fetchFullData = async (id: string) => {
     try {
       const res = await axios.get(`${masters_fulldata_url}/${id}`, config);
-      setSelectedMaster(res.data.body);
+      setSelectedMaster(res?.data?.body);
       setDetailIsOpen(true);
       fetchService(id);
       fetchGallery(id);
@@ -131,14 +131,14 @@ const RequestNewMasters: React.FC = () => {
   const fetchService = async (id: string) => {
     try {
       const res = await axios.get(`${masters_service_url}/${id}`, config);
-      setServiceData(res.data.body);
+      setServiceData(res?.data?.body);
     } catch { }
   };
 
   const fetchGallery = async (id: string) => {
     try {
       const res = await axios.get(`${masters_gallery_url}/${id}`, config);
-      setGalleryData(res.data.body);
+      setGalleryData(res?.data?.body);
     } catch { }
   };
 
@@ -222,7 +222,7 @@ const RequestNewMasters: React.FC = () => {
             </div>
           ) : (
             <div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex justify-between flex-wrap gap-3">
                 {data.map((item, index) => (
                   <div key={index}>
                     <NewMastersCard
