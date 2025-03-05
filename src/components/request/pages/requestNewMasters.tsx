@@ -224,7 +224,7 @@ const RequestNewMasters: React.FC = () => {
             <div>
               <div className="flex justify-between flex-wrap gap-3">
                 {data.map((item, index) => (
-                  <div key={index}>
+                  <div key={index}> 
                     <NewMastersCard
                       salonName={item.salonName || t("The_salon_name_is_not_configured")}
                       salonCategory={item.categoryName}
