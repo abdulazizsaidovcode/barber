@@ -169,7 +169,7 @@ const RequestNewMasters: React.FC = () => {
     };
     try {
       const res = await axios.put(masters_cancel_url, payload, config);
-      if (res.data.success) {
+      if (res?.data?.success) {
         fetchData(currentPage, pageSize);
       }
     } catch { }
@@ -223,7 +223,7 @@ const RequestNewMasters: React.FC = () => {
           ) : (
             <div>
               <div className="flex justify-between flex-wrap gap-3">
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                   <div key={index}> 
                     <NewMastersCard
                       salonName={item.salonName || t("The_salon_name_is_not_configured")}
