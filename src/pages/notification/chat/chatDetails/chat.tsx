@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
 import ChatusersList from '../users/user.tsx';
 import { Input, Select } from 'antd';
-import { Buttons } from '../../../../components/buttons/index.tsx';
+import { Buttons } from '../../../../components/buttons';
 import { IoSearchOutline } from 'react-icons/io5';
 import { chat_url, messages_url, sockjs_url } from '../../../../helpers/api.tsx';
 import { Stomp } from '@stomp/stompjs';
@@ -47,11 +47,8 @@ const Chatdetail: React.FC = () => {
 
   useEffect(() => {
     if (recipientId) {
-      if (stompClient && stompClient.connected) {
-        fetchMessages(adminId, recipientId);
-      } else {
-        alert('Stomp client not connected');
-      }
+      if (stompClient && stompClient.connected) fetchMessages(adminId, recipientId);
+      else alert('Stomp client not connected');
     }
   }, [recipientId]);
 
@@ -87,30 +84,37 @@ const Chatdetail: React.FC = () => {
       const socket = new SockJS(sockjs_url);
       const stomp = Stomp.over(socket);
 
-      stomp.connect({}, (frame: any) => {
-        console.log('Connected: ' + frame);
+      stomp.connect({}, () => {
         setStompClient(stomp);
         stomp.subscribe(`/user/${adminId}/queue/messages`, (response: any) => {
-          const receivedMessage = response && response.body ? JSON.parse(response.body) : null;
+          const receivedMessage: any = response && response?.body ? JSON.parse(response?.body) : null;
+
           if (receivedMessage) {
-            setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-          } else {
-            alert('Received message is null or undefined');
-          }
+            setMessages((prev: any[]) => {
+              const messagesMap = new Map(prev.map(msg => [msg.id, msg]));
+
+              if (Array.isArray(receivedMessage)) {
+                receivedMessage.forEach(({ chatId, read }) => {
+                  if (messagesMap.has(chatId)) {
+                    messagesMap.set(chatId, { ...messagesMap.get(chatId), read });
+                  }
+                });
+              } else messagesMap.set(receivedMessage.id, receivedMessage);
+
+              return Array.from(messagesMap.values());
+            });
+          } else alert('Received message is null or undefined');
         });
       }, (error: any) => {
         console.error('Error connecting: ', error);
       });
     }
   };
-  // if (stompClient && stompClient.connected) {
-  //   alert('Stomp client connected');
-  // }
 
   const sendMessage = async () => {
     let fileUrl = null;
     if (photo) {
-      console.log(photo);
+      // console.log(photo);
       await uploadFile({
         file: photo,
         setUploadResponse: (response) => (fileUrl = response.body)
@@ -125,18 +129,16 @@ const Chatdetail: React.FC = () => {
         isRead: false,
         attachmentIds: fileUrl ? [fileUrl] : []
       };
-      console.log(JSON.stringify(chatMessage));
+      // console.log(JSON.stringify(chatMessage));
 
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/chat', {}, JSON.stringify(chatMessage));
-      } else {
-        alert('Stomp client not connected or is null');
-      }
-      setTimeout(() => {
-        if (stompClient && stompClient.connected) {
-          fetchMessages(adminId, recipientId);
-        }
-      }, 500);
+      } else alert('Stomp client not connected or is null');
+      // setTimeout(() => {
+      //   if (stompClient && stompClient.connected) {
+      //     fetchMessages(adminId, recipientId);
+      //   }
+      // }, 500);
       setContent('');
     }
   };
@@ -168,7 +170,7 @@ const Chatdetail: React.FC = () => {
 
   const readAllMessages = () => {
     axios.get(`${chat_url}/all-message-ready`, config)
-      .then(res => {
+      .then(() => {
         toast.success('All messages marked as read successfully');
         GetChatList({
           status: role === 'master' ? 'MASTER' : 'CLIENT',
@@ -190,7 +192,7 @@ const Chatdetail: React.FC = () => {
     }
     if (stompClient && stompClient.connected) {
       stompClient.send('/app/isRead', {}, JSON.stringify(list));
-      fetchMessages(adminId, recipientId);
+      // fetchMessages(adminId, recipientId);
       GetChatList({
         status: role === 'master' ? 'MASTER' : 'CLIENT',
         setData: setChatData
@@ -220,9 +222,9 @@ const Chatdetail: React.FC = () => {
     if ((replyId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/replay', {}, JSON.stringify(replyObj));
-        setTimeout(() => {
-          fetchMessages(adminId, recipientId);
-        }, 500);
+        // setTimeout(() => {
+        //   fetchMessages(adminId, recipientId);
+        // }, 500);
         setContent('');
       }
     } else {
@@ -237,12 +239,12 @@ const Chatdetail: React.FC = () => {
 
     if (chatId) {
       if (stompClient && stompClient.connected) {
-        setTimeout(() => {
-          stompClient.send('/app/deleteMessage/list', {}, JSON.stringify(list));
-        }, 300);
-        setTimeout(() => {
-          fetchMessages(adminId, recipientId);
-        }, 500);
+        stompClient.send('/app/deleteMessage/list', {}, JSON.stringify(list));
+        // setTimeout(() => {
+        // }, 300);
+        // setTimeout(() => {
+        //   fetchMessages(adminId, recipientId);
+        // }, 500);
       }
     }
   }
@@ -271,7 +273,7 @@ const Chatdetail: React.FC = () => {
     if ((editId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
-        fetchMessages(adminId, recipientId);
+        // fetchMessages(adminId, recipientId);
         setContent('');
       }
     } else {
@@ -318,7 +320,6 @@ const Chatdetail: React.FC = () => {
             { value: 'READ', label: t('Read') }
           ]}
         />
-
         <NewChat />
         <Buttons onClick={readAllMessages}>{t('Delete_all_read')}</Buttons>
       </div>
