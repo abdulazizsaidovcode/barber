@@ -65,7 +65,7 @@ const ChartMasterRate: React.FC = () => {
         axios
             .get(`${dashboard_url}web/diagram`, config)
             .then((response) => {
-                const data = response.data.body;
+                const data = response?.data?.body;
                 const series = [
                     data.five,
                     data.four,

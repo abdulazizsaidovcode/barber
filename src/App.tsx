@@ -47,35 +47,24 @@ import { clearFunction } from './common/clear-function/clear-function.tsx';
 import RequestSalons from './components/request/pages/requestSalons.tsx';
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isToken = sessionStorage.getItem('token');
 
   useEffect(() => {
     setConfig();
-    window.scrollTo(0, 0);
     if (!isToken) {
       navigate(`/auth/signin`);
-      sessionStorage.clear();
     }
     clearFunction()
   }, [pathname]);
-
-  useEffect(() => {
-    const refresh = sessionStorage.getItem('refreshUrl');
-    setTimeout(() => setLoading(false), 1000);
-    if (!refresh) {
-      navigate('/auth/signin');
-      sessionStorage.setItem('refreshUrl', 'true');
-    }
-    clearFunction()
-  }, []);
 
   return loading ? (
     <Loader />
   ) : (
     <>
+    
       <Routes>
         <Route
           index

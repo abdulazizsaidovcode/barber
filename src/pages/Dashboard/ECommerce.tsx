@@ -12,6 +12,7 @@ import { DGeneralIndecators } from '../../helpers/api-function/dashboard/General
 import dashboardStore from '../../helpers/state_managment/dashboard/dashboardStore';
 import ChartMasterRate from '../../components/Charts/ChartSex';
 import { clearFunction } from '../../common/clear-function/clear-function.tsx';
+import { setConfig } from '../../helpers/token.tsx';
 
 const ECommerce: React.FC = () => {
   const { t } = useTranslation();
@@ -22,7 +23,10 @@ const ECommerce: React.FC = () => {
   const [localDate, setLocalDate] = useState<string | undefined>(undefined);
   const [startDate, setStartDate] = useState<string | undefined>(undefined);
   const [endDate, setEndDate] = useState<string | undefined>(undefined);
-
+  useEffect(() => {
+    setConfig()
+    clearFunction();
+  }, []);
   const handleYearChange = (dateString: any) => {
     setYear(dateString);
   };
@@ -31,14 +35,10 @@ const ECommerce: React.FC = () => {
     setLocalDate(dateString);
   };
 
-  const handleRangeChange = ( dateStrings: [string, string]) => {
+  const handleRangeChange = (dateStrings: [string, string]) => {
     setStartDate(dateStrings[0]);
     setEndDate(dateStrings[1]);
   };
-
-  useEffect(() => {
-    clearFunction()
-  }, []);
 
   useEffect(() => {
     DGeneralIndecators({
@@ -48,7 +48,7 @@ const ECommerce: React.FC = () => {
       endDate,
       setDashdata: setData,
     });
-    clearFunction()
+    clearFunction();
   }, [year, localDate, startDate, endDate]);
 
   return (
@@ -71,7 +71,6 @@ const ECommerce: React.FC = () => {
               onChange={handleLocalDateChange}
             />
             <RangePicker
-
               onChange={() => handleRangeChange}
               placeholder={[t('Select_start_date'), t('Select_end_date')]}
             />
@@ -119,7 +118,7 @@ const ECommerce: React.FC = () => {
           ) : (
             <Skeleton.Input active />
           )}
-          {data.customerDissatisfaction !== undefined ? (
+          {data?.customerDissatisfaction !== undefined ? (
             <CardDataStats
               title={t('Customer_churn')}
               total={data.customerDissatisfaction}
@@ -127,7 +126,7 @@ const ECommerce: React.FC = () => {
           ) : (
             <Skeleton.Input active />
           )}
-          {data.masterDissatisfaction !== undefined ? (
+          {data?.masterDissatisfaction !== undefined ? (
             <CardDataStats
               title={t('Master_churn')}
               total={data.masterDissatisfaction}
@@ -135,30 +134,17 @@ const ECommerce: React.FC = () => {
           ) : (
             <Skeleton.Input active />
           )}
-          
-          {data.masterAverageClient !== undefined ? (
+
+          {data?.masterAverageClient !== undefined ? (
             <CardDataStats
               title={t('Clients_per_1_specialist_on_average')}
-              total={data.masterAverageClient}
+              total={data?.masterAverageClient}
             />
           ) : (
             <Skeleton.Input active />
           )}
-          {/* {data.positiveFeedbackInService !== undefined &&
-          data.negativeFeedbackInService !== undefined ? (
-            <CardDataCharts
-              title={t('Clients_per_1_specialist_on_average')}
-              firstTotal={data.positiveFeedbackInService}
-              secondTotal={data.negativeFeedbackInService}
-            />
-          ) : (
-            <Skeleton.Input active />
-          )} */}
         </div>
       </section>
-
-      {/* generall indicators bolimi */}
-
       <section className="flex md:flex-row flex-col justify-between mt-20 gap-5">
         <div className="flex md:w-1/2 w-full">
           <ChartTwo />
@@ -167,22 +153,15 @@ const ECommerce: React.FC = () => {
           <ChartThree />
         </div>
       </section>
-
-      {/* Income dynamics */}
-
       <div className="mt-4 w-full gap-5 flex md:flex-row flex-col">
         <div className="md:w-1/2 w-full">
           <ChartOne />
         </div>
-        {/* <div className="md:w-1/2 w-full">
-          <ChartFour />
-        </div> */}
       </div>
       {/* Income dynamics */}
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartMasterRate />
-        {/* <ChartSeven /> */}
         <ChartEight />
       </div>
 

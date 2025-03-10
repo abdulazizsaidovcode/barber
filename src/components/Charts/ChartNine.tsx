@@ -12,7 +12,7 @@ const initialOptions: ApexOptions = {
   legend: {
     show: false,
     position: 'top',
-    horizontalAlign: 'left'
+    horizontalAlign: 'left',
   },
   colors: ['#D9D9D9', '#000000'],
   chart: {
@@ -25,48 +25,48 @@ const initialOptions: ApexOptions = {
       top: 10,
       blur: 4,
       left: 0,
-      opacity: 0.1
+      opacity: 0.1,
     },
     toolbar: {
-      show: false
-    }
+      show: false,
+    },
   },
   responsive: [
     {
       breakpoint: 1024,
       options: {
         chart: {
-          height: 300
-        }
-      }
+          height: 300,
+        },
+      },
     },
     {
       breakpoint: 1366,
       options: {
         chart: {
-          height: 350
-        }
-      }
-    }
+          height: 350,
+        },
+      },
+    },
   ],
   stroke: {
     width: [2, 2],
-    curve: 'straight'
+    curve: 'straight',
   },
   grid: {
     xaxis: {
       lines: {
-        show: true
-      }
+        show: true,
+      },
     },
     yaxis: {
       lines: {
-        show: true
-      }
-    }
+        show: true,
+      },
+    },
   },
   dataLabels: {
-    enabled: false
+    enabled: false,
   },
   markers: {
     size: 4,
@@ -79,28 +79,28 @@ const initialOptions: ApexOptions = {
     discrete: [],
     hover: {
       size: undefined,
-      sizeOffset: 5
-    }
+      sizeOffset: 5,
+    },
   },
   xaxis: {
     type: 'category',
     categories: [],
     axisBorder: {
-      show: false
+      show: false,
     },
     axisTicks: {
-      show: false
-    }
+      show: false,
+    },
   },
   yaxis: {
     title: {
       style: {
-        fontSize: '0px'
-      }
+        fontSize: '0px',
+      },
     },
     min: 0,
-    max: 100
-  }
+    // max: 100
+  },
 };
 
 interface ChartOneState {
@@ -112,14 +112,16 @@ interface ChartOneState {
 
 const ChartNine: React.FC = () => {
   const { t } = useTranslation();
-  const [chart, setChart] = useState<{ incomeTotal: number; name: string }[]>([]);
+  const [chart, setChart] = useState<{ incomeTotal: number; name: string }[]>(
+    [],
+  );
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
         name: 'Income',
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   });
 
   const [year, setYear] = useState<number | undefined>(undefined);
@@ -129,7 +131,6 @@ const ChartNine: React.FC = () => {
   const [options, setOptions] = useState(initialOptions);
 
   const fetchData = () => {
-
     setLoading(true);
     setError('');
 
@@ -142,20 +143,23 @@ const ChartNine: React.FC = () => {
       url += `?month=${month}`;
     }
 
-    axios.get(url, config)
+    axios
+      .get(url, config)
       .then((response) => {
-        if (response.data.body && response.data.body.length > 0) {
-          setChart(response.data.body);
+        if (response?.data?.body && response?.data?.body?.length > 0) {
+          setChart(response?.data?.body);
         } else {
           setError('No data available');
         }
-      }).catch(() => {
-      setError('There was an error fetching the data!');
-    })
+      })
+      .catch(() => {
+        setError('There was an error fetching the data!');
+      })
       .finally(() => {
         setLoading(false);
       });
   };
+  console.log('chart', chart);
 
   useEffect(() => {
     fetchData(); // Fetch data initially without any parameters
@@ -168,21 +172,30 @@ const ChartNine: React.FC = () => {
   }, [year, month]);
 
   useEffect(() => {
-    setState({
-      series: [
-        {
-          name: 'Income',
-          data: chart.map((item) => item.incomeTotal || 0)
-        }
-      ]
-    });
-    setOptions((prevOptions) => ({
-      ...prevOptions,
-      xaxis: {
-        ...prevOptions.xaxis,
-        categories: chart.map((item) => item.name)
-      }
-    }));
+    if (chart.length > 0) {
+      const maxIncome = Math.max(...chart.map((item) => item?.incomeTotal));
+
+      setState({
+        series: [
+          {
+            name: 'Income',
+            data: chart.map((item) => item?.incomeTotal),
+          },
+        ],
+      });
+
+      setOptions((prevOptions) => ({
+        ...prevOptions,
+        xaxis: {
+          ...prevOptions.xaxis,
+          categories: chart.map((item) => item.name),
+        },
+        yaxis: {
+          ...prevOptions.yaxis,
+          max: maxIncome + maxIncome * 0.1, // Apidan kelgan qiymatlarni kattasiga 10% qushadi max uchun
+        },
+      }));
+    }
   }, [chart]);
 
   const handleYearChange = (date: any, dateString: any) => {
@@ -194,14 +207,22 @@ const ChartNine: React.FC = () => {
   };
 
   return (
-    <div
-      className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
+    <div className="col-span-12 rounded-3xl border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-12">
       <div className="flex justify-between flex-wrap">
-        <h1 className="font-semibold text-black text-xl dark:text-white">{t('Total_income')} {year ? year : ''}</h1>
+        <h1 className="font-semibold text-black text-xl dark:text-white">
+          {t('Total_income')} {year ? year : ''}
+        </h1>
         <div className="flex gap-3">
-          <DatePicker onChange={handleYearChange} placeholder={t('Select_year')} picker="year" style={{ height: 35 }} />
-          <DatePicker onChange={handleMonthChange} placeholder={t('Select_month')} picker="month"
-                      style={{ height: 35 }} />
+          <DatePicker
+            onChange={handleYearChange}
+            placeholder={t('Select_year')}
+            picker="year"
+          />
+          <DatePicker
+            onChange={handleMonthChange}
+            placeholder={t('Select_month')}
+            picker="month"
+          />
         </div>
       </div>
       {loading ? (
@@ -215,7 +236,7 @@ const ChartNine: React.FC = () => {
               options={options}
               series={state.series}
               type="bar"
-              height={350}
+              height={650}
             />
           </div>
         </div>

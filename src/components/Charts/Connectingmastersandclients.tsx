@@ -12,6 +12,8 @@ const ChartTwo: React.FC = () => {
   const [clientData, setClientData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dates, setDates] = useState<string | number>(new Date().getFullYear());
+  console.log();
+
   const [series, setSeries] = useState([
     { name: 'MasterCount', data: [] },
     { name: 'Client Count', data: [] },
@@ -69,7 +71,7 @@ const ChartTwo: React.FC = () => {
         t('september'),
         t('october'),
         t('november'),
-        t('december')
+        t('december'),
       ],
     },
     legend: {
@@ -93,39 +95,53 @@ const ChartTwo: React.FC = () => {
 
   const handleYearChange = (date: any, dateString: any) => {
     setDates(dateString);
+    console.log(dateString);
+        
   };
 
   function getData(value: string | number) {
-    setLoading(true)
+    setLoading(true);
     axios
       .get(`${dashboard_url}web/masterVsClient?year=${value}`, config)
       .then((response) => {
         const { data } = response;
-        if (data && data.body) {
-          const newData = data.body.map((item: any) => ({
-            masterCount: item.masterCount ? item.masterCount : 0,
-            clientCount: item.clientCount ? item.clientCount : 0,
-          }));
+        if (data?.body) {
+          const newData = data
+
           setClientData(newData);
 
           setSeries([
-            { name: t("MasterCount"), data: newData.map((item: any) => item.masterCount) },
-            { name: t("Client_Count"), data: newData.map((item: any) => item.clientCount) },
+            {
+              name: t('MasterCount'),
+              data: data?.body?.map((item: any) => item.masterCount),
+            },
+            {
+              name: t('Client_Count'),
+              data: data?.body?.map((item: any) => item.clientCount),
+            },
           ]);
         }
       })
       .catch(() => {
         console.error('There was an error fetching the data!');
-      }).finally(() => {
-        setLoading(false)
       })
+      .finally(() => {
+        setLoading(false);
+      });
   }
-
   return (
-    <div className='w-full'>
-      <div className='flex justify-between items-center mb-5'>
-        <h1 className='font-semibold w-75 text-black text-2xl dark:text-white'>{t("Dynamics_of_connecting_masters_and_clients")}</h1>
-        <DatePicker onChange={handleYearChange} picker="year" placeholder={t("Select_year")} style={{ height: 35 }} />
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="font-semibold w-75 text-black text-2xl dark:text-white">
+          {t('Dynamics_of_connecting_masters_and_clients')}
+        </h1>
+        <DatePicker
+          onChange={handleYearChange}
+          picker="year"
+          // value={dates}
+          placeholder={t('Select_year')}
+          style={{ height: 35 }}
+        />
       </div>
       <div className="rounded-3xl border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div id="chartTwo" className="-ml-5 -mb-9 mx-auto">

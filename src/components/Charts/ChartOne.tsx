@@ -8,57 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 const ChartOne = () => {
   const { t } = useTranslation();
-  const [data, setData] = useState([
-    {
-      "name": "JANUARY",
-      "incomeTotal": 0
-    },
-    {
-      "name": "FEBRUARY",
-      "incomeTotal": 0
-    },
-    {
-      "name": "MARCH",
-      "incomeTotal": 0
-    },
-    {
-      "name": "APRIL",
-      "incomeTotal": 0
-    },
-    {
-      "name": "MAY",
-      "incomeTotal": 0
-    },
-    {
-      "name": "JUNE",
-      "incomeTotal": 0
-    },
-    {
-      "name": "JULY",
-      "incomeTotal": 0
-    },
-    {
-      "name": "AUGUST",
-      "incomeTotal": 0
-    },
-    {
-      "name": "SEPTEMBER",
-      "incomeTotal": 0
-    },
-    {
-      "name": "OCTOBER",
-      "incomeTotal": 0
-    },
-    {
-      "name": "NOVEMBER",
-      "incomeTotal": 0
-    },
-    {
-      "name": "DECEMBER",
-      "incomeTotal": 0
-    }
-  ]);
-
+  // Necessary States
   const [series, setSeries] = useState([
     {
       name: 'Income',
@@ -113,7 +63,7 @@ const ChartOne = () => {
         const { data } = response;
         if (data && data.body) {
           const newData = data.body.map((item: any) => item.incomeTotal);
-          const newCategories = data.body.map((item: any) => item.name);
+          const newCategories = data?.body?.map((item: any) => item.name);
           setSeries([{ name: 'Income', data: newData }]);
           setOptions((prevOptions: any) => ({
             ...prevOptions,

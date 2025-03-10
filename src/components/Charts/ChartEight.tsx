@@ -7,115 +7,135 @@ import { config } from '../../helpers/token';
 import { useTranslation } from 'react-i18next';
 
 interface ChartThreeState {
-    series: number[];
-    labels: string[];
+  series: number[];
+  labels: string[];
 }
 
 const initialOptions: ApexOptions = {
-    chart: {
-        fontFamily: 'Satoshi, sans-serif',
-        type: 'donut',
+  chart: {
+    fontFamily: 'Satoshi, sans-serif',
+    type: 'donut',
+  },
+  colors: ['#000000', '#D9D9D9', '#E4E8EF'],
+  labels: [],
+  legend: {
+    show: true,
+    position: 'bottom',
+  },
+  plotOptions: {
+    pie: {
+      donut: {
+        size: '55%',
+        background: 'transparent',
+      },
     },
-    colors: ['#000000', '#D9D9D9', '#E4E8EF'],
-    labels: [],
-    legend: {
-        show: true,
-        position: 'bottom',
-    },
-    plotOptions: {
-        pie: {
-            donut: {
-                size: '55%',
-                background: 'transparent',
-            },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  responsive: [
+    {
+      breakpoint: 2600,
+      options: {
+        chart: {
+          width: 380,
         },
+      },
     },
-    dataLabels: {
-        enabled: false,
+    {
+      breakpoint: 640,
+      options: {
+        chart: {
+          width: 200,
+        },
+      },
     },
-    responsive: [
-        {
-            breakpoint: 2600,
-            options: {
-                chart: {
-                    width: 380,
-                },
-            },
-        },
-        {
-            breakpoint: 640,
-            options: {
-                chart: {
-                    width: 200,
-                },
-            },
-        },
-    ],
+  ],
 };
 
 const ChartEight: React.FC = () => {
-    const {  t} = useTranslation();
-    const [state, setState] = useState<ChartThreeState>({
-        series: [],
-        labels: [],
-    });
+  const { t } = useTranslation();
+  const [state, setState] = useState<ChartThreeState>({
+    series: [],
+    labels: [],
+  });
 
-    const [options, setOptions] = useState<ApexOptions>(initialOptions);
+  const [options, setOptions] = useState<ApexOptions>(initialOptions);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const fetchData = () => {
-        axios
-            .get(`${dashboard_url}web/popular/services/by/category`, config)
-            .then((response) => {
-                const data = response.data.body;
-                const categories = data.map((item: any) => item.categoryName);
-                const series = data.map((item: any) => item.percent);
+  const fetchData = () => {
+    axios
+      .get(`${dashboard_url}web/popular/services/by/category`, config)
+      .then((response) => {
+        const data = response.data.body;
+        const categories = data.map((item: any) => item.categoryName);
+        const series = data.map((item: any) => item.percent);
+        // console.log("anyone", data.map((item: {percent: string}) => item.percent));
 
-                // Check if all values are 0
-                const allZero = series.every((value: number) => value === 0);
-                if (allZero) {
-                    setState({
-                        series: [1],
-                        labels: [t("no_info")],
-                    });
-                    setOptions({
-                        ...initialOptions,
-                        labels: [t("no_info")],
-                        colors: ['#E4E8EF'],
-                    });
-                } else {
-                    setState({
-                        series,
-                        labels: categories,
-                    });
-                    setOptions({
-                        ...initialOptions,
-                        labels: categories,
-                    });
-                }
-            })
-            .catch(() => {
-                console.error('There was an error fetching the data!');
-            });
-    };
+        // Check if all values are 0
+        const allZero = series.every((value: number) => value === 0);
+        if (allZero) {
+          setState({
+            series: +data
+              .map((item: { percent: string }) => item.percent)
+              .join('')
+              ? data?.map((item: { percent: string }) => item.percent)
+              : [1],
+            labels: +data
+              .map((item: { percent: string }) => item.percent)
+              .join('')
+              ? data.map((item: { categoryName: string }) => item.categoryName)
+              : t('no_info'),
+          });
+          setOptions({
+            ...initialOptions,
+            labels: data.map(
+              (item: { categoryName: string }) => item.categoryName,
+            ),
+            colors: [
+              '#FF5733',
+              '#33FF57',
+              '#5733FF',
+              '#FFD700',
+              '#00CED1',
+              '#8B008B',
+            ],
+          });
+        } else {
+          setState({
+            series,
+            labels: categories,
+          });
+          setOptions({
+            ...initialOptions,
+            labels: categories,
+          });
+        }
+      })
+      .catch(() => {
+        console.error('There was an error fetching the data!');
+      });
+  };
 
-    return (
-        <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-            <h1 className='font-semibold text-black text-xl dark:text-white'>{t("Popular_services_by_category")}</h1>
-            <div className="mb-2">
-                <div id="chartThree" className="mx-auto flex justify-center">
-                    <ReactApexChart
-                        options={options}
-                        series={state.series}
-                        type="donut"
-                    />
-                </div>
-            </div>
+  return (
+    <div className="sm:px-7.5 col-span-12 rounded-3xl border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+      <h1 className="font-semibold text-black text-xl dark:text-white">
+        {t('Popular_services_by_category')}
+      </h1>
+      <div className="mb-2">
+        <div id="chartThree" className="mx-auto flex justify-center">
+          <ReactApexChart
+            options={options}
+            series={state.series}
+            type="donut"
+          />
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ChartEight;

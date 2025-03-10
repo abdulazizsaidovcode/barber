@@ -35,11 +35,11 @@ export const Login: React.FC = () => {
   }, [goPage]);
 
   const styles: StylesType = {
-    container: 'min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-0',
+    container: 'select-none min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-0',
     card: 'max-w-md w-full space-y-8 z-10',
     title: 'mb-6 text-center text-xl md:text-3xl font-extrabold text-slate-900',
     input: 'appearance-none rounded-none relative block w-full p-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-150',
-    button: 'group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+    button: 'group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
     hideShowIcon: 'absolute top-4 right-4 text-[1.5rem] hover:cursor-pointer opacity-60 hover:opacity-90 duration-150 z-40'
   };
 
@@ -65,8 +65,8 @@ export const Login: React.FC = () => {
                 type="text"
                 autoComplete="username"
                 required
-                className={styles.input}
-                placeholder="Username" />
+                className={`rounded-xl ${styles.input} `}
+                placeholder="Phone number" />
             </div>
             <div className="relative">
               <label htmlFor="password" className="sr-only">Password</label>
@@ -78,7 +78,7 @@ export const Login: React.FC = () => {
                 type={`${show ? 'password' : 'text'}`}
                 autoComplete="current-password"
                 required
-                className={`${styles.input}`}
+                className={`rounded-xl ${styles.input}`}
                 placeholder="Password" />
               {show
                 ? <BiSolidShow onClick={() => setShow(false)} className={styles.hideShowIcon} />
@@ -86,7 +86,7 @@ export const Login: React.FC = () => {
               }
             </div>
           </div>
-          <button type="submit" className={styles.button}>
+          <button type="submit" className={`bg-[#9C0A35] ${styles.button}`}>
             {loading ? 'loading...' : 'LOGIN'}
           </button>
         </form>
