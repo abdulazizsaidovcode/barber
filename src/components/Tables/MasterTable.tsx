@@ -1,9 +1,9 @@
 import React from 'react';
 import { IMasterTableProps } from '../../types/master.ts';
 
-const MasterTable: React.FC<IMasterTableProps> = ({ thead, children }) => {
+const MasterTable: React.FC<IMasterTableProps> = ({ thead, children, px }) => {
   return (
-    <div className="rounded-sm  bg-white px-5 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+    <div className={`rounded-sm  bg-white ${px ? '' : 'px-5 sm:px-7.5'} pb-2.5 dark:border-strokedark dark:bg-boxdark xl:pb-1`}>
       <div className="max-w-full overflow-x-auto w-[100%]">
         <table className="w-full table-auto">
           <thead>

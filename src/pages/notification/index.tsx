@@ -16,7 +16,7 @@ const Natification = () => {
   const { setClientData, setClientTotalPage } = clientStore();
   const { role, setChatData } = chatStore();
 
-  const { setLetterData } = MailStore()
+  const { setLetterData } = MailStore();
 
   useEffect(() => {
     GetChatLetters({
@@ -24,14 +24,14 @@ const Natification = () => {
       page: page,
       size: size
     });
-  }, [setLetterData]); 
+  }, [setLetterData]);
 
   useEffect(() => {
     if (role === 'master') {
       GetChatList({
-        status: "MASTER",
+        status: 'MASTER',
         setData: setChatData
-      })
+      });
       getMasters({
         setData,
         setTotalPage
@@ -40,9 +40,9 @@ const Natification = () => {
     }
     if (role === 'client') {
       GetChatList({
-        status: "CLIENT",
+        status: 'CLIENT',
         setData: setChatData
-      })
+      });
       getClients({
         setData: setClientData,
         setTotalPage: setClientTotalPage
@@ -54,9 +54,9 @@ const Natification = () => {
   useEffect(() => {
     if (role === 'master') {
       GetChatList({
-        status: "MASTER",
+        status: 'MASTER',
         setData: setChatData
-      })
+      });
       getMasters({
         setData,
         setTotalPage
@@ -65,9 +65,9 @@ const Natification = () => {
     }
     if (role === 'client') {
       GetChatList({
-        status: "CLIENT",
+        status: 'CLIENT',
         setData: setChatData
-      })
+      });
       getClients({
         setData: setClientData,
         setTotalPage: setClientTotalPage

@@ -27,7 +27,7 @@ const Chatdetail: React.FC = () => {
   const [siteBarClass, setSiteBarClass] = useState<string>('');
 
   const [recipientId, setRecipientId] = useState<string | null>(null);
-  const [adminId, setAdminId] = useState<string | null>(sessionStorage.getItem('userId'));
+  const [adminId, _] = useState<string | null>(sessionStorage.getItem('userId'));
 
   const [messages, setMessages] = useState<any[]>([]);
   const [content, setContent] = useState<string>('');
@@ -39,7 +39,7 @@ const Chatdetail: React.FC = () => {
   const [replyId, setreplyId] = useState<string | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
   const [photo, setPhoto] = useState<any | null>(null);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   useEffect(() => {
     connect();
@@ -90,7 +90,7 @@ const Chatdetail: React.FC = () => {
       stomp.connect({}, (frame: any) => {
         console.log('Connected: ' + frame);
         setStompClient(stomp);
-        stomp.subscribe(`/user/${adminId}/queue/messages`, (response) => {
+        stomp.subscribe(`/user/${adminId}/queue/messages`, (response: any) => {
           const receivedMessage = response && response.body ? JSON.parse(response.body) : null;
           if (receivedMessage) {
             setMessages((prevMessages) => [...prevMessages, receivedMessage]);
@@ -103,9 +103,9 @@ const Chatdetail: React.FC = () => {
       });
     }
   };
-  if (stompClient && stompClient.connected) {
-    alert('Stomp client connected');
-  }
+  // if (stompClient && stompClient.connected) {
+  //   alert('Stomp client connected');
+  // }
 
   const sendMessage = async () => {
     let fileUrl = null;
@@ -113,8 +113,8 @@ const Chatdetail: React.FC = () => {
       console.log(photo);
       await uploadFile({
         file: photo,
-        setUploadResponse: (response) => (fileUrl = response.body),
-      })
+        setUploadResponse: (response) => (fileUrl = response.body)
+      });
     }
 
     if (stompClient && recipientId) {
@@ -123,7 +123,7 @@ const Chatdetail: React.FC = () => {
         recipientId: recipientId,
         content: content,
         isRead: false,
-        attachmentIds: fileUrl ? [fileUrl] : [],
+        attachmentIds: fileUrl ? [fileUrl] : []
       };
       console.log(JSON.stringify(chatMessage));
 
@@ -136,7 +136,7 @@ const Chatdetail: React.FC = () => {
         if (stompClient && stompClient.connected) {
           fetchMessages(adminId, recipientId);
         }
-      }, 500)
+      }, 500);
       setContent('');
     }
   };
@@ -150,19 +150,19 @@ const Chatdetail: React.FC = () => {
           } else {
             setMessages([]);
             GetChatList({
-              status: role,
+              status: role === 'master' ? 'MASTER' : 'CLIENT',
               setData: setChatData
             });
           }
         }).catch(err => {
-          if (err.response.status === 404) {
-            setMessages([]);
-            GetChatList({
-              status: role,
-              setData: setChatData
-            });
-          }
-        });
+        if (err.response.status === 404) {
+          setMessages([]);
+          GetChatList({
+            status: role === 'master' ? 'MASTER' : 'CLIENT',
+            setData: setChatData
+          });
+        }
+      });
     }
   };
 
@@ -171,30 +171,30 @@ const Chatdetail: React.FC = () => {
       .then(res => {
         toast.success('All messages marked as read successfully');
         GetChatList({
-          status: role,
+          status: role === 'master' ? 'MASTER' : 'CLIENT',
           setData: setChatData
-        })
+        });
       }).catch(err => {
-        console.log(err);
-      });
+      console.log(err);
+    });
   };
 
   function readMeessage(id: any) {
     let list: any = {
       ids: []
-    }
+    };
     if (id && stompClient.connected) {
       id.map((item: any) => {
-        list.ids.push(item.id)
-      })
+        list.ids.push(item.id);
+      });
     }
     if (stompClient && stompClient.connected) {
       stompClient.send('/app/isRead', {}, JSON.stringify(list));
       fetchMessages(adminId, recipientId);
       GetChatList({
-        status: role,
+        status: role === 'master' ? 'MASTER' : 'CLIENT',
         setData: setChatData
-      })
+      });
     }
   }
 
@@ -203,8 +203,8 @@ const Chatdetail: React.FC = () => {
     if (photo) {
       await uploadFile({
         file: photo,
-        setUploadResponse: (response) => (fileUrl = response.body),
-      })
+        setUploadResponse: (response) => (fileUrl = response.body)
+      });
     }
     const replyObj = {
       messageId: replyId,
@@ -213,36 +213,36 @@ const Chatdetail: React.FC = () => {
         recipientId: recipientId,
         content: content,
         isRead: false,
-        attachmentIds: fileUrl ? [fileUrl] : [],
+        attachmentIds: fileUrl ? [fileUrl] : []
       }
-    }
+    };
 
     if ((replyId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/replay', {}, JSON.stringify(replyObj));
         setTimeout(() => {
           fetchMessages(adminId, recipientId);
-        }, 500)
-        setContent("")
+        }, 500);
+        setContent('');
       }
     } else {
-      toast.error(t("Enter_your_message"));
+      toast.error(t('Enter_your_message'));
     }
   }
 
   function deleteMessage() {
     let list: any = {
       ids: [chatId]
-    }
+    };
 
     if (chatId) {
       if (stompClient && stompClient.connected) {
         setTimeout(() => {
           stompClient.send('/app/deleteMessage/list', {}, JSON.stringify(list));
-        }, 300)
+        }, 300);
         setTimeout(() => {
           fetchMessages(adminId, recipientId);
-        }, 500)
+        }, 500);
       }
     }
   }
@@ -253,8 +253,8 @@ const Chatdetail: React.FC = () => {
     if (photo) {
       await uploadFile({
         file: photo,
-        setUploadResponse: (response) => (fileUrl = response.body),
-      })
+        setUploadResponse: (response) => (fileUrl = response.body)
+      });
     }
 
     const editMessage = {
@@ -266,16 +266,16 @@ const Chatdetail: React.FC = () => {
         isRead: false,
         attachmentIds: fileUrl ? [fileUrl] : []
       }
-    }
+    };
 
     if ((editId && content) || fileUrl) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/editMessage', {}, JSON.stringify(editMessage));
         fetchMessages(adminId, recipientId);
-        setContent("")
+        setContent('');
       }
     } else {
-      toast.error(t("Enter_your_message"));
+      toast.error(t('Enter_your_message'));
     }
   }
 
@@ -287,14 +287,14 @@ const Chatdetail: React.FC = () => {
         </button>
 
         <Input
-          placeholder={t("Search_by_fullname")}
+          placeholder={t('Search_by_fullname')}
           prefix={<IoSearchOutline />}
           className="w-56"
           onChange={(e) => {
             const value = e.target.value;
             setFullName(value);
             GetChatList({
-              status: role,
+              status: role === 'master' ? 'MASTER' : 'CLIENT',
               fullName: value,
               setData: setChatData
             });
@@ -307,26 +307,26 @@ const Chatdetail: React.FC = () => {
           onChange={(value) => {
             setMessageStatus(value);
             GetChatList({
-              status: role,
+              status: role === 'master' ? 'MASTER' : 'CLIENT',
               messageStatus: value,
               setData: setChatData
             });
           }}
           options={[
-            { value: 'ALL_MESSAGES', label: t("All_messages") },
-            { value: 'UNREAD', label: t("Unread") },
-            { value: 'READ', label: t("Read") },
+            { value: 'ALL_MESSAGES', label: t('All_messages') },
+            { value: 'UNREAD', label: t('Unread') },
+            { value: 'READ', label: t('Read') }
           ]}
         />
 
         <NewChat />
-        <Buttons onClick={readAllMessages}>{t("Delete_all_read")}</Buttons>
+        <Buttons onClick={readAllMessages}>{t('Delete_all_read')}</Buttons>
       </div>
 
       <div className="flex w-[100%] h-full relative">
         <div
           className={`${sidebarWidth} ${siteBar} ${siteBarClass} top-[80px] transition-all  md:translate-x-0 -translate-x-full sm:w-2/3 w-7/8 bg-[#eaeaea] drop-shadow-1 dark:bg-[#30303d] md:static fixed md:px-3 p-5  border md:py-5 h-full duration-300 flex flex-col`}>
-          <div className='flex justify-end mb-4'>
+          <div className="flex justify-end mb-4">
             <button onClick={toggleSidebar} className="md:hidden text-black dark:text-white mb-2">
               <ArrowLeftOutlined className="text-[1.5rem] font-bold" />
             </button>

@@ -54,7 +54,7 @@ const ChatTable: React.FC = () => {
     }
   };
 
-  console.log("chatDatachatDatachatDatachatDatachatData", chatData);
+  // console.log("chatDatachatDatachatDatachatDatachatData", chatData);
 
   const handleChangeTema: any = (date: any) => {
     if (date.target.value.trim() !== "") {
@@ -142,7 +142,7 @@ const ChatTable: React.FC = () => {
   ];
 
   return (
-    <section>
+    <section className={'w-full'}>
       {showAddMails ? (
         <div className="pt-5">
           <div className="mb-5 flex">
@@ -153,7 +153,7 @@ const ChatTable: React.FC = () => {
           <AddMails />
         </div>
       ) : (
-        <div className="pt-5">
+        <div className="pt-5 px-0">
           <div className="mb-5 flex gap-2 sm:flex-row flex-col">
             <Input
               className="w-full md:w-40 lg:w-40 xl:w-40  dark:bg-gray-800 dark:text-black"
@@ -172,12 +172,12 @@ const ChatTable: React.FC = () => {
             </div>
           </div>
 
-          <MasterTable thead={thead}>
+          <MasterTable thead={thead} px>
             {chatData?.object?.length > 0 ? (
               chatData.object.map((item: any) => (
                 <tr
                   key={item?.id}
-                  className="border-b border-[#eee] dark:border-strokedark"
+                  className="border-b border-[#eee] dark:border-strokedark w-full p-0"
                 >
                   <td className="min-w-[150px] p-5">
                     <Image
@@ -227,7 +227,7 @@ const ChatTable: React.FC = () => {
               <tr className="border-b border-[#eee] dark:border-strokedark flex justify-center md:w-[30vw] w-[100vw]">
                 <td
                   className="min-w-full text-center py-10 text-xl font-bold flex gap-5 items-center"
-                  colSpan={6}
+                  colSpan={thead.length}
                 >
                   <p className="ms-10 text-center">{t("the_is_unavailable")}</p>
                   <MdOutlineSpeakerNotesOff />

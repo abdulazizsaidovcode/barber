@@ -11,6 +11,7 @@ export interface IMasterItems {
 export interface IMasterTableProps {
   thead: IThead[];
   children: ReactNode;
+  px?: boolean;
 }
 
 // master global table thead lists

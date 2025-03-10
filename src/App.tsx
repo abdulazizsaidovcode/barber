@@ -54,8 +54,10 @@ function App() {
 
   useEffect(() => {
     setConfig();
+    window.scrollTo(0, 0);
     if (!isToken) {
       navigate(`/auth/signin`);
+      sessionStorage.clear();
     }
     clearFunction()
   }, [pathname]);
@@ -64,7 +66,6 @@ function App() {
     <Loader />
   ) : (
     <>
-    
       <Routes>
         <Route
           index
@@ -377,7 +378,7 @@ function App() {
           path="/chat"
           element={
             <>
-              <PageTitle title="Finance | Barber" />
+              <PageTitle title="Chat | Barber" />
               <Natification />
             </>
           }

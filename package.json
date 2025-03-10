@@ -42,7 +42,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@stomp/stompjs": "^7.0.0",
+    "@stomp/stompjs": "^7.0.1",
     "@types/react": "^18.2.17",
     "@types/react-dom": "^18.2.7",
     "@types/react-lazy-load-image-component": "^1.6.4",
@@ -55,5 +55,5 @@
     "vite": "^5.2.11",
     "webpack": "^5.88.2"
   },
-  "proxy": "http://134.122.77.107:8080/"
+  "proxy": "http://207.154.246.120:8080"
 }

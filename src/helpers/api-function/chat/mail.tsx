@@ -2,7 +2,6 @@ import axios from "axios";
 import { newsletters_url } from "../../api";
 import { config } from "../../token";
 import { clearFunction } from "../../../common/clear-function/clear-function.tsx";
-import MailStore from "../../state_managment/chat/mailStore.tsx";
 
 interface IChatLetters {
   subject?: string;
@@ -12,14 +11,14 @@ interface IChatLetters {
   setLetterData: (val: any) => void;
 }
 
-export const GetChatLetters = ({
+export const GetChatLetters = async ({
   subject,  
   date,
   page = 0,
   size = 10,
   setLetterData,
 }: IChatLetters) => {
-  axios
+  await axios
     .get(
       `${newsletters_url}/list${subject ? `?subject=${subject}` : ""}${
         date ? (subject ? `&date=${date}` : `?date=${date}`) : ""
