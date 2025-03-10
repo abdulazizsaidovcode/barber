@@ -20,7 +20,7 @@ interface SpecializationsData {
 
 const RequestSpecializations: React.FC = () => {
   const [newSpecializations, setNewSpecializations] = useState<SpecializationsData[]>([]);
-  const [changedSpecializations, setChangedSpecializations] = useState<SpecializationsData[]>([]);
+  const [changedSpecializations, setChangedSpecializations] = useState<SpecializationsData[]>([]); 
   const [loading, setLoading] = useState(true);
   const [totalNewSpecializations, setTotalNewSpecializations] = useState<number>(0);
   const [totalChangedSpecializations, setTotalChangedSpecializations] = useState<number>(0);

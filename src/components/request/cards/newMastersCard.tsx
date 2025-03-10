@@ -34,7 +34,7 @@ const NewMastersCard: React.FC<NewMastersCardProp> = ({
         <p className="text-xl font-bold text-black">{salonName}</p>
         <p className="text-md font-bold text-black">{displayArray(salonCategory)}</p>
         <p className="text-md text-black">{salonAddress}</p>
-      </div>
+      </div> 
       <div className="mt-3">
         <hr />
       </div>

@@ -115,7 +115,7 @@ const RequestProcedures: React.FC = () => {
                         phoneNumber={item.phoneNumber}
                         salonCreateDate={item.createdAt}
                         salonDescription={t("The_master_has_added")}
-                      />
+                      /> 
                     ))}
                   </div>
                   <div className="mt-5">

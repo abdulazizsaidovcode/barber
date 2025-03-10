@@ -15,7 +15,7 @@ const RequestSalons: React.FC = () => {
     const [salons, setSalons] = useState<RequestsSalon[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isModal, setIsModal] = useState(false);
-    const [message, setMessage] = useState<RequestMessage | null>(null);
+    const [message, setMessage] = useState<RequestMessage | null>(null); 
 
     useEffect(() => {
         fetchRequestsSalon()
