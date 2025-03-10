@@ -43,7 +43,7 @@ const SpecializationsCard: React.FC<SpecializationsCardProp> = ({ ownerImage, mo
       </div>
     </Link> :
       <div onClick={onClick}>
-        <div className='lg:w-[380px] w-full cursor-pointer lg:h-[130px] h-max rounded-xl reviews-shadow p-3 bg-white'>
+        <div className='lg:w-[380px] w-full cursor-pointer rounded-xl reviews-shadow p-3 bg-white'>
           <div className='flex justify-between'>
             <div className='flex gap-3 mt-3'>
               <div>
