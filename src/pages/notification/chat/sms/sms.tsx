@@ -185,7 +185,7 @@ const Sms = ({
 
   return (
     <div className="h-full relative pl-4">
-      {chat && chat.length > 0 ? (
+      {chat ? (
         <div className="w-full h-full flex flex-col">
           <div className="bg-gray-200 flex-1 h-full overflow-hidden" ref={chatContainerRef}>
             <div className="w-full h-full overflow-y-auto">

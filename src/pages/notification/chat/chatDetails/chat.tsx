@@ -240,11 +240,9 @@ const Chatdetail: React.FC = () => {
     if (chatId) {
       if (stompClient && stompClient.connected) {
         stompClient.send('/app/deleteMessage/list', {}, JSON.stringify(list));
-        // setTimeout(() => {
-        // }, 300);
-        // setTimeout(() => {
-        //   fetchMessages(adminId, recipientId);
-        // }, 500);
+        setTimeout(() => {
+          fetchMessages(adminId, recipientId);
+        }, 500);
       }
     }
   }
